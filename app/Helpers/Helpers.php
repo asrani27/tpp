@@ -72,3 +72,8 @@ function terbilang($angka) {
  {
     return Jabatan::where('skpd_id', $skpd_id)->get();
  }
+
+ function pegawaiSkpd($id)
+ {
+     return Pegawai::where('skpd_id', $id)->paginate(10);
+ }

@@ -14,6 +14,10 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/superadmin/profil', 'ProfilController@superadmin');
     Route::post('/superadmin/profil', 'ProfilController@changeSuperadmin');
     Route::get('/superadmin/skpd', 'SuperadminController@skpd');
+    Route::get('/superadmin/skpd/pegawai/{skpd_id}', 'SuperadminController@pegawaiSkpd');
+    Route::get('/superadmin/skpd/pegawai/{skpd_id}/add', 'SuperadminController@addPegawaiSkpd');
+    Route::post('/superadmin/skpd/pegawai/{skpd_id}/add', 'SuperadminController@storePegawaiSkpd');
+    Route::get('/superadmin/skpd/pegawai/{skpd_id}/delete/{id}', 'SuperadminController@deletePegawaiSkpd');
     Route::get('/superadmin/skpd/jabatan/{skpd_id}', 'SuperadminController@jabatan');
     Route::post('/superadmin/skpd/jabatan/{skpd_id}', 'SuperadminController@storeJabatan');
     Route::get('/superadmin/skpd/jabatan/{skpd_id}/edit/{id}', 'SuperadminController@editJabatan');

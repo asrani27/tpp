@@ -39,7 +39,7 @@
                       <tr>
                         <th>#</th>
                         <th></th>
-                        <th>Kode / Username</th>
+                        <th>Kode</th>
                         <th>Nama</th>
                         <th>Aksi</th>
                       </tr>
@@ -62,7 +62,7 @@
                             </td>
                             <td>
                             <strong>{{$item->nama}}</strong><br/>
-                            <a href="#" class="btn btn-sm btn-info"><i class="fas fa-users"></i> ASN : 45</a>
+                            <a href="/superadmin/skpd/pegawai/{{$item->id}}" class="btn btn-sm btn-info"><i class="fas fa-users"></i> ASN : {{$item->pegawai->count()}}</a>
                             <a href="#" class="btn btn-sm btn-success"><i class="fas fa-money-bill"></i> TPP : Rp. 45.000.000.,</a>
                             <a href="/superadmin/skpd/jabatan/{{$item->id}}" class="btn btn-sm bg-purple"><i class="fas fa-university"></i> PETA JABATAN : {{$item->jabatan->count()}}</a>
                             </td>

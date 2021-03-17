@@ -27,7 +27,7 @@
                         <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">NIP</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="nip" value="{{ old('nip') }}" placeholder="NIP" required  maxlength="18">
+                            <input type="text" class="form-control" name="nip" value="{{ old('nip') }}" placeholder="NIP" required  minlength="18" maxlength="18">
                         
                             @if ($errors->has('nip'))
                                 <span class="text-danger">{{ $errors->first('nip') }}</span>

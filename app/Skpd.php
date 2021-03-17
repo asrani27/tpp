@@ -13,6 +13,11 @@ class Skpd extends Model
     {
         return $this->hasMany(Jabatan::class, 'skpd_id');
     }
+
+    public function pegawai()
+    {
+        return $this->hasMany(Pegawai::class, 'skpd_id');
+    }
     
     public function user()
     {

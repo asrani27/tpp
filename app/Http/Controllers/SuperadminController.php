@@ -77,6 +77,47 @@ class SuperadminController extends Controller
         return view('superadmin.jabatan.index',compact('skpd_id','edit'));
     }
 
+    public function pegawaiSkpd($skpd_id)
+    {
+        return view('superadmin.skpd.pegawai',compact('skpd_id'));
+    }
+
+    public function addPegawaiSkpd($skpd_id)
+    {
+        $nama_skpd = Skpd::find($skpd_id)->nama;
+        return view('superadmin.skpd.create_pegawai',compact('skpd_id','nama_skpd'));
+    }
+
+    public function storePegawaiSkpd(Request $req, $skpd_id)
+    {
+        $messages = [
+            'numeric' => 'Inputan Harus Angka',
+            'min'     => 'Harus 18 Digit',
+            'unique'  => 'NIP sudah Ada',
+        ];
+
+        $rules = [
+            'nip' =>  'unique:pegawai|min:18|numeric',
+            'nama' => 'required'
+        ];
+        $req->validate($rules, $messages);
+        
+        $req->flash();
+
+        $attr = $req->all();
+        $attr['skpd_id'] = $skpd_id;
+        
+        Pegawai::create($attr);
+        toastr()->success('Pegawai Berhasil Disimpan');
+
+        return redirect('/superadmin/skpd/pegawai/'.$skpd_id);
+    }
+
+    public function deletePegawaiSkpd()
+    {
+
+    }
+    
     public function userSkpd()
     {
         $roleAdminSkpd = Role::where('name','admin')->first();

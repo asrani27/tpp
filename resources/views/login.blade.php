@@ -22,13 +22,14 @@
 	<link rel="stylesheet" type="text/css" href="/login_tpp/css/util.css">
 	<link rel="stylesheet" type="text/css" href="/login_tpp/css/main.css">
 <!--===============================================================================================-->
+  @toastr_css
 </head>
 <body>
 	
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('/login_tpp/images/img-01.jpg');">
-			<div class="wrap-login100 p-t-120 p-b-30">
-				<form method="POST" class="login100-form validate-form" autocomplete="off" action="/login">
+			<div class="wrap-login100 p-b-30">
+				<form method="post" class="login100-form validate-form" autocomplete="off" action="/login">
                     @csrf
 					<div class="login100-form-avatar">
 						<img src="/login_tpp/images/icons/logo.png" alt="AVATAR">
@@ -51,7 +52,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input m-b-10" data-validate = "Password is required">
-						<input class="input100" type="password" name="pass" placeholder="Password" autocomplete="off">
+						<input class="input100" type="password" name="password" placeholder="Password" autocomplete="off">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock"></i>
@@ -59,16 +60,16 @@
 					</div>
 
 					<div class="container-login100-form-btn p-t-10">
-						<button class="login100-form-btn">
+						<button type="submit" class="login100-form-btn">
 							Login
 						</button>
 					</div>
 
-					<div class="text-center w-full p-t-25 p-b-230">
+					{{-- <div class="text-center w-full p-t-25 p-b-230">
 						<a href="#" class="txt1">
 							Forgot Username / Password?
 						</a>
-					</div>
+					</div> --}}
 
 					<div class="text-center w-full">
 						{{-- <a class="txt1" href="#">
@@ -94,5 +95,7 @@
 <!--===============================================================================================-->
 	<script src="/login_tpp/js/main.js"></script>
 
+	@toastr_js
+	@toastr_render
 </body>
 </html>

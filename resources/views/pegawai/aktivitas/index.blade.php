@@ -52,8 +52,8 @@
             <div class="col-12">
                 <div class="callout callout-danger">
                     <div class="row">
-                        <div class="col-8">Beban Kerja : 56.1</div>
-                        <div class="col-4"><i class="fas fa-calendar-alt"></i> 3 Des 2020</div>
+                        <div class="col-8 text-xs">Beban Kerja : 56.1</div>
+                        <div class="col-4 text-xs"><i class="fas fa-calendar-alt"></i> 3 Des 2020</div>
                     </div>
                 
                 <h5><b>Menjadi Mentor</b></h5>
@@ -63,8 +63,8 @@
                 
                 <div class="callout callout-success">
                     <div class="row">
-                        <div class="col-8">Beban Kerja : 46.1</div>
-                        <div class="col-4"><i class="fas fa-calendar-alt"></i> 3 Des 2020</div>
+                        <div class="col-8 text-xs">Beban Kerja : 46.1</div>
+                        <div class="col-4 text-xs"><i class="fas fa-calendar-alt"></i> 3 Des 2020</div>
                     </div>
                     
                     <h5><b>Survey Lapangan</b></h5>
@@ -74,8 +74,8 @@
                 
                 <div class="callout callout-info">
                     <div class="row">
-                        <div class="col-8">Beban Kerja : 66.1</div>
-                        <div class="col-4"><i class="fas fa-calendar-alt"></i> 3 Des 2020</div>
+                        <div class="col-8 text-xs">Beban Kerja : 66.1</div>
+                        <div class="col-4 text-xs"><i class="fas fa-calendar-alt"></i> 3 Des 2020</div>
                     </div>
                     
                     <h5><b>Memberi Arahan Kepada Bawahan</b></h5>

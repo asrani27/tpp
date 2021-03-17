@@ -53,23 +53,23 @@
             <div class="col-12">
                 <div class="callout callout-danger">
                     <div class="row">
-                        <div class="col-8">Beban Kerja : 56.1</div>
-                        <div class="col-4"><i class="fas fa-calendar-alt"></i> 3 Des 2020</div>
+                        <div class="col-8 text-xs">Waktu : 50 Menit</div>
+                        <div class="col-4 text-xs"><i class="fas fa-calendar-alt"></i> 3 Des 2020</div>
                     </div>
                 
                     <h5><b>Menjadi Mentor</b></h5>
 
                     <div class="row">
-                        <div class="col-8"><p>Memberikan Arahan Kepada Bawahan</p></div>
-                        <div class="col-4"><a href="/pegawai/verifikasi/jurnal/detail" class="btn btn-xs btn-info" style="color:white;text-decoration:none;">verifikasi</a></div>
+                        <div class="col-8 text-xs"><p>Memberikan Arahan Kepada Bawahan</p></div>
+                        <div class="col-4 text-xs"><a href="/pegawai/verifikasi/jurnal/detail" class="btn btn-xs btn-info" style="color:white;text-decoration:none;">verifikasi</a></div>
                     </div>
                     
                 </div>
                 
                 <div class="callout callout-success">
                     <div class="row">
-                        <div class="col-8">Beban Kerja : 26.1</div>
-                        <div class="col-4"><i class="fas fa-calendar-alt"></i> 3 Des 2020</div>
+                        <div class="col-8 text-xs">Beban Kerja : 26.1</div>
+                        <div class="col-4 text-xs"><i class="fas fa-calendar-alt"></i> 3 Des 2020</div>
                     </div>
                     
                     <h5><b>Survey Lapangan</b></h5>

@@ -23,7 +23,7 @@
                   <p>SKPD</p>
                 </div>
                 <div class="icon">
-                  <i class="ion ion-bag"></i>
+                    <i class="fas fa-university"></i>
                 </div>
                 <a href="#" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
               </div>
@@ -51,14 +51,14 @@
                   <h3>Rp. 6.342.123.456,-</h3>
   
                   <p>Total TPP Bulan Juni 2021</p>
+                  
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
                 </div>
                 <a href="#" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
               </div>
-            </div>
-            
+            </div> 
         </div>
         
         <div class="row">
@@ -75,71 +75,7 @@
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-lg-4 col-12">
-                <div class="card">
-                    <div class="card-body">
-                        
-                        <div class="form-group">
-                            <select class="form-control select2" style="width: 100%;">
-                            <option selected="selected">Top Level</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="jabatan" placeholder="nama jabatan">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-block btn-primary">Simpan</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-8 col-12">
-                
-            <ul>
-                <li>
-                    <div class="callout callout-info text-sm" style="padding:5px;">
-                        <strong>Kepala Dinas Komunikasi Dan Informatika</strong> 
-                            <a href="#" class="btn btn-tool" data-tooltip="remove"><i class="fas fa-edit"></i></a>
-                            <a href="#" class="btn btn-tool" data-tooltip="remove"><i class="fas fa-times"></i></a>
-                            
-                    </div>
-                    
-                    <ul>
-                        <li>
-                            <div class="callout callout-warning text-sm" style="padding:5px;">
-                                <strong>Sekretaris</strong>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="callout callout-warning text-sm" style="padding:5px;">
-                                <strong>Kabid 1</strong>
-                            </div>
-                            <ul>
-                                <li>
-                                    <div class="callout callout-danger text-sm" style="padding:5px;">
-                                        <strong>Kasi 1</strong>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="callout callout-danger text-sm" style="padding:5px;">
-                                        <strong>Kasi 2</strong>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <div class="callout callout-warning text-sm" style="padding:5px;">
-                                <strong>Kabid 2</strong>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-                
-            </ul>
-            </div>
-        </div>
+        
     </div>
 </div>
 @endsection

@@ -18,6 +18,14 @@
         <input type="text" class="form-control" name="nama" value="{{$jabatan->nama}}" required>
     </div>
     <div class="form-group">
+        <select class="form-control select2" name="kelas_id" style="width: 100%;" required>
+            <option value="" selected="selected">-Kelas Jabatan-</option>
+                @foreach (kelas() as $item)
+                <option value="{{$item->id}}" {{$jabatan->kelas_id == $item->id ? 'selected' : ''}}>{{$item->nama}}</option>
+                @endforeach
+        </select>
+    </div>
+    <div class="form-group">
         <button type="submit" class="btn btn-block btn-primary">Update</button>
         <a href="/superadmin/skpd/jabatan/{{$skpd_id}}" class="btn btn-block btn-warning">New</a>
     </div>

@@ -75,18 +75,6 @@
                         </div>
                         
                         <div class="form-group row">
-                            <label for="inputPassword3" class="col-sm-2 col-form-label">Kelas Jabatan</label>
-                            <div class="col-sm-10">
-                                <select name="kelas_id" class="form-control" required>
-                                    <option value="">-pilih-</option>
-                                    @foreach (kelas() as $item)
-                                        <option value="{{$item->id}}">{{$item->nama}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group row">
                             <label for="inputPassword3" class="col-sm-2 col-form-label">SKPD</label>
                             <div class="col-sm-10">
                                 <select name="skpd_id" class="form-control" required>

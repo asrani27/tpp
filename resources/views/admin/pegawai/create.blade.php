@@ -5,30 +5,28 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 @endpush
 @section('title')
-    SUPERADMIN
+    ADMIN SKPD
 @endsection
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <h4>Data ASN</h4>
-        
         <div class="row">
-            <div class="col-lg-12 col-12">
-                <div class="card card-widget widget-user-2">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="widget-user-header bg-info">
-                      <div class="widget-user-image">
-                        <img class="img-circle elevation-2" src="/login_tpp/images/icons/logo.png" alt="User Avatar">
-                      </div>
-                      <!-- /.widget-user-image -->
-                      <h3 class="widget-user-username">{{detailSkpd($skpd_id)->nama}}</h3>
-                      <h5 class="widget-user-desc">Kode Skpd: {{detailSkpd($skpd_id)->kode_skpd}}</h5>
+          <div class="col-lg-12 col-12">
+              <div class="card card-widget widget-user-2">
+                  <!-- Add the bg color to the header using any of the bg-* classes -->
+                  <div class="widget-user-header bg-info">
+                    <div class="widget-user-image">
+                      <img class="img-circle elevation-2" src="/login_tpp/images/icons/logo.png" alt="User Avatar">
                     </div>
-                    
+                    <!-- /.widget-user-image -->
+                    <h3 class="widget-user-username">{{detailSkpd(Auth::user()->skpd->id)->nama}}</h3>
+                    <h5 class="widget-user-desc">Kode Skpd: {{detailSkpd(Auth::user()->skpd->id)->kode_skpd}}</h5>
                   </div>
-            </div>
+                  
+                </div>
+          </div>
         </div>
-        <a href="/superadmin/skpd/pegawai/{{$skpd_id}}" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i> Kembali</a><br /><br />
+        <a href="/admin/pegawai" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i> Kembali</a><br /><br />
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -47,13 +45,13 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
-                        <form class="form-horizontal" method="POST" action="/superadmin/skpd/pegawai/{{$skpd_id}}/add">
+                        <form class="form-horizontal" method="POST" action="/admin/pegawai/add">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">SKPD</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" value="{{$nama_skpd}}" readonly>
+                                    <input type="text" class="form-control" value="{{Auth::user()->skpd->nama}}" readonly>
                                 </div>
                                 </div>
 
@@ -105,13 +103,13 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group row">
                                     <label for="inputPassword3" class="col-sm-2 col-form-label">Nama Jabatan</label>
                                     <div class="col-sm-10">
                                         <select name="jabatan_id" class="form-control" required>
                                             <option value="">-pilih-</option>
-                                            @foreach (jabatan($skpd_id) as $item)
+                                            @foreach (jabatan(Auth::user()->skpd->id) as $item)
                                                 <option value="{{$item->id}}">{{$item->nama}}</option>
                                             @endforeach
                                         </select>

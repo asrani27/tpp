@@ -17,6 +17,8 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/superadmin/skpd/pegawai/{skpd_id}', 'SuperadminController@pegawaiSkpd');
     Route::get('/superadmin/skpd/pegawai/{skpd_id}/add', 'SuperadminController@addPegawaiSkpd');
     Route::post('/superadmin/skpd/pegawai/{skpd_id}/add', 'SuperadminController@storePegawaiSkpd');
+    Route::get('/superadmin/skpd/pegawai/{skpd_id}/edit/{id}', 'SuperadminController@editPegawaiSkpd');
+    Route::post('/superadmin/skpd/pegawai/{skpd_id}/edit/{id}', 'SuperadminController@updatePegawaiSkpd');
     Route::get('/superadmin/skpd/pegawai/{skpd_id}/delete/{id}', 'SuperadminController@deletePegawaiSkpd');
     Route::get('/superadmin/skpd/jabatan/{skpd_id}', 'SuperadminController@jabatan');
     Route::post('/superadmin/skpd/jabatan/{skpd_id}', 'SuperadminController@storeJabatan');
@@ -25,6 +27,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/superadmin/skpd/jabatan/{skpd_id}/delete/{id}', 'SuperadminController@deleteJabatan');
     Route::get('/superadmin/skpd/createuser', 'SuperadminController@userSkpd');
     Route::get('/superadmin/skpd/createuser/{skpd_id}', 'SuperadminController@userSkpdId');
+    Route::get('/superadmin/skpd/resetpassword/{skpd_id}', 'SuperadminController@resetPassUserSkpdId');
     Route::get('/superadmin/skpd/deleteuser', 'SuperadminController@deleteUserSkpd');
     Route::get('/superadmin/skpd/add', 'SuperadminController@addSkpd');
     Route::post('/superadmin/skpd/add', 'SuperadminController@storeSkpd');
@@ -32,7 +35,10 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::post('/superadmin/skpd/edit/{skpd_id}', 'SuperadminController@updateSkpd');
     Route::get('/superadmin/skpd/delete/{skpd_id}', 'SuperadminController@deleteSkpd');
     
+    Route::get('/superadmin/mutasi', 'SuperadminController@mutasi');
+    
     Route::get('/superadmin/pegawai', 'SuperadminController@pegawai');
+    Route::get('/superadmin/pegawai/search', 'SuperadminController@searchPegawai');
     Route::get('/superadmin/pegawai/add', 'SuperadminController@addPegawai');
     Route::post('/superadmin/pegawai/add', 'SuperadminController@storePegawai');
     Route::get('/superadmin/pegawai/delete/{id}', 'SuperadminController@deletePegawai');
@@ -48,12 +54,32 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/superadmin/kelas/delete/{id}', 'SuperadminController@deleteKelas');
 
     Route::get('/superadmin/pangkat', 'SuperadminController@pangkat');
+    Route::get('/superadmin/pangkat/add', 'SuperadminController@addPangkat');
+    Route::get('/superadmin/pangkat/edit/{id}', 'SuperadminController@editPangkat');
+    Route::post('/superadmin/pangkat/edit/{id}', 'SuperadminController@updatePangkat');
+    Route::post('/superadmin/pangkat/add', 'SuperadminController@storePangkat');
+    Route::get('/superadmin/pangkat/delete/{id}', 'SuperadminController@deletePangkat');
+
     Route::get('/superadmin/eselon', 'SuperadminController@eselon');
+    Route::get('/superadmin/eselon/add', 'SuperadminController@addEselon');
+    Route::get('/superadmin/eselon/edit/{id}', 'SuperadminController@editEselon');
+    Route::post('/superadmin/eselon/edit/{id}', 'SuperadminController@updateEselon');
+    Route::post('/superadmin/eselon/add', 'SuperadminController@storeEselon');
+    Route::get('/superadmin/eselon/delete/{id}', 'SuperadminController@deleteEselon');
 
 });
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/home/admin', 'HomeController@admin');
+    
+    Route::get('/home/admin/up/{id}/{urutan}', 'HomeController@adminUp');
+    Route::get('/home/admin/down/{id}/{urutan}', 'HomeController@adminDown');
+
+    Route::get('/admin/profil', 'ProfilController@admin');
+    Route::get('/admin/pegawai', 'AdminController@pegawai');
+    Route::get('/admin/pegawai/add', 'AdminController@addPegawai');
+    Route::post('/admin/pegawai/add', 'AdminController@storePegawai');
+    Route::get('/admin/peta-jabatan', 'AdminController@jabatan');
 });
 
 Route::group(['middleware' => ['auth', 'role:pegawai']], function () {

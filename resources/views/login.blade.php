@@ -28,7 +28,7 @@
 	
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('/login_tpp/images/img-01.jpg');">
-			<div class="wrap-login100 p-b-30">
+			<div class="wrap-login100  p-t-100 p-b-30">
 				<form method="post" class="login100-form validate-form" autocomplete="off" action="/login">
                     @csrf
 					<div class="login100-form-avatar">
@@ -65,11 +65,11 @@
 						</button>
 					</div>
 
-					{{-- <div class="text-center w-full p-t-25 p-b-230">
-						<a href="#" class="txt1">
-							Forgot Username / Password?
+					<div class="text-center w-full p-t-25 p-b-230">
+						<a href="#" class="txt1 text-white">
+							Tim Programmer Diskominfotik<br /> Kota Banjarmasin
 						</a>
-					</div> --}}
+					</div>
 
 					<div class="text-center w-full">
 						{{-- <a class="txt1" href="#">

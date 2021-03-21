@@ -44,6 +44,31 @@ function terbilang($angka) {
      return Skpd::get();
  }
 
+ function countSkpd()
+ {
+     return Skpd::get()->count();
+ }
+
+ function countPegawai()
+ {
+     return Pegawai::get()->count();
+ }
+
+ function countPegawaiSkpd($id)
+ {
+     return Pegawai::where('skpd_id', $id)->get()->count();
+ }
+
+ function countJabatanSkpd($id)
+ {
+    return Jabatan::where('skpd_id', $id)->get()->count();
+ }
+
+ function grafikSkpd()
+ {
+     return Skpd::get()->pluck('kode_skpd');
+ }
+
  function pangkat()
  {
      return Pangkat::get();
@@ -56,10 +81,10 @@ function terbilang($angka) {
  
  function kelas()
  {
-     return Kelas::orderBy('nama','ASC')->get();
+     return Kelas::orderBy('id','DESC')->get();
  }
  function pegawai()
- {
+ {      
      return Pegawai::orderBy('nama','ASC')->paginate(10);
  }
 

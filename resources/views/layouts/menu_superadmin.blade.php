@@ -33,37 +33,44 @@
         </p>
     </a>
     </li>
+    
     <li class="nav-item">
-    <a href="/superadmin/kelas" class="nav-link {{ Request::is('superadmin/kelas*') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-list"></i>
+    <a href="/superadmin/mutasi" class="nav-link {{ Request::is('superadmin/mutasi*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-people-arrows"></i>
         <p>
-        Kelas Jabatan
+        Mutasi Pegawai
         </p>
     </a>
     </li>
-    <li class="nav-item">
-    <a href="/superadmin/pangkat" class="nav-link {{ Request::is('superadmin/pangkat*') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-list"></i>
-        <p>
-        Pangkat
-        </p>
-    </a>
-    </li>
-    <li class="nav-item">
-    <a href="/superadmin/eselon" class="nav-link {{ Request::is('superadmin/eselon*') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-list"></i>
-        <p>
-        Eselon
-        </p>
-    </a>
-    </li>
-    <li class="nav-item">
-    <a href="/superadmin/report" class="nav-link {{ Request::is('superadmin/report*') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-file-invoice"></i>
-        <p>
-        Report
-        </p>
-    </a>
+    
+    <li class="nav-item has-treeview {{Request::is('superadmin/kelas*') || Request::is('superadmin/pangkat*') || Request::is('superadmin/eselon*') ? 'menu-open' : ''}}">
+        <a href="#" class="nav-link {{Request::is('superadmin/kelas*') || Request::is('superadmin/pangkat*') || Request::is('superadmin/eselon*') ? 'active' : ''}}">
+          <i class="nav-icon fas fa-cogs"></i>
+          <p>
+            Setting
+            <i class="fas fa-angle-left right"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview" style="display: {{Request::is('superadmin/kelas*') || Request::is('superadmin/pangkat*') || Request::is('superadmin/eselon*') ? 'block' : 'none'}};">
+            <li class="nav-item">
+            <a href="/superadmin/kelas" class="nav-link {{ Request::is('superadmin/kelas*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-list"></i>
+                <p>Kelas Jabatan</p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="/superadmin/pangkat" class="nav-link {{ Request::is('superadmin/pangkat*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-list"></i>
+                <p>Pangkat / Gol.</p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="/superadmin/eselon" class="nav-link {{ Request::is('superadmin/eselon*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-list"></i>
+                <p>Eselon</p>
+            </a>
+            </li>
+        </ul>
     </li>
     <li class="nav-item">
     <a href="/logout" class="nav-link">

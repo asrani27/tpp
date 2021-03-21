@@ -2,7 +2,7 @@
 <nav class="mt-2">
 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
     <li class="nav-item">
-    <a href="/home" class="nav-link">
+    <a href="/home/admin" class="nav-link">
         <i class="nav-icon fas fa-home"></i>
         <p>
         Beranda
@@ -10,34 +10,34 @@
     </a>
     </li>
     <li class="nav-item">
-    <a href="/pegawai/aktivitas" class="nav-link">
-        <i class="nav-icon fas fa-list-alt"></i>
+    <a href="/admin/profil" class="nav-link">
+        <i class="nav-icon fas fa-user"></i>
         <p>
-        Jurnal Aktivitas
+        Profil
         </p>
     </a>
     </li>
     <li class="nav-item">
-    <a href="/pegawai/verifikasi" class="nav-link">
-        <i class="nav-icon fas fa-tasks"></i>
+    <a href="/admin/pegawai" class="nav-link">
+        <i class="nav-icon fas fa-users"></i>
         <p>
-        Validasi
+        Pegawai
         </p>
     </a>
     </li>
     <li class="nav-item">
-    <a href="/pegawai/riwayat" class="nav-link">
-        <i class="nav-icon fas fa-chart-line"></i>
+    <a href="/admin/peta-jabatan" class="nav-link">
+        <i class="nav-icon fas fa-map"></i>
         <p>
-        Riwayat Jabatan
+        Peta Jabatan
         </p>
     </a>
     </li>
     <li class="nav-item">
-    <a href="/pegawai/tpp" class="nav-link">
-        <i class="nav-icon fas fa-file-invoice"></i>
+    <a href="/admin/kelas-jabatan" class="nav-link">
+        <i class="nav-icon fas fa-book"></i>
         <p>
-        Laporan TPP
+        Kelas Jabatan
         </p>
     </a>
     </li>

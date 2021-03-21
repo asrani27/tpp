@@ -6,7 +6,9 @@ use App\Role;
 use App\Skpd;
 use App\User;
 use App\Kelas;
+use App\Eselon;
 use App\Jabatan;
+use App\Pangkat;
 use App\Pegawai;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -45,6 +47,7 @@ class SuperadminController extends Controller
         toastr()->success('Skpd Berhasil Di Update');
         return redirect('/superadmin/skpd');
     }
+    
     public function deleteSkpd($skpd_id)
     {
         try{
@@ -106,6 +109,7 @@ class SuperadminController extends Controller
 
         $attr = $req->all();
         $attr['skpd_id'] = $skpd_id;
+        $attr['verified'] = 1;
         
         Pegawai::create($attr);
         toastr()->success('Pegawai Berhasil Disimpan');
@@ -113,11 +117,53 @@ class SuperadminController extends Controller
         return redirect('/superadmin/skpd/pegawai/'.$skpd_id);
     }
 
-    public function deletePegawaiSkpd()
-    {
+    public function updatePegawaiSkpd(Request $req, $skpd_id, $id)
+    { 
+        $messages = [
+            'numeric' => 'Inputan Harus Angka',
+            'min'     => 'Harus 18 Digit',
+            'unique'  => 'NIP sudah Ada',
+        ];
 
+        $rules = [
+            'nip' =>  'min:18|numeric|unique:pegawai,nip,'.$id,
+            'nama' => 'required'
+        ];
+        $req->validate($rules, $messages);
+        
+        $req->flash();
+
+        $attr = $req->all();
+        
+        Pegawai::find($id)->update($attr);
+        toastr()->success('Pegawai Berhasil Diupdate');
+
+        return redirect('/superadmin/skpd/pegawai/'.$skpd_id);
+    }
+    public function deletePegawaiSkpd($skpd_id, $id)
+    {
+        try{
+            $s = Pegawai::find($id);
+            if($s->user != null)
+            {
+                $s->user->delete();
+            }
+            $s->delete();
+            toastr()->success('Pegawai Berhasil Di Hapus');
+        }catch(\Exception $e){
+            toastr()->error('Pegawai Tidak Bisa Di Hapus Karena terkait Dengan Data Lain');
+        }
+        return back();
     }
     
+    public function editPegawaiSkpd($skpd_id, $id)
+    {
+        $nama_skpd = Skpd::find($skpd_id)->nama;
+        $data = Pegawai::find($id);
+        return view('superadmin.skpd.edit_pegawai',compact('skpd_id','nama_skpd','data'));
+
+    }
+
     public function userSkpd()
     {
         $roleAdminSkpd = Role::where('name','admin')->first();
@@ -175,6 +221,13 @@ class SuperadminController extends Controller
 
     }
 
+    public function resetPassUserSkpdId($skpd_id)
+    {
+        Skpd::find($skpd_id)->user->update(['password' => bcrypt('adminskpd')]);
+        toastr()->success('Password : adminskpd');
+        return back();
+    }
+
     public function deleteUserSkpd()
     {
         $data = Skpd::get()->map(function($item){
@@ -200,6 +253,7 @@ class SuperadminController extends Controller
         if($req->jabatan_id == null){            
             $jabatan = Jabatan::find($id);
             $jabatan->nama = $req->nama;
+            $jabatan->kelas_id = $req->kelas_id;
             $jabatan->save();
             toastr()->success('Jabatan Berhasil Di Update');
             return redirect('/superadmin/skpd/jabatan/'.$skpd_id);
@@ -217,8 +271,11 @@ class SuperadminController extends Controller
                 toastr()->error('Jabatan Tidak bisa di pindah Ke tingkat yang lebih Tinggi');
                 return back();
             }else{
+                
                 $jabatan = Jabatan::find($id);
                 $jabatan->jabatan_id = $req->jabatan_id;
+                $jabatan->nama = $req->nama;
+                $jabatan->kelas_id = $req->kelas_id;
                 $jabatan->save();
                 toastr()->success('Jabatan Berhasil Di Update');
                 
@@ -232,6 +289,7 @@ class SuperadminController extends Controller
         $attr['nama']       = $req->nama;
         $attr['jabatan_id'] = $req->jabatan_id;
         $attr['skpd_id']    = $skpd_id;
+        $attr['kelas_id']    = $req->kelas_id;
 
         if($req->jabatan_id == null){
             $attr['tingkat']    = 1;
@@ -257,9 +315,20 @@ class SuperadminController extends Controller
 
     public function pegawai()
     {
-        return view('superadmin.pegawai.index');
+        $data = Pegawai::orderBy('id','DESC')->paginate(10);
+        return view('superadmin.pegawai.index',compact('data'));
     }
-    
+    public function searchPegawai()
+    {
+        $search = request()->get('search');
+        $data   = Pegawai::where('nip', 'like', '%'.$search.'%')
+        ->orWhere('nama', 'like', '%'.$search.'%')
+        ->orderBy('id','DESC')
+        ->paginate(10);
+        request()->flash();
+        return view('superadmin.pegawai.index',compact('data'));
+
+    }
     public function addPegawai()
     {
         return view('superadmin.pegawai.create');
@@ -287,7 +356,11 @@ class SuperadminController extends Controller
         
         $req->flash();
 
+        $urutan          = Skpd::find($req->skpd_id)->pegawai->sortBy('urutan')->last()->urutan + 1;
+
         $attr = $req->all();
+        $attr['verified'] = 1;
+        $attr['urutan'] = $urutan;
         
         Pegawai::create($attr);
         toastr()->success('Pegawai Berhasil Disimpan');
@@ -448,8 +521,136 @@ class SuperadminController extends Controller
         return view('superadmin.pangkat.index');
     }
 
+    public function addPangkat()
+    {
+        return view('superadmin.pangkat.create');
+    }
+
+    public function editPangkat($id)
+    {
+        $data = Pangkat::find($id);
+        return view('superadmin.pangkat.edit',compact('data'));
+    }
+
+    public function storePangkat(Request $req)
+    {
+        $messages = [
+            'unique'  => 'Nama sudah Ada',
+        ];
+
+        $rules = [
+            'nama' =>  'required|unique:pangkat,nama',
+            'golongan' => 'required|unique:pangkat,golongan',
+        ];
+        $req->validate($rules, $messages);
+        
+        $req->flash();
+
+        Pangkat::create($req->all());
+        toastr()->success('Pangkat Berhasil Di Simpan');
+        return redirect('/superadmin/pangkat');
+    }
+
+    public function updatePangkat(Request $req, $id)
+    {
+        $messages = [
+            'unique'  => 'Nama sudah Ada',
+        ];
+
+        $rules = [
+            'nama' =>  'required|unique:pangkat,nama,'.$id,
+            'golongan' => 'required|unique:pangkat,golongan,'.$id,
+        ];
+        $req->validate($rules, $messages);
+        
+        $req->flash();
+
+        Pangkat::find($id)->update($req->all());
+        toastr()->success('Pangkat Berhasil Di Update');
+        return redirect('/superadmin/pangkat');
+    }
+
+    public function deletePangkat($id)
+    {
+        try{
+            Pangkat::find($id)->delete();
+            toastr()->success('Pangkat Berhasil Di Hapus');
+        }catch(\Exception $e){
+            toastr()->error('Pangkat Tidak Bisa Di Hapus Karena Memiliki Data yang terkait');
+        }
+        return back();
+    }
+
     public function eselon()
     {
         return view('superadmin.eselon.index');
+    }
+
+    
+    public function addEselon()
+    {
+        return view('superadmin.eselon.create');
+    }
+
+    public function editEselon($id)
+    {
+        $data = Eselon::find($id);
+        return view('superadmin.eselon.edit',compact('data'));
+    }
+
+    public function storeEselon(Request $req)
+    {
+        $messages = [
+            'unique'  => 'Nama sudah Ada',
+        ];
+
+        $rules = [
+            'nama' =>  'required|unique:eselon,nama',
+        ];
+        $req->validate($rules, $messages);
+        
+        $req->flash();
+
+        Eselon::create($req->all());
+        toastr()->success('Eselon Berhasil Di Simpan');
+        return redirect('/superadmin/eselon');
+    }
+
+    public function updateEselon(Request $req, $id)
+    {
+        $messages = [
+            'unique'  => 'Nama sudah Ada',
+        ];
+
+        $rules = [
+            'nama' =>  'required|unique:eselon,nama,'.$id,
+        ];
+        $req->validate($rules, $messages);
+        
+        $req->flash();
+
+        Eselon::find($id)->update($req->all());
+        toastr()->success('Eselon Berhasil Di Update');
+        return redirect('/superadmin/eselon');
+    }
+
+    public function deleteEselon($id)
+    {
+        try{
+            if(Eselon::find($id) == null){
+                toastr()->error('Tidak ada Data untuk Di Hapus');
+            }else{
+                Eselon::find($id)->delete();
+                toastr()->success('Eselon Berhasil Di Hapus');
+            }
+        }catch(\Exception $e){
+            toastr()->error('Eselon Tidak Bisa Di Hapus Karena Memiliki Data yang terkait');
+        }
+        return back();
+    }
+
+    public function mutasi()
+    {
+        return view('superadmin.mutasi.index');
     }
 }

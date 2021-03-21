@@ -16,8 +16,8 @@
         <div class="row">
             <div class="col-12">
               <a href="/superadmin/skpd/add" class="btn btn-sm btn-primary"><i class="fas fa-university"></i> Tambah SKPD</a>
-              <a href="/superadmin/skpd/createuser" class="btn btn-sm bg-purple"><i class="fas fa-key"></i> Create User & Pass SKPD</a>
-              <a href="/superadmin/skpd/deleteuser" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete User & Pass SKPD</a> <br/><br/>
+              <a href="/superadmin/skpd/createuser" class="btn btn-sm bg-purple" onclick="return confirm('Yakin Mengcreate User Dan Pass?');"><i class="fas fa-key"></i> Create User & Pass SKPD</a>
+              <a href="/superadmin/skpd/deleteuser" class="btn btn-sm btn-danger" onclick="return confirm('Akan menghapus Semua User AdminSKPD, Yakin?');"><i class="fas fa-trash"></i> Delete User & Pass SKPD</a> <br/><br/>
               <div class="card">
                 {{-- <div class="card-header">
                   <h3 class="card-title">Responsive Hover Table</h3>
@@ -57,19 +57,21 @@
                               @if ($item->user_id == null)
                               <a href="/superadmin/skpd/createuser/{{$item->id}}" class="btn btn-sm btn-secondary"><i class="fas fa-key"></i> Create User</a>
                               @else
+                              <a href="/superadmin/skpd/resetpassword/{{$item->id}}" class="btn btn-sm btn-secondary" onclick="return confirm('Yakin ingin reset Password?');"><i class="fas fa-key"></i> Reset Password</a>
                                   
                               @endif
                             </td>
                             <td>
                             <strong>{{$item->nama}}</strong><br/>
                             <a href="/superadmin/skpd/pegawai/{{$item->id}}" class="btn btn-sm btn-info"><i class="fas fa-users"></i> ASN : {{$item->pegawai->count()}}</a>
-                            <a href="#" class="btn btn-sm btn-success"><i class="fas fa-money-bill"></i> TPP : Rp. 45.000.000.,</a>
+                            <a href="/superadmin/skpd/tpp" class="btn btn-sm btn-success"><i class="fas fa-money-bill"></i> TPP JANUARI 2021: Rp. 45.000.000.,</a>
                             <a href="/superadmin/skpd/jabatan/{{$item->id}}" class="btn btn-sm bg-purple"><i class="fas fa-university"></i> PETA JABATAN : {{$item->jabatan->count()}}</a>
+                            <a href="/superadmin/skpd/kelas/{{$item->id}}" class="btn btn-sm bg-primary"><i class="fas fa-th"></i> KELAS : {{$item->jabatan->count()}}</a>
                             </td>
                             <td>
                               
                             <a href="/superadmin/skpd/edit/{{$item->id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
-                            <a href="/superadmin/skpd/delete/{{$item->id}}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                            <a href="/superadmin/skpd/delete/{{$item->id}}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
                             </td>
                           </tr>
                       @endforeach

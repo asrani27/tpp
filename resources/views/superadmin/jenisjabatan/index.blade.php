@@ -12,10 +12,10 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <h4>KELAS JABATAN</h4>
+        <h4>JENIS JABATAN</h4>
         <div class="row">
             <div class="col-12">
-              <a href="/superadmin/kelas/add" class="btn btn-sm btn-primary"><i class="fas fa-graduation-cap"></i> Tambah Kelas</a><br/><br/>
+              <a href="/superadmin/jenisjabatan/add" class="btn btn-sm btn-primary"><i class="fas fa-user-cog"></i> Tambah Jenis</a><br/><br/>
               <div class="card">
                 <div class="card-header">
                   <h3 class="card-title"></h3>
@@ -32,12 +32,11 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
-                  <table class="table table-hover text-nowrap table-striped table-sm">
+                  <table class="table table-hover text-nowrap">
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Kelas</th>
-                        <th>Nilai</th>
+                        <th>Nama Jenis Jabatan</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -45,14 +44,13 @@
                         $no =1;
                     @endphp
                     <tbody>
-                    @foreach (kelas() as $key => $item)
+                    @foreach (jenisjabatan() as $key => $item)
                           <tr>
                             <td>{{$no++}}</td>
                             <td>{{$item->nama}}</td>
-                            <td>@currency($item->nilai)</td>
                             <td>
-                            <a href="/superadmin/kelas/edit/{{$item->id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
-                            <a href="/superadmin/kelas/delete/{{$item->id}}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
+                            <a href="/superadmin/jenisjabatan/edit/{{$item->id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                            <a href="/superadmin/jenisjabatan/delete/{{$item->id}}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
                             </td>
                           </tr>
                       @endforeach

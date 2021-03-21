@@ -56,7 +56,7 @@
                             <th>NIP / Username</th>
                             <th>Nama</th>
                             <th>Jabatan</th>
-                            <th>Kelas</th>
+                            <th class="text-center">Verified ?</th>
                             <th>Aksi</th>
                           </tr>
                         </thead>
@@ -66,29 +66,40 @@
                         <tbody>
                         @foreach (pegawaiSkpd($skpd_id) as $key => $item)
                               <tr>
-                                <td>{{$no++}}</td>
+                                <td>{{$key+ pegawai()->firstItem()}}</td>
                                 <td>{{$item->nip}}<br />
                                 @if ($item->user_id == null)
                                   <a href="/superadmin/pegawai/createuser/{{$item->id}}" class="btn btn-xs btn-secondary"><i class="fas fa-key"></i> Create User</a>
                                 @else
+                                <a href="/superadmin/pegawai/resetpassword/{{$item->id}}" class="btn btn-xs btn-secondary" onclick="return confirm('Yakin ingin di reset?');"><i class="fas fa-key"></i> Reset password</a>
                                     
                                 @endif
                                 </td>
                                 <td>{{$item->nama}}</td>
                                 <td>{{$item->jabatan == null ? '-': $item->jabatan->nama}}</td>
-                                <td>{{$item->kelas == null ? '-': $item->kelas->nama}}</td>
+                                {{-- <td>{{$item->kelas == null ? '-': $item->kelas->nama}}</td> --}}
+                                
+                                <td class="text-center">
+                                  @if ($item->verified == 0)
+                                  <i class="far fa-times-circle text-danger"></i>
+                                    
+                                  @else
+                                      
+                                  <i class="far fa-check-circle text-success"></i>
+                                  @endif
+                                </td>
                                 <td>
-                                <a href="/superadmin/skpd/pegawai/edit/{{$item->id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
-                                <a href="/superadmin/skpd/pegawai/delete/{{$item->id}}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
+                                <a href="/superadmin/skpd/pegawai/{{$skpd_id}}/edit/{{$item->id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                                <a href="/superadmin/skpd/pegawai/{{$skpd_id}}/delete/{{$item->id}}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
                                 </td>
                               </tr>
                           @endforeach
                         </tbody>
                       </table>
                     </div>
-                    {{pegawai()->links()}}
                     <!-- /.card-body -->
                   </div>
+                  {{pegawai()->links()}}
             </div>
         </div>
     </div>

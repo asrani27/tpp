@@ -15,6 +15,14 @@
         <input type="text" class="form-control" name="nama" placeholder="nama jabatan" required>
     </div>
     <div class="form-group">
+        <select class="form-control select2" name="kelas_id" style="width: 100%;" required>
+            <option value="" selected="selected">-Kelas Jabatan-</option>
+                @foreach (kelas() as $item)
+                <option value="{{$item->id}}">{{$item->nama}}</option>
+                @endforeach
+        </select>
+    </div>
+    <div class="form-group">
         <button type="submit" class="btn btn-block btn-primary">Simpan</button>
     </div>
 </form>

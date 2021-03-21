@@ -12,10 +12,10 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <h4>PANGKAT</h4>
+        <h4>PANGKAT / Golongan</h4>
         <div class="row">
             <div class="col-12">
-              <a href="/superadmin/pangkat/add" class="btn btn-sm btn-primary"><i class="fas fa-user-cog"></i> Tambah Pangkat</a><br/><br/>
+              <a href="/superadmin/pangkat/add" class="btn btn-sm btn-primary"><i class="fas fa-user-cog"></i> Tambah Pangkat / Gol.</a><br/><br/>
               <div class="card">
                 <div class="card-header">
                   <h3 class="card-title"></h3>
@@ -32,11 +32,12 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
-                  <table class="table table-hover text-nowrap">
+                  <table class="table table-hover text-nowrap table-striped table-sm">
                     <thead>
                       <tr>
                         <th>#</th>
                         <th>Nama Pangkat</th>
+                        <th>Golongan</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -48,6 +49,7 @@
                           <tr>
                             <td>{{$no++}}</td>
                             <td>{{$item->nama}}</td>
+                            <td>{{$item->golongan}}</td>
                             <td>
                             <a href="/superadmin/pangkat/edit/{{$item->id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                             <a href="/superadmin/pangkat/delete/{{$item->id}}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>

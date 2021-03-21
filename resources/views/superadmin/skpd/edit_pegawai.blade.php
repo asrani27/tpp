@@ -34,7 +34,7 @@
                 <div class="card">
                     <div class="card-header">
                       <h3 class="card-title"></h3>
-                        Tambah Data ASN
+                        Edit Data ASN
                       <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 300px;">
                           {{-- <input type="text" name="table_search" class="form-control float-right" placeholder="Cari NIP / Nama">
@@ -47,7 +47,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
-                        <form class="form-horizontal" method="POST" action="/superadmin/skpd/pegawai/{{$skpd_id}}/add">
+                        <form class="form-horizontal" method="POST" action="/superadmin/skpd/pegawai/{{$skpd_id}}/edit/{{$data->id}}">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group row">
@@ -60,7 +60,7 @@
                                 <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">NIP</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="nip" value="{{ old('nip') }}" placeholder="NIP" required   minlength="18" maxlength="18">
+                                    <input type="text" class="form-control" name="nip" value="{{ $data->nip }}" required minlength="18" maxlength="18">
                                 
                                     @if ($errors->has('nip'))
                                         <span class="text-danger">{{ $errors->first('nip') }}</span>
@@ -71,14 +71,14 @@
                                 <div class="form-group row">
                                 <label for="inputPassword3" class="col-sm-2 col-form-label">Nama ASN</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="nama"  value="{{ old('nama') }}" placeholder="Agung Saptoto, M.Kom" required>
+                                    <input type="text" class="form-control" name="nama"  value="{{ $data->nama }}" required>
                                 </div>
                                 </div>
                                 
                                 <div class="form-group row">
                                     <label for="inputPassword3" class="col-sm-2 col-form-label">Tanggal lahir</label>
                                     <div class="col-sm-10">
-                                        <input type="date" class="form-control" name="tanggal_lahir"  value="{{ old('tanggal_lahir') }}" required>
+                                        <input type="date" class="form-control" name="tanggal_lahir"  value="{{ $data->tanggal_lahir }}" required>
                                     </div>
                                 </div>
         
@@ -88,7 +88,7 @@
                                         <select name="eselon_id" class="form-control">
                                             <option value="">-pilih-</option>
                                             @foreach (eselon() as $item)
-                                                <option value="{{$item->id}}">{{$item->nama}}</option>
+                                                <option value="{{$item->id}}" {{$data->eselon_id == $item->id ? 'selected':''}}>{{$item->nama}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -100,7 +100,7 @@
                                         <select name="pangkat_id" class="form-control">
                                             <option value="">-pilih-</option>
                                             @foreach (pangkat() as $item)
-                                                <option value="{{$item->id}}">{{$item->nama}}</option>
+                                                <option value="{{$item->id}}" {{$data->pangkat_id == $item->id ? 'selected':''}}>{{$item->nama}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -112,7 +112,7 @@
                                         <select name="jabatan_id" class="form-control" required>
                                             <option value="">-pilih-</option>
                                             @foreach (jabatan($skpd_id) as $item)
-                                                <option value="{{$item->id}}">{{$item->nama}}</option>
+                                                <option value="{{$item->id}}" {{$data->jabatan_id == $item->id ? 'selected':''}}>{{$item->nama}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -121,7 +121,7 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-info">Simpan</button>
+                                <button type="submit" class="btn btn-info">Update</button>
                             </div>
                         <!-- /.card-footer -->
                         </form>

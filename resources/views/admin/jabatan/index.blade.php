@@ -35,9 +35,9 @@
                 <div class="card">
                     <div class="card-body">
                         @if ($edit == true)
-                            @include('superadmin.jabatan.partial.edit')
+                            @include('admin.jabatan.partial.edit')
                         @else
-                            @include('superadmin.jabatan.partial.create')
+                            @include('admin.jabatan.partial.create')
                         @endif
                     </div>
                 </div>
@@ -49,35 +49,39 @@
                 
                 <li>
                     <div class="callout callout-info text-sm" style="padding:5px;">
+                        {{$item->kelas == null ? '-':$item->kelas->nama}} |
                         <strong>{{$item->nama}}</strong> 
-                            <a href="/superadmin/skpd/jabatan/{{$skpd_id}}/edit/{{$item->id}}" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
-                            <a href="/superadmin/skpd/jabatan/{{$skpd_id}}/delete/{{$item->id}}" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
+                            <a href="/admin/jabatan/edit/{{$item->id}}" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                            <a href="/admin/jabatan/delete/{{$item->id}}" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
                             
                     </div>           
                     <ul>
                         @foreach ($item->bawahan as $item2)
                         <li>
                             <div class="callout callout-warning text-sm" style="padding:5px;">
+                                {{$item2->kelas == null ? '-':$item2->kelas->nama}} |
                                 <strong>{{$item2->nama}}</strong>
-                                <a href="/superadmin/skpd/jabatan/{{$skpd_id}}/edit/{{$item2->id}}" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
-                                <a href="/superadmin/skpd/jabatan/{{$skpd_id}}/delete/{{$item2->id}}" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
+                                <a href="/admin/jabatan/edit/{{$item2->id}}" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                <a href="/admin/jabatan/delete/{{$item2->id}}" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
                             </div>
                             <ul>
                                 
                             @foreach ($item2->bawahan as $item3)
                             <li>
                                 <div class="callout callout-danger text-sm" style="padding:5px;">
+                                    {{$item3->kelas == null ? '-':$item3->kelas->nama}} |
                                     <strong>{{$item3->nama}}</strong>
-                                    <a href="/superadmin/skpd/jabatan/{{$skpd_id}}/edit/{{$item3->id}}" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
-                                    <a href="/superadmin/skpd/jabatan/{{$skpd_id}}/delete/{{$item3->id}}" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
+                                    <a href="/admin/jabatan/edit/{{$item3->id}}" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                    <a href="/admin/jabatan/delete/{{$item3->id}}" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
                                 </div>
                                 <ul>
                                     @foreach ($item3->bawahan as $item4)
                                         <li>
                                             <div class="callout callout-danger text-sm" style="padding:5px;">
+                                                {{$item4->kelas == null ? '-':$item4->kelas->nama}} |
                                                 <strong>{{$item4->nama}}</strong>
-                                                <a href="/superadmin/skpd/jabatan/{{$skpd_id}}/edit/{{$item4->id}}" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
-                                                <a href="/superadmin/skpd/jabatan/{{$skpd_id}}/delete/{{$item4->id}}" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
+                                                <a href="/admin/jabatan/edit/{{$item4->id}}" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                                <a href="/admin/jabatan/delete/{{$item4->id}}" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
                                             </div>
                                         </li>
                                     @endforeach

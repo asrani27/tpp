@@ -6,6 +6,7 @@ use App\Eselon;
 use App\Jabatan;
 use App\Pangkat;
 use App\Pegawai;
+use App\Parameter;
 
 function terbilang($angka) {
     $angka=abs($angka);
@@ -101,4 +102,20 @@ function terbilang($angka) {
  function pegawaiSkpd($id)
  {
      return Pegawai::where('skpd_id', $id)->paginate(10);
+ }
+
+ function parameter()
+ {
+     return Parameter::get();
+ }
+
+ function currency($value)
+ {
+    $hasil=number_format($value,0,',','.');
+    return $hasil;
+ }
+ 
+ function persentase_tpp()
+ {
+     return Parameter::first()->persentase_tpp;
  }

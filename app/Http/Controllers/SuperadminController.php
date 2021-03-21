@@ -10,6 +10,7 @@ use App\Eselon;
 use App\Jabatan;
 use App\Pangkat;
 use App\Pegawai;
+use App\Parameter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -652,5 +653,23 @@ class SuperadminController extends Controller
     public function mutasi()
     {
         return view('superadmin.mutasi.index');
+    }
+
+    public function parameter()
+    {
+        return view('superadmin.parameter.index');
+    }
+    
+    public function editParameter($id)
+    {
+        $data = Parameter::find($id);
+        return view('superadmin.parameter.edit',compact('data'));
+    }
+    
+    public function updateParameter(Request $req,$id)
+    {
+        Parameter::find($id)->update($req->all());
+        toastr()->success('Parameter Berhasil Di Update');
+        return redirect('/superadmin/parameter');
     }
 }

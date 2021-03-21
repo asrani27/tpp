@@ -26,20 +26,13 @@
     </a>
     </li>
     <li class="nav-item">
-    <a href="/admin/peta-jabatan" class="nav-link">
+    <a href="/admin/jabatan" class="nav-link">
         <i class="nav-icon fas fa-map"></i>
         <p>
         Peta Jabatan
         </p>
     </a>
     </li>
-    <li class="nav-item">
-    <a href="/admin/kelas-jabatan" class="nav-link">
-        <i class="nav-icon fas fa-book"></i>
-        <p>
-        Kelas Jabatan
-        </p>
-    </a>
     </li>
     <li class="nav-item">
     <a href="/logout" class="nav-link">

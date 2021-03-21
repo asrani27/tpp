@@ -98,14 +98,14 @@
                                         <select name="pangkat_id" class="form-control">
                                             <option value="">-pilih-</option>
                                             @foreach (pangkat() as $item)
-                                                <option value="{{$item->id}}">{{$item->nama}}</option>
+                                                <option value="{{$item->id}}">{{$item->nama}} ({{$item->golongan}})</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Nama Jabatan</label>
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Jabatan</label>
                                     <div class="col-sm-10">
                                         <select name="jabatan_id" class="form-control" required>
                                             <option value="">-pilih-</option>

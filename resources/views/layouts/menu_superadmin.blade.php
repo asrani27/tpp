@@ -43,15 +43,15 @@
     </a>
     </li>
     
-    <li class="nav-item has-treeview {{Request::is('superadmin/kelas*') || Request::is('superadmin/pangkat*') || Request::is('superadmin/eselon*') ? 'menu-open' : ''}}">
-        <a href="#" class="nav-link {{Request::is('superadmin/kelas*') || Request::is('superadmin/pangkat*') || Request::is('superadmin/eselon*') ? 'active' : ''}}">
+    <li class="nav-item has-treeview {{Request::is('superadmin/kelas*') || Request::is('superadmin/pangkat*') || Request::is('superadmin/eselon*') || Request::is('superadmin/parameter*') ? 'menu-open' : ''}}">
+        <a href="#" class="nav-link {{Request::is('superadmin/kelas*') || Request::is('superadmin/pangkat*') || Request::is('superadmin/eselon*') || Request::is('superadmin/parameter*') ? 'active' : ''}}">
           <i class="nav-icon fas fa-cogs"></i>
           <p>
             Setting
             <i class="fas fa-angle-left right"></i>
           </p>
         </a>
-        <ul class="nav nav-treeview" style="display: {{Request::is('superadmin/kelas*') || Request::is('superadmin/pangkat*') || Request::is('superadmin/eselon*') ? 'block' : 'none'}};">
+        <ul class="nav nav-treeview" style="display: {{Request::is('superadmin/kelas*') || Request::is('superadmin/pangkat*') || Request::is('superadmin/eselon*') || Request::is('superadmin/parameter*') ? 'block' : 'none'}};">
             <li class="nav-item">
             <a href="/superadmin/kelas" class="nav-link {{ Request::is('superadmin/kelas*') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-list"></i>
@@ -68,6 +68,12 @@
             <a href="/superadmin/eselon" class="nav-link {{ Request::is('superadmin/eselon*') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-list"></i>
                 <p>Eselon</p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="/superadmin/parameter" class="nav-link {{ Request::is('superadmin/parameter*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-list"></i>
+                <p>Parameter</p>
             </a>
             </li>
         </ul>

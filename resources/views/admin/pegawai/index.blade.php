@@ -86,13 +86,13 @@
                             </td>
                             <td>
                                 @if ($item->user_id == null)
-                                  <a href="/superadmin/pegawai/createuser/{{$item->id}}" class="btn btn-xs btn-success"><i class="fas fa-key"></i> Create User</a>
+                                  <a href="/admin/pegawai/createuser/{{$item->id}}" class="btn btn-xs btn-success"><i class="fas fa-key"></i> Create User</a>
                                 @else
-                                  <a href="/superadmin/pegawai/resetpass/{{$item->id}}" class="btn btn-xs btn-secondary"><i class="fas fa-key"></i> Reset Pass</a>  
+                                  <a href="/admin/pegawai/resetpass/{{$item->id}}" class="btn btn-xs btn-secondary"><i class="fas fa-key"></i> Reset Pass</a>  
                                 @endif
-                            <a href="/superadmin/pegawai/detail/{{$item->id}}" class="btn btn-xs btn-info" data-toggle="tooltip" title='lihat data'><i class="fas fa-eye"></i></a>
-                            <a href="/superadmin/pegawai/edit/{{$item->id}}" class="btn btn-xs btn-warning" data-toggle="tooltip" title='Edit data'><i class="fas fa-edit"></i></a>
-                            <a href="/superadmin/pegawai/delete/{{$item->id}}" class="btn btn-xs btn-danger" data-toggle="tooltip" title='Hapus data' onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
+                            {{-- <a href="/admin/pegawai/detail/{{$item->id}}" class="btn btn-xs btn-info" data-toggle="tooltip" title='lihat data'><i class="fas fa-eye"></i></a> --}}
+                            <a href="/admin/pegawai/edit/{{$item->id}}" class="btn btn-xs btn-warning" data-toggle="tooltip" title='Edit data'><i class="fas fa-edit"></i></a>
+                            <a href="/admin/pegawai/delete/{{$item->id}}" class="btn btn-xs btn-danger" data-toggle="tooltip" title='Hapus data' onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
                             </td>
                           </tr>
                       @endforeach

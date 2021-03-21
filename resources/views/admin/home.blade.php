@@ -62,7 +62,7 @@
         <div class="row">
             <div class="col-12 text-center">
                 <strong>DAFTAR TPP ASN<br/>
-                BULAN JANUARI 2021<br/>
+                BULAN {{strtoupper(\Carbon\Carbon::now()->monthName)}}<br/>
                 {{strtoupper(Auth::user()->name)}}</strong>
             </div>
         </div>
@@ -102,7 +102,9 @@
                         </thead>
                         @php
                             $no=1;
+                            $count = $data->count();
                         @endphp
+                        
                         <tbody>
                           @foreach ($data as $key => $item)
                               
@@ -111,6 +113,8 @@
                             <td>
                               @if ($key == 0)
                                 <a href="/home/admin/down/{{$item->id}}/{{$item->urutan}}"><i class="fas fa-caret-down"></i></a>
+                              @elseif($key == $count-1)
+                                <a href="/home/admin/up/{{$item->id}}/{{$item->urutan}}"><i class="fas fa-caret-up"></i></a>
                               @else
                                 <a href="/home/admin/up/{{$item->id}}/{{$item->urutan}}"><i class="fas fa-caret-up"></i></a>
                                 <a href="/home/admin/down/{{$item->id}}/{{$item->urutan}}"><i class="fas fa-caret-down"></i></a>
@@ -123,23 +127,83 @@
                                 NIP. {{$item->nip}}
 
                             </td>
+                            <td class="text-center">
+                              {{$item->jabatan == null ? '-':$item->jabatan->nama}}
+                            </td>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td class="text-center">
+                              {{$item->jabatan == null ? '-':$item->jabatan->kelas->nama}}
+                            </td>
+                            <td class="text-right">
+                              {{$item->jabatan == null ? 0: currency($item->jabatan->kelas->nilai)}}
+                            </td>
+                            <td class="text-center">
+                              {{persentase_tpp().' %'}}
+                            </td>
+                            <td class="text-center">
+                              {{$item->jabatan == null ? '0 %':$item->jabatan->tambahan_persen_tpp == null ? '0 %' : $item->jabatan->tambahan_persen_tpp.' %'}}
+                            </td>
+                            <td class="text-center">
+                              @if ($item->jabatan == null)
+                                {{persentase_tpp()}} %
+                              @else
+                                {{persentase_tpp() + $item->jabatan->tambahan_persen_tpp}} %
+                              @endif
+                            </td>
+                            <td class="text-right">
+                            @if ($item->jabatan == null)
+                                0
+                            @else
+                              {{currency($item->jabatan->kelas->nilai * (persentase_tpp() + $item->jabatan->tambahan_persen_tpp) / 100)}}
+                            @endif
+                            </td>
+                            <td>100 %</td>
+                            <td class="text-right">
+                              @if ($item->jabatan == null)
+                              0
+                              @else
+                                {{currency(($item->jabatan->kelas->nilai * (persentase_tpp() + $item->jabatan->tambahan_persen_tpp) / 100) * 40 / 100)}}
+                              @endif
+                            </td>
+                            <td>100 %</td>
+                            <td class="text-right">
+                              @if ($item->jabatan == null)
+                              0
+                              @else
+                                {{currency(($item->jabatan->kelas->nilai * (persentase_tpp() + $item->jabatan->tambahan_persen_tpp) / 100) * 60 / 100)}}
+                              @endif
+                            </td>
+                            <td class="text-right">
+                              @if ($item->jabatan == null)
+                              0
+                              @else
+                                {{currency((($item->jabatan->kelas->nilai * (persentase_tpp() + $item->jabatan->tambahan_persen_tpp) / 100) * 60 / 100)+(($item->jabatan->kelas->nilai * (persentase_tpp() + $item->jabatan->tambahan_persen_tpp) / 100) * 40 / 100))}}
+                              @endif
+                            </td>
                           </tr>
                           @endforeach
                           
                         </tbody>
+                        <tfoot>
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Total</td>
+                            <td>disnini</td>
+                          </tr>
+                        </tfoot>
                       </table>
                     </div>
                     <!-- /.card-body -->

@@ -37,6 +37,10 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     
     Route::get('/superadmin/mutasi', 'SuperadminController@mutasi');
     
+    Route::get('/superadmin/parameter', 'SuperadminController@parameter');
+    Route::get('/superadmin/parameter/edit/{id}', 'SuperadminController@editParameter');
+    Route::post('/superadmin/parameter/edit/{id}', 'SuperadminController@updateParameter');
+
     Route::get('/superadmin/pegawai', 'SuperadminController@pegawai');
     Route::get('/superadmin/pegawai/search', 'SuperadminController@searchPegawai');
     Route::get('/superadmin/pegawai/add', 'SuperadminController@addPegawai');
@@ -79,7 +83,17 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/pegawai', 'AdminController@pegawai');
     Route::get('/admin/pegawai/add', 'AdminController@addPegawai');
     Route::post('/admin/pegawai/add', 'AdminController@storePegawai');
-    Route::get('/admin/peta-jabatan', 'AdminController@jabatan');
+    Route::get('/admin/pegawai/edit/{id}', 'AdminController@editPegawai');
+    Route::post('/admin/pegawai/edit/{id}', 'AdminController@updatePegawai');
+    Route::get('/admin/pegawai/delete/{id}', 'AdminController@deletePegawai');
+    Route::get('/admin/pegawai/createuser/{id}', 'AdminController@createUser');
+    Route::get('/admin/pegawai/resetpass/{id}', 'AdminController@resetPass');
+    
+    Route::get('/admin/jabatan', 'AdminController@jabatan');
+    Route::post('/admin/jabatan', 'AdminController@storeJabatan');
+    Route::get('/admin/jabatan/edit/{id}', 'AdminController@editJabatan');
+    Route::post('/admin/jabatan/edit/{id}', 'AdminController@updateJabatan');
+    Route::get('/admin/jabatan/delete/{id}', 'AdminController@deleteJabatan');
 });
 
 Route::group(['middleware' => ['auth', 'role:pegawai']], function () {

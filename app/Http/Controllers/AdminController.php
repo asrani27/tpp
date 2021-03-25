@@ -20,7 +20,19 @@ class AdminController extends Controller
 
     public function pegawai()
     { 
-        $data = Pegawai::where('skpd_id', Auth::user()->skpd->id)->orderBy('urutan','ASC')->paginate(10);
+        $data = Pegawai::with('jabatan','user')->where('skpd_id', $this->skpd_id())->orderBy('urutan','ASC')->paginate(10);
+        return view('admin.pegawai.index',compact('data'));
+    }
+
+    public function searchPegawai()
+    {
+        $search = request()->get('search');
+        $data   = Pegawai::with('jabatan','user')
+        ->where('skpd_id', $this->skpd_id())
+        ->where('nip', 'LIKE','%'.$search.'%')
+        ->orWhere('nama', 'LIKE','%'.$search.'%')
+        ->orderBy('urutan','ASC')->paginate(10);
+        request()->flash();
         return view('admin.pegawai.index',compact('data'));
     }
 
@@ -149,7 +161,7 @@ class AdminController extends Controller
     {
         $skpd_id = Auth::user()->skpd->id;
         $edit = false;
-        return view('admin.jabatan.index',compact('data','skpd_id','edit'));
+        return view('admin.jabatan.index',compact('skpd_id','edit'));
     }
 
     public function editJabatan($id)

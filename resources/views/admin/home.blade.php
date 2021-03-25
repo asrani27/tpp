@@ -2,7 +2,7 @@
 
 @push('css')
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
 @endpush
 @section('title')
     ADMIN SKPD {{strtoupper(Auth::user()->name)}}
@@ -16,7 +16,7 @@
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>{{countPegawaiSkpd(Auth::user()->skpd->id)}}</h3>
+                  <h3>{{$countPegawai}}</h3>
   
                   <p>ASN</p>
                 </div>
@@ -31,7 +31,7 @@
               <!-- small box -->
               <div class="small-box bg-warning">
                 <div class="inner">
-                  <h3>{{countJabatanSkpd(Auth::user()->skpd->id)}}</h3>
+                  <h3>{{$countJabatan}}</h3>
   
                   <p>PETA JABATAN</p>
                 </div>
@@ -46,7 +46,7 @@
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">
-                  <h3>Rp. 6.342.123.456,-</h3>
+                  <h3>Rp. {{currency($data->sum('total_tpp'))}},-</h3>
 
                   <p>Total TPP Bulan {{\Carbon\Carbon::now()->isoFormat("MMMM Y")}}</p>
                   
@@ -102,7 +102,7 @@
                         </thead>
                         @php
                             $no=1;
-                            $count = $data->count();
+                             $count = $data->count();
                         @endphp
                         
                         <tbody>
@@ -123,63 +123,44 @@
                             <td>{{$no++}}</td>
                             <td>
                                 {{$item->nama}} <br/>
-                                {{$item->pangkat == null ? '-':$item->pangkat->nama}}<br/>
+                                {{$item->nama_pangkat}}<br/>
                                 NIP. {{$item->nip}}
 
                             </td>
                             <td class="text-center">
-                              {{$item->jabatan == null ? '-':$item->jabatan->nama}}
+                              {{$item->nama_jabatan}}
                             </td>
                             <td></td>
                             <td class="text-center">
-                              {{$item->jabatan == null ? '-':$item->jabatan->kelas->nama}}
+                              {{$item->nama_kelas}}
                             </td>
                             <td class="text-right">
-                              {{$item->jabatan == null ? 0: currency($item->jabatan->kelas->nilai)}}
+                              {{currency($item->basic_tpp)}}
                             </td>
                             <td class="text-center">
-                              {{persentase_tpp().' %'}}
+                              {{$item->persentase_tpp}} %
                             </td>
                             <td class="text-center">
-                              {{$item->jabatan == null ? '0 %':$item->jabatan->tambahan_persen_tpp == null ? '0 %' : $item->jabatan->tambahan_persen_tpp.' %'}}
+                              {{$item->tambahan_persen_tpp == null ? 0: $item->tambahan_persen_tpp}} %
+                              <a href="#" id="username" data-type="text" data-pk="1" data-url="/post" data-title="Enter username">superuser</a>
                             </td>
                             <td class="text-center">
-                              @if ($item->jabatan == null)
-                                {{persentase_tpp()}} %
-                              @else
-                                {{persentase_tpp() + $item->jabatan->tambahan_persen_tpp}} %
-                              @endif
+                              {{$item->jumlah_persentase}} %
                             </td>
                             <td class="text-right">
-                            @if ($item->jabatan == null)
-                                0
-                            @else
-                              {{currency($item->jabatan->kelas->nilai * (persentase_tpp() + $item->jabatan->tambahan_persen_tpp) / 100)}}
-                            @endif
+                              {{currency($item->total_pagu)}}
                             </td>
                             <td>100 %</td>
                             <td class="text-right">
-                              @if ($item->jabatan == null)
-                              0
-                              @else
-                                {{currency(($item->jabatan->kelas->nilai * (persentase_tpp() + $item->jabatan->tambahan_persen_tpp) / 100) * 40 / 100)}}
-                              @endif
+                              {{currency($item->total_disiplin)}}
                             </td>
                             <td>100 %</td>
                             <td class="text-right">
-                              @if ($item->jabatan == null)
-                              0
-                              @else
-                                {{currency(($item->jabatan->kelas->nilai * (persentase_tpp() + $item->jabatan->tambahan_persen_tpp) / 100) * 60 / 100)}}
-                              @endif
+                              {{currency($item->total_produktivitas)}}
                             </td>
                             <td class="text-right">
-                              @if ($item->jabatan == null)
-                              0
-                              @else
-                                {{currency((($item->jabatan->kelas->nilai * (persentase_tpp() + $item->jabatan->tambahan_persen_tpp) / 100) * 60 / 100)+(($item->jabatan->kelas->nilai * (persentase_tpp() + $item->jabatan->tambahan_persen_tpp) / 100) * 40 / 100))}}
-                              @endif
-                            </td>
+                              {{currency($item->total_tpp)}}
+                            </td> 
                           </tr>
                           @endforeach
                           
@@ -199,9 +180,8 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
                             <td>Total</td>
-                            <td>disnini</td>
+                            <td>{{currency($data->sum('total_tpp'))}}</td>
                           </tr>
                         </tfoot>
                       </table>
@@ -215,5 +195,18 @@
 @endsection
 
 @push('js')
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
+<script>
+  $(document).ready(function() {
+    $('#username').editable();
+});
+$('#username').editable({
+    type: 'text',
+    pk: 1,
+    mode: 'inline',
+    url: '/post',
+    title: 'Enter username'
+});
+</script>
 @endpush

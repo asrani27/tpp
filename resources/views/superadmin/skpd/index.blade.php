@@ -64,9 +64,9 @@
                             <td>
                             <strong>{{$item->nama}}</strong><br/>
                             <a href="/superadmin/skpd/pegawai/{{$item->id}}" class="btn btn-sm btn-info"><i class="fas fa-users"></i> ASN : {{$item->pegawai->count()}}</a>
-                            <a href="/superadmin/skpd/tpp" class="btn btn-sm btn-success"><i class="fas fa-money-bill"></i> TPP JANUARI 2021: Rp. 45.000.000.,</a>
+                            <a href="/superadmin/skpd/tpp" class="btn btn-sm btn-success"><i class="fas fa-money-bill"></i> TPP : Rp. 0-.,</a>
                             <a href="/superadmin/skpd/jabatan/{{$item->id}}" class="btn btn-sm bg-purple"><i class="fas fa-university"></i> PETA JABATAN : {{$item->jabatan->count()}}</a>
-                            <a href="/superadmin/skpd/kelas/{{$item->id}}" class="btn btn-sm bg-primary"><i class="fas fa-th"></i> KELAS : {{$item->jabatan->count()}}</a>
+                          
                             </td>
                             <td>
                               
@@ -89,81 +89,4 @@
 
 @push('js')
 
-<!-- ChartJS -->
-<script src="/theme/plugins/chart.js/Chart.min.js"></script>
-
-<script>
-    $(function () {
-  //---------------------
-    //- STACKED BAR CHART -
-    //---------------------
-    var barChartData = {
-      labels  : ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sept', 'Okt', 'Nov', 'Des'],
-      datasets: [
-        {
-          label               : 'TPP',
-          backgroundColor     : 'rgba(60,141,188,0.9)',
-          borderColor         : 'rgba(60,141,188,0.8)',
-          pointRadius          : false,
-          pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(60,141,188,1)',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [4000000, 5000000, 4500000, 3900000, 5100000, 4300000, 5000000]
-        }
-      ]
-    }
-    var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
-    var stackedBarChartData = jQuery.extend(true, {}, barChartData)
-
-    var stackedBarChartOptions = {
-      responsive              : true,
-      maintainAspectRatio     : false,
-      tooltips: { 
-           callbacks: { 
-               label: function(tooltipItem, data) { 
-                   return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
-                }, 
-            }, 
-        },
-      
-      scales: {
-        xAxes: [{
-          stacked: true,
-        }],
-        yAxes: [{
-          stacked: true,
-          ticks: {
-                    callback: function(label, index, labels) {
-                        return label/1000000+'JT';
-                    }
-                },   
-            scaleLabel: {
-                display: true,
-                labelString: '1JT = 1.000.000'
-            }
-        }]
-      }
-    }
-
-    var stackedBarChart = new Chart(stackedBarChartCanvas, {
-      type: 'bar', 
-      data: stackedBarChartData,
-      options: stackedBarChartOptions
-    })
-    });
-</script>
-<!-- Select2 -->
-<script src="/theme/plugins/select2/js/select2.full.min.js"></script>
-<script>
-    $(function () {
-      //Initialize Select2 Elements
-      $('.select2').select2()
-  
-      //Initialize Select2 Elements
-      $('.select2bs4').select2({
-        theme: 'bootstrap4'
-      })
-    })
-</script>  
 @endpush

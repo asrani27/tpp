@@ -16,12 +16,7 @@
         <div class="row">
             <div class="col-12">
               
-                <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title"></h3>
-                  
-                </div>
-                <!-- /.card-header -->
+              <div class="card">
                 <div class="card-body table-responsive p-0">
                   <table class="table table-hover text-nowrap table-striped table-sm">
                     <thead>
@@ -47,9 +42,33 @@
                     </tbody>
                   </table>
                 </div>
-                <!-- /.card-body -->
               </div>
-              <!-- /.card -->
+              
+              <div class="card">
+                <div class="card-body table-responsive p-0">
+                  <table class="table table-hover text-nowrap table-striped table-sm">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Jabatan Tertinggi</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    @php
+                        $no =1;
+                    @endphp
+                    <tbody>
+                          <tr>
+                            <td>1</td>
+                            <td>{{$toplevel == null ? '-': $toplevel->nama}}</td>
+                            <td>
+                            <a href="/superadmin/parameter/jabatan/edit" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                            </td>
+                          </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
     </div>

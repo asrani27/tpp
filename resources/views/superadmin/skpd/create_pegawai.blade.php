@@ -1,8 +1,11 @@
 @extends('layouts.app')
 
 @push('css')
-
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="/theme/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/theme/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 @endpush
 @section('title')
     SUPERADMIN
@@ -107,11 +110,11 @@
                                 </div>
                                 
                                 <div class="form-group row">
-                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Nama Jabatan</label>
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Jabatan Tersedia</label>
                                     <div class="col-sm-10">
-                                        <select name="jabatan_id" class="form-control" required>
+                                        <select name="jabatan_id" class="form-control select2" required>
                                             <option value="">-pilih-</option>
-                                            @foreach (jabatan($skpd_id) as $item)
+                                            @foreach ($jabatan as $item)
                                                 <option value="{{$item->id}}">{{$item->nama}}</option>
                                             @endforeach
                                         </select>
@@ -136,5 +139,16 @@
 @endsection
 
 @push('js')
-
+<script src="/theme/plugins/select2/js/select2.full.min.js"></script>
+<script>
+    $(function () {
+      //Initialize Select2 Elements
+      $('.select2').select2()
+  
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+        theme: 'bootstrap4'
+      })
+    })
+</script>  
 @endpush

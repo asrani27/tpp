@@ -30,7 +30,8 @@
         </div>
         <a href="/superadmin/skpd" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i> Kembali</a>
         <a href="/superadmin/skpd/pegawai/{{$skpd_id}}/add" class="btn btn-sm btn-primary"><i class="fas fa-users"></i> Tambah ASN</a>
-        <a href="/superadmin/skpd/import/pegawai" class="btn btn-sm btn-info"><i class="fas fa-file-excel"></i> Import Data</a><br/><br/>
+        <a href="/superadmin/skpd/pegawai/createuser/{{$skpd_id}}" class="btn btn-sm bg-purple"><i class="fas fa-key"></i> Create User & Pass ASN</a>
+        <a href="/superadmin/skpd/pegawai/{{$skpd_id}}/import" class="btn btn-sm btn-info"><i class="fas fa-file-excel"></i> Import Data</a><br/><br/>
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -53,10 +54,10 @@
                         <thead>
                           <tr>
                             <th>#</th>
+                            <th></th>
                             <th>NIP / Username</th>
                             <th>Nama</th>
                             <th>Jabatan</th>
-                            <th class="text-center">Verified ?</th>
                             <th>Aksi</th>
                           </tr>
                         </thead>
@@ -64,33 +65,33 @@
                             $no =1;
                         @endphp
                         <tbody>
-                        @foreach (pegawaiSkpd($skpd_id) as $key => $item)
+                        @foreach ($data as $key => $item)
                               <tr>
-                                <td>{{$key+ pegawai()->firstItem()}}</td>
+                                <td>{{$no++}}</td>
+                                <td>
+                                  @if ($item->foto == null)
+                                      
+                                  <img src="https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png" alt="User" width="30px" class="brand-image img-circle elevation-3"
+                                  style="opacity: .8">
+                                  @else
+                                  <img src="/storage/pegawai/{{$item->foto}}" alt="User" width="30px" class="brand-image img-circle elevation-3"
+                                  style="opacity: .8">
+                                      
+                                  @endif
+                                </td>
                                 <td>{{$item->nip}}<br />
-                                @if ($item->user_id == null)
-                                  <a href="/superadmin/pegawai/createuser/{{$item->id}}" class="btn btn-xs btn-secondary"><i class="fas fa-key"></i> Create User</a>
-                                @else
-                                <a href="/superadmin/pegawai/resetpassword/{{$item->id}}" class="btn btn-xs btn-secondary" onclick="return confirm('Yakin ingin di reset?');"><i class="fas fa-key"></i> Reset password</a>
-                                    
-                                @endif
                                 </td>
                                 <td>{{$item->nama}}</td>
                                 <td>{{$item->jabatan == null ? '-': $item->jabatan->nama}}</td>
-                                {{-- <td>{{$item->kelas == null ? '-': $item->kelas->nama}}</td> --}}
-                                
-                                <td class="text-center">
-                                  @if ($item->verified == 0)
-                                  <i class="far fa-times-circle text-danger"></i>
-                                    
-                                  @else
-                                      
-                                  <i class="far fa-check-circle text-success"></i>
-                                  @endif
-                                </td>
                                 <td>
-                                <a href="/superadmin/skpd/pegawai/{{$skpd_id}}/edit/{{$item->id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
-                                <a href="/superadmin/skpd/pegawai/{{$skpd_id}}/delete/{{$item->id}}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
+                                  @if ($item->user_id == null)
+                                    <a href="/superadmin/pegawai/createuser/{{$item->id}}" class="btn btn-xs btn-success" data-toggle="tooltip" title="Buat Akun User"><i class="fas fa-key"></i></a>
+                                  @else
+                                    <a href="/superadmin/pegawai/resetpassword/{{$item->id}}" class="btn btn-xs btn-secondary"  data-toggle="tooltip" title="Reset Password" onclick="return confirm('Yakin ingin di reset?');"><i class="fas fa-lock"></i></a>
+                                      
+                                  @endif
+                                <a href="/superadmin/skpd/pegawai/{{$skpd_id}}/edit/{{$item->id}}" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Edit Data"><i class="fas fa-edit"></i></a>
+                                <a href="/superadmin/skpd/pegawai/{{$skpd_id}}/delete/{{$item->id}}" class="btn btn-xs btn-danger"  data-toggle="tooltip" title="Hapus Data" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
                                 </td>
                               </tr>
                           @endforeach
@@ -99,7 +100,7 @@
                     </div>
                     <!-- /.card-body -->
                   </div>
-                  {{pegawai()->links()}}
+                  {{$data->links()}}
             </div>
         </div>
     </div>

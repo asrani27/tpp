@@ -54,7 +54,7 @@ function terbilang($angka) {
  {
      return Pegawai::get()->count();
  }
-
+ 
  function countPegawaiSkpd($id)
  {
      return Pegawai::where('skpd_id', $id)->get()->count();

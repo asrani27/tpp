@@ -44,7 +44,6 @@
                         <th>NIP / Username</th>
                         <th>Nama</th>
                         <th>SKPD</th>
-                        <th>Verified ?</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -64,15 +63,6 @@
                             </td>
                             <td>{{$item->nama}}</td>
                             <td>{{$item->skpd->nama}}</td>
-                            <td class="text-center">
-                              @if ($item->verified == 0)
-                              <i class="far fa-times-circle text-danger"></i>
-                                
-                              @else
-                                  
-                              <i class="far fa-check-circle text-success"></i>
-                              @endif
-                            </td>
                             <td>
                             <a href="/superadmin/pegawai/detail/{{$item->id}}" class="btn btn-sm btn-info" data-toggle="tooltip" title='lihat data'><i class="fas fa-eye"></i></a>
                             <a href="/superadmin/pegawai/edit/{{$item->id}}" class="btn btn-sm btn-warning" data-toggle="tooltip" title='Edit data'><i class="fas fa-edit"></i></a>

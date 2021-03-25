@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Pegawai extends Model
@@ -14,6 +15,16 @@ class Pegawai extends Model
         return $this->belongsTo(Skpd::class, 'skpd_id');
     }
     
+    public function aktivitas()
+    {
+        return $this->hasMany(Aktivitas::class, 'pegawai_id');
+    }
+
+    public function aktivitasToday()
+    {
+        return $this->hasMany(Aktivitas::class, 'pegawai_id')->where('tanggal','=',Carbon::today()->format('Y-m-d'))->orderBy('id','DESC');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

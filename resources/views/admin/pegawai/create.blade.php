@@ -59,7 +59,6 @@
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">NIP</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" name="nip" value="{{ old('nip') }}" placeholder="NIP" required   minlength="18" maxlength="18">
-                                
                                     @if ($errors->has('nip'))
                                         <span class="text-danger">{{ $errors->first('nip') }}</span>
                                     @endif
@@ -107,7 +106,7 @@
                                 <div class="form-group row">
                                     <label for="inputPassword3" class="col-sm-2 col-form-label">Jabatan</label>
                                     <div class="col-sm-10">
-                                        <select name="jabatan_id" class="form-control" required>
+                                        <select name="jabatan_id" class="form-control">
                                             <option value="">-pilih-</option>
                                             @foreach (jabatan(Auth::user()->skpd->id) as $item)
                                                 <option value="{{$item->id}}">{{$item->nama}}</option>

@@ -37,7 +37,7 @@
               
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Total ASN : {{$data->count()}} Orang</h3>
+                  <h3 class="card-title">Total ASN : {{$data->total()}} Orang</h3>
   
                   <div class="card-tools">
                     <form method="get" action="/admin/pegawai/search">
@@ -53,14 +53,14 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
-                  <table class="table table-hover text-nowrap table-striped table-sm">
+                  <table class="table table-hover text-nowrap table-sm">
                     <thead>
                       <tr>
                         <th>#</th>
+                        <th></th>
                         <th>NIP / Username</th>
                         <th>Nama</th>
                         <th>Jabatan</th>
-                        <th class="text-center">Verified ?</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -71,19 +71,21 @@
                     @foreach ($data as $key => $item)
                           <tr>
                             <td>{{$key+ $data->firstItem()}}</td>
+                            <td>
+                              @if ($item->foto == null)
+                                  
+                              <img src="https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png" alt="User" width="30px" class="brand-image img-circle elevation-3"
+                              style="opacity: .8">
+                              @else
+                              <img src="/storage/pegawai/{{$item->foto}}" alt="User" width="30px" class="brand-image img-circle elevation-3"
+                              style="opacity: .8">
+                                  
+                              @endif
+                            </td>
                             <td>{{$item->nip}}<br />
                             </td>
                             <td>{{$item->nama}}</td>
                             <td>{{$item->jabatan == null ? '-' : $item->jabatan->nama}}</td>
-                            <td class="text-center">
-                              @if ($item->verified == 0)
-                              <i class="far fa-times-circle text-danger"></i>
-                                
-                              @else
-                                  
-                              <i class="far fa-check-circle text-success"></i>
-                              @endif
-                            </td>
                             <td>
                                 @if ($item->user_id == null)
                                   <a href="/admin/pegawai/createuser/{{$item->id}}" class="btn btn-xs btn-success"><i class="fas fa-key"></i> Create User</a>
@@ -106,21 +108,11 @@
             </div>
         </div>
         
-        <div class="row">
-          <div class="col-lg-12 col-12">
-            <div class="callout callout-info text-sm">
-              <i class="far fa-times-circle text-danger"></i> : Pegawai yang belum di verifikasi oleh BKD, tidak dapat login ke Aplikasi TPP<br /> 
-              
-              <i class="far fa-check-circle text-success"></i> : Pegawai yang telah di verifikasi oleh BKD, dapat login ke Aplikasi TPP
-            </div>
-          </div>
-        </div>
     </div>
 </div>
 
 @endsection
 
 @push('js')
-
 
 @endpush

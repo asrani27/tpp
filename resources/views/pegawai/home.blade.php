@@ -4,45 +4,21 @@
     
 @endpush
 @section('title')
-    BERANDA
+  <strong>TPP Bulan {{\Carbon\Carbon::now()->isoFormat("MMMM Y")}}</strong>
 @endsection
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <div class="row">
-            <div class="col-6">Bulan
-                <select name="bulan" class="form-control">
-                    <option value="">Januari</option>
-                    <option value="">Februari</option>
-                    <option value="">Maret</option>
-                    <option value="">April</option>
-                    <option value="">Mei</option>
-                    <option value="">Juni</option>
-                    <option value="">Juli</option>
-                    <option value="">Agustus</option>
-                    <option value="">September</option>
-                    <option value="">Oktober</option>
-                    <option value="">November</option>
-                    <option value="">Desember</option>
-                </select>
-            </div>
-            <div class="col-6">
-                Tahun
-                <select name="tahun" class="form-control">
-                    <option value="">2021</option>
-                    <option value="">2022</option>
-                    <option value="">2023</option>
-                </select>
-            </div>            
-        </div>
-        <br />
+        {{-- <div class="alert alert-info text-center alert-dismissible">
+          <h5><i class="icon fas fa-calendar-alt"></i> TPP Bulan {{\Carbon\Carbon::now()->isoFormat("MMMM Y")}}</h5>
+        </div> --}}
         <div class="row">
             <div class="col-lg-12 col-12">
                 <div class="card card-widget widget-user">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header bg-info">
-                    <h3 class="widget-user-username">{{Auth::user()->name}}</h3>
-                    <h5 class="widget-user-desc">Rp. 5.670.341,-</h5>
+                    <h3 class="widget-user-username">{{$data->nama}}</h3>
+                    <h5 class="widget-user-desc">Rp. {{currency(($data->total_tpp - $data->pph21))}},-</h5>
                     </div>
                     <div class="widget-user-image">
                     <img class="img-circle elevation-2" src="/theme/dist/img/user1-128x128.jpg" alt="User Avatar">
@@ -51,24 +27,24 @@
                     <div class="row">
                         <div class="col-4 border-right">
                         <div class="description-block">
-                            <h5 class="description-header">3,200</h5>
-                            <span class="description-text">DISETUJUI</span>
+                            <h5 class="description-header">{{$acc}}</h5>
+                            <span class="description-text"><i class="fas fa-check-circle"></i> DISETUJUI</span>
                         </div>
                         <!-- /.description-block -->
                         </div>
                         <!-- /.col -->
                         <div class="col-4 border-right">
                         <div class="description-block">
-                            <h5 class="description-header">13,000</h5>
-                            <span class="description-text">DITOLAK</span>
+                            <h5 class="description-header">{{$tolak}}</h5>
+                            <span class="description-text"><i class="fas fa-times-circle"></i> DITOLAK</span>
                         </div>
                         <!-- /.description-block -->
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
                         <div class="description-block">
-                            <h5 class="description-header">35</h5>
-                            <span class="description-text">BELUM ACC</span>
+                            <h5 class="description-header">{{$pending}}</h5>
+                            <span class="description-text"><i class="fas fa-list-alt"></i> BELUM ACC</span>
                         </div>
                         <!-- /.description-block -->
                         </div>
@@ -77,12 +53,116 @@
                     <!-- /.row -->
                     </div>
                 </div>
-              </div>
+            </div>
         </div>
         <div class="row">
-            <div class="col-12">Beban Aktivitas
+            
+            <div class="col-lg-6 col-12">
+
+                <div class="row">
+                    <div class="col-lg-6 col-12">
+                        <div class="info-box">
+                        <span class="info-box-icon bg-success"><i class="far fa-clock"></i></span>
+            
+                        <div class="info-box-content">
+                            <span class="info-box-text">Jumlah Menit Bekerja</span>
+                            <span class="info-box-number">{{$jmlmenit}} / 6750 Menit</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-lg-6 col-12">
+                        <div class="info-box">
+                        <span class="info-box-icon bg-warning"><i class="far fa-calendar-alt"></i></span>
+            
+                        <div class="info-box-content">
+                            <span class="info-box-text">Presensi</span>
+                            <span class="info-box-number">100%</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                </div>
                 
                 <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+
+            </div>
+            <div class="col-lg-6 col-12">
+                <div class="card">
+                    <div class="card-header border-transparent bg-gradient-primary">
+                      <h3 class="card-title">Detail Perhitungan TPP Bulan {{\Carbon\Carbon::now()->isoFormat("MMMM Y")}}</h3>
+      
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool">
+                          <i class="fas fa-print"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                      <div class="table-responsive">
+                        <table class="table m-0 table-sm">
+                            
+                          <tbody>
+                          <tr>
+                            <td class="text-sm" width="120px">Kelas Jabatan</td>
+                            <td class="text-right">{{$data->nama_kelas}}</td>
+                          </tr>
+                          <tr>
+                            <td class="text-sm" width="120px">Basic TPP</td>
+                            <td class="text-right">{{currency($data->basic_tpp)}}</td>
+                          </tr>
+                          <tr>
+                            <td class="text-sm" width="120px">Persentase TPP</td>
+                            <td class="text-right">{{$data->persentase_tpp}} %</td>
+                          </tr>
+                          <tr>
+                            <td class="text-sm" width="170px">Tambahan Persen TPP</td>
+                            <td class="text-right">{{$data->tambahan_persen_tpp}} %</td>
+                          </tr>
+                          <tr>
+                            <td class="text-sm" width="170px">Jumlah Persentase</td>
+                            <td class="text-right">{{$data->jumlah_persentase}} %</td>
+                          </tr>
+                          <tr>
+                            <td class="text-sm" width="170px">Total Pagu</td>
+                            <td class="text-right">{{currency($data->total_pagu)}}</td>
+                          </tr>
+                          <tr>
+                            <td class="text-sm" width="250px">Disiplin 40% dari Total Pagu (Jika Presensi 100%)</td>
+                            <td class="text-right">{{currency($data->total_disiplin)}}</td>
+                          </tr>
+                          <tr>
+                            <td class="text-sm" width="170px">Produktivitas 60% dari Total Pagu  (Jika Aktivitas Mencapai 6750 Menit)</td>
+                            <td class="text-right">{{currency($data->total_produktivitas)}}</td>
+                          </tr>
+                          <tr>
+                            <td class="text-sm" width="170px">Total TPP Bruto</td>
+                            <td class="text-right">{{currency($data->total_tpp)}}</td>
+                          </tr>
+                          <tr>
+                            <td class="text-sm" width="170px">PPH 21 15%</td>
+                            <td class="text-right">{{currency($data->pph21)}}</td>
+                          </tr>
+                          <tr>
+                            <td class="text-sm" width="170px">BPJS</td>
+                            <td class="text-right">0</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        <strong>TOTAL TPP DITERIMA</strong>
+                      <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">Rp. {{currency(($data->total_tpp - $data->pph21))}}</a>
+                    </div>
+                    <!-- /.card-footer -->
+                  </div>
             </div>
         </div>
     </div>
@@ -99,16 +179,20 @@
     //- DONUT CHART -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
+    tolak = {!!json_decode($tolak)!!}
+    acc = {!!json_decode($acc)!!}
+    proses = {!!json_decode($pending)!!}
+    console.log(tolak);
     var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
     var donutData        = {
       labels: [
-          'Aktivitas ACC', 
+          'Aktivitas Tolak', 
+          'Aktivitas ACC',
           'Aktivitas Belum ACC',
-          'Aktivitas Tolak',
       ],
       datasets: [
         {
-          data: [700,500,400],
+          data: [tolak,acc, proses],
           backgroundColor : ['#f56954', '#00a65a', '#f39c12'],
         }
       ]

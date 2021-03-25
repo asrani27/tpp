@@ -13,6 +13,8 @@ use App\Pegawai;
 use App\Parameter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Imports\PegawaiImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 
 class SuperadminController extends Controller
@@ -83,13 +85,42 @@ class SuperadminController extends Controller
 
     public function pegawaiSkpd($skpd_id)
     {
-        return view('superadmin.skpd.pegawai',compact('skpd_id'));
+        $data = Pegawai::with('jabatan')->where('skpd_id', $skpd_id)->paginate(10);
+        return view('superadmin.skpd.pegawai',compact('skpd_id','data'));
     }
 
     public function addPegawaiSkpd($skpd_id)
     {
         $nama_skpd = Skpd::find($skpd_id)->nama;
-        return view('superadmin.skpd.create_pegawai',compact('skpd_id','nama_skpd'));
+        $jabatan   = Jabatan::with('pegawai')->where('skpd_id', $skpd_id)->get()->where('pegawai',null);
+        return view('superadmin.skpd.create_pegawai',compact('skpd_id','nama_skpd','jabatan'));
+    }
+
+    public function addImport($skpd_id)
+    {
+        return view('superadmin.skpd.import',compact('skpd_id'));
+    }
+
+    public function importPegawai(Request $req, $skpd_id)
+    {
+        $data = Excel::toCollection(new PegawaiImport, $req->file('file'))->first();
+        foreach($data as $key=>$item)
+        {
+            $check = Pegawai::where('nip', $item[2])->first();
+            if($check == null){
+                $attr['nama'] = $item[1];
+                $attr['nip'] = $item[2];
+                $attr['tanggal_lahir'] = Carbon::createFromFormat('dmY',$item[3])->format('Y-m-d');
+                $attr['urutan'] = $item[0];
+                $attr['skpd_id'] = $skpd_id;
+                Pegawai::create($attr);
+            }
+            
+        }
+
+        toastr()->success('Data Pegawai Berhasil Di Import');
+        return back();
+        
     }
 
     public function storePegawaiSkpd(Request $req, $skpd_id)
@@ -160,8 +191,10 @@ class SuperadminController extends Controller
     public function editPegawaiSkpd($skpd_id, $id)
     {
         $nama_skpd = Skpd::find($skpd_id)->nama;
-        $data = Pegawai::find($id);
-        return view('superadmin.skpd.edit_pegawai',compact('skpd_id','nama_skpd','data'));
+        $data      = Pegawai::find($id);
+        $jabatan   = Jabatan::with('pegawai')->where('skpd_id', $skpd_id)->get()->where('pegawai',null);
+        
+        return view('superadmin.skpd.edit_pegawai',compact('skpd_id','nama_skpd','data','jabatan'));
 
     }
 
@@ -222,6 +255,30 @@ class SuperadminController extends Controller
 
     }
 
+    public function userPegawaiSkpdId($skpd_id)
+    {
+        $data = Pegawai::with('user')->where('skpd_id', $skpd_id)->get();
+        $rolePegawai = Role::where('name','pegawai')->first();
+        
+        foreach($data as $key => $item)
+        {
+            if($item->user == null){
+                $attr['name'] = $item->nama;
+                $attr['username'] = $item->nip;
+                $attr['password'] = bcrypt(Carbon::parse($item->tanggal_lahir)->format('dmY'));
+                $u = User::create($attr);
+
+                //Update user_id di table skpd
+                $item->user_id = $u->id;
+                $item->save();
+    
+                //Create Role
+                $u->roles()->attach($rolePegawai);
+            }
+        }
+        toastr()->success('Username : NIP, Password : tanggal Lahir Contoh(01012000)');
+        return back();
+    }
     public function resetPassUserSkpdId($skpd_id)
     {
         Skpd::find($skpd_id)->user->update(['password' => bcrypt('adminskpd')]);
@@ -338,6 +395,7 @@ class SuperadminController extends Controller
     public function editPegawai($id)
     {
         $data = Pegawai::find($id);
+        
         return view('superadmin.pegawai.edit',compact('data'));
     }
 
@@ -357,7 +415,7 @@ class SuperadminController extends Controller
         
         $req->flash();
 
-        $urutan          = Skpd::find($req->skpd_id)->pegawai->sortBy('urutan')->last()->urutan + 1;
+        $urutan          = Skpd::find($req->skpd_id)->pegawai->sortBy('urutan')->last() == null ? 1: Skpd::find($req->skpd_id)->pegawai->sortBy('urutan')->last()->urutan + 1;
 
         $attr = $req->all();
         $attr['verified'] = 1;
@@ -431,6 +489,15 @@ class SuperadminController extends Controller
         return back();
     }
 
+    public function resetPassPegawaiId($id)
+    {
+        $data = Pegawai::find($id);
+        $data->user->update([
+            'password' => bcrypt(Carbon::parse($data->tanggal_lahir)->format('dmY'))
+        ]);
+        toastr()->success('Password '.Carbon::parse($data->tanggal_lahir)->format('dmY'));
+        return back();
+    }
     public function kelas()
     {
         return view('superadmin.kelas.index');
@@ -657,7 +724,8 @@ class SuperadminController extends Controller
 
     public function parameter()
     {
-        return view('superadmin.parameter.index');
+        $toplevel = Jabatan::where('sekda',1)->first();
+        return view('superadmin.parameter.index',compact('toplevel'));
     }
     
     public function editParameter($id)
@@ -671,5 +739,39 @@ class SuperadminController extends Controller
         Parameter::find($id)->update($req->all());
         toastr()->success('Parameter Berhasil Di Update');
         return redirect('/superadmin/parameter');
+    }
+
+    public function topLevel()
+    {
+        $data = Jabatan::paginate(10);
+        return view('superadmin.parameter.jabatan',compact('data'));
+    }
+
+    public function sekda($id)
+    {
+        $new = Jabatan::find($id);
+        $j = jabatan::where('sekda', '!=', null)->first();
+        if($j == null){
+            $new->update([
+                'sekda' => 1
+            ]);
+        }else{
+            $j->update([
+                'sekda' => null
+            ]);
+            
+            $new->update([
+                'sekda' => 1
+            ]);
+        }
+        toastr()->success('Jabatan Top Level Berhasil Di Update');
+        return redirect('/superadmin/parameter');
+    }
+
+    public function searchSekda()
+    {
+        $search = request()->get('search');
+        $data   = Jabatan::where('nama','LIKE','%'.$search.'%')->paginate(10);
+        return view('superadmin.parameter.jabatan',compact('data'));
     }
 }

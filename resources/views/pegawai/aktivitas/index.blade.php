@@ -10,79 +10,87 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
+        
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="card card-widget widget-user-2">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header bg-gradient-blue">
+                      <div class="widget-user-image">
+                        <img class="img-circle elevation-2" src="/login_tpp/images/icons/logo.png" alt="User Avatar">
+                      </div>
+                      <!-- /.widget-user-image -->
+                      @if (Auth::user()->pegawai->jabatan->sekda == 1)
+                          
+                        <h3 class="widget-user-username">WALIKOTA</h3>
+                        <h5 class="widget-user-desc">KOTA BANJARMASIN</h5>
+                      @else
+                          
+                        <h3 class="widget-user-username">{{$atasan->pegawai == null ? '-': $atasan->pegawai->nama}}</h3>
+                        <h5 class="widget-user-desc">{{$atasan->nama}}</h5>
+                      @endif
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-lg-6 col-12">
+                <div class="card card-widget widget-user-2">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header bg-gradient-purple">
+                      <div class="widget-user-image">
+                        <img class="img-circle elevation-2" src="/login_tpp/images/icons/logo.png" alt="User Avatar">
+                      </div>
+                      <!-- /.widget-user-image -->
+                      <h3 class="widget-user-username">{{Auth::user()->name}}</h3>
+                      <h5 class="widget-user-desc">{{Auth::user()->pegawai->jabatan->nama}}</h5>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
         <div class="row">
             <div class="col-12">
-                <div class="input-group input-group">
-                    <input type="text" class="form-control" placeholder="search">
-                    <span class="input-group-append">
-                      <button type="button" class="btn btn-info btn-flat"><i class="fas fa-search"></i></button>
-                    </span>
-                  </div>
+                <a href="/pegawai/aktivitas/add" class="btn btn-success btn-block"><i class="fas fa-plus"></i> Tambah Aktivitas</a>
             </div>
         </div>
         <br />
         <div class="row">
-            <div class="col-6">Bulan
-                <select name="bulan" class="form-control">
-                    <option value="">Januari</option>
-                    <option value="">Februari</option>
-                    <option value="">Maret</option>
-                    <option value="">April</option>
-                    <option value="">Mei</option>
-                    <option value="">Juni</option>
-                    <option value="">Juli</option>
-                    <option value="">Agustus</option>
-                    <option value="">September</option>
-                    <option value="">Oktober</option>
-                    <option value="">November</option>
-                    <option value="">Desember</option>
-                </select>
-            </div>
-            <div class="col-6">
-                Tahun
-                <select name="tahun" class="form-control">
-                    <option value="">2021</option>
-                    <option value="">2022</option>
-                    <option value="">2023</option>
-                </select>
-            </div>            
-        </div>
-        <br />
-        <div class="row">
             <div class="col-12">
-                <div class="callout callout-danger">
-                    <div class="row">
-                        <div class="col-8 text-xs">Beban Kerja : 56.1</div>
-                        <div class="col-4 text-xs"><i class="fas fa-calendar-alt"></i> 3 Des 2020</div>
-                    </div>
-                
-                <h5><b>Menjadi Mentor</b></h5>
-
-                <p>Memberikan Arahan Kepada Bawahan</p>
-                </div>
-                
-                <div class="callout callout-success">
-                    <div class="row">
-                        <div class="col-8 text-xs">Beban Kerja : 46.1</div>
-                        <div class="col-4 text-xs"><i class="fas fa-calendar-alt"></i> 3 Des 2020</div>
-                    </div>
+                @foreach ($data as $item)
+                    <div class="callout callout-info">
+                        <div class="row">
+                            <div class="col-8 text-xs">Menit Kerja : {{$item->menit == null ? 0 : $item->menit}}</div>
+                            <div class="col-4 text-xs"><i class="fas fa-calendar-alt"></i> {{\Carbon\Carbon::parse($item->tanggal)->format('d M Y')}} {{\Carbon\Carbon::createFromFormat('H:i:s',$item->jam_mulai)->format('H:i')}} - {{\Carbon\Carbon::createFromFormat('H:i:s',$item->jam_selesai)->format('H:i')}}</div>
+                        </div>
                     
-                    <h5><b>Survey Lapangan</b></h5>
-    
-                    <p>Survey Lapangan </p>
-                </div>
-                
-                <div class="callout callout-info">
-                    <div class="row">
-                        <div class="col-8 text-xs">Beban Kerja : 66.1</div>
-                        <div class="col-4 text-xs"><i class="fas fa-calendar-alt"></i> 3 Des 2020</div>
-                    </div>
+                    <h5><b>{{$item->deskripsi}}</b></h5>
                     
-                    <h5><b>Memberi Arahan Kepada Bawahan</b></h5>
-    
-                    <p>OK </p>
-                </div>
-                <a href="/pegawai/aktivitas/add" class="btn btn-primary btn-block"><i class="fas fa-plus"></i> Tambah Aktivitas</a>
+                    <div class="row">
+                        <div class="col-8 text-xs">
+                            Status : 
+                            @if ($item->validasi == 0)
+                            <span data-toggle="tooltip" title="3 New Messages" class="badge badge-info"><i class="fas fa-clock"></i></span>  Belum Di Validasi
+                            @elseif($item->validasi == 1)
+                            <span data-toggle="tooltip" title="3 New Messages" class="badge badge-success"><i class="fas fa-check"></i></span> Di setujui
+                            @else
+                                
+                            <span data-toggle="tooltip" title="3 New Messages" class="badge badge-danger"><i class="fas fa-times"></i></span> Di Tolak    
+                            @endif
+                        </div>
+                        <div class="col-4 text-xs">
+                            
+                            @if ($item->validasi == 0)
+                            <a href="/pegawai/aktivitas/harian/edit/{{$item->id}}" class="btn btn-xs btn-success text-white" data-toggle="tooltip" title="edit data"><i class="fas fa-edit"></i></a>
+                            <a href="/pegawai/aktivitas/harian/delete/{{$item->id}}" class="btn btn-xs btn-danger text-white" data-toggle="tooltip" title="hapus data"  onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
+                            @else
+                              
+                            @endif
+                        </div>
+                        </div>
+                    </div>
+                @endforeach
+                {{$data->links()}}
             </div>
         </div>
         <br />

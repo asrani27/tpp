@@ -18,7 +18,7 @@
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>{{countSkpd()}}</h3>
+                  <h3>{{$skpd}}</h3>
   
                   <p>SKPD</p>
                 </div>
@@ -33,7 +33,7 @@
               <!-- small box -->
               <div class="small-box bg-purple">
                 <div class="inner">
-                  <h3>{{countPegawai()}}</h3>
+                  <h3>{{$asn}}</h3>
   
                   <p>ASN</p>
                 </div>
@@ -48,7 +48,7 @@
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">
-                  <h3>Rp. 6.342.123.456,-</h3>
+                  <h3>Rp. {{currency($tpp_pemko)}},-</h3>
 
                   <p>Total TPP Bulan {{\Carbon\Carbon::now()->isoFormat("MMMM Y")}}</p>
                   

@@ -65,13 +65,14 @@ class HomeController extends Controller
     {
         $pegawai        = Pegawai::with('jabatan.kelas','pangkat')->where('skpd_id', $this->skpd_id())->orderBy('urutan','ASC')->get();
         $countPegawai   = $pegawai->count();
-        $persentase_tpp = Parameter::first()->persentase_tpp;
+        $persentase_tpp = (float) Parameter::where('name','persentase_tpp')->first()->value;
         $countJabatan   = DB::table('jabatan')->where('skpd_id',$this->skpd_id())->get()->count();
         
         //return response()->json($pegawai);
         $data = $pegawai->map(function($item)use($persentase_tpp){
             if($item->jabatan == null){
                 $item->nama_jabatan = null;
+                $item->jenis_jabatan = null;
                 $item->nama_kelas = null;
                 $item->basic_tpp = 0;
                 $item->persentase_tpp = $persentase_tpp;
@@ -85,6 +86,7 @@ class HomeController extends Controller
                 $item->total_tpp =  0;
             }else{
                 $item->nama_jabatan = $item->jabatan->nama;
+                $item->jenis_jabatan = $item->jabatan->jenis_jabatan;
                 $item->nama_kelas = $item->jabatan->kelas->nama;
                 $item->basic_tpp = $item->jabatan->kelas->nilai;
                 $item->persentase_tpp = $persentase_tpp;
@@ -136,7 +138,7 @@ class HomeController extends Controller
     public function pegawai()
     {
         $pegawai = Pegawai::where('user_id',Auth::user()->id)->get();
-        $persentase_tpp = Parameter::first()->persentase_tpp;
+        $persentase_tpp = (float) Parameter::where('name','persentase_tpp')->first()->value;
         
         $month = Carbon::now()->month;
         $year  = Carbon::now()->year;

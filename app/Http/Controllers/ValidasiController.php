@@ -50,4 +50,15 @@ class ValidasiController extends Controller
         
         return view('pegawai.validasi.detail',compact('data','pegawai'));
     }
+    
+    public function keberatan()
+    {
+        $data = $this->user()->pegawai->jabatan->bawahan->load('pegawai')->map(function($item){
+            $item->nama_pegawai = $item->pegawai == null ? '-':$item->pegawai->nama;
+            $item->aktivitas_baru = $item->pegawai == null ? 0:$item->pegawai->aktivitas->where('validasi', 0)->count();
+            return $item;
+        });
+        
+        return view('pegawai.validasi.keberatan',compact('data'));
+    }
 }

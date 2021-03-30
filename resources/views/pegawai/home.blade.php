@@ -182,7 +182,7 @@
     tolak = {!!json_decode($tolak)!!}
     acc = {!!json_decode($acc)!!}
     proses = {!!json_decode($pending)!!}
-    console.log(tolak);
+    console.log(tolak, acc,proses);
     var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
     var donutData        = {
       labels: [

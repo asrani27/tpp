@@ -23,7 +23,7 @@
                 <div class="icon">
                   <i class="ion ion-person-add"></i>
                 </div>
-                <a href="#" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="/admin/pegawai" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
 
@@ -38,7 +38,7 @@
                 <div class="icon">
                     <i class="fas fa-map"></i>
                 </div>
-                <a href="#" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="/admin/jabatan" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -66,9 +66,9 @@
                 {{strtoupper(Auth::user()->name)}}</strong>
             </div>
         </div>
-        <a href="#" class="btn btn-sm btn-primary">
-            <i class="fas fa-file-excel"></i>
-            Export</a><br/><br/>
+        <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-file-excel"></i> Export</a>
+        <a href="/home/admin/persen" class="btn btn-sm btn-primary"><i class="fas fa-percent"></i> Edit Persen TPP</a>
+        <br/><br/>
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -130,7 +130,9 @@
                             <td class="text-center">
                               {{$item->nama_jabatan}}
                             </td>
-                            <td></td>
+                            <td class="text-center">
+                              {{$item->jenis_jabatan}}
+                            </td>
                             <td class="text-center">
                               {{$item->nama_kelas}}
                             </td>
@@ -142,7 +144,6 @@
                             </td>
                             <td class="text-center">
                               {{$item->tambahan_persen_tpp == null ? 0: $item->tambahan_persen_tpp}} %
-                              <a href="#" id="username" data-type="text" data-pk="1" data-url="/post" data-title="Enter username">superuser</a>
                             </td>
                             <td class="text-center">
                               {{$item->jumlah_persentase}} %
@@ -180,6 +181,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                             <td>Total</td>
                             <td>{{currency($data->sum('total_tpp'))}}</td>
                           </tr>
@@ -195,18 +197,5 @@
 @endsection
 
 @push('js')
-<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
-<script>
-  $(document).ready(function() {
-    $('#username').editable();
-});
-$('#username').editable({
-    type: 'text',
-    pk: 1,
-    mode: 'inline',
-    url: '/post',
-    title: 'Enter username'
-});
-</script>
 @endpush

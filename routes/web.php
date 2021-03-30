@@ -85,6 +85,8 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/home/admin', 'HomeController@admin');
     
+    Route::get('/home/admin/persen', 'AdminController@editPersen');
+    Route::post('/home/admin/persen', 'AdminController@updatePersen');
     Route::get('/home/admin/up/{id}/{urutan}', 'HomeController@adminUp');
     Route::get('/home/admin/down/{id}/{urutan}', 'HomeController@adminDown');
 
@@ -129,6 +131,7 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::get('/pegawai/validasi/harian/acc/{id}', 'ValidasiController@accSemua');
     Route::get('/pegawai/validasi/harian/view/{id}', 'ValidasiController@view');
 
+    Route::get('/pegawai/validasi/keberatan', 'ValidasiController@keberatan');
 
     Route::get('/pegawai/verifikasi', 'VerifikasiController@index');
     Route::get('/pegawai/verifikasi/detail', 'VerifikasiController@detail');
@@ -136,6 +139,13 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::get('/pegawai/riwayat', 'RiwayatController@index');
     Route::get('/pegawai/tpp', 'TppController@index');
     Route::get('/pegawai/tpp/grafik', 'TppController@grafik');
+    Route::get('/pegawai/profil', 'ProfilController@pegawai');
+
+    Route::get('/pegawai/gaji', 'GajiController@index');
+    
+    Route::get('/pegawai/laporan/tpp', 'LaporanController@tpp');
+    Route::get('/pegawai/laporan/aktivitas', 'LaporanController@aktivitas');
+    Route::get('/pegawai/laporan/penghasilan', 'LaporanController@penghasilan');
 });
 
 Route::group(['middleware' => ['auth', 'role:walikota']], function () {

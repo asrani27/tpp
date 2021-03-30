@@ -22,7 +22,8 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Persentase TPP</th>
+                        <th>Nama Parameter</th>
+                        <th>Value</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -30,10 +31,11 @@
                         $no =1;
                     @endphp
                     <tbody>
-                    @foreach (parameter() as $key => $item)
+                    @foreach ($parameter as $key => $item)
                           <tr>
                             <td>{{$no++}}</td>
-                            <td>{{$item->persentase_tpp}}</td>
+                            <td>{{$item->name}}</td>
+                            <td>{{$item->value}}</td>
                             <td>
                             <a href="/superadmin/parameter/edit/{{$item->id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                             </td>

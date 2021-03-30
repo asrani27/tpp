@@ -725,7 +725,8 @@ class SuperadminController extends Controller
     public function parameter()
     {
         $toplevel = Jabatan::where('sekda',1)->first();
-        return view('superadmin.parameter.index',compact('toplevel'));
+        $parameter = Parameter::get();
+        return view('superadmin.parameter.index',compact('toplevel','parameter'));
     }
     
     public function editParameter($id)
@@ -736,7 +737,9 @@ class SuperadminController extends Controller
     
     public function updateParameter(Request $req,$id)
     {
-        Parameter::find($id)->update($req->all());
+        Parameter::find($id)->update([
+            'value' => $req->value,
+        ]);
         toastr()->success('Parameter Berhasil Di Update');
         return redirect('/superadmin/parameter');
     }

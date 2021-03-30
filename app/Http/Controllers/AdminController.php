@@ -9,6 +9,7 @@ use App\Jabatan;
 use App\Pegawai;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -235,6 +236,36 @@ class AdminController extends Controller
             toastr()->error('Jabatan Tidak Bisa Di Hapus Karena Memiliki Bawahan');
         }
         return redirect('/admin/jabatan');
+    }
+
+    public function editPersen()
+    {
+        
+        $data = Auth::user()->skpd->jabatan;
+
+        return view('admin.edit_persen',compact('data'));
+    }
+
+    public function updatePersen(Request $req)
+    {
+        DB::beginTransaction();
+        try {
+            $count = count($req->jabatan_id);
+            for($i=0; $i < $count; $i++){                
+                Jabatan::findOrfail($req->jabatan_id[$i])->update([
+                    'jenis_jabatan' => $req->jenis_jabatan[$i],
+                    'tambahan_persen_tpp' => $req->tambahan_persen_tpp[$i],
+                ]);
+            }
+            
+            DB::commit();
+            toastr()->success('Data Berhasil di Update');
+        } catch (Exception $e) {
+            DB::rollback();
+            
+            toastr()->error('Gagal Update Data');
+        }
+        return back();
     }
 
 }

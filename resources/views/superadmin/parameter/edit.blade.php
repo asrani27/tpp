@@ -22,9 +22,9 @@
                         @csrf
                         <div class="card-body">
                             <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Nama Pangkat</label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Value</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="persentase_tpp" value="{{ $data->persentase_tpp }}" required>
+                                <input type="text" class="form-control" name="value" value="{{ $data->value }}" required>
                             </div>
                             </div>
                         </div>

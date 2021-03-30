@@ -83,6 +83,14 @@
         </p>
     </a>
     </li>
+    <li class="nav-item">
+    <a href="/pegawai/gaji" class="nav-link">
+        <i class="nav-icon fas fa-money-bill"></i>
+        <p>
+        Gaji
+        </p>
+    </a>
+    </li>
     <li class="nav-item has-treeview {{Request::is('pegawai/laporan*') ? 'menu-open' : ''}}">
         <a href="#" class="nav-link {{Request::is('pegawai/laporan*') ? 'active' : ''}}">
           <i class="nav-icon fas fa-file"></i>
@@ -93,19 +101,19 @@
         </a>
         <ul class="nav nav-treeview" style="display: {{Request::is('pegawai/laporan*') ? 'block' : 'none'}};">
             <li class="nav-item">
-            <a href="/pegawai/laporan/harian" class="nav-link {{ Request::is('pegawai/laporan/harian') ? 'active' : '' }}">
+            <a href="/pegawai/laporan/tpp" class="nav-link {{ Request::is('pegawai/laporan/tpp') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-list"></i>
                 <p>Laporan TPP</p>
             </a>
             </li>
             <li class="nav-item">
-            <a href="/pegawai/laporan/keberatan" class="nav-link {{ Request::is('pegawai/laporan/keberatan') ? 'active' : '' }}">
+            <a href="/pegawai/laporan/aktivitas" class="nav-link {{ Request::is('pegawai/laporan/aktivitas') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-list"></i>
                 <p>Laporan Aktivitas</p>
             </a>
             </li>
             <li class="nav-item">
-            <a href="/pegawai/laporan/keberatan" class="nav-link {{ Request::is('pegawai/laporan/keberatan') ? 'active' : '' }}">
+            <a href="/pegawai/laporan/penghasilan" class="nav-link {{ Request::is('pegawai/laporan/penghasilan') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-list"></i>
                 <p>Laporan Penghasilan</p>
             </a>

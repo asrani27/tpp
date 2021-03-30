@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,7 +33,8 @@ class ProfilController extends Controller
 
     public function pegawai()
     {
-        return view('pegawai.profil');
+        $data = Pegawai::with('jabatan','pangkat','skpd')->findOrfail(Auth::user()->pegawai->id);
+        return view('pegawai.profil',compact('data'));
     }
 
     public function walikota()

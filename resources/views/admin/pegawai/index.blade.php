@@ -31,7 +31,7 @@
         <div class="row">
             <div class="col-12">
               <a href="/admin/pegawai/add" class="btn btn-sm btn-primary"><i class="fas fa-users"></i> Tambah ASN</a>
-              <a href="/admin/pegawai/createuser" class="btn btn-sm bg-purple"><i class="fas fa-key"></i> Create User & Pass ASN</a>
+              {{-- <a href="/admin/pegawai/createuser" class="btn btn-sm bg-purple"><i class="fas fa-key"></i> Create User & Pass ASN</a> --}}
               <a href="/admin/pegawai" class="btn btn-sm bg-info"><i class="fas fa-recycle"></i> Refresh</a>
               <br/><br/>
               

@@ -91,6 +91,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/home/admin/down/{id}/{urutan}', 'HomeController@adminDown');
 
     Route::get('/admin/profil', 'ProfilController@admin');
+    Route::get('/admin/org', 'AdminController@org');
     Route::get('/admin/pegawai', 'AdminController@pegawai');
     Route::get('/admin/pegawai/search', 'AdminController@searchPegawai');
     Route::get('/admin/pegawai/add', 'AdminController@addPegawai');
@@ -112,11 +113,15 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::get('/home/pegawai', 'HomeController@pegawai');
     
     Route::get('/pegawai/skp/rencana-kegiatan', 'SkpController@index');
-    Route::get('/pegawai/skp/rencana-kegiatan/add', 'SkpController@add');
+    Route::post('/pegawai/skp/rencana-kegiatan', 'SkpController@storePeriode');
     Route::get('/pegawai/skp/rencana-kegiatan/edit/{id}', 'SkpController@edit');
-    Route::post('/pegawai/skp/rencana-kegiatan/add', 'SkpController@store');
     Route::post('/pegawai/skp/rencana-kegiatan/edit/{id}', 'SkpController@update');
     Route::get('/pegawai/skp/rencana-kegiatan/delete/{id}', 'SkpController@delete');
+    Route::get('/pegawai/skp/rencana-kegiatan/periode/edit/{id}', 'SkpController@editPeriode');
+    Route::get('/pegawai/skp/rencana-kegiatan/periode/delete/{id}', 'SkpController@deletePeriode');
+    Route::get('/pegawai/skp/rencana-kegiatan/periode/view/{id}', 'SkpController@viewPeriode');
+    Route::post('/pegawai/skp/rencana-kegiatan/periode/view/{id}', 'SkpController@storeSkp');
+    Route::get('/pegawai/skp/rencana-kegiatan/periode/aktifkan/{id}', 'SkpController@aktifkan');
 
     Route::get('/pegawai/aktivitas/harian', 'AktivitasController@index');
     Route::get('/pegawai/aktivitas/add', 'AktivitasController@add');
@@ -129,6 +134,8 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
 
     Route::get('/pegawai/validasi/harian', 'ValidasiController@index');
     Route::get('/pegawai/validasi/harian/acc/{id}', 'ValidasiController@accSemua');
+    Route::get('/pegawai/validasi/harian/acc_aktivitas/{id}', 'ValidasiController@accAktivitas');
+    Route::get('/pegawai/validasi/harian/tolak/{id}', 'ValidasiController@tolakAktivitas');
     Route::get('/pegawai/validasi/harian/view/{id}', 'ValidasiController@view');
 
     Route::get('/pegawai/validasi/keberatan', 'ValidasiController@keberatan');

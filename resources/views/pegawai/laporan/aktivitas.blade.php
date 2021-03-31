@@ -17,12 +17,12 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Riwayat Aktivitas</h3>
+                  <h3 class="card-title">Total : {{count($data)}} Aktivitas</h3>
   
                   <div class="card-tools">
                     <form method="get" action="/pegawai/skp/rencana-kegiatan/search">
                     <div class="input-group input-group-sm" style="width: 300px;">
-                      <input type="text" name="search" class="form-control input-sm float-right" value="{{old('search')}}" placeholder="Bulan / Tahun">
+                      <input type="text" name="search" class="form-control input-sm float-right" value="{{old('search')}}" placeholder="Cari">
   
                       <div class="input-group-append">
                         <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
@@ -39,9 +39,9 @@
                         <th>#</th>
                         <th>Tanggal</th>
                         <th>Jam</th>
+                        <th>Menit</th>
                         <th>Aktivitas</th>
                         <th>Status</th>
-                        <th>Menit</th>
                       </tr>
                     </thead>
                     @php
@@ -53,6 +53,7 @@
                             <td>{{$key+ $data->firstItem()}}</td>
                             <td>{{\Carbon\Carbon::parse($item->tanggal)->isoFormat('D MMMM Y')}}</td>
                             <td>{{\Carbon\Carbon::parse($item->jam_mulai)->format('H:i')}} - {{\Carbon\Carbon::parse($item->jam_selesai)->format('H:i')}}</td>
+                            <td>{{$item->menit}}</td>
                             <td>{{$item->deskripsi}}</td>
                             <td>
                                 @if ($item->validasi == 0)
@@ -65,7 +66,6 @@
                                     
                                 @endif
                             </td>
-                            <td>{{$item->menit}}</td>
                           </tr>
                     @endforeach
                     </tbody>

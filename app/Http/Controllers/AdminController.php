@@ -260,7 +260,7 @@ class AdminController extends Controller
             
             DB::commit();
             toastr()->success('Data Berhasil di Update');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
             
             toastr()->error('Gagal Update Data');
@@ -268,4 +268,18 @@ class AdminController extends Controller
         return back();
     }
 
+    public function org()
+    {
+        $skpd_id = Auth::user()->skpd->id;
+        $data = Jabatan::where('skpd_id', $skpd_id)->get();
+        $map = $data->map(function($item){
+            $item->format = [['v'=>(string)$item->id, 'f'=>$item->nama],$item->jabatan_id == null ? '':(string)$item->jabatan_id, ''];
+            return $item->format;
+        });
+        //dd($map);
+        $json = response()->json($map);
+
+      
+        return view('admin.jabatan.org',compact('json'));
+    }
 }

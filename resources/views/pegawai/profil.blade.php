@@ -81,7 +81,7 @@
             <div class="form-group row">
                 <label for="inputName" class="col-sm-2 col-form-label">Pejabat Penilai</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" value="{{$data->jabatan == null ? '' : $data->jabatan->atasan->pegawai->nama}}" readonly>
+                <input type="text" class="form-control" value="{{($data->jabatan == null ? '' : $data->jabatan->atasan) == null ? 'Sekda' : $data->jabatan->atasan->pegawai->nama}}" readonly>
                 </div>
             </div>
             <div class="form-group row">

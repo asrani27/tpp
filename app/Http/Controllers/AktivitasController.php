@@ -21,7 +21,7 @@ class AktivitasController extends Controller
     {
         $person = $this->user()->pegawai->with('jabatan');
         $atasan = $this->user()->pegawai->jabatan->atasan == null ? Jabatan::where('sekda',1)->first():$this->user()->pegawai->jabatan->atasan;
-        //dd($this->user()->pegawai->jabatan);
+        
         $data = $this->user()->pegawai->aktivitas()->paginate(10);
 
         return view('pegawai.aktivitas.index',compact('data','atasan'));
@@ -31,7 +31,8 @@ class AktivitasController extends Controller
     {
         $tahun = Carbon::now()->year;
         
-        $skp = Auth::user()->pegawai->jabatan->skp->where('tahun', $tahun);
+        $skp = Auth::user()->pegawai->skp_periode->where('is_aktif',1)->first()->skp;
+        
         return view('pegawai.aktivitas.create',compact('skp'));
     }
     

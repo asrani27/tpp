@@ -10,12 +10,6 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        
-      <div class="row">
-        <div class="col-12">
-            <a href="/pegawai/validasi/harian" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i> Kembali</a>
-        </div>
-      </div><br />
         <div class="row">
             <div class="col-lg-12 col-12">
                 <div class="card card-widget widget-user-2">
@@ -34,8 +28,70 @@
             
             
         </div>
+        
         <div class="row">
             <div class="col-12">
+                <a href="/pegawai/validasi/harian" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i> Kembali</a>
+                @if (count($data) != 0)
+                <a href="/pegawai/validasi/harian/acc/{{$id}}" class="btn btn-sm btn-success">
+                    <i class="fas fa-check"></i> SETUJUI SEMUA
+                </a>
+                @endif
+            </div>
+        </div><br />
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap table-sm">
+                        <thead>
+                            <tr>
+                            <th>#</th>
+                            <th>Tanggal</th>
+                            <th>Jam</th>
+                            <th>Menit</th>
+                            <th>Aktivitas</th>
+                            <th>Status</th>
+                            <th></th>
+                            </tr>
+                        </thead>
+                        @php
+                            $no =1;
+                        @endphp
+                        <tbody>
+                        @foreach ($data as $key => $item)
+                                <tr style="font-size:12px; font-family:Arial, Helvetica, sans-serif">
+                                <td>{{$key+ $data->firstItem()}}</td>
+                                <td>{{\Carbon\Carbon::parse($item->tanggal)->isoFormat('D MMMM Y')}}</td>
+                                <td>{{\Carbon\Carbon::parse($item->jam_mulai)->format('H:i')}} - {{\Carbon\Carbon::parse($item->jam_selesai)->format('H:i')}}</td>
+                                <td>{{$item->menit}}</td>
+                                <td>{{$item->deskripsi}}</td>
+                                <td>
+                                    @if ($item->validasi == 0)
+                                    <span class="badge bg-info"><i class="fas fa-clock"></i> Diproses</span>
+                                    @elseif ($item->validasi == 1)
+                                    <span class="badge bg-success">Disetujui</span>
+                                    
+                                    @else
+                                    <span class="badge bg-danger">Ditolak</span>
+                                        
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($item->validasi == 0)
+                                    <a href="/pegawai/validasi/harian/acc_aktivitas/{{$item->id}}" class="btn btn-xs btn-success text-white" data-toggle="tooltip" title="Setujui Aktivitas" onclick="return confirm('Yakin ingin di Setujui?');"><i class="fas fa-check"></i> Setujui</a>
+                                    <a href="/pegawai/validasi/harian/tolak/{{$item->id}}" class="btn btn-xs btn-danger text-white" data-toggle="tooltip" title="Tolak Aktivitas"  onclick="return confirm('Yakin ingin di tolak?');"><i class="fas fa-times"></i> Tolak</a>
+                                    @else
+                                      
+                                    @endif
+                                </td>
+                                </tr>
+                        @endforeach
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+{{--                 
                 @foreach ($data as $item)
                     <div class="callout callout-info">
                         <div class="row">
@@ -68,7 +124,7 @@
                         </div>
                         </div>
                     </div>
-                @endforeach
+                @endforeach --}}
                 {{$data->links()}}
             </div>
         </div>

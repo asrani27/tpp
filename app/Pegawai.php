@@ -17,7 +17,12 @@ class Pegawai extends Model
     
     public function aktivitas()
     {
-        return $this->hasMany(Aktivitas::class, 'pegawai_id');
+        return $this->hasMany(Aktivitas::class, 'pegawai_id')->orderBy('id','DESC');
+    }
+
+    public function skp_periode()
+    {
+        return $this->hasMany(Skp_periode::class, 'pegawai_id')->orderBy('id','DESC');
     }
 
     public function aktivitasToday()

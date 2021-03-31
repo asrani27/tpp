@@ -13,23 +13,14 @@
         <div class="row">
             <div class="col-12">
               <div class="card">
-                <div class="card-header border-0">
-                  <h3 class="card-title">Data ASN</h3>
-                  <div class="card-tools">
-                    <a href="#" class="btn btn-tool btn-sm">
-                      <i class="fas fa-download"></i>
-                    </a>
-                    <a href="#" class="btn btn-tool btn-sm">
-                      <i class="fas fa-bars"></i>
-                    </a>
-                  </div>
+                <div class="card-header">
+                  <h3 class="card-title">Data Bawahan</h3>
                 </div>
                 <div class="card-body table-responsive p-0">
-                  <table class="table table-striped table-valign-middle">
+                  <table class="table table-striped table-valign-middle table-sm">
                     <thead>
                     <tr>
                       <th>No</th>
-                      <th></th>
                       <th>Nama</th>
                       <th>Aktivitas</th>
                       <th>Aksi</th>
@@ -43,10 +34,6 @@
                         
                     <tr>
                       <td width="10px">{{$no++}}</td>
-                      <td>
-                        <img src="https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png" alt="Product 1" class="img-circle img-size-64 mr-2">
-                        
-                      </td>
                       <td>
                         {{$item->pegawai == null ? '-': $item->pegawai->nama}} <br />
                         {{$item->nama}}
@@ -66,9 +53,6 @@
                         @else
                           <a href="/pegawai/validasi/harian/view/{{$item->id}}" class="btn btn-sm btn-info">
                             <i class="fas fa-eye"></i> VIEW
-                          </a>
-                          <a href="/pegawai/validasi/harian/acc/{{$item->id}}" class="btn btn-sm btn-success">
-                            <i class="fas fa-check"></i> ACC SEMUA
                           </a>
                         @endif
                       </td>

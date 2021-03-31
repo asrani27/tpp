@@ -33,31 +33,27 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
-                  <table class="table table-hover text-nowrap">
+                  <table class="table table-hover text-nowrap table-sm">
                     <thead>
                       <tr>
                         <th>#</th>
                         <th>Bulan</th>
                         <th>Tahun</th>
-                        <th>TPP</th>
-                        <th>Aksi</th>
+                        <th>TPP Diterima</th>
                       </tr>
                     </thead>
                     @php
                         $no =1;
                     @endphp
                     <tbody>
-                    {{-- @foreach ($data as $key => $item)
+                    @foreach ($data as $key => $item)
                           <tr>
                             <td>{{$key+ $data->firstItem()}}</td>
+                            <td>{{\Carbon\Carbon::createFromFormat('m',$item->bulan)->isoFormat('MMMM')}}</td>
                             <td>{{$item->tahun}}</td>
-                            <td>{{$item->deskripsi}}</td>
-                            <td>
-                            <a href="/pegawai/skp/rencana-kegiatan/edit/{{$item->id}}" class="btn btn-sm btn-warning" data-toggle="tooltip" title='Edit data'><i class="fas fa-edit"></i></a>
-                            <a href="/pegawai/skp/rencana-kegiatan/delete/{{$item->id}}" class="btn btn-sm btn-danger" data-toggle="tooltip" title='Hapus data' onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
-                            </td>
+                            <td>@currency(($item->total_pagu * $item->disiplin / 100) + ($item->total_pagu * $item->produktivitas / 100))</td>
                           </tr>
-                    @endforeach --}}
+                    @endforeach
                     </tbody>
                   </table>
                 </div>

@@ -15,24 +15,18 @@
         <h4>SKP PEGAWAI</h4>
         <div class="row">
             <div class="col-12">
-              <form method="POST" action="/pegawai/skp/rencana-kegiatan">
+              <form method="POST" action="/pegawai/skp/rencana-kegiatan/periode/view/{{$id}}">
                 @csrf
               <div class="card">
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-md-4 col-12">
-                      <label class="col-form-label" for="inputWarning"><i class="far fa-calendar"></i> Periode Mulai</label>
-                      <input type="date" name="mulai" class="form-control" placeholder=".col-3" required>
+                    <div class="col-md-12 col-12">
+                      <label class="col-form-label" for="inputWarning"><i class="far fa-calendar"></i> Deskripsi Kegiatan</label>
+                      <textarea class="form-control" rows="3" name="deskripsi"></textarea>
                     </div>
-                    <div class="col-md-4 col-12">
-                      <label class="col-form-label" for="inputWarning"><i class="far fa-calendar"></i> Periode Selesai</label>
-                      <input type="date" name="sampai" class="form-control" placeholder=".col-4" required>
-                    </div>
-                    <div class="col-md-4 col-12">
-                      <label class="col-form-label" for="inputWarning"><i class="far fa-user"></i> </label><br />
-                      <button class="btn btn-primary" type="submit">Tambah Periode</button>
-                    </div>
-                  </div>
+                  </div><br/>
+                  <a href="/pegawai/skp/rencana-kegiatan" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i> Kembali</a>
+                  <button class="btn btn-sm btn-primary" type="submit"><i class="fas fa-save"></i>  Simpan SKP</button>
                 </div>
               </div>
               </form>
@@ -40,7 +34,7 @@
               
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Periode SKP Pegawai</h3>
+                  <h3 class="card-title">Daftar SKP Pegawai Periode : </h3>
   
                   <div class="card-tools">
                     {{-- <form method="get" action="/pegawai/skp/rencana-kegiatan/search">
@@ -60,8 +54,7 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Periode</th>
-                        <th>Aktif?</th>
+                        <th>Deskripsi</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -72,18 +65,11 @@
                     @foreach ($data as $key => $item)
                           <tr>
                             <td>{{$key+ $data->firstItem()}}</td>
-                            <td>{{\Carbon\Carbon::parse($item->mulai)->isoFormat('D MMMM Y')}} s/d {{\Carbon\Carbon::parse($item->sampai)->isoFormat('D MMMM Y')}}</td>
+                            <td>{{$item->deskripsi}}</td>
                             <td>
-                              @if ($item->is_aktif == 1)
-                                <span class="badge badge-success"><i class="fas fa-check-circle"></i></span>
-                              @else
-                                <a href="/pegawai/skp/rencana-kegiatan/periode/aktifkan/{{$item->id}}" class="btn btn-xs btn-primary" data-toggle="tooltip" title='Aktifkan'>Aktifkan</a>
-                              @endif
-                            </td>
-                            <td>
-                              <a href="/pegawai/skp/rencana-kegiatan/periode/view/{{$item->id}}" class="btn btn-xs btn-success" data-toggle="tooltip" title='Tambah data'><i class="fas fa-eye"></i> Detail SKP</a>
-                            <a href="/pegawai/skp/rencana-kegiatan/periode/edit/{{$item->id}}" class="btn btn-xs btn-warning" data-toggle="tooltip" title='Edit data'><i class="fas fa-edit"></i></a>
-                            <a href="/pegawai/skp/rencana-kegiatan/periode/delete/{{$item->id}}" class="btn btn-xs btn-danger" data-toggle="tooltip" title='Hapus data' onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
+                          
+                            <a href="/pegawai/skp/rencana-kegiatan/edit/{{$item->id}}" class="btn btn-xs btn-warning" data-toggle="tooltip" title='Edit data'><i class="fas fa-edit"></i></a>
+                            <a href="/pegawai/skp/rencana-kegiatan/delete/{{$item->id}}" class="btn btn-xs btn-danger" data-toggle="tooltip" title='Hapus data' onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
                             </td>
                           </tr>
                       @endforeach

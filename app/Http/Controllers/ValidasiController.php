@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jabatan;
+use App\Aktivitas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,7 +39,7 @@ class ValidasiController extends Controller
                 ]);
                 return $item;
             });
-            toastr()->success('Aktivitas Di ACC');
+            toastr()->success('Semua Aktivitas Di Setujui');
             return back();
         }
     }
@@ -48,17 +49,39 @@ class ValidasiController extends Controller
         $pegawai = Jabatan::find($id)->pegawai;
         $data = $pegawai->aktivitas()->where('validasi',0)->paginate(10);
         
-        return view('pegawai.validasi.detail',compact('data','pegawai'));
+        return view('pegawai.validasi.detail',compact('data','pegawai','id'));
     }
     
     public function keberatan()
     {
-        $data = $this->user()->pegawai->jabatan->bawahan->load('pegawai')->map(function($item){
+        $tingkat = Auth::user()->pegawai->jabatan->tingkat + 2;
+        
+        $jabatan = Jabatan::where('skpd_id', Auth::user()->pegawai->skpd_id)->where('tingkat', $tingkat)->get();
+        
+        $data = $jabatan->map(function($item){
             $item->nama_pegawai = $item->pegawai == null ? '-':$item->pegawai->nama;
             $item->aktivitas_baru = $item->pegawai == null ? 0:$item->pegawai->aktivitas->where('validasi', 0)->count();
             return $item;
         });
         
         return view('pegawai.validasi.keberatan',compact('data'));
+    }
+
+    public function accAktivitas($id)
+    {
+        Aktivitas::findOrFail($id)->update([
+            'validasi' => 1
+        ]);
+        toastr()->success('Aktivitas Di Setujui');
+        return back();
+    }
+
+    public function tolakAktivitas($id)
+    {
+        Aktivitas::findOrFail($id)->update([
+            'validasi' => 2
+        ]);
+        toastr()->success('Aktivitas Di Tolak');
+        return back();
     }
 }

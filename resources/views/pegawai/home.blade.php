@@ -44,7 +44,7 @@
                         <div class="col-4">
                         <div class="description-block">
                             <h5 class="description-header">{{$pending}}</h5>
-                            <span class="description-text"><i class="fas fa-list-alt"></i> BELUM ACC</span>
+                            <span class="description-text"><i class="fas fa-list-alt"></i> DIPROSES</span>
                         </div>
                         <!-- /.description-block -->
                         </div>

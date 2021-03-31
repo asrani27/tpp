@@ -34,10 +34,11 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-            <form method="POST" action="">
+            <form method="POST" action="/pegawai/profil/gantipass">
+              @csrf
             <input type="hidden" class="form-control" readonly value="{{Auth::user()->id}}">
-            <input type="text" class="form-control" required placeholder="masukkan password"><br />
-            <input type="text" class="form-control" required placeholder="masukkan password Lagi"><br />
+            <input type="text" class="form-control" name="password1" required placeholder="masukkan password"><br />
+            <input type="text" class="form-control" name="password2" required placeholder="masukkan password Lagi"><br />
             <button type="submit" class="btn btn-success btn-block"><b>Ganti Password</b></button>
             </form>
             

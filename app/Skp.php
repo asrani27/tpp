@@ -13,4 +13,9 @@ class Skp extends Model
     {
         return $this->hasMany(Aktivitas::class,'skp_id');
     }
+
+    public function skp_periode()
+    {
+        return $this->belongsTo(Skp_periode::class, 'skp_periode_id');
+    }
 }

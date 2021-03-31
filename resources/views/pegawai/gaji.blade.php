@@ -38,24 +38,6 @@
                 <input type="text" class="form-control" value="Rp. 0,-" readonly>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="inputName" class="col-sm-3 col-form-label">Tunjangan Pangan</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" value="Rp. 0,-" readonly>
-                </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputName" class="col-sm-3 col-form-label">Tunjangan Keluarga</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" value="Rp. 0,-" readonly>
-                </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputName" class="col-sm-3 col-form-label">Tunjangan Jabatan</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" value="Rp. 0,-" readonly>
-                </div>
-            </div>
         </div><!-- /.card-body -->
       </div>
       <!-- /.nav-tabs-custom -->

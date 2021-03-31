@@ -26,6 +26,14 @@
                 <p>Rencana Kegiatan</p>
             </a>
             </li>
+            @if (count(Auth::user()->pegawai->jabatan->bawahan) != 0)
+                <li class="nav-item">
+                <a href="/pegawai/skp/validasi" class="nav-link {{ Request::is('pegawai/skp/validasi') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-list"></i>
+                    <p>Validasi SKP</p>
+                </a>
+                </li>
+            @endif
         </ul>
     </li>
     
@@ -44,12 +52,12 @@
                 <p>Aktivitas Harian</p>
             </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
             <a href="/pegawai/aktivitas/keberatan" class="nav-link {{ Request::is('pegawai/aktivitas/keberatan') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-list"></i>
                 <p>Pengajuan Keberatan</p>
             </a>
-            </li>
+            </li> --}}
         </ul>
     </li>
     <li class="nav-item has-treeview {{Request::is('pegawai/validasi*') ? 'menu-open' : ''}}">
@@ -68,11 +76,17 @@
             </a>
             </li>
             <li class="nav-item">
+            <a href="/pegawai/validasi/riwayat" class="nav-link {{ Request::is('pegawai/validasi/riwayat') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-list"></i>
+                <p>Riwayat Validasi</p>
+            </a>
+            </li>
+            {{-- <li class="nav-item">
             <a href="/pegawai/validasi/keberatan" class="nav-link {{ Request::is('pegawai/validasi/keberatan') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-list"></i>
                 <p>Validasi Keberatan</p>
             </a>
-            </li>
+            </li> --}}
         </ul>
     </li>
     <li class="nav-item">

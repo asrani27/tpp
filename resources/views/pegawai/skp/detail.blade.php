@@ -55,6 +55,7 @@
                       <tr>
                         <th>#</th>
                         <th>Deskripsi</th>
+                        <th>Status</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -66,6 +67,17 @@
                           <tr>
                             <td>{{$key+ $data->firstItem()}}</td>
                             <td>{{$item->deskripsi}}</td>
+                            <td>
+                                @if ($item->validasi == null)
+                                    <span class="badge badge-info">diproses</span>
+                                @elseif ($item->validasi == 1)
+                                <span class="badge badge-success">disetujui</span>
+
+                                @else
+                                    
+                                <span class="badge badge-danger">ditolak</span>
+                                @endif
+                            </td>
                             <td>
                           
                             <a href="/pegawai/skp/rencana-kegiatan/edit/{{$item->id}}" class="btn btn-xs btn-warning" data-toggle="tooltip" title='Edit data'><i class="fas fa-edit"></i></a>

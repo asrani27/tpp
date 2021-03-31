@@ -41,4 +41,18 @@ class ProfilController extends Controller
     {
         return view('walikota.profil');
     }
+
+    public function gantiPassPegawai(Request $req)
+    {
+        if($req->password1 != $req->password2){
+            toastr()->info('Password tidak sama');
+            return back();
+        }else{
+            Auth::user()->update([
+                'password' => bcrypt($req->password1)
+            ]);
+            toastr()->success('Password Berhasil DiUbah');
+            return back();
+        }
+    }
 }

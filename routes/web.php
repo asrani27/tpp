@@ -110,9 +110,16 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
+    
     Route::get('/home/pegawai', 'HomeController@pegawai');
+    Route::post('/pegawai/profil/gantipass', 'ProfilController@gantiPassPegawai');
     
     Route::get('/pegawai/skp/rencana-kegiatan', 'SkpController@index');
+    Route::get('/pegawai/skp/validasi', 'SkpController@validasiSkp');
+    Route::get('/pegawai/skp/validasi/view/{id}', 'SkpController@viewSkp');
+    Route::get('/pegawai/skp/validasi/acc/{id}', 'SkpController@setujuiSkp');
+    Route::get('/pegawai/skp/validasi/acc_semua/{id}', 'SkpController@accSemuaSkp');
+    Route::get('/pegawai/skp/validasi/tolak/{id}', 'SkpController@tolakSkp');
     Route::post('/pegawai/skp/rencana-kegiatan', 'SkpController@storePeriode');
     Route::get('/pegawai/skp/rencana-kegiatan/edit/{id}', 'SkpController@edit');
     Route::post('/pegawai/skp/rencana-kegiatan/edit/{id}', 'SkpController@update');

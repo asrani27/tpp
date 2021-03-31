@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Skp;
+use App\Pegawai;
 use App\Skp_periode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -126,5 +127,67 @@ class SkpController extends Controller
         }
         toastr()->success('periode Berhasil Di Aktifkan');
         return back();
+    }
+
+    public function validasiSkp()
+    {
+        $data = Auth::user()->pegawai->jabatan->bawahan->load('pegawai')->map(function($item){
+            $item->nama_pegawai = $item->pegawai == null ? '-':$item->pegawai->nama;
+            $item->skp_baru = $item->pegawai == null ? 0:$item->pegawai->skp_periode->map(function($item2){
+                return $item2->skp->where('validasi',null);
+            })->collapse()->count();
+            return $item;
+        });
+        
+        return view('pegawai.skp.validasi',compact('data'));
+    }
+
+    public function viewSkp($id)
+    {
+        $id_periode = Pegawai::find($id)->skp_periode->pluck('id')->toArray();
+        $data = Skp::whereIn('skp_periode_id', $id_periode)->orderBy('validasi', 'ASC')->paginate(10);
+        $pegawai = Pegawai::find($id);
+        return view('pegawai.skp.detail_validasi',compact('data','pegawai','id'));
+    }
+
+    public function setujuiSkp($id)
+    {
+        Skp::find($id)->update([
+            'validasi' => 1,
+            'validator' => Auth::user()->pegawai->id,
+        ]);
+        toastr()->success('Skp Disetujui');
+        return back();
+    }
+    
+    public function tolakSkp($id)
+    {
+        Skp::find($id)->update([
+            'validasi' => 2,
+            'validator' => Auth::user()->pegawai->id,
+        ]);
+        toastr()->info('Skp Ditolak');
+        return back();
+    }
+
+    public function accSemuaSkp($id)
+    {
+        $id_periode = Pegawai::find($id)->skp_periode->pluck('id')->toArray();
+        $data = Skp::whereIn('skp_periode_id', $id_periode)->where('validasi',null)->get();
+        if(count($data) == 0){
+            toastr()->info('Tidak ada SKP yang Disetujui');
+            return back();
+        }else{
+            foreach($data as $key => $item)
+            {
+                $item->update([
+                    'validasi' => 1,
+                    'validator' => Auth::user()->pegawai->id
+                ]);
+            }
+            
+            toastr()->success('Skp Disetujui');
+            return back();
+        }
     }
 }

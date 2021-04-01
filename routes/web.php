@@ -140,6 +140,7 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::get('/pegawai/aktivitas/keberatan', 'AktivitasController@keberatan');
 
     Route::get('/pegawai/validasi/harian', 'ValidasiController@index');
+    Route::get('/pegawai/validasi/riwayat', 'ValidasiController@riwayat');
     Route::get('/pegawai/validasi/harian/acc/{id}', 'ValidasiController@accSemua');
     Route::get('/pegawai/validasi/harian/acc_aktivitas/{id}', 'ValidasiController@accAktivitas');
     Route::get('/pegawai/validasi/harian/tolak/{id}', 'ValidasiController@tolakAktivitas');

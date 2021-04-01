@@ -39,7 +39,12 @@ class AdminController extends Controller
 
     public function addPegawai()
     {
-        return view('admin.pegawai.create');
+        $jabatan = Jabatan::where('skpd_id',Auth::user()->skpd->id)->get()->map(function($item){
+            $item->pegawai = $item->pegawai;
+            return $item;
+        })->where('pegawai',null);
+        
+        return view('admin.pegawai.create',compact('jabatan'));
     }
 
     public function storePegawai(Request $req)
@@ -74,7 +79,12 @@ class AdminController extends Controller
     public function editPegawai($id)
     {
         $data = Pegawai::find($id);
-        return view('admin.pegawai.edit',compact('data'));
+        
+        $jabatan = Jabatan::where('skpd_id',Auth::user()->skpd->id)->get()->map(function($item){
+            $item->pegawai = $item->pegawai;
+            return $item;
+        })->where('pegawai',null);
+        return view('admin.pegawai.edit',compact('data','jabatan'));
     }
     
     public function updatePegawai(Request $req, $id)
@@ -271,12 +281,15 @@ class AdminController extends Controller
     public function org()
     {
         $skpd_id = Auth::user()->skpd->id;
-        $data = Jabatan::where('skpd_id', $skpd_id)->get();
+        $data = Jabatan::with('pegawai')->where('skpd_id', $skpd_id)->get();
+        
         $map = $data->map(function($item){
-            $item->format = [['v'=>(string)$item->id, 'f'=>$item->nama],$item->jabatan_id == null ? '':(string)$item->jabatan_id, ''];
+            $item->pegawai = $item->pegawai == null ? '-': $item->pegawai->nama;
+            
+            $item->format = [['v'=>(string)$item->id, 'f'=>'<b>'.$item->nama.'</b><br/>'.$item->pegawai],$item->jabatan_id == null ? '':(string)$item->jabatan_id, ''];
             return $item->format;
         });
-        //dd($map);
+        
         $json = response()->json($map);
 
       

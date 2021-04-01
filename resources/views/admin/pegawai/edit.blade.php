@@ -78,8 +78,8 @@
                             <label for="inputPassword3" class="col-sm-2 col-form-label">Jabatan</label>
                             <div class="col-sm-10">
                                 <select name="jabatan_id" class="form-control" required>
-                                    <option value="">-pilih-</option>
-                                    @foreach (jabatan(Auth::user()->skpd->id) as $item)
+                                    <option value="{{$data->jabatan_id}}" selected>{{$data->jabatan->nama}}</option>
+                                    @foreach ($jabatan as $item)
                                         <option value="{{$item->id}}" {{$item->id == $data->jabatan_id ? 'selected':''}}>{{$item->nama}}</option>
                                     @endforeach
                                 </select>

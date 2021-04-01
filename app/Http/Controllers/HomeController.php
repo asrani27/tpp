@@ -9,6 +9,7 @@ use App\Aktivitas;
 use App\Parameter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\View_aktivitas_pegawai;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
@@ -68,8 +69,12 @@ class HomeController extends Controller
         $persentase_tpp = (float) Parameter::where('name','persentase_tpp')->first()->value;
         $countJabatan   = DB::table('jabatan')->where('skpd_id',$this->skpd_id())->get()->count();
         
-        //return response()->json($pegawai);
-        $data = $pegawai->map(function($item)use($persentase_tpp){
+        $month = Carbon::now()->month;
+        $year  = Carbon::now()->year;
+
+        $view_aktivitas = View_aktivitas_pegawai::where('tahun', $year)->where('bulan', $month)->get();
+
+        $data = $pegawai->map(function($item)use($persentase_tpp, $view_aktivitas){
             if($item->jabatan == null){
                 $item->nama_jabatan = null;
                 $item->jenis_jabatan = null;
@@ -81,7 +86,7 @@ class HomeController extends Controller
                 $item->total_pagu = 0;
                 $item->persen_disiplin = 100;
                 $item->total_disiplin =  0;
-                $item->persen_produktivitas = 100;
+                $item->persen_produktivitas = 0;
                 $item->total_produktivitas =  0;
                 $item->total_tpp =  0;
             }else{
@@ -95,12 +100,20 @@ class HomeController extends Controller
                 $item->total_pagu = $item->basic_tpp * ($persentase_tpp + $item->tambahan_persen_tpp) / 100;
                 $item->persen_disiplin = 100;
                 $item->total_disiplin =  $item->total_pagu * 40 / 100;
-                $item->persen_produktivitas = 100;
-                $item->total_produktivitas =  $item->total_pagu * 60 / 100;
+                $item->persen_produktivitas = $view_aktivitas->where('pegawai_id', $item->id)->first() == null ? 0 : (int) $view_aktivitas->where('pegawai_id', $item->id)->first()->jumlah_menit;
+                if($item->persen_produktivitas < \App\Parameter::where('name','menit')->first()->value)
+                {
+                    $item->total_produktivitas =  0;
+                }else
+                {
+                    $item->total_produktivitas =  $item->total_pagu * 60 / 100;
+                }
                 $item->total_tpp =  $item->total_disiplin + $item->total_produktivitas;
             }
             return $item;
         });
+
+        //dd($data);
         
         return view('admin.home',compact('data','persentase_tpp','countPegawai','countJabatan'));
     }

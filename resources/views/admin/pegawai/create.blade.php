@@ -104,11 +104,11 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Jabatan</label>
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Jabatan Tersedia</label>
                                     <div class="col-sm-10">
                                         <select name="jabatan_id" class="form-control">
                                             <option value="">-pilih-</option>
-                                            @foreach (jabatan(Auth::user()->skpd->id) as $item)
+                                            @foreach ($jabatan as $item)
                                                 <option value="{{$item->id}}">{{$item->nama}}</option>
                                             @endforeach
                                         </select>

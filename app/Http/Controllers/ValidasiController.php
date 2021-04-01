@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Skp;
 use App\Jabatan;
 use App\Aktivitas;
 use Illuminate\Http\Request;
@@ -70,7 +71,8 @@ class ValidasiController extends Controller
     public function accAktivitas($id)
     {
         Aktivitas::findOrFail($id)->update([
-            'validasi' => 1
+            'validasi' => 1,
+            'validator' => Auth::user()->pegawai->id,
         ]);
         toastr()->success('Aktivitas Di Setujui');
         return back();
@@ -79,9 +81,16 @@ class ValidasiController extends Controller
     public function tolakAktivitas($id)
     {
         Aktivitas::findOrFail($id)->update([
-            'validasi' => 2
+            'validasi' => 2,
+            'validator' => Auth::user()->pegawai->id,
         ]);
         toastr()->success('Aktivitas Di Tolak');
         return back();
+    }
+
+    public function riwayat()
+    {
+        $data = Aktivitas::with('pegawai')->where('validator',Auth::user()->pegawai->id)->paginate(10);
+        return view('pegawai.validasi.riwayat',compact('data'));
     }
 }

@@ -60,15 +60,48 @@
         </div>
         
         <div class="row">
+          <div class="col-lg-4 col-6">
+            
+          <select name="bulan" class="form-control">
+            <option value="01">Januari</option>
+            <option value="02">Februari</option>
+            <option value="03">Maret</option>
+            <option value="04">April</option>
+            <option value="05">Mei</option>
+            <option value="06">Juni</option>
+            <option value="07">Juli</option>
+            <option value="08">Agustus</option>
+            <option value="09">September</option>
+            <option value="10">Oktober</option>
+            <option value="11">November</option>
+            <option value="12">Desember</option>
+          </select>
+          </div>
+          <div class="col-lg-4 col-6">
+            
+          <select name="tahun" class="form-control">
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+          </select>
+          </div>
+          <div class="col-lg-4 col-12">
+            <button type="submit" class="btn btn-primary"><i class="fas fa-searcg"></i>Tampilkan</button>
+            <a href="/home/admin/persen" class="btn btn-primary"><i class="fas fa-percent"></i> Edit Persen TPP</a>
+          </div>
+
+        </div>
+        <form method="get">
+        </form>
+        <br/><br/>
+        
+        
+        <div class="row">
             <div class="col-12 text-center">
                 <strong>DAFTAR TPP ASN<br/>
                 BULAN {{strtoupper(\Carbon\Carbon::now()->monthName)}}<br/>
                 {{strtoupper(Auth::user()->name)}}</strong>
             </div>
         </div>
-        <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-file-excel"></i> Export</a>
-        <a href="/home/admin/persen" class="btn btn-sm btn-primary"><i class="fas fa-percent"></i> Edit Persen TPP</a>
-        <br/><br/>
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -96,7 +129,7 @@
                               <th>Total Pagu</th>
                               <th>%</th>
                               <th>Rp.</th>
-                              <th>%</th>
+                              <th>{{\App\Parameter::where('name','menit')->first()->value}} menit</th>
                               <th>Rp.</th>
                           </tr>
                         </thead>
@@ -155,7 +188,7 @@
                             <td class="text-right">
                               {{currency($item->total_disiplin)}}
                             </td>
-                            <td>100 %</td>
+                            <td>{{$item->persen_produktivitas}} m</td>
                             <td class="text-right">
                               {{currency($item->total_produktivitas)}}
                             </td>

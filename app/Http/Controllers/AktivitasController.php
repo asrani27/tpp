@@ -19,6 +19,11 @@ class AktivitasController extends Controller
     }
     public function index()
     {
+        if($this->user()->pegawai->jabatan == null)
+        {
+            toastr()->info('Tidak bisa melakukan aktivitas, Karena Tidak memiliki jabatan,untuk melihat riwayat silahkan ke menu laporan aktivitas');
+            return back();
+        }
         $person = $this->user()->pegawai->with('jabatan');
         $atasan = $this->user()->pegawai->jabatan->atasan == null ? Jabatan::where('sekda',1)->first():$this->user()->pegawai->jabatan->atasan;
         
@@ -30,8 +35,17 @@ class AktivitasController extends Controller
     public function add()
     {
         $tahun = Carbon::now()->year;
+        if($this->user()->pegawai->skp_periode->count() == 0){
+            toastr()->info('Harap isi SKP dulu');
+            return back();
+        }
         
-        $skp = Auth::user()->pegawai->skp_periode->where('is_aktif',1)->first()->skp;
+        if($this->user()->pegawai->skp_periode->where('is_aktif',1)->first() == null){
+            toastr()->info('Aktifkan SKP Anda Terlebih dahulu');
+            return back();
+        }
+        
+        $skp = $this::user()->pegawai->skp_periode->where('is_aktif',1)->first()->skp;
         
         return view('pegawai.aktivitas.create',compact('skp'));
     }

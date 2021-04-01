@@ -26,7 +26,7 @@
                 <p>Rencana Kegiatan</p>
             </a>
             </li>
-            @if (Auth::user()->pegawai != null )    
+            @if (Auth::user()->pegawai->jabatan != null )    
                 @if (count(Auth::user()->pegawai->jabatan->bawahan) != 0)
                 <li class="nav-item">
                 <a href="/pegawai/skp/validasi" class="nav-link {{ Request::is('pegawai/skp/validasi') ? 'active' : '' }}">

@@ -1,6 +1,7 @@
 <form method="POST" action="/admin/jabatan">
     @csrf
     <div class="form-group">
+        <label for="inputPassword3" class="col-sm-12 col-form-label">Atasan langsung :</label>
         <select class="form-control select2" name="jabatan_id" style="width: 100%;">
             @if (jabatan($skpd_id)->count() == 0)
                 <option value="" selected="selected">Top Level</option>

@@ -29,7 +29,7 @@
         data.addColumn('string', 'ToolTip');
 
         // For each orgchart box, provide the name, manager, and tooltip to show.
-        console.log(petajabatan, test);
+        
         data.addRows(petajabatan);
 
         // Create the chart.

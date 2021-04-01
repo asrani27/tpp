@@ -84,7 +84,7 @@
                                         <option value="">-pilih-</option>
                                     @endif
                                     @foreach ($jabatan as $item)
-                                        <option value="{{$item->id}}" {{$item->id == $data->jabatan_id ? 'selected':''}}>{{$item->nama}} {{$item->atasan == null ? '-':$item->atasan->nama}}</option>
+                                        <option value="{{$item->id}}" {{$item->id == $data->jabatan_id ? 'selected':''}}>{{$item->nama}} - {{$item->atasan == null ? '-':'Atasan : '$item->atasan->nama}}</option>
                                     @endforeach
                                 </select>
                             </div>

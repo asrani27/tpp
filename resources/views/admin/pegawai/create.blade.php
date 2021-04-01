@@ -109,7 +109,7 @@
                                         <select name="jabatan_id" class="form-control">
                                             <option value="">-pilih-</option>
                                             @foreach ($jabatan as $item)
-                                                <option value="{{$item->id}}">{{$item->nama}}</option>
+                                                <option value="{{$item->id}}">{{$item->nama}} {{$item->atasan == null ? '-':$item->atasan->nama}}</option>
                                             @endforeach
                                         </select>
                                     </div>

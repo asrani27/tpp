@@ -71,7 +71,6 @@ class HomeController extends Controller
         
         $month = Carbon::now()->month;
         $year  = Carbon::now()->year;
-
         $view_aktivitas = View_aktivitas_pegawai::where('tahun', $year)->where('bulan', $month)->get();
 
         $data = $pegawai->map(function($item)use($persentase_tpp, $view_aktivitas){
@@ -115,7 +114,7 @@ class HomeController extends Controller
 
         //dd($data);
         
-        return view('admin.home',compact('data','persentase_tpp','countPegawai','countJabatan'));
+        return view('admin.home',compact('data','persentase_tpp','countPegawai','countJabatan','month','year'));
     }
     
     public function adminUp($id, $urutan)

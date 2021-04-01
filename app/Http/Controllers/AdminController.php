@@ -286,13 +286,21 @@ class AdminController extends Controller
         $map = $data->map(function($item){
             $item->pegawai = $item->pegawai == null ? '-': $item->pegawai->nama;
             
-            $item->format = [['v'=>(string)$item->id, 'f'=>'<b>'.$item->nama.'</b><br/>'.$item->pegawai],$item->jabatan_id == null ? '':(string)$item->jabatan_id, ''];
+            $item->format = [['v'=>(string)$item->id, 'f'=>'<img src="https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png" width="50px"><br/><b>'.$item->nama.'</b><br/>'.$item->pegawai],$item->jabatan_id == null ? '':(string)$item->jabatan_id, ''];
             return $item->format;
         });
         
         $json = response()->json($map);
-
-      
+ 
         return view('admin.jabatan.org',compact('json'));
+    }
+
+    public function tpp()
+    {
+        $bulan = request()->get('bulan');
+        $tahun = request()->get('tahun');
+        toastr()->info('Dalam Tahap pengembangan');
+        return back();
+        //dd($bulan, $tahun);
     }
 }

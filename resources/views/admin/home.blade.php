@@ -61,38 +61,37 @@
         
         <div class="row">
           <div class="col-lg-4 col-6">
+            <form method="get" action="/home/admin/tpp">
             
-          <select name="bulan" class="form-control">
-            <option value="01">Januari</option>
-            <option value="02">Februari</option>
-            <option value="03">Maret</option>
-            <option value="04">April</option>
-            <option value="05">Mei</option>
-            <option value="06">Juni</option>
-            <option value="07">Juli</option>
-            <option value="08">Agustus</option>
-            <option value="09">September</option>
-            <option value="10">Oktober</option>
-            <option value="11">November</option>
-            <option value="12">Desember</option>
-          </select>
-          </div>
-          <div class="col-lg-4 col-6">
-            
-          <select name="tahun" class="form-control">
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
-          </select>
-          </div>
-          <div class="col-lg-4 col-12">
-            <button type="submit" class="btn btn-primary"><i class="fas fa-searcg"></i>Tampilkan</button>
-            <a href="/home/admin/persen" class="btn btn-primary"><i class="fas fa-percent"></i> Edit Persen TPP</a>
-          </div>
+              <select name="bulan" class="form-control">
+                <option value="01" {{$month == '01' ? 'selected' : ''}}>Januari</option>
+                <option value="02" {{$month == '02' ? 'selected' : ''}}>Februari</option>
+                <option value="03" {{$month == '03' ? 'selected' : ''}}>Maret</option>
+                <option value="04" {{$month == '04' ? 'selected' : ''}}>April</option>
+                <option value="05" {{$month == '05' ? 'selected' : ''}}>Mei</option>
+                <option value="06" {{$month == '06' ? 'selected' : ''}}>Juni</option>
+                <option value="07" {{$month == '07' ? 'selected' : ''}}>Juli</option>
+                <option value="08" {{$month == '08' ? 'selected' : ''}}>Agustus</option>
+                <option value="09" {{$month == '09' ? 'selected' : ''}}>September</option>
+                <option value="10" {{$month == '10' ? 'selected' : ''}}>Oktober</option>
+                <option value="11" {{$month == '11' ? 'selected' : ''}}>November</option>
+                <option value="12" {{$month == '12' ? 'selected' : ''}}>Desember</option>
+              </select>
+              </div>
+              <div class="col-lg-4 col-6">
+                
+              <select name="tahun" class="form-control">
+                <option value="2021" {{$year == '2021' ? 'selected' : ''}}>2021</option>
+                <option value="2022" {{$year == '2022' ? 'selected' : ''}}>2022</option>
+              </select>
+              </div>
+              <div class="col-lg-4 col-12">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-searcg"></i>Tampilkan</button>
+                <a href="/home/admin/persen" class="btn btn-primary"><i class="fas fa-percent"></i> Edit Persen TPP</a>
+              </div>
 
-        </div>
-        <form method="get">
-        </form>
-        <br/><br/>
+            </form>
+        </div><br />
         
         
         <div class="row">

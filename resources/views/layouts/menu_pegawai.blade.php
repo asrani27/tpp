@@ -26,13 +26,15 @@
                 <p>Rencana Kegiatan</p>
             </a>
             </li>
-            @if (count(Auth::user()->pegawai->jabatan->bawahan) != 0)
+            @if (Auth::user()->pegawai != null )    
+                @if (count(Auth::user()->pegawai->jabatan->bawahan) != 0)
                 <li class="nav-item">
                 <a href="/pegawai/skp/validasi" class="nav-link {{ Request::is('pegawai/skp/validasi') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-list"></i>
                     <p>Validasi SKP</p>
                 </a>
                 </li>
+                @endif
             @endif
         </ul>
     </li>

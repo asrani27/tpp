@@ -19,12 +19,6 @@
     var petajabatan = json['original'];
     var count =  json['original'].length;
     
-    var test =  [
-            [{'v':'1', 'f':'Mike<div style="color:red; font-style:italic">President</div>'},'', ''],
-           [{'v':'2', 'f':'Mike<div style="color:red; font-style:italic">President</div>'},'1', ''],
-           [{'v':'3', 'f':'Tyson<div style="color:red; font-style:italic">President</div>'},'2', ''],
-           ];
-
       google.charts.load('current', {packages:["orgchart"]});
       google.charts.setOnLoadCallback(drawChart);
 

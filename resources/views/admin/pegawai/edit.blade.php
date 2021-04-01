@@ -78,7 +78,11 @@
                             <label for="inputPassword3" class="col-sm-2 col-form-label">Jabatan</label>
                             <div class="col-sm-10">
                                 <select name="jabatan_id" class="form-control" required>
-                                    <option value="{{$data->jabatan_id}}" selected>{{$data->jabatan->nama}}</option>
+                                    @if ($data->jabatan_id != null)   
+                                        <option value="{{$data->jabatan_id}}" selected>{{$data->jabatan->nama}}</option>
+                                    @else
+                                        <option value="">-pilih-</option>
+                                    @endif
                                     @foreach ($jabatan as $item)
                                         <option value="{{$item->id}}" {{$item->id == $data->jabatan_id ? 'selected':''}}>{{$item->nama}}</option>
                                     @endforeach

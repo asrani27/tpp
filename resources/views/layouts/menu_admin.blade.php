@@ -26,6 +26,14 @@
     </a>
     </li>
     <li class="nav-item">
+    <a href="/admin/presensi" class="nav-link">
+        <i class="nav-icon fas fa-clock"></i>
+        <p>
+        Presensi
+        </p>
+    </a>
+    </li>
+    <li class="nav-item">
     <a href="/admin/jabatan" class="nav-link">
         <i class="nav-icon fas fa-map"></i>
         <p>
@@ -38,6 +46,14 @@
         <i class="nav-icon fas fa-sitemap"></i>
         <p>
         Struktur Organisasi
+        </p>
+    </a>
+    </li>
+    <li class="nav-item">
+    <a href="/admin/rekapitulasi" class="nav-link">
+        <i class="nav-icon fas fa-file"></i>
+        <p>
+        Rekapitulasi TPP
         </p>
     </a>
     </li>

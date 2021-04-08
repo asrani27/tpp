@@ -103,6 +103,13 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/pegawai/createuser/{id}', 'AdminController@createUser');
     Route::get('/admin/pegawai/resetpass/{id}', 'AdminController@resetPass');
     
+    Route::get('/admin/presensi', 'PresensiController@index');
+    Route::get('/admin/presensi/edit', 'PresensiController@edit');
+    Route::post('/admin/presensi/edit', 'PresensiController@update');
+    Route::get('/admin/presensi/list', 'PresensiController@list');
+    Route::get('/admin/presensi/{bulan}/{tahun}', 'PresensiController@editBulanTahun');
+    Route::post('/admin/presensi/{bulan}/{tahun}', 'PresensiController@updateBulanTahun');
+
     Route::get('/admin/jabatan', 'AdminController@jabatan');
     Route::post('/admin/jabatan', 'AdminController@storeJabatan');
     Route::get('/admin/jabatan/edit/{id}', 'AdminController@editJabatan');

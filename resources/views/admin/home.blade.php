@@ -58,40 +58,16 @@
               </div>
             </div> 
         </div>
-        
         <div class="row">
-          <div class="col-lg-4 col-6">
-            <form method="get" action="/home/admin/tpp">
-            
-              <select name="bulan" class="form-control">
-                <option value="01" {{$month == '01' ? 'selected' : ''}}>Januari</option>
-                <option value="02" {{$month == '02' ? 'selected' : ''}}>Februari</option>
-                <option value="03" {{$month == '03' ? 'selected' : ''}}>Maret</option>
-                <option value="04" {{$month == '04' ? 'selected' : ''}}>April</option>
-                <option value="05" {{$month == '05' ? 'selected' : ''}}>Mei</option>
-                <option value="06" {{$month == '06' ? 'selected' : ''}}>Juni</option>
-                <option value="07" {{$month == '07' ? 'selected' : ''}}>Juli</option>
-                <option value="08" {{$month == '08' ? 'selected' : ''}}>Agustus</option>
-                <option value="09" {{$month == '09' ? 'selected' : ''}}>September</option>
-                <option value="10" {{$month == '10' ? 'selected' : ''}}>Oktober</option>
-                <option value="11" {{$month == '11' ? 'selected' : ''}}>November</option>
-                <option value="12" {{$month == '12' ? 'selected' : ''}}>Desember</option>
-              </select>
-              </div>
-              <div class="col-lg-4 col-6">
-                
-              <select name="tahun" class="form-control">
-                <option value="2021" {{$year == '2021' ? 'selected' : ''}}>2021</option>
-                <option value="2022" {{$year == '2022' ? 'selected' : ''}}>2022</option>
-              </select>
-              </div>
-              <div class="col-lg-4 col-12">
-                <button type="submit" class="btn btn-primary"><i class="fas fa-searcg"></i>Tampilkan</button>
-                <a href="/home/admin/persen" class="btn btn-primary"><i class="fas fa-percent"></i> Edit Persen TPP</a>
-              </div>
-
-            </form>
-        </div><br />
+          <div class="col-12 text-center">
+          
+          <a href="/admin/rekapitulasi" class="btn btn-info"><i class="fas fa-file"></i>Rekap Data</a>
+          <a href="/home/admin/persen" class="btn btn-primary"><i class="fas fa-percent"></i> Edit Persen TPP</a>
+          <a href="/admin/presensi" class="btn btn-primary"><i class="fas fa-clock"></i> Edit Presensi</a>
+          </div>
+        </div>
+        
+        <br />
         
         
         <div class="row">
@@ -183,7 +159,7 @@
                             <td class="text-right">
                               {{currency($item->total_pagu)}}
                             </td>
-                            <td>100 %</td>
+                            <td>{{$item->persen_disiplin}}</td>
                             <td class="text-right">
                               {{currency($item->total_disiplin)}}
                             </td>

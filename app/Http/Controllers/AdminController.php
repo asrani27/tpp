@@ -264,6 +264,7 @@ class AdminController extends Controller
             for($i=0; $i < $count; $i++){                
                 Jabatan::findOrfail($req->jabatan_id[$i])->update([
                     'jenis_jabatan' => $req->jenis_jabatan[$i],
+                    'persentase_tpp' => $req->persentase_tpp[$i],
                     'tambahan_persen_tpp' => $req->tambahan_persen_tpp[$i],
                 ]);
             }
@@ -286,7 +287,7 @@ class AdminController extends Controller
         $map = $data->map(function($item){
             $item->pegawai = $item->pegawai == null ? '-': $item->pegawai->nama;
             
-            $item->format = [['v'=>(string)$item->id, 'f'=>'<img src="https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png" width="20px"><br/><b>'.$item->nama.'</b><br/>'.$item->pegawai],$item->jabatan_id == null ? '':(string)$item->jabatan_id, ''];
+            $item->format = [['v'=>(string)$item->id, 'f'=>'<img src="https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png" width="35px"><br/><b>'.$item->nama.'</b><br/>'.$item->pegawai],$item->jabatan_id == null ? '':(string)$item->jabatan_id, ''];
             return $item->format;
         });
         

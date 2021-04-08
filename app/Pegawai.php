@@ -30,6 +30,16 @@ class Pegawai extends Model
         return $this->hasMany(Aktivitas::class, 'pegawai_id')->where('tanggal','=',Carbon::today()->format('Y-m-d'))->orderBy('id','DESC');
     }
 
+    public function presensi()
+    {
+        return $this->hasMany(Presensi::class, 'pegawai_id');
+    }
+
+    public function presensiMonth()
+    {
+        return $this->hasMany(Presensi::class, 'pegawai_id')->where('bulan', Carbon::today()->format('m'))->where('tahun', Carbon::today()->format('Y'));
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

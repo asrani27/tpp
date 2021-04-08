@@ -25,6 +25,7 @@
                             <th style="width: 10px">#</th>
                             <th>Nama /NIP/Pangkat/Golongan</th>
                             <th>Jenis Jabatan</th>
+                            <th>Persentase TPP</th>
                             <th>Tambahan Persentase TPP</th>
                           </tr>
                         </thead>
@@ -50,7 +51,10 @@
                               </select>
                             </td>
                             <td class="text-center">
-                              <input type="text" name="tambahan_persen_tpp[]" class="form-control form-control-sm" value="{{$item->tambahan_persen_tpp}}">
+                              <input type="text" name="persentase_tpp[]" class="form-control form-control-sm" value="{{$item->persentase_tpp == null ? 87.5 : $item->persentase_tpp}}">
+                            </td>
+                            <td class="text-center">
+                              <input type="text" name="tambahan_persen_tpp[]" class="form-control form-control-sm" value="{{$item->tambahan_persen_tpp == null ? 0 : $item->tambahan_persen_tpp}}">
                             </td>
                           </tr>
                           @endforeach

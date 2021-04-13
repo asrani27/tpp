@@ -135,7 +135,7 @@
                             <td>
                                 {{$item->nama}} <br/>
                                 {{$item->nama_pangkat}}<br/>
-                                NIP. {{$item->nip}}
+                                NIP.{{$item->nip}}
 
                             </td>
                             <td class="text-center">

@@ -93,7 +93,7 @@
                     </tbody> 
                     <tfoot>
                         <tr>
-                            <td colspan=3>
+                            <td colspan=4>
                                 <button type="submit" class="btn btn-block bg-gradient-success"><i class="fas fa-edit"></i> Update Presensi</button>
                             </td>
                         </tr>

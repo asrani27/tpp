@@ -208,7 +208,8 @@ class HomeController extends Controller
                     $item->total_produktivitas =  0;
                 }
                 $item->total_tpp =  $item->total_disiplin + $item->total_produktivitas;
-                $item->pph21 =  $item->total_tpp * 15 /100;
+                $item->pph   = $item->pangkat->pph;
+                $item->pph21 =  $item->total_tpp * $item->pph /100;
                 $item->bpjs =  0;
             }
             return $item;

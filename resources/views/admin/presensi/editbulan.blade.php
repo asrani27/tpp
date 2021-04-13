@@ -60,6 +60,7 @@
                         <th>#</th>
                         <th>Nama / Nip / Jabatan</th>
                         <th>Presensi Final (%)</th>
+                        <th>Hukuman Disiplin</th>
                       </tr>
                     </thead>
                     @php
@@ -80,12 +81,19 @@
                                 </div>
                               </div>
                             </td>
+                            <td>
+                              <div class="row">
+                                <div class="col-xs-3">
+                                    <input type="text" name="hukuman[]" class="form-control form-control-sm" value="{{$item->hukuman}}">
+                                </div>
+                              </div>
+                            </td>
                           </tr>
                       @endforeach
                     </tbody> 
                     <tfoot>
                         <tr>
-                            <td colspan=3>
+                            <td colspan=4>
                                 <button type="submit" class="btn btn-block bg-gradient-success"><i class="fas fa-edit"></i> Update Presensi</button>
                             </td>
                         </tr>

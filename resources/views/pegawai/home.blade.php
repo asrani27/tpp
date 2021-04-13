@@ -144,7 +144,7 @@
                             <td class="text-right">{{currency($data->total_tpp)}}</td>
                           </tr>
                           <tr>
-                            <td class="text-sm" width="170px">PPH 21 15%</td>
+                            <td class="text-sm" width="170px">PPH 21 {{$data->pph}} %</td>
                             <td class="text-right">{{currency($data->pph21)}}</td>
                           </tr>
                           <tr>

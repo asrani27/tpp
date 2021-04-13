@@ -38,6 +38,7 @@
                         <th>#</th>
                         <th>Nama Pangkat</th>
                         <th>Golongan</th>
+                        <th>PPH21</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -50,6 +51,7 @@
                             <td>{{$no++}}</td>
                             <td>{{$item->nama}}</td>
                             <td>{{$item->golongan}}</td>
+                            <td>{{$item->pph}} %</td>
                             <td>
                             <a href="/superadmin/pangkat/edit/{{$item->id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                             <a href="/superadmin/pangkat/delete/{{$item->id}}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>

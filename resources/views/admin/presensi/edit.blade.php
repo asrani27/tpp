@@ -60,6 +60,7 @@
                         <th>#</th>
                         <th>Nama / Nip / Jabatan</th>
                         <th>Presensi Final (%)</th>
+                        <th>Hukuman Disiplin</th>
                       </tr>
                     </thead>
                     @php
@@ -77,6 +78,13 @@
                               <div class="row">
                                 <div class="col-xs-3">
                                     <input type="text" name="persen[]" class="form-control form-control-sm" value="{{$item->persen == null ? 100:$item->persen}}">
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="row">
+                                <div class="col-xs-3">
+                                    <input type="text" name="hukuman[]" class="form-control form-control-sm" value="{{$item->hukuman}}">
                                 </div>
                               </div>
                             </td>

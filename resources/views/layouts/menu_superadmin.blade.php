@@ -78,6 +78,25 @@
             </li>
         </ul>
     </li>
+    
+    <li class="nav-item has-treeview {{Request::is('superadmin/rekapitulasi*') ? 'menu-open' : ''}}">
+        <a href="#" class="nav-link {{Request::is('superadmin/rekapitulasi*') ? 'active' : ''}}">
+          <i class="nav-icon fas fa-file"></i>
+          <p>
+            Rekapitulasi
+            <i class="fas fa-angle-left right"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview" style="display: {{Request::is('superadmin/rekapitulasi/pns*') ? 'block' : 'none'}};">
+            <li class="nav-item">
+            <a href="/superadmin/rekapitulasi/pns" class="nav-link {{ Request::is('superadmin/rekapitulasi/pns*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-users"></i>
+                <p>Data PNS</p>
+            </a>
+            </li>
+            
+        </ul>
+    </li>
     <li class="nav-item">
     <a href="/logout" class="nav-link">
         <i class="nav-icon fas fa-sign-out-alt"></i>

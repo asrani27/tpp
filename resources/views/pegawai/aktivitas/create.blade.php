@@ -27,7 +27,7 @@
                 <label class="col-sm-2 col-form-label">Tanggal</label>
                 <div class="col-sm-10">
                   
-                  <input type="date" class="form-control" name="tanggal" placeholder="" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                  <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}">
                 </div>
               </div>
               <div class="form-group row">
@@ -50,13 +50,13 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Jam Mulai</label>
                 <div class="col-sm-2">
-                  <input type="time" class="form-control" placeholder="0" name="jam_mulai" required value="{{old('jam_mulai')}}">
+                  <input type="time" class="form-control" name="jam_mulai" required value="{{$jam_mulai}}">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Jam Selesai</label>
                 <div class="col-sm-2">
-                  <input type="time" class="form-control" placeholder="0" name="jam_selesai" required value="{{old('jam_selesai')}}">
+                  <input type="time" class="form-control" name="jam_selesai" required value="{{$jam_selesai}}">
                 </div>
               </div>
               <div class="form-group row">

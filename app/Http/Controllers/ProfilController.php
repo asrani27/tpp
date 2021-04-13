@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Eselon;
+use App\Pangkat;
 use App\Pegawai;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class ProfilController extends Controller
 {
+
+    public function user()
+    {
+        return Auth::user();
+    }
     public function superadmin()
     {
         return view('superadmin.profil');
@@ -33,8 +41,47 @@ class ProfilController extends Controller
 
     public function pegawai()
     {
-        $data = Pegawai::with('jabatan','pangkat','skpd')->findOrfail(Auth::user()->pegawai->id);
+        $data = Auth::user()->pegawai;
         return view('pegawai.profil',compact('data'));
+    }
+
+    public function editPegawai()
+    {
+        $data = Auth::user()->pegawai;
+        $pangkat = Pangkat::get();
+        $eselon  = Eselon::get();
+        return view('pegawai.edit_profil',compact('data','pangkat','eselon'));
+    }
+
+    public function updatePegawai(Request $req)
+    {
+        DB::beginTransaction();
+        try {
+            $p = $this->user()->pegawai;
+            
+            $p->nama       = $req->nama;
+            $p->pangkat_id = $req->pangkat_id;
+            $p->eselon_id  = $req->eselon_id;
+            $p->no_rek     = $req->no_rek;
+            $p->npwp       = $req->npwp;
+            $p->alamat     = $req->alamat;
+            $p->jkel       = $req->jkel;
+            $p->jurusan    = $req->jurusan;
+            $p->tanggal_lahir      = $req->tanggal_lahir;
+            $p->jenjang_pendidikan = $req->jenjang_pendidikan;
+            $p->save();
+            $u = $this->user();
+            $u->email = $req->email;
+            $u->save();
+
+            DB::commit();
+            toastr()->success('Data Berhasil di Update');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $e;
+            toastr()->error('Gagal Update Data');
+        }
+        return redirect('/pegawai/profil');
     }
 
     public function walikota()

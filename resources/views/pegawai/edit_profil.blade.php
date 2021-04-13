@@ -22,7 +22,6 @@
           <p class="text-muted text-center">NIP. {{Auth::user()->username}}</p>
 
           <a href="#" class="btn btn-info btn-block"><i class="fas fa-upload"></i> Upload Foto</a>
-          <a href="/pegawai/profil/edit" class="btn btn-success btn-block"><i class="fas fa-user"></i>Edit Profil</a>
         </div>
         <!-- /.card-body -->
       </div>
@@ -37,7 +36,7 @@
         <div class="card-body">
             <form method="POST" action="/pegawai/profil/gantipass">
               @csrf
-            <input type="hidden" class="form-control" readonly value="{{Auth::user()->id}}">
+            <input type="hidden" class="form-control"  value="{{Auth::user()->id}}">
             <input type="text" class="form-control" name="password1" required placeholder="masukkan password"><br />
             <input type="text" class="form-control" name="password2" required placeholder="masukkan password Lagi"><br />
             <button type="submit" class="btn btn-success btn-block"><i class="fas fa-key"></i> Ganti Password</button>
@@ -51,15 +50,16 @@
     <!-- /.col -->
     <div class="col-md-9">
       <div class="card">
-        <div class="card-header">
+    <div class="card-header">
           <h3 class="card-title">Detail Pegawai</h3>
         </div>
         <div class="card-body">
-            <form class="form-horizontal">
+            <form class="form-horizontal" method="POST" action="/pegawai/profil/edit">
+                @csrf
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">Nama</label>
                 <div class="col-sm-9">
-                <input type="text" class="form-control" value="{{$data->nama}}" readonly>
+                <input type="text" class="form-control" name="nama"  value="{{$data->nama}}" required>
                 </div>
             </div>
             <div class="form-group row">
@@ -77,13 +77,23 @@
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">Pangkat / Golongan</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" value="{{$data->pangkat == null ? '' : $data->pangkat->nama.'('.$data->pangkat->nama.')'}}" readonly>
+                    <select name="pangkat_id" class="form-control" required>
+                        <option value="">-pilih-</option>
+                        @foreach ($pangkat as $item)
+                            <option value="{{$item->id}}" {{$data->pangkat->id == $item->id ? 'selected':''}}>{{$item->nama}} ({{$item->golongan}})</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">Eselon</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" value="{{$data->eselon == null ? '' : $data->eselon->nama}}" readonly>
+                    <select name="eselon_id" class="form-control" required>
+                        <option value="">-pilih-</option>
+                        @foreach ($eselon as $item)
+                            <option value="{{$item->id}}" {{$data->eselon->id == $item->id ? 'selected':''}}>{{$item->nama}}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="form-group row">
@@ -101,53 +111,66 @@
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">No Rek. BPPD</label>
                 <div class="col-sm-9">
-                <input type="text" class="form-control" name="no_rek" value="{{$data->no_rek == null ? '' : $data->no_rek}}" readonly>
+                <input type="text" class="form-control" name="no_rek" value="{{$data->no_rek == null ? '' : $data->no_rek}}" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">NPWP</label>
                 <div class="col-sm-9">
-                <input type="text" class="form-control" name="npwp" value="{{$data->npwp == null ? '' : $data->npwp}}" readonly>
+                <input type="text" class="form-control" name="npwp" value="{{$data->npwp == null ? '' : $data->npwp}}" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">Email</label>
                 <div class="col-sm-9">
-                <input type="text" class="form-control" name="email" value="{{$data->user == null ? '' : $data->user->email}}" readonly>
+                <input type="email" class="form-control" name="email" value="{{$data->user == null ? '' : $data->user->email}}" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">Alamat Rumah</label>
                 <div class="col-sm-9">
-                <input type="text" class="form-control" name="alamat" value="{{$data->alamat == null ? '' : $data->alamat}}" readonly>
+                <input type="text" class="form-control" name="alamat" value="{{$data->alamat == null ? '' : $data->alamat}}" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">Jenis Kelamin</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" value="{{$data->jkel == null ? '' : $data->jkel}}" readonly>
+                    <select name="jkel" class="form-control" required>
+                        <option value="L" {{$data->jkel == 'L' ? 'selected':''}}>Laki-Laki</option>
+                        <option value="P" {{$data->jkel == 'P' ? 'selected':''}}>Perempuan</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">Pendidikan Terakhir</label>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" value="{{$data->jenjang_pendidikan == null ? '' : $data->jenjang_pendidikan}}" readonly>
+                    <select name="jenjang_pendidikan" class="form-control" required>
+                        <option value="">-pilih-</option>
+                        <option value="SMA" {{$data->jenjang_pendidikan == 'SMA' ? 'selected':''}}>SMA</option>
+                        <option value="D3" {{$data->jenjang_pendidikan == 'D3' ? 'selected':''}}>D3</option>
+                        <option value="S1" {{$data->jenjang_pendidikan == 'S1' ? 'selected':''}}>S1</option>
+                        <option value="S2" {{$data->jenjang_pendidikan == 'S2' ? 'selected':''}}>S2</option>
+                        <option value="S3" {{$data->jenjang_pendidikan == 'S3' ? 'selected':''}}>S3</option>
+                    </select>
                 </div>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" value="{{$data->jurusan == null ? '' : $data->jurusan}}" readonly>
+                    <input type="text" class="form-control" name="jurusan" value="{{$data->jurusan}}" required>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="inputName" class="col-sm-3 col-form-label">Tanggal Lahir / Umur</label>
-                <div class="col-sm-2">
-                    <input type="text" class="form-control" value="{{$data->tanggal_lahir == null ? '' : $data->tanggal_lahir}}" readonly>
-                </div>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" value="{{$data->tanggal_lahir == null ? '' : \Carbon\Carbon::parse($data->tanggal_lahir)->diff(\Carbon\Carbon::now())->format('%y Tahun, %m Bulan and %d Hari')}}" readonly>
+                <label for="inputName" class="col-sm-3 col-form-label">Tanggal Lahir</label>
+                <div class="col-sm-9">
+                <input type="date" class="form-control" name="tanggal_lahir" value="{{$data->tanggal_lahir == null ? '' : $data->tanggal_lahir}}" required>
                 </div>
             </div>
             <div class="form-group row">
-                <div class="offset-sm-2 col-sm-9">
+                <div class="offset-sm-3 col-sm-9">
+                <button type="submit" class="btn btn-success btn-block"><i class="fas fa-save"></i> <b>Update</b></button>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="offset-sm-3 col-sm-9">
+                <a href="/pegawai/profil" class="btn btn-secondary btn-block"><i class="fas fa-arrow-alt-circle-left"></i> <b>Kembali</b></a>
                 </div>
             </div>
             </form>

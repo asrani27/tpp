@@ -20,6 +20,7 @@ class PresensiController extends Controller
                             ->map(function($item)use($month, $year, $skpd_id){
                                 $check = $item->presensi->where('bulan', $month)->where('tahun', $year)->where('skpd_id', $skpd_id)->first();
                                 $item->persen = $check == null ? 100 : $check->persen;
+                                $item->hukuman = $check->hukuman;
                                 return $item;
                             });
                             
@@ -44,6 +45,7 @@ class PresensiController extends Controller
                             ->map(function($item)use($month, $year, $skpd_id){
                                 $check = $item->presensi->where('bulan', $month)->where('tahun', $year)->where('skpd_id', $skpd_id)->first();
                                 $item->persen = $check == null ? 100 : $check->persen;
+                                $item->hukuman = $check->hukuman;
                                 return $item;
                             });
         $data = Presensi::where('skpd_id', Auth::user()->id)->get();
@@ -68,11 +70,13 @@ class PresensiController extends Controller
                     $attr['tahun'] = $year;
                     $attr['skpd_id'] = $skpd_id;
                     $attr['persen'] = $req->persen[$value];
+                    $attr['hukuman'] = $req->hukuman[$value];
                     Presensi::create($attr);
                 }else{
                     //update data
                     $check->update([
-                        'persen' => $req->persen[$value]
+                        'persen' => $req->persen[$value],
+                        'hukuman' => $req->hukuman[$value]
                     ]);
                 }
                 return $item;
@@ -97,6 +101,7 @@ class PresensiController extends Controller
                             ->map(function($item)use($month, $year, $skpd_id){
                                 $check = $item->presensi->where('bulan', $month)->where('tahun', $year)->where('skpd_id', $skpd_id)->first();
                                 $item->persen = $check == null ? 100 : $check->persen;
+                                $item->hukuman = $check->hukuman;
                                 return $item;
                             });
                             
@@ -123,11 +128,13 @@ class PresensiController extends Controller
                     $attr['tahun'] = $year;
                     $attr['skpd_id'] = $skpd_id;
                     $attr['persen'] = $req->persen[$value];
+                    $attr['hukuman'] = $req->hukuman[$value];
                     Presensi::create($attr);
                 }else{
                     //update data
                     $check->update([
-                        'persen' => $req->persen[$value]
+                        'persen' => $req->persen[$value],
+                        'hukuman' => $req->hukuman[$value]
                     ]);
                 }
                 return $item;

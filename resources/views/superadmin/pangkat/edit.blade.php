@@ -39,6 +39,15 @@
                                 @endif
                             </div>
                             </div>
+                            <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label">PPH 21</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="pph"  value="{{ $data->pph }}" onkeypress="return hanyaAngka(event)" required>
+                                @if ($errors->has('pph'))
+                                <span class="text-danger">{{ $errors->first('pph') }}</span>
+                                @endif
+                            </div>
+                            </div>
                         </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
@@ -55,6 +64,5 @@
 @endsection
 
 @push('js')
-
-
+@include('helper.hanya_angka')
 @endpush

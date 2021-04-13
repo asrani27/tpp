@@ -14,6 +14,7 @@ use App\Parameter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Imports\PegawaiImport;
+use Illuminate\Cache\NullStore;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 
@@ -609,6 +610,7 @@ class SuperadminController extends Controller
         $rules = [
             'nama' =>  'required|unique:pangkat,nama',
             'golongan' => 'required|unique:pangkat,golongan',
+            'pph' => 'required',
         ];
         $req->validate($rules, $messages);
         
@@ -628,6 +630,7 @@ class SuperadminController extends Controller
         $rules = [
             'nama' =>  'required|unique:pangkat,nama,'.$id,
             'golongan' => 'required|unique:pangkat,golongan,'.$id,
+            'pph' => 'required',
         ];
         $req->validate($rules, $messages);
         
@@ -776,5 +779,21 @@ class SuperadminController extends Controller
         $search = request()->get('search');
         $data   = Jabatan::where('nama','LIKE','%'.$search.'%')->paginate(10);
         return view('superadmin.parameter.jabatan',compact('data'));
+    }
+
+    public function rekapASN()
+    {
+        $data = Pegawai::paginate(10);
+        $jeniscari = Null;
+        return view('superadmin.rekapitulasi.pns',compact('data','jeniscari'));
+    }
+
+    public function rekapASNjkel()
+    {
+        $data = Pegawai::orderBy('jkel','ASC')->paginate(10);
+        $l = Pegawai::where('jkel', 'L')->get()->count();
+        $p = Pegawai::where('jkel', 'P')->get()->count();
+        $jeniscari = 'jkel';
+        return view('superadmin.rekapitulasi.pns',compact('data','jeniscari','l','p'));
     }
 }

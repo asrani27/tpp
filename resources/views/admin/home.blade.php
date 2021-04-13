@@ -46,7 +46,7 @@
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">
-                  <h3>Rp. {{currency($data->sum('total_tpp'))}},-</h3>
+                  <h3>Rp. {{currency($data->sum('tpp_diterima'))}},-</h3>
 
                   <p>Total TPP Bulan {{\Carbon\Carbon::now()->isoFormat("MMMM Y")}}</p>
                   
@@ -96,6 +96,9 @@
                             <th colspan=2>Disiplin 40%</th>
                             <th colspan=2>Produktivitas 60%</th>
                             <th rowspan=2>TPP ASN</th>
+                            <th rowspan=2>PPH 21</th>
+                            <th rowspan=2>Hukuman Disiplin</th>
+                            <th rowspan=2>TPP DIterima</th>
                           </tr>
                           <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center bg-gradient-primary">
                               <th>Persentase TPP</th>
@@ -104,7 +107,7 @@
                               <th>Total Pagu</th>
                               <th>%</th>
                               <th>Rp.</th>
-                              <th>{{\App\Parameter::where('name','menit')->first()->value}} menit</th>
+                              <th>{{$capaianMenit}} menit</th>
                               <th>Rp.</th>
                           </tr>
                         </thead>
@@ -170,6 +173,17 @@
                             <td class="text-right">
                               {{currency($item->total_tpp)}}
                             </td> 
+                            <td class="text-right">
+                              {{$item->pph}} % <br>
+                              {{$item->pph_angka == 0 ? '':'-'}}{{currency($item->pph_angka)}}
+                            </td> 
+                            <td class="text-right">
+                              {{$item->hukuman}} % <br>
+                              {{$item->hukuman_angka == 0 ? '':'-'}}{{currency($item->hukuman_angka)}}
+                            </td> 
+                            <td class="text-right">
+                              {{currency($item->tpp_diterima)}}
+                            </td> 
                           </tr>
                           @endforeach
                           
@@ -190,8 +204,11 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td>Total</td>
-                            <td>{{currency($data->sum('total_tpp'))}}</td>
+                            <td>{{currency($data->sum('tpp_diterima'))}}</td>
                           </tr>
                         </tfoot>
                       </table>

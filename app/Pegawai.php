@@ -54,4 +54,9 @@ class Pegawai extends Model
     {
         return $this->belongsTo(Pangkat::class, 'pangkat_id');
     }
+    
+    public function eselon()
+    {
+        return $this->belongsTo(Eselon::class, 'eselon_id');
+    }
 }

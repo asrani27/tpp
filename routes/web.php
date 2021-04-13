@@ -79,6 +79,9 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/superadmin/parameter/jabatan/edit', 'SuperadminController@topLevel');
     Route::get('/superadmin/parameter/sekda/{id}', 'SuperadminController@sekda');
     Route::get('/superadmin/parameter/jabatan/search', 'SuperadminController@searchSekda');
+    
+    Route::get('/superadmin/rekapitulasi/pns', 'SuperadminController@rekapASN');
+    Route::get('/superadmin/rekapitulasi/pns/jkel', 'SuperadminController@rekapASNjkel');
 
 });
 
@@ -163,6 +166,8 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::get('/pegawai/tpp', 'TppController@index');
     Route::get('/pegawai/tpp/grafik', 'TppController@grafik');
     Route::get('/pegawai/profil', 'ProfilController@pegawai');
+    Route::get('/pegawai/profil/edit', 'ProfilController@editPegawai');
+    Route::post('/pegawai/profil/edit', 'ProfilController@updatePegawai');
 
     Route::get('/pegawai/gaji', 'GajiController@index');
     

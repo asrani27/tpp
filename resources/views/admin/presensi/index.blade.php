@@ -60,6 +60,7 @@
                         <th>#</th>
                         <th>Nama / Nip / Jabatan</th>
                         <th>Presensi Final (%)</th>
+                        <th>Hukuman Disiplin</th>
                       </tr>
                     </thead>
                     @php
@@ -76,6 +77,7 @@
                             <td>
                                 {{$item->persen == null ? 0:$item->persen}} %
                             </td>
+                            <td>{{$item->hukuman}} %</td>
                           </tr>
                       @endforeach
                     </tbody> 

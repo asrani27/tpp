@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Jabatan;
+use App\Skp;
 
+use App\Jabatan;
 use App\Aktivitas;
 use Carbon\Carbon;
+use App\Skp_periode;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -45,9 +47,20 @@ class AktivitasController extends Controller
             return back();
         }
         
-        $skp = $this::user()->pegawai->skp_periode->where('is_aktif',1)->first()->skp;
+        $skp = $this->user()->pegawai->skp_periode->where('is_aktif',1)->first()->skp;
         
-        return view('pegawai.aktivitas.create',compact('skp'));
+        $data = Aktivitas::where('pegawai_id', $this->user()->pegawai->id)->latest('id')->first();
+        if($data == null){
+            $tanggal   = Carbon::now()->format('Y-m-d');
+            $jam_mulai = Carbon::parse('08:01')->format('H:i');
+            $jam_selesai = Carbon::parse('09:00')->format('H:i');
+        }else{
+            $tanggal = $data->tanggal;
+            $jam_mulai = Carbon::parse($data->jam_selesai)->addMinute()->format('H:i');
+            $jam_selesai = Carbon::parse($data->jam_selesai)->addHour()->format('H:i');
+        }
+        
+        return view('pegawai.aktivitas.create',compact('skp','tanggal','jam_mulai','jam_selesai'));
     }
     
     public function edit($id)
@@ -80,21 +93,32 @@ class AktivitasController extends Controller
 
     public function store(Request $req)
     {
-        $attr = $req->all();
-        $attr['pegawai_id'] = Auth::user()->pegawai->id;
-
-        if(strtotime($req->jam_selesai) > strtotime($req->jam_mulai)){        
-            $menit = (strtotime($req->jam_selesai) - strtotime($req->jam_mulai)) / 60;
-            $attr['menit'] = $menit;
-            Aktivitas::create($attr);
-            toastr()->success('Aktivitas berhasil Di Simpan');
-            return redirect('pegawai/aktivitas/harian');
+        $skp = Skp_periode::where('pegawai_id', $this->user()->pegawai->id)->where('is_aktif', 1)->first();
+        $skpMulai = $skp->mulai;
+        $skpSampai = $skp->sampai;
+        $tgl = $req->tanggal;
+        if(Carbon::parse($tgl) >= Carbon::parse($skpMulai) && Carbon::parse($tgl) <= Carbon::parse($skpSampai) ){
+            
+            $attr = $req->all();
+            $attr['pegawai_id'] = $this->user()->pegawai->id;
+            if(strtotime($req->jam_selesai) > strtotime($req->jam_mulai)){        
+                $menit = (strtotime($req->jam_selesai) - strtotime($req->jam_mulai)) / 60;
+                $attr['menit'] = $menit;
+                Aktivitas::create($attr);
+                toastr()->success('Aktivitas berhasil Di Simpan');
+                return redirect('pegawai/aktivitas/harian');
+            }else{
+                toastr()->error('Jam Selesai Tidak Bisa Kurang Dari Jam Mulai');
+                $req->flash();
+                return back();
+            }
         }else{
-            toastr()->error('Jam Selesai Tidak Bisa Kurang Dari Jam Mulai');
+            toastr()->error('Tanggal Berada di luar Periode SKP yang di aktifkan');
             $req->flash();
             return back();
-        }
+        }              
     }
+
     public function update(Request $req, $id)
     {
         $attr = $req->all();

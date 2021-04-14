@@ -14,8 +14,8 @@
     <div class="col-md-12">
         <h4>ASN PEMERINTAH KOTA BANJARMASIN</h4>
         
-        <a href="/superadmin/rekapitulasi/pns/jkel" class="btn btn-sm btn-info"><i class="fas fa-users"></i> ASN Berdasarkan Jenis Kelamin</a>
-        <a href="/superadmin/rekapitulasi/pns/kelas-jabatan" class="btn btn-sm btn-info"><i class="fas fa-users"></i> ASN Berdasarkan Kelas Jabatan</a>
+        <a href="/superadmin/rekapitulasi/pns/jkel" class="btn btn-sm {{$jeniscari == 'jkel' ? 'btn-danger':'btn-info'}}"><i class="fas fa-users"></i> ASN Berdasarkan Jenis Kelamin</a>
+        <a href="/superadmin/rekapitulasi/pns/kelas-jabatan" class="btn btn-sm {{$jeniscari == 'kelas' ? 'btn-danger':'btn-info'}}"><i class="fas fa-users"></i> ASN Berdasarkan Kelas Jabatan</a>
         <a href="/superadmin/rekapitulasi/pns/tingkat-pendidikan" class="btn btn-sm btn-info"><i class="fas fa-users"></i> ASN Berdasarkan Tingkat Pendidikan</a>
         <a href="/superadmin/rekapitulasi/pns/eselon" class="btn btn-sm btn-info"><i class="fas fa-users"></i> ASN Berdasarkan Eselon</a>
         <a href="/superadmin/rekapitulasi/pns/pangkat" class="btn btn-sm btn-info"><i class="fas fa-users"></i> ASN Berdasarkan Pangkat & Golongan</a>

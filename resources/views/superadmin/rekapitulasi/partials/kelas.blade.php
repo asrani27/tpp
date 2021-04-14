@@ -1,42 +1,34 @@
 <div class="row">
-<!-- /.col -->
-<div class="col-12 col-sm-6 col-md-6">
-    <div class="info-box mb-3">
-    <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-male"></i></span>
-
-    <div class="info-box-content">
-        <span class="info-box-text">Laki-Laki</span>
-        <span class="info-box-number">{{$l}}</span>
+    <div class="col-12">
+        <div class="card card-info">
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form action="/superadmin/rekapitulasi/pns/kelas-jabatan/search">
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <select name="kelas_id" class="form-control">
+                            <option value="">-Kelas Jabatan-</option>
+                            @foreach ($kelas as $item)
+                                <option value="{{$item->id}}" {{old('kelas_id') == $item->id ? 'selected':''}}>{{$item->nama}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i> Tampilkan</button>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
     </div>
-    <!-- /.info-box-content -->
-    </div>
-    <!-- /.info-box -->
 </div>
-<!-- /.col -->
-
-<!-- fix for small devices only -->
-<div class="clearfix hidden-md-up"></div>
-
-<div class="col-12 col-sm-6 col-md-6">
-    <div class="info-box mb-3">
-    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-female"></i></span>
-
-    <div class="info-box-content">
-        <span class="info-box-text">Perempuan</span>
-        <span class="info-box-number">{{$p}}</span>
-    </div>
-    <!-- /.info-box-content -->
-    </div>
-    <!-- /.info-box -->
-</div>
-<!-- /.col -->
-<!-- /.col -->
-</div>
+<br/>
 <div class="row">
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Data ASN Berdasarkan Jenis Kelamin</h3>
+          <h3 class="card-title">Data ASN Berdasarkan Kelas Jabatan (Total : {{$data->total()}})</h3>
 
           {{-- <div class="card-tools">
             <form method="get" action="/superadmin/pegawai/search">
@@ -58,7 +50,8 @@
                 <th>#</th>
                 <th>NIP / Username</th>
                 <th>Nama</th>
-                <th>Jenis Kelamin</th>
+                <th>Jabatan</th>
+                <th>Kelas</th>
               </tr>
             </thead>
             @php
@@ -70,14 +63,8 @@
                     <td>{{$key+ $data->firstItem()}}</td>
                     <td>{{$item->nip}}</td>
                     <td>{{$item->nama}}</td>
-                    <td>
-                        @if ($item->jkel == NULL)
-                            
-                        @else
-                            
-                        {{$item->jkel == 'L' ? 'Laki-Laki': 'Perempuan'}}
-                        @endif
-                    </td>
+                    <td>{{$item->jabatan == null ? '': $item->jabatan->nama}}</td>
+                    <td>{{$item->jabatan == null ? '': $item->jabatan->kelas->nama}}</td>
                   </tr>
               @endforeach
             </tbody>

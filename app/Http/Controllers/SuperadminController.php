@@ -15,8 +15,11 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Imports\PegawaiImport;
 use Illuminate\Cache\NullStore;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\Paginator;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SuperadminController extends Controller
 {
@@ -795,5 +798,37 @@ class SuperadminController extends Controller
         $p = Pegawai::where('jkel', 'P')->get()->count();
         $jeniscari = 'jkel';
         return view('superadmin.rekapitulasi.pns',compact('data','jeniscari','l','p'));
+    }
+    public function rekapASNkelas()
+    {
+        $data = Pegawai::with('jabatan')->paginate(10);
+        $kelas = Kelas::with('jabatan')->get();
+        
+        $jeniscari = 'kelas';
+        return view('superadmin.rekapitulasi.pns',compact('data','jeniscari','kelas'));
+    }
+
+    public function searchRekapASNkelas()
+    {
+        $kelas_id = request()->get('kelas_id');
+        $jabatan  = Jabatan::where('kelas_id', $kelas_id)->get();
+        $map      = $jabatan->map(function($item){
+            return $item->pegawai;
+        })->whereNotNull();
+        
+        $data = $this->paginate($map);
+        
+        request()->flash();
+        $kelas = Kelas::get();
+        
+        $jeniscari = 'kelas';
+        return view('superadmin.rekapitulasi.pns',compact('data','jeniscari','kelas'));
+    }
+    
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }

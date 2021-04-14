@@ -49,14 +49,14 @@
         </p>
     </a>
     </li>
-    <li class="nav-item">
+    {{-- <li class="nav-item">
     <a href="/admin/rekapitulasi" class="nav-link">
         <i class="nav-icon fas fa-file"></i>
         <p>
         Rekapitulasi TPP
         </p>
     </a>
-    </li>
+    </li> --}}
     </li>
     <li class="nav-item">
     <a href="/logout" class="nav-link">

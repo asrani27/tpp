@@ -831,4 +831,25 @@ class SuperadminController extends Controller
         $items = $items instanceof Collection ? $items : Collection::make($items);
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
+
+    public function rekapASNpendidikan()
+    {
+        $data = Pegawai::with('jabatan')->paginate(10);
+        $pendidikan = collect(['SMA','D3','S1','S2','S3']);
+        
+        $jeniscari = 'pendidikan';
+        return view('superadmin.rekapitulasi.pns',compact('data','jeniscari','pendidikan'));
+    }
+
+    public function searchRekapASNpendidikan()
+    {
+        $jenjang = request()->get('jenjang');
+        $data = Pegawai::where('jenjang_pendidikan', $jenjang)->paginate(10);
+        
+        request()->flash();
+        $pendidikan = collect(['SMA','D3','S1','S2','S3']);
+        
+        $jeniscari = 'pendidikan';
+        return view('superadmin.rekapitulasi.pns',compact('data','jeniscari','pendidikan'));
+    }
 }

@@ -3,14 +3,14 @@
         <div class="card card-info">
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="/superadmin/rekapitulasi/pns/kelas-jabatan/search">
+            <form action="/superadmin/rekapitulasi/pns/tingkat-pendidikan/search">
             <div class="card-body">
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <select name="kelas_id" class="form-control">
-                            <option value="">-Kelas Jabatan-</option>
-                            @foreach ($kelas as $item)
-                                <option value="{{$item->id}}" {{old('kelas_id') == $item->id ? 'selected':''}}>{{$item->nama}}</option>
+                        <select name="jenjang" class="form-control">
+                            <option value="">-Jenjang Pendidikan-</option>
+                            @foreach ($pendidikan as $item)
+                                <option value="{{$item}}" {{old('jenjang') == $item ? 'selected':''}}>{{$item}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -28,19 +28,8 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Data ASN Berdasarkan Kelas Jabatan (Total : {{$data->total()}})</h3>
-
-          {{-- <div class="card-tools">
-            <form method="get" action="/superadmin/pegawai/search">
-            <div class="input-group input-group-sm" style="width: 300px;">
-              <input type="text" name="search" class="form-control input-sm float-right" value="{{old('search')}}" placeholder="Cari NIP / Nama">
-
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-              </div>
-            </div>
-            </form>
-          </div> --}}
+          <h3 class="card-title">Data ASN Berdasarkan Tingkat Pendidikan (Total : {{$data->total()}})</h3>
+        
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
@@ -51,7 +40,7 @@
                 <th>NIP / Username</th>
                 <th>Nama</th>
                 <th>Jabatan</th>
-                <th>Kelas</th>
+                <th>Jenjang Pendidikan</th>
               </tr>
             </thead>
             @php
@@ -64,7 +53,7 @@
                     <td>{{$item->nip}}</td>
                     <td>{{$item->nama}}</td>
                     <td>{{$item->jabatan == null ? '': $item->jabatan->nama}}</td>
-                    <td>{{$item->jabatan == null ? '': $item->jabatan->kelas->nama}}</td>
+                    <td>{{$item->jenjang_pendidikan}}</td>
                   </tr>
               @endforeach
             </tbody>

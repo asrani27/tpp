@@ -34,13 +34,34 @@
     </a>
     </li>
     
-    <li class="nav-item">
-    <a href="/superadmin/mutasi" class="nav-link {{ Request::is('superadmin/mutasi*') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-people-arrows"></i>
-        <p>
-        Mutasi Pegawai
-        </p>
-    </a>
+    <li class="nav-item has-treeview {{Request::is('superadmin/mutasi*') ? 'menu-open' : ''}}">
+        <a href="#" class="nav-link {{Request::is('superadmin/mutasi*') ? 'active' : ''}}">
+          <i class="nav-icon fas fa-people-arrows"></i>
+          <p>
+            Mutasi
+            <i class="fas fa-angle-left right"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview" style="display: {{Request::is('superadmin/mutasi*') ? 'block' : 'none'}};">
+            <li class="nav-item">
+            <a href="/superadmin/mutasi/plt" class="nav-link {{ Request::is('superadmin/mutasi/plt*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-user"></i>
+                <p>PLT / PJ / PLH</p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="/superadmin/mutasi/pindah" class="nav-link {{ Request::is('superadmin/mutasi/pindah*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-user"></i>
+                <p>Pindah Jabatan</p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="/superadmin/mutasi/pensiun" class="nav-link {{ Request::is('superadmin/mutasi/pensiun*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-user"></i>
+                <p>Pensiun</p>
+            </a>
+            </li>
+        </ul>
     </li>
     
     <li class="nav-item has-treeview {{Request::is('superadmin/kelas*') || Request::is('superadmin/pangkat*') || Request::is('superadmin/eselon*') || Request::is('superadmin/parameter*') ? 'menu-open' : ''}}">

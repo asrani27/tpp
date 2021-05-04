@@ -41,7 +41,7 @@ class HomeController extends Controller
                 $item->persentase_tpp = $persentase_tpp;
                 $item->tambahan_persen_tpp = $item->jabatan->tambahan_persen_tpp;
                 $item->jumlah_persentase = $persentase_tpp + $item->jabatan->tambahan_persen_tpp;
-                $item->total_pagu = $item->basic_tpp * ($persentase_tpp + $item->tambahan_persen_tpp) / 100;
+                $item->total_pagu = ceil($item->basic_tpp * ($persentase_tpp + $item->tambahan_persen_tpp) / 100);
                 $item->persen_disiplin = 100;
                 $item->total_disiplin =  $item->total_pagu * 40 / 100;
                 $item->persen_produktivitas = 100;
@@ -103,7 +103,7 @@ class HomeController extends Controller
                 $item->persentase_tpp   = $item->jabatan->persentase_tpp == null ? 0:$item->jabatan->persentase_tpp;
                 $item->tambahan_persen_tpp  = $item->jabatan->tambahan_persen_tpp;
                 $item->jumlah_persentase    = $item->persentase_tpp + $item->jabatan->tambahan_persen_tpp;
-                $item->total_pagu           = $item->basic_tpp * ($item->persentase_tpp + $item->tambahan_persen_tpp) / 100;
+                $item->total_pagu           = ceil($item->basic_tpp * ($item->persentase_tpp + $item->tambahan_persen_tpp) / 100);
                 $item->persen_disiplin      = $item->presensiMonth->first() == null ? 0:$item->presensiMonth->first()->persen;
                 $item->total_disiplin       =  $item->total_pagu * ((40 / 100) * $item->persen_disiplin / 100);
                 $item->persen_produktivitas = $view_aktivitas->where('pegawai_id', $item->id)->first() == null ? 0 : (int) $view_aktivitas->where('pegawai_id', $item->id)->first()->jumlah_menit;
@@ -198,7 +198,7 @@ class HomeController extends Controller
                 $item->persentase_tpp = $persentase_tpp;
                 $item->tambahan_persen_tpp = $item->jabatan->tambahan_persen_tpp;
                 $item->jumlah_persentase = $persentase_tpp + $item->jabatan->tambahan_persen_tpp;
-                $item->total_pagu = $item->basic_tpp * ($persentase_tpp + $item->tambahan_persen_tpp) / 100;
+                $item->total_pagu = ceil($item->basic_tpp * ($persentase_tpp + $item->tambahan_persen_tpp) / 100);
                 $item->persen_disiplin = 100;
                 $item->total_disiplin =  $item->total_pagu * 40 / 100;
                 $item->persen_produktivitas = 100;

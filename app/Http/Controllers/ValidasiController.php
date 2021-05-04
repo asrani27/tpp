@@ -20,11 +20,18 @@ class ValidasiController extends Controller
             toastr()->info('Tidak bisa melakukan validasi karena anda tidak memiliki jabatan, hub admin SKPD');
             return back();
         }
-        $data = $this->user()->pegawai->jabatan->bawahan->load('pegawai')->map(function($item){
+        $data1 = $this->user()->pegawai->jabatan->bawahan->load('pegawai')->map(function($item){
             $item->nama_pegawai = $item->pegawai == null ? '-':$item->pegawai->nama;
             $item->aktivitas_baru = $item->pegawai == null ? 0:$item->pegawai->aktivitas->where('validasi', 0)->count();
             return $item;
         });
+        if($this->user()->pegawai->jabatan->sekda == 1){
+            $data2 = Jabatan::where('jabatan_id', null)->where('sekda', null)->get();
+        }else{
+            $data2 = collect([]);
+        }
+
+        $data = $data1->merge($data2);
         
         return view('pegawai.validasi.index',compact('data'));
     }

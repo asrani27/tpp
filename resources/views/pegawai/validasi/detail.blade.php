@@ -34,7 +34,7 @@
                 <a href="/pegawai/validasi/harian" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i> Kembali</a>
                 @if (count($data) != 0)
                 <a href="/pegawai/validasi/harian/acc/{{$id}}" class="btn btn-sm btn-success">
-                    <i class="fas fa-check"></i> SETUJUI SEMUA
+                    <i class="fas fa-check"></i> SETUJU SEMUA
                 </a>
                 @endif
             </div>
@@ -79,7 +79,7 @@
                                 </td>
                                 <td>
                                     @if ($item->validasi == 0)
-                                    <a href="/pegawai/validasi/harian/acc_aktivitas/{{$item->id}}" class="btn btn-xs btn-success text-white" data-toggle="tooltip" title="Setujui Aktivitas" onclick="return confirm('Yakin ingin di Setujui?');"><i class="fas fa-check"></i> Setujui</a>
+                                    <a href="/pegawai/validasi/harian/acc_aktivitas/{{$item->id}}" class="btn btn-xs btn-success text-white" data-toggle="tooltip" title="Setujui Aktivitas" onclick="return confirm('Yakin ingin di Setujui?');"><i class="fas fa-check"></i> Setuju</a>
                                     <a href="/pegawai/validasi/harian/tolak/{{$item->id}}" class="btn btn-xs btn-danger text-white" data-toggle="tooltip" title="Tolak Aktivitas"  onclick="return confirm('Yakin ingin di tolak?');"><i class="fas fa-times"></i> Tolak</a>
                                     @else
                                       

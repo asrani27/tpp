@@ -9,9 +9,15 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        {{-- <div class="alert alert-info text-center alert-dismissible">
-          <h5><i class="icon fas fa-calendar-alt"></i> TPP Bulan {{\Carbon\Carbon::now()->isoFormat("MMMM Y")}}</h5>
-        </div> --}}
+
+        @if ($data->pangkat_id == null)
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+          Pangkat Belum di isi!, hubungi admin SKPD anda.
+        </div>
+        @endif
+      
         <div class="row">
             <div class="col-lg-12 col-12">
                 <div class="card card-widget widget-user">

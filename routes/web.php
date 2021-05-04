@@ -140,6 +140,7 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::post('/pegawai/skp/rencana-kegiatan/edit/{id}', 'SkpController@update');
     Route::get('/pegawai/skp/rencana-kegiatan/delete/{id}', 'SkpController@delete');
     Route::get('/pegawai/skp/rencana-kegiatan/periode/edit/{id}', 'SkpController@editPeriode');
+    Route::post('/pegawai/skp/rencana-kegiatan/periode/edit/{id}', 'SkpController@updatePeriode');
     Route::get('/pegawai/skp/rencana-kegiatan/periode/delete/{id}', 'SkpController@deletePeriode');
     Route::get('/pegawai/skp/rencana-kegiatan/periode/view/{id}', 'SkpController@viewPeriode');
     Route::post('/pegawai/skp/rencana-kegiatan/periode/view/{id}', 'SkpController@storeSkp');

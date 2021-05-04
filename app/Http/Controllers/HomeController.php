@@ -97,7 +97,7 @@ class HomeController extends Controller
             }else{
                 $item->nama_jabatan     = $item->jabatan->nama;
                 $item->jenis_jabatan    = $item->jabatan->jenis_jabatan;
-                $item->nama_pangkat     = $item->pangkat->nama.' ('.$item->pangkat->golongan.')';
+                $item->nama_pangkat     = $item->pangkat == null ? null:$item->pangkat->nama.' ('.$item->pangkat->golongan.')';
                 $item->nama_kelas       = $item->jabatan->kelas->nama;
                 $item->basic_tpp        = $item->jabatan->kelas->nilai;
                 $item->persentase_tpp   = $item->jabatan->persentase_tpp == null ? 0:$item->jabatan->persentase_tpp;
@@ -115,8 +115,15 @@ class HomeController extends Controller
                     $item->total_produktivitas =  $item->total_pagu * 60 / 100;
                 }
                 $item->total_tpp =  $item->total_disiplin + $item->total_produktivitas;
-                $item->pph                  =  $item->pangkat->pph;
-                $item->pph_angka            =  $item->pph * $item->total_tpp / 100;
+                
+                if($item->pangkat == null){
+                    $item->pph   = 0;
+                    $item->pph21 =  0;
+                }else{
+                    $item->pph   = $item->pangkat->pph;
+                    $item->pph21 =  $item->total_tpp * $item->pph /100;
+                }
+                
                 $item->hukuman              =  $item->presensiMonth->first() == null ? 0:$item->presensiMonth->first()->hukuman;
                 $item->hukuman_angka        =  $item->hukuman * $item->total_tpp / 100;
                 $item->tpp_diterima         =  $item->total_tpp - $item->pph_angka - $item->hukuman_angka;
@@ -208,8 +215,14 @@ class HomeController extends Controller
                     $item->total_produktivitas =  0;
                 }
                 $item->total_tpp =  $item->total_disiplin + $item->total_produktivitas;
-                $item->pph   = $item->pangkat->pph;
-                $item->pph21 =  $item->total_tpp * $item->pph /100;
+                if($item->pangkat == null){
+                    $item->pph   = 0;
+                    $item->pph21 =  0;
+                }else{
+                    $item->pph   = $item->pangkat->pph;
+                    $item->pph21 =  $item->total_tpp * $item->pph /100;
+                }
+                
                 $item->bpjs =  0;
             }
             return $item;

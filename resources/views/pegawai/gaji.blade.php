@@ -33,7 +33,7 @@
         </div>
         <div class="card-body">
             <div class="form-group row">
-                <label for="inputName" class="col-sm-3 col-form-label">Gaji Pokok</label>
+                <label for="inputName" class="col-sm-3 col-form-label">Gaji</label>
                 <div class="col-sm-9">
                 <input type="text" class="form-control" value="Rp. 0,-" readonly>
                 </div>

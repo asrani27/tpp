@@ -19,9 +19,16 @@ class SkpController extends Controller
     
     public function editPeriode($id)
     {
-
+        $data = Skp_periode::find($id);
+        return view('pegawai.skp.edit_periode',compact('data'));
     }
 
+    public function updatePeriode(Request $req, $id)
+    {
+        Skp_periode::find($id)->update($req->all());
+        return redirect('/pegawai/skp/rencana-kegiatan');
+    }
+    
     public function storeSkp(Request $req, $id)
     {
         $attr = $req->all();
@@ -30,6 +37,7 @@ class SkpController extends Controller
         toastr()->success('SKP Berhasil Di Simpan');
         return back();
     }
+
     public function viewPeriode($id)
     { 
         $pegawai_id = Auth::user()->pegawai->id;

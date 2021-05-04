@@ -134,7 +134,11 @@
                             <td>{{$no++}}</td>
                             <td>
                                 {{$item->nama}} <br/>
-                                {{$item->nama_pangkat}}<br/>
+                                @if ($item->nama_pangkat == null)
+                                <a href="#" data-toggle="tooltip" data-placement="top" title="Pangkat Kosong!"> <span class="text-danger"><i class="fas fa-exclamation-triangle"></i></span></a>
+                                @else  
+                                  {{$item->nama_pangkat}}<br/>
+                                @endif
                                 NIP.{{$item->nip}}
 
                             </td>

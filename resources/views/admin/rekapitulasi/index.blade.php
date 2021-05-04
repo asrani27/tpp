@@ -71,7 +71,7 @@
               <!-- /.card-body -->
               <div class="card-footer">
                 <button type="submit" name="button" value="1" class="btn btn-info">Tampilkan</button>
-                <button type="submit" name="button" value="2" class="btn btn-danger">Cetak PDF</button>
+                <button type="submit" name="button" formtarget="_blank" value="2" class="btn btn-danger">Cetak PDF</button>
               </div>
               <!-- /.card-footer -->
             </form>

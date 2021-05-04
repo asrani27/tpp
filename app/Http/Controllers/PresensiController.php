@@ -19,8 +19,14 @@ class PresensiController extends Controller
         $pegawai = Pegawai::with('presensi')->where('skpd_id', Auth::user()->skpd->id)->orderBy('urutan','ASC')->get()
                             ->map(function($item)use($month, $year, $skpd_id){
                                 $check = $item->presensi->where('bulan', $month)->where('tahun', $year)->where('skpd_id', $skpd_id)->first();
-                                $item->persen = $check == null ? 100 : $check->persen;
-                                $item->hukuman = $check->hukuman;
+                                if($check == null){
+                                    $item->persen = 100;
+                                    $item->hukuman = 0;
+                                }else{
+                                    $item->persen = $check == null ? 100 : $check->persen;
+                                    $item->hukuman = $check->hukuman;
+                                }
+                                
                                 return $item;
                             });
                             
@@ -44,8 +50,13 @@ class PresensiController extends Controller
         $pegawai = Pegawai::with('presensi')->where('skpd_id', Auth::user()->skpd->id)->orderBy('urutan','ASC')->get()
                             ->map(function($item)use($month, $year, $skpd_id){
                                 $check = $item->presensi->where('bulan', $month)->where('tahun', $year)->where('skpd_id', $skpd_id)->first();
-                                $item->persen = $check == null ? 100 : $check->persen;
-                                $item->hukuman = $check->hukuman;
+                                if($check == null){
+                                    $item->persen = 100;
+                                    $item->hukuman = 0;
+                                }else{
+                                    $item->persen = $check == null ? 100 : $check->persen;
+                                    $item->hukuman = $check->hukuman;
+                                }
                                 return $item;
                             });
         $data = Presensi::where('skpd_id', Auth::user()->id)->get();
@@ -100,8 +111,13 @@ class PresensiController extends Controller
         $pegawai = Pegawai::with('presensi')->where('skpd_id', Auth::user()->skpd->id)->orderBy('urutan','ASC')->get()
                             ->map(function($item)use($month, $year, $skpd_id){
                                 $check = $item->presensi->where('bulan', $month)->where('tahun', $year)->where('skpd_id', $skpd_id)->first();
-                                $item->persen = $check == null ? 100 : $check->persen;
-                                $item->hukuman = $check->hukuman;
+                                if($check == null){
+                                    $item->persen = 100;
+                                    $item->hukuman = 0;
+                                }else{
+                                    $item->persen = $check == null ? 100 : $check->persen;
+                                    $item->hukuman = $check->hukuman;
+                                }
                                 return $item;
                             });
                             

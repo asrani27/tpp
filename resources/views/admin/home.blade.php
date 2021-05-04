@@ -98,6 +98,7 @@
                             <th rowspan=2>TPP ASN</th>
                             <th rowspan=2>PPH 21</th>
                             <th rowspan=2>Hukuman Disiplin</th>
+                            <th rowspan=2>Potongan BPJS</th>
                             <th rowspan=2>TPP DIterima</th>
                           </tr>
                           <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center bg-gradient-primary">
@@ -186,6 +187,9 @@
                               {{$item->hukuman_angka == 0 ? '':'-'}}{{currency($item->hukuman_angka)}}
                             </td> 
                             <td class="text-right">
+                              0
+                            </td> 
+                            <td class="text-right">
                               {{currency($item->tpp_diterima)}}
                             </td> 
                           </tr>
@@ -194,6 +198,7 @@
                         </tbody>
                         <tfoot>
                           <tr>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>

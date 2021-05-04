@@ -118,10 +118,10 @@ class HomeController extends Controller
                 
                 if($item->pangkat == null){
                     $item->pph   = 0;
-                    $item->pph21 =  0;
+                    $item->pph_angka =  0;
                 }else{
                     $item->pph   = $item->pangkat->pph;
-                    $item->pph21 =  $item->total_tpp * $item->pph /100;
+                    $item->pph_angka =  $item->total_tpp * $item->pph /100;
                 }
                 
                 $item->hukuman              =  $item->presensiMonth->first() == null ? 0:$item->presensiMonth->first()->hukuman;
@@ -217,10 +217,10 @@ class HomeController extends Controller
                 $item->total_tpp =  $item->total_disiplin + $item->total_produktivitas;
                 if($item->pangkat == null){
                     $item->pph   = 0;
-                    $item->pph21 =  0;
+                    $item->pph_angka =  0;
                 }else{
                     $item->pph   = $item->pangkat->pph;
-                    $item->pph21 =  $item->total_tpp * $item->pph /100;
+                    $item->pph_angka =  $item->total_tpp * $item->pph /100;
                 }
                 
                 $item->bpjs =  0;

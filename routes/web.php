@@ -122,6 +122,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/jabatan/edit/{id}', 'AdminController@editJabatan');
     Route::post('/admin/jabatan/edit/{id}', 'AdminController@updateJabatan');
     Route::get('/admin/jabatan/delete/{id}', 'AdminController@deleteJabatan');
+
+    Route::get('/admin/rekapitulasi', 'RekapitulasiController@index');
+    Route::get('/admin/rekapitulasi/cetaktpp', 'RekapitulasiController@cetaktpp');
 });
 
 Route::group(['middleware' => ['auth', 'role:pegawai']], function () {

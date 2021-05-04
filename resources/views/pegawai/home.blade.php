@@ -27,7 +27,7 @@
                     <h5 class="widget-user-desc">Rp. {{currency(($data->total_tpp - $data->pph21))}},-</h5>
                     </div>
                     <div class="widget-user-image">
-                    <img class="img-circle elevation-2" src="/theme/dist/img/user1-128x128.jpg" alt="User Avatar">
+                    <img class="img-circle elevation-2" src="https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png" alt="User Avatar">
                     </div>
                     <div class="card-footer">
                     <div class="row">

@@ -48,6 +48,7 @@ class ValidasiController extends Controller
             $data->map(function($item){
                 $item->update([
                     'validasi' => 1,
+                    'validator' => Auth::user()->pegawai->id,
                 ]);
                 return $item;
             });

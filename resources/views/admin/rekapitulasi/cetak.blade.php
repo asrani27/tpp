@@ -21,11 +21,14 @@
 }
 .auto-style5 {
 	border: 1px solid #000000;
-	font-size: xx-small;
-	
+	font-size: xx-small;	
 }
 .auto-style4 {
 	font-size: x-small;
+}
+.auto-style6 {
+	border: 1px solid #000000;
+	font-size: small;	
 }
 </style>
 </head>
@@ -52,7 +55,7 @@
 		<td class="auto-style3" rowspan="2"><strong>Hukuman Disiplin</strong></td>
 		<td class="auto-style3" rowspan="2"><strong>Potongan BPJS</strong></td>
 		<td class="auto-style3" rowspan="2" style="height: 26px"><strong>TPP Diterima</strong></td>
-		<td class="auto-style3" rowspan="2"><strong>TTD</strong></td>
+		<td class="auto-style3" rowspan="2"><strong>Tanda Tangan</strong></td>
 	</tr>
 	<tr>
 		<td class="auto-style3"><strong>Persentase TPP</strong></td>
@@ -87,54 +90,54 @@
             <td class="text-center auto-style5">
                 {{$item->nama_jabatan}}
             </td>
-            <td class="text-center auto-style5">
+            <td class="text-center auto-style5" style="text-align: center">
                 {{$item->jenis_jabatan}}
             </td>
-            <td class="text-center auto-style5">
+            <td class="text-center auto-style5" style="text-align: center">
                 {{$item->nama_kelas}}
             </td>
-            <td class="text-right auto-style5">
+            <td class="text-right auto-style5" style="text-align: right">
                 {{currency($item->basic_tpp)}}
             </td>
-            <td class="text-center auto-style5">
+            <td class="text-center auto-style5" style="text-align: center">
                 {{$item->persentase_tpp}} %
             </td>
-            <td class="text-center auto-style5">
+            <td class="text-center auto-style5" style="text-align: center">
                 {{$item->tambahan_persen_tpp == null ? 0: $item->tambahan_persen_tpp}} %
             </td>
-            <td class="text-center auto-style5">
+            <td class="text-center auto-style5" style="text-align: center">
                 {{$item->jumlah_persentase}} %
             </td>
-            <td class="text-right auto-style5">
+            <td class="auto-style5" style="text-align: right">
                 {{currency($item->total_pagu)}}
             </td>
-            <td class="text-right auto-style5">
+            <td class="text-right auto-style5" style="text-align: center">
                 {{$item->persen_disiplin}}
             </td>
-            <td class="text-right auto-style5">
+            <td class="auto-style5" style="text-align: right">
                 {{currency($item->total_disiplin)}}
             </td>
-            <td class="text-right auto-style5">
+            <td class="auto-style5" style="text-align: center">
                 {{$item->persen_produktivitas}} m
             </td>
-            <td class="text-right auto-style5">
+            <td class="auto-style5" style="text-align: right">
                 {{currency($item->total_produktivitas)}}
             </td>
-            <td class="text-right auto-style5">
+            <td class="auto-style5" style="text-align: right">
                 {{currency($item->total_tpp)}}
             </td> 
-            <td class="text-right auto-style5">
+            <td class="auto-style5" style="text-align: right">
                 {{$item->pph}} % <br>
                 {{$item->pph_angka == 0 ? '':'-'}}{{currency($item->pph_angka)}}
             </td> 
-            <td class="text-right auto-style5">
+            <td class="auto-style5" style="text-align: right">
                 {{$item->hukuman}} % <br>
                 {{$item->hukuman_angka == 0 ? '':'-'}}{{currency($item->hukuman_angka)}}
             </td> 
-            <td class="text-right auto-style5">
+            <td class="text-right auto-style5" style="text-align: center">
                 0
             </td> 
-            <td class="text-right auto-style5">
+            <td class="auto-style5" style="text-align: right">
                 {{currency($item->tpp_diterima)}}
             </td> 
             <td class="auto-style5"> </td>
@@ -143,26 +146,10 @@
         </tbody>
         <tfoot>
             <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>Total</td>
-            <td>{{currency($data->sum('tpp_diterima'))}}</td>
+            <td colspan="17" class="auto-style5"></td>
+            <td class="auto-style6"><strong>Total</strong></td>
+            <td class="auto-style6"><strong>{{currency($data->sum('tpp_diterima'))}}</strong></td>
+            <td class="auto-style6"></td>
             </tr>
         </tfoot>
         @endif

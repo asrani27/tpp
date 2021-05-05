@@ -151,7 +151,7 @@
                           </tr>
                           <tr>
                             <td class="text-sm" width="170px">PPH 21 {{$data->pph}} %</td>
-                            <td class="text-right">{{currency($data->pph21)}}</td>
+                            <td class="text-right">{{currency($data->pph_angka)}}</td>
                           </tr>
                           <tr>
                             <td class="text-sm" width="170px">BPJS</td>
@@ -165,7 +165,7 @@
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
                         <strong>TOTAL TPP DITERIMA</strong>
-                      <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">Rp. {{currency(($data->total_tpp - $data->pph21))}}</a>
+                      <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">Rp. {{currency(($data->total_tpp - $data->pph_angka))}}</a>
                     </div>
                     <!-- /.card-footer -->
                   </div>

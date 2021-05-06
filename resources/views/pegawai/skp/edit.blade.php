@@ -21,11 +21,11 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form class="form-horizontal" method="POST" action="/pegawai/skp/rencana-kegiatan/edit/{{$data->id}}">
+                    <form class="form-horizontal" method="POST" action="/pegawai/skp/rencana-kegiatan/edit/{{$data->id}}/{{$periode_id}}">
                         @csrf
                     <div class="card-body">
                         <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-2 col-form-label">Tahun</label>
+                        <label for="inputEmail3" class="col-sm-2 col-form-label text-right">Tahun</label>
                         <div class="col-sm-10">
                             <select name="tahun" class="form-control">
                                 <option value="2021" {{$data->tahun == '2021' ? 'selected' :''}}>2021</option>
@@ -37,10 +37,45 @@
                         </div>
                         </div>
                         <div class="form-group row">
-                        <label for="inputPassword3" class="col-sm-2 col-form-label">Deskripsi</label>
+                        <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Deskripsi Kegiatan</label>
                         <div class="col-sm-10">
                             <textarea class="form-control"  name="deskripsi" rows="3" required>{{$data->deskripsi}}</textarea>
                         </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label text-right">AK</label>
+                            <div class="col-sm-10">
+                            <input type="text" class="form-control" name="ak" value="{{$data->ak}}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Kuant/Output</label>
+                            <div class="col-sm-10">
+                            <input type="text" class="form-control" name="output" value="{{$data->output}}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Kual/Mutu</label>
+                            <div class="col-sm-10">
+                            <input type="text" class="form-control" name="mutu" value="{{$data->mutu}}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Waktu</label>
+                            <div class="col-sm-10">
+                            <input type="text" class="form-control" name="waktu" value="{{$data->waktu}}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Biaya</label>
+                            <div class="col-sm-10">
+                            <input type="text" class="form-control" name="biaya" value="{{$data->biaya}}">
+                            </div>
                         </div>
                     </div>
                     <!-- /.card-body -->

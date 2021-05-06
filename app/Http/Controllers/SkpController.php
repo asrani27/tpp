@@ -63,6 +63,7 @@ class SkpController extends Controller
             return back();
         }
     }
+
     public function storePeriode(Request $req)
     {
         $attr = $req->all();
@@ -86,16 +87,16 @@ class SkpController extends Controller
         return redirect('pegawai/skp/rencana-kegiatan');
     }
     
-    public function edit($id)
+    public function edit($id, $periode_id)
     {
         $data = Skp::find($id);
-        return view('pegawai.skp.edit',compact('data'));
+        return view('pegawai.skp.edit',compact('data','periode_id'));
     }
-    public function update(Request $req, $id)
+    public function update(Request $req, $id, $periode_id)
     {
         Skp::find($id)->update($req->all());
         toastr()->success('SKP Berhasil Di Update');
-        return redirect('pegawai/skp/rencana-kegiatan');
+        return redirect('pegawai/skp/rencana-kegiatan/periode/view/'.$periode_id);
     }
 
     public function delete($id)

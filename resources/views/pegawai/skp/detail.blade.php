@@ -19,14 +19,55 @@
                 @csrf
               <div class="card">
                 <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12 col-12">
-                      <label class="col-form-label" for="inputWarning"><i class="far fa-calendar"></i> Deskripsi Kegiatan</label>
-                      <textarea class="form-control" rows="3" name="deskripsi"></textarea>
-                    </div>
-                  </div><br/>
-                  <a href="/pegawai/skp/rencana-kegiatan" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i> Kembali</a>
-                  <button class="btn btn-sm btn-primary" type="submit"><i class="fas fa-save"></i>  Simpan SKP</button>
+                  
+                  <div class="form-group row">
+                      <label for="inputPassword3" class="col-sm-2 col-form-label text-right"> Deskripsi Kegiatan</label>
+                      <div class="col-sm-10">
+                        <textarea class="form-control" rows="3" name="deskripsi"></textarea>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label for="inputPassword3" class="col-sm-2 col-form-label text-right">AK</label>
+                      <div class="col-sm-10">
+                      <input type="text" class="form-control" name="ak">
+                      </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                      <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Kuant/Output</label>
+                      <div class="col-sm-10">
+                      <input type="text" class="form-control" name="output">
+                      </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                      <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Kual/Mutu</label>
+                      <div class="col-sm-10">
+                      <input type="text" class="form-control" name="mutu">
+                      </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                      <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Waktu</label>
+                      <div class="col-sm-10">
+                      <input type="text" class="form-control" name="waktu">
+                      </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                      <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Biaya</label>
+                      <div class="col-sm-10">
+                      <input type="text" class="form-control" name="biaya">
+                      </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                      <label for="inputPassword3" class="col-sm-2 col-form-label text-right"></label>
+                      <div class="col-sm-10">
+                        <a href="/pegawai/skp/rencana-kegiatan" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i> Kembali</a>
+                        <button class="btn btn-sm btn-primary" type="submit"><i class="fas fa-save"></i>  Simpan SKP</button>
+                      </div>
+                  </div>
                 </div>
               </div>
               </form>
@@ -54,7 +95,12 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Deskripsi</th>
+                        <th>Deskripsi Kegiatan/Tugas</th>
+                        <th>AK</th>
+                        <th>Kuant/Output</th>
+                        <th>Kual/Mutu</th>
+                        <th>Waktu</th>
+                        <th>Biaya</th>
                         <th>Status</th>
                         <th>Aksi</th>
                       </tr>
@@ -67,6 +113,11 @@
                           <tr>
                             <td>{{$key+ $data->firstItem()}}</td>
                             <td>{{$item->deskripsi}}</td>
+                            <td>{{$item->ak}}</td>
+                            <td>{{$item->output}}</td>
+                            <td>{{$item->mutu}}</td>
+                            <td>{{$item->waktu}}</td>
+                            <td>{{$item->biaya}}</td>
                             <td>
                                 @if ($item->validasi == null)
                                     <span class="badge badge-info">diproses</span>
@@ -80,8 +131,8 @@
                             </td>
                             <td>
                           
-                            <a href="/pegawai/skp/rencana-kegiatan/edit/{{$item->id}}" class="btn btn-xs btn-warning" data-toggle="tooltip" title='Edit data'><i class="fas fa-edit"></i></a>
-                            <a href="/pegawai/skp/rencana-kegiatan/delete/{{$item->id}}" class="btn btn-xs btn-danger" data-toggle="tooltip" title='Hapus data' onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
+                            <a href="/pegawai/skp/rencana-kegiatan/edit/{{$item->id}}/{{$id}}" class="btn btn-xs btn-warning" data-toggle="tooltip" title='Edit data'><i class="fas fa-edit"></i></a>
+                            <a href="/pegawai/skp/rencana-kegiatan/delete/{{$item->id}}/{{$id}}" class="btn btn-xs btn-danger" data-toggle="tooltip" title='Hapus data' onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
                             </td>
                           </tr>
                       @endforeach

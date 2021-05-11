@@ -63,7 +63,12 @@ class AdminController extends Controller
         
         $req->flash();
         
-        $urutan          = Skpd::find($this->skpd_id())->pegawai->sortBy('urutan')->last()->urutan + 1;
+        if(count(Skpd::find($this->skpd_id())->pegawai) == 0){
+            $urutan      = 1;
+        }else{
+            $urutan      = Skpd::find($this->skpd_id())->pegawai->sortBy('urutan')->last()->urutan + 1;
+        }
+        
         $attr            = $req->all();
         $attr['urutan']  = $urutan;
         $attr['skpd_id'] = $this->skpd_id();

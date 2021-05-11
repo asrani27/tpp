@@ -463,9 +463,10 @@ class SuperadminController extends Controller
             {
                 $s->user->delete();
             }
-            $s->delete();
+            Pegawai::find($id)->delete();
             toastr()->success('Pegawai Berhasil Di Hapus');
         }catch(\Exception $e){
+            return $e;
             toastr()->error('Pegawai Tidak Bisa Di Hapus Karena terkait Dengan Data Lain');
         }
         return back();

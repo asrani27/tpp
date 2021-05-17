@@ -83,6 +83,18 @@
                                                 <a href="/admin/jabatan/edit/{{$item4->id}}" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                                 <a href="/admin/jabatan/delete/{{$item4->id}}" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
                                             </div>
+                                            <ul>
+                                                @foreach ($item4->bawahan as $item5)
+                                                    <li>
+                                                        <div class="callout callout-danger text-sm" style="padding:5px;">
+                                                            {{$item5->kelas == null ? '-':$item5->kelas->nama}} |
+                                                            <strong>{{$item5->nama}}</strong>
+                                                            <a href="/admin/jabatan/edit/{{$item5->id}}" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                                            <a href="/admin/jabatan/delete/{{$item5->id}}" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
                                         </li>
                                     @endforeach
                                 </ul>

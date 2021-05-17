@@ -5,7 +5,10 @@
             @if (jabatan($skpd_id)->count() == 0)
                 <option value="" selected="selected">Top Level</option>
             @else
-                @foreach (jabatan($skpd_id)->where('tingkat', '!=', 4) as $item)
+                @php
+                    $tingkat = $skpd_id == 21 ? 5 : 4;
+                @endphp
+                @foreach (jabatan($skpd_id)->where('tingkat', '!=', $tingkat) as $item)
                 <option value="{{$item->id}}">{{$item->nama}}</option>
                 @endforeach
             @endif

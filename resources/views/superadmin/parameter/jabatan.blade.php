@@ -51,7 +51,11 @@
                             <td>{{$key + $data->firstItem()}}</td>
                             <td>{{$item->nama}}</td>
                             <td>
-                            <a href="/superadmin/parameter/sekda/{{$item->id}}" class="btn btn-xs btn-success" onclick="return confirm('Yakin?');"><i class="fas fa-check"></i> Top Level</a>
+                              @if ($item->sekda == 1)
+                              <i class="fas fa-check"></i>    
+                              @else
+                              <a href="/superadmin/parameter/sekda/{{$item->id}}" class="btn btn-xs btn-success" onclick="return confirm('Yakin?');"><i class="fas fa-check"></i> Top Level</a>
+                              @endif
                             </td>
                           </tr>
                       @endforeach

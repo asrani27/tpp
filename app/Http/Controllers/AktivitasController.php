@@ -30,7 +30,7 @@ class AktivitasController extends Controller
         $atasan = $this->user()->pegawai->jabatan->atasan == null ? Jabatan::where('sekda',1)->first():$this->user()->pegawai->jabatan->atasan;
         
         $data = $this->user()->pegawai->aktivitas()->paginate(10);
-
+        dd($person, $atasan, $data, $atasan->pegawai);
         return view('pegawai.aktivitas.index',compact('data','atasan'));
     }
     

@@ -1,7 +1,7 @@
 <form method="POST" action="/admin/jabatan/edit/{{$id}}">
     @csrf
     <div class="form-group">
-            @if ($jabatan->jabatan_id == null)
+            {{-- @if ($jabatan->jabatan_id == null)
             <select class="form-control select2" name="jabatan_id" style="width: 100%;" readonly>
                 <option value="">Top Level</option>
             </select>
@@ -12,7 +12,7 @@
                     <option value="{{$jab->id}}" {{$jabatan->jabatan_id == $jab->id ? 'selected' : ''}}>{{$jab->nama}}</option>
                 @endforeach
             </select>
-            @endif
+            @endif --}}
     </div>
     <div class="form-group">
         <input type="text" class="form-control" name="nama" value="{{$jabatan->nama}}" required>
@@ -27,6 +27,6 @@
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-block btn-primary">Update</button>
-        <a href="/admin/jabatan" class="btn btn-block btn-warning">New</a>
+        <a href="/admin/rspuskesmas/{{$id}}/petajabatan" class="btn btn-block btn-warning">New</a>
     </div>
 </form>

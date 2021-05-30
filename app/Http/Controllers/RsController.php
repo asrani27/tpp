@@ -82,10 +82,28 @@ class RsController extends Controller
         return back();
     }
 
+    public function editJabatan($id, $idJab)
+    {
+        $jabatan = Jabatan::find($idJab);
+        
+        $edit = true;
+        $namarspuskesmas = Rspuskesmas::find($id);
+        $kadis = Auth::user()->skpd->kadis;
+        //$jabatan = Jabatan::where('rs_puskesmas_id', $id)->get();
+        //$merge = $kadis->merge($jabatan);
+       
+        return view('admin.rs.jabatan',compact('namarspuskesmas','edit','jabatan','id','kadis'));
+    }
+
     public function deleteJabatan($id, $idJab)
     {
-        Jabatan::find($idJab)->delete();
-        toastr()->success('Jabatan Berhasil Di Hapus');
-        return back();
+        try {
+            Jabatan::find($idJab)->delete();
+            toastr()->success('Jabatan Berhasil Di Hapus');
+            return back();
+        } catch (\Throwable $th) {
+            toastr()->error('Tidak Bisa Di Hapus');
+            return back();
+        }
     }
 }

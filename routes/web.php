@@ -124,6 +124,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('/admin/rspuskesmas/{id}/edit', 'RsController@update');
     Route::get('/admin/rspuskesmas/{id}/delete', 'RsController@destroy');
     Route::get('/admin/rspuskesmas/{id}/petajabatan', 'RsController@jabatan');
+    
     Route::post('/admin/rspuskesmas/{id}/petajabatan', 'RsController@storeJabatan');
     Route::get('/admin/rspuskesmas/{id}/petajabatan/{idJab}/delete', 'RsController@deleteJabatan');
     Route::get('/admin/rspuskesmas/{id}/petajabatan/{idJab}/edit', 'RsController@editJabatan');

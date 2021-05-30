@@ -1,18 +1,11 @@
-<form method="POST" action="/admin/jabatan">
+<form method="POST" action="/admin/rspuskesmas/{{$id}}/petajabatan">
     @csrf
     <div class="form-group">
         <label for="inputPassword3" class="col-sm-12 col-form-label">Atasan langsung :</label>
         <select class="form-control select2" name="jabatan_id" style="width: 100%;">
-            @if (jabatan($skpd_id)->count() == 0)
-                <option value="" selected="selected">Top Level</option>
-            @else
-            @php
-                $tingkat = $skpd_id == 21 ? 5 : 4;
-            @endphp
-                @foreach (jabatan($skpd_id)->where('tingkat', '!=', $tingkat)->where('rs_puskesmas_id', null) as $item)
-                <option value="{{$item->id}}">{{$item->nama}}</option>
-                @endforeach
-            @endif
+            @foreach ($merge as $item)
+            <option value="{{$item->id}}">{{$item->nama}}</option>                
+            @endforeach
         </select>
     </div>
     <div class="form-group">

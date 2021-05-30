@@ -307,6 +307,5 @@ class AdminController extends Controller
         $tahun = request()->get('tahun');
         toastr()->info('Dalam Tahap pengembangan');
         return back();
-        //dd($bulan, $tahun);
     }
 }

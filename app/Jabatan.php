@@ -14,6 +14,16 @@ class Jabatan extends Model
         return $this->belongsTo(Jabatan::class, 'jabatan_id');
     }
 
+    public function bawahan()
+    {
+        return $this->hasMany(Jabatan::class, 'jabatan_id')->where('rs_puskesmas_id', null);
+    }
+
+    public function bawahanblud($param)
+    {
+        return $this->hasMany(Jabatan::class, 'jabatan_id')->where('rs_puskesmas_id', $param)->get();
+    }
+
     public function kelas()
     {
         return $this->belongsTo(Kelas::class, 'kelas_id');
@@ -22,11 +32,6 @@ class Jabatan extends Model
     public function pegawai()
     {
         return $this->hasOne(Pegawai::class, 'jabatan_id');
-    }
-
-    public function bawahan()
-    {
-        return $this->hasMany(Jabatan::class, 'jabatan_id');
     }
     
     public function skp()

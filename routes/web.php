@@ -117,6 +117,17 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/presensi/{bulan}/{tahun}', 'PresensiController@editBulanTahun');
     Route::post('/admin/presensi/{bulan}/{tahun}', 'PresensiController@updateBulanTahun');
 
+    Route::get('/admin/rspuskesmas', 'RsController@index');
+    Route::get('/admin/rspuskesmas/add', 'RsController@create');
+    Route::post('/admin/rspuskesmas/add', 'RsController@store');
+    Route::get('/admin/rspuskesmas/{id}/edit', 'RsController@edit');
+    Route::post('/admin/rspuskesmas/{id}/edit', 'RsController@update');
+    Route::get('/admin/rspuskesmas/{id}/delete', 'RsController@destroy');
+    Route::get('/admin/rspuskesmas/{id}/petajabatan', 'RsController@jabatan');
+    Route::post('/admin/rspuskesmas/{id}/petajabatan', 'RsController@storeJabatan');
+    Route::get('/admin/rspuskesmas/{id}/petajabatan/{idJab}/delete', 'RsController@deleteJabatan');
+    Route::get('/admin/rspuskesmas/{id}/petajabatan/{idJab}/edit', 'RsController@editJabatan');
+
     Route::get('/admin/jabatan', 'AdminController@jabatan');
     Route::post('/admin/jabatan', 'AdminController@storeJabatan');
     Route::get('/admin/jabatan/edit/{id}', 'AdminController@editJabatan');

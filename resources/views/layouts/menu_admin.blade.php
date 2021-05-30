@@ -41,6 +41,18 @@
         </p>
     </a>
     </li>
+    
+    @if (Auth::user()->username = '1.02.01.')
+        
+    <li class="nav-item">
+    <a href="/admin/rspuskesmas" class="nav-link">
+        <i class="nav-icon fas fa-hospital"></i>
+        <p>
+        RS & Puskesmas
+        </p>
+    </a>
+    </li>
+    @endif
     <li class="nav-item">
     <a href="/admin/org" class="nav-link" target="_blank">
         <i class="nav-icon fas fa-sitemap"></i>

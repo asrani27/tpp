@@ -59,8 +59,10 @@ class SuperadminController extends Controller
     {
         try{
             $s = Skpd::find($skpd_id);
-            $s->user->delete();
-            $s->delete();
+            if($s->user != null){
+                $s->user->delete();
+            }
+            Skpd::find($skpd_id)->delete();
             toastr()->success('Skpd Berhasil Di Hapus');
         }catch(\Exception $e){
             toastr()->error('Skpd Tidak Bisa Di Hapus Karena terkait Dengan Data Lain');

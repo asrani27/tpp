@@ -38,4 +38,14 @@ class Jabatan extends Model
     {
         return $this->hasMany(Skp::class, 'jabatan_id')->orderBy('id','DESC');
     }
+
+    public function skpd()
+    {
+        return $this->belongsTo(Skpd::class, 'skpd_id');
+    }
+    
+    public function rs()
+    {
+        return $this->belongsTo(Rspuskesmas::class, 'rs_puskesmas_id');
+    }
 }

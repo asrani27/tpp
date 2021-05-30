@@ -128,6 +128,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('/admin/rspuskesmas/{id}/petajabatan', 'RsController@storeJabatan');
     Route::get('/admin/rspuskesmas/{id}/petajabatan/{idJab}/delete', 'RsController@deleteJabatan');
     Route::get('/admin/rspuskesmas/{id}/petajabatan/{idJab}/edit', 'RsController@editJabatan');
+    Route::post('/admin/rspuskesmas/{id}/petajabatan/{idJab}/edit', 'RsController@updateJabatan');
 
     Route::get('/admin/jabatan', 'AdminController@jabatan');
     Route::post('/admin/jabatan', 'AdminController@storeJabatan');

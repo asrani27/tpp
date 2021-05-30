@@ -75,16 +75,16 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputPassword3" class="col-sm-2 col-form-label">Jabatan</label>
+                            <label for="inputPassword3" class="col-sm-2 col-form-label">Jabatan Tersedia</label>
                             <div class="col-sm-10">
-                                <select name="jabatan_id" class="form-control" required>
+                                <select name="jabatan_id" class="form-control select2" required>
                                     @if ($data->jabatan_id != null)   
-                                        <option value="{{$data->jabatan_id}}" selected>{{$data->jabatan->nama}}</option>
+                                        <option value="{{$data->jabatan_id}}" selected>{{$data->jabatan->nama}} ({{$data->jabatan->rs_puskesmas_id == null ? $data->skpd->nama:$data->jabatan->rs->nama}})</option>
                                     @else
                                         <option value="">-pilih-</option>
                                     @endif
                                     @foreach ($jabatan as $item)
-                                        <option value="{{$item->id}}" {{$item->id == $data->jabatan_id ? 'selected':''}}>{{$item->nama}} - {{$item->atasan == null ? '-':'Atasan : '.$item->atasan->nama}}</option>
+                                        <option value="{{$item->id}}" {{$item->id == $data->jabatan_id ? 'selected':''}}>{{$item->nama}} ({{$item->rs == null ? $item->skpd->nama:$item->rs->nama}}) - {{$item->atasan == null ? '-':'Atasan : '.$item->atasan->nama}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -106,5 +106,18 @@
 
 @push('js')
 
+
+<script src="/theme/plugins/select2/js/select2.full.min.js"></script>
+<script>
+    $(function () {
+      //Initialize Select2 Elements
+      $('.select2').select2()
+  
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+        theme: 'bootstrap4'
+      })
+    })
+</script>  
 
 @endpush

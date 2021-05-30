@@ -61,6 +61,9 @@
                         <th>NIP / Username</th>
                         <th>Nama</th>
                         <th>Jabatan</th>
+                        @if (Auth::user()->username = '1.02.01.')
+                          <th>SKPD/RS/Puskesmas</th>
+                        @endif
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -86,6 +89,10 @@
                             </td>
                             <td>{{$item->nama}}</td>
                             <td>{{$item->jabatan == null ? '-' : $item->jabatan->nama}}</td>
+                            
+                            @if (Auth::user()->username = '1.02.01.')
+                              <td>{{$item->jabatan->rs_puskesmas_id == null ? 'Dinas Kesehatan' : $item->jabatan->rs->nama}}</td>
+                            @endif
                             <td>
                                 @if ($item->user_id == null)
                                   <a href="/admin/pegawai/createuser/{{$item->id}}" class="btn btn-xs btn-success"><i class="fas fa-key"></i> Create User</a>
@@ -114,5 +121,4 @@
 @endsection
 
 @push('js')
-
 @endpush

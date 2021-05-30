@@ -71,7 +71,11 @@ class RsController extends Controller
     public function storeJabatan(Request $req, $id)
     {
         $attr = $req->all();
-        $attr['tingkat']         = 9;
+        if($req->jabatan_id == null){
+            $attr['tingkat']    = 1;
+        }else{
+            $attr['tingkat']    = Jabatan::find($req->jabatan_id)->tingkat + 1;
+        }
         $attr['rs_puskesmas_id'] = $id;
         $attr['is_aktif']        = 1;
         $attr['skpd_id']         = Auth::user()->skpd->id;
@@ -105,5 +109,15 @@ class RsController extends Controller
             toastr()->error('Tidak Bisa Di Hapus');
             return back();
         }
+    }
+
+    public function updateJabatan(Request $req, $id, $idJab)
+    {
+        Jabatan::find($idJab)->update([
+            'nama' => $req->nama, 
+            'kelas_id' => $req->kelas_id,
+        ]);
+        toastr()->success('Jabatan Berhasil Di Update');
+        return redirect('/admin/rspuskesmas/'.$id.'/petajabatan');
     }
 }

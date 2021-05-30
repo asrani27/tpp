@@ -70,8 +70,9 @@
                                 <div class="callout callout-danger text-sm" style="padding:5px;">
                                     {{$item3->kelas == null ? '-':$item3->kelas->nama}} |
                                     <strong>{{$item3->nama}}</strong>
-                                    <a href="/admin/jabatan/edit/{{$item3->id}}" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
-                                    <a href="/admin/jabatan/delete/{{$item3->id}}" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
+                                    <a href="/admin/rspuskesmas/{{$id}}/petajabatan/{{$item3->id}}/edit" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                    <a href="/admin/rspuskesmas/{{$id}}/petajabatan/{{$item3->id}}/delete" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
+                                    
                                 </div>
                                 <ul>
                                     @foreach ($item3->bawahanblud($id) as $item4)
@@ -79,8 +80,9 @@
                                             <div class="callout callout-danger text-sm" style="padding:5px;">
                                                 {{$item4->kelas == null ? '-':$item4->kelas->nama}} |
                                                 <strong>{{$item4->nama}}</strong>
-                                                <a href="/admin/jabatan/edit/{{$item4->id}}" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
-                                                <a href="/admin/jabatan/delete/{{$item4->id}}" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
+                                                <a href="/admin/rspuskesmas/{{$id}}/petajabatan/{{$item4->id}}/edit" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                                <a href="/admin/rspuskesmas/{{$id}}/petajabatan/{{$item4->id}}/delete" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
+                                                
                                             </div>
                                             <ul>
                                                 @foreach ($item4->bawahan as $item5)
@@ -88,8 +90,10 @@
                                                         <div class="callout callout-danger text-sm" style="padding:5px;">
                                                             {{$item5->kelas == null ? '-':$item5->kelas->nama}} |
                                                             <strong>{{$item5->nama}}</strong>
-                                                            <a href="/admin/jabatan/edit/{{$item5->id}}" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
-                                                            <a href="/admin/jabatan/delete/{{$item5->id}}" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
+                                                            <a href="/admin/rspuskesmas/{{$id}}/petajabatan/{{$item5->id}}/edit" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                                            <a href="/admin/rspuskesmas/{{$id}}/petajabatan/{{$item5->id}}/delete" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
+
+                                                            
                                                         </div>
                                                     </li>
                                                 @endforeach

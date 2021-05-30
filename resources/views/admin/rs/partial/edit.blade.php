@@ -1,4 +1,4 @@
-<form method="POST" action="/admin/jabatan/edit/{{$id}}">
+<form method="POST" action="/admin/rspuskesmas/{{$id}}/petajabatan/{{$jabatan->id}}/edit">
     @csrf
     <div class="form-group">
             {{-- @if ($jabatan->jabatan_id == null)

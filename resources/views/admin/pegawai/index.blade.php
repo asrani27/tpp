@@ -61,7 +61,7 @@
                         <th>NIP / Username</th>
                         <th>Nama</th>
                         <th>Jabatan</th>
-                        @if (Auth::user()->username = '1.02.01.')
+                        @if (Auth::user()->username == '1.02.01.')
                           <th>SKPD/RS/Puskesmas</th>
                         @endif
                         <th>Aksi</th>
@@ -90,7 +90,7 @@
                             <td>{{$item->nama}}</td>
                             <td>{{$item->jabatan == null ? '-' : $item->jabatan->nama}}</td>
                             
-                            @if (Auth::user()->username = '1.02.01.')
+                            @if (Auth::user()->username == '1.02.01.')
                               <td>{{$item->jabatan->rs_puskesmas_id == null ? 'Dinas Kesehatan' : $item->jabatan->rs->nama}}</td>
                             @endif
                             <td>

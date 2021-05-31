@@ -42,7 +42,7 @@
     </a>
     </li>
     
-    @if (Auth::user()->username = '1.02.01.')
+    @if (Auth::user()->username == '1.02.01.')
         
     <li class="nav-item">
     <a href="/admin/rspuskesmas" class="nav-link">

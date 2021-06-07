@@ -26,7 +26,8 @@ class PltController extends Controller
         
         $dataPlt = Pegawai::where('skpd_id', $this->user()->skpd->id)->where('jabatan_plt', '!=', null)->get();
 
-        return view('admin.plt.index',compact('jabatanTersedia','dataPlt'));
+        $riwayat = RiwayatPlt::where('skpd_id', $this->user()->skpd->id)->get();
+        return view('admin.plt.index',compact('jabatanTersedia','dataPlt','riwayat'));
     }
 
     public function adminStorePlt(Request $req)
@@ -47,7 +48,7 @@ class PltController extends Controller
                     //Simpan Ke Tabel Riwayat PLT
                     $jab                = Jabatan::find($req->jabatan_plt);
                     $riwayat            = $req->all();
-                    $riwayat['skpd']    = $jab->skpd->nama;
+                    $riwayat['skpd_id'] = $jab->skpd->id;
                     $riwayat['jabatan'] = $jab->nama;
                     $riwayat['nama']    = $checkNip->nama;
                     
@@ -69,5 +70,15 @@ class PltController extends Controller
                 }
             }
         }
+    }
+
+    public function adminDeletePlt($id)
+    {
+        $u = Pegawai::find($id);
+        $u->jabatan_plt = null;
+        $u->save();
+        
+        toastr()->success('PLt Berhasil di Hapus');
+        return back();
     }
 }

@@ -64,7 +64,7 @@ class HomeController extends Controller
 
     public function admin()
     {
-        $pegawai        = Pegawai::with('jabatan.kelas','pangkat')->where('skpd_id', $this->skpd_id())->orderBy('urutan','ASC')->get();
+        $pegawai        = Pegawai::with('jabatan.kelas','pangkat')->where('skpd_id', $this->skpd_id())->where('is_aktif', 1)->orderBy('urutan','ASC')->get();
         $countPegawai   = $pegawai->count();
         $persentase_tpp = (float) Parameter::where('name','persentase_tpp')->first()->value;
         $countJabatan   = DB::table('jabatan')->where('skpd_id',$this->skpd_id())->get()->count();

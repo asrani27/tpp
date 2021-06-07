@@ -24,8 +24,8 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                   <label>Jabatan Kosong</label>
-                                  <select class="form-control select2" name="jabatan_plt">
-                                    <option>-pilih-</option>
+                                  <select class="form-control select2" name="jabatan_plt" required>
+                                    <option value="">-pilih-</option>
                                     @foreach ($jabatanTersedia as $item)
                                     <option value="{{$item->id}}" {{old('jabatan_plt') == $item->id ? 'selected':''}}>{{$item->nama}}</option>                                       
                                     @endforeach
@@ -67,14 +67,9 @@
         
         <div class="row">
             <div class="col-12">
-              <a href="/admin/pegawai/add" class="btn btn-sm btn-primary"><i class="fas fa-users"></i> Tambah ASN</a>
-              {{-- <a href="/admin/pegawai/createuser" class="btn btn-sm bg-purple"><i class="fas fa-key"></i> Create User & Pass ASN</a> --}}
-              <a href="/admin/pegawai" class="btn btn-sm bg-info"><i class="fas fa-recycle"></i> Refresh</a>
-              <br/><br/>
-              
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Riwayat PLT</h3>
+                  <h3 class="card-title">PLT sedang Berjalan</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
@@ -98,6 +93,53 @@
                                 <td>{{$item->nip}}</td>
                                 <td>{{$item->nama}}</td>
                                 <td>{{$item->plt->nama}}</td>
+                                <td>
+                                    <a href="/admin/plt/delete/{{$item->id}}" class="btn btn-sm btn-danger"onclick="return confirm('Yakin ingin di hapus?');"> Hapus </a>
+                                </td>
+                            </tr>    
+                        @endforeach
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+        </div>
+
+        
+        <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Riwayat PLT</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0">
+                  <table class="table table-hover text-nowrap table-sm">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>NIP</th>
+                        <th>Nama</th>
+                        <th>Jabatan di PLT</th>
+                        <th>Mulai</th>
+                        <th>Selesai</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    @php
+                        $no =1;
+                    @endphp
+                    <tbody>
+                        @foreach ($riwayat as $item)
+                            <tr>
+                                <td>{{$no++}}</td>
+                                <td>{{$item->nip}}</td>
+                                <td>{{$item->nama}}</td>
+                                <td>{{$item->jabatan}}</td>
+                                <td>{{$item->tgl_mulai_sk}}</td>
+                                <td>{{$item->tgl_selesai_sk}}</td>
                             </tr>    
                         @endforeach
                     </tbody>

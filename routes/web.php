@@ -119,6 +119,11 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
     Route::get('/admin/plt', 'PltController@admin');
     Route::post('/admin/plt/add', 'PltController@adminStorePlt');
+    Route::get('/admin/plt/delete/{id}', 'PltController@adminDeletePlt');
+    
+    Route::get('/admin/pensiun', 'PensiunController@admin');
+    Route::post('/admin/pensiun/add', 'PensiunController@adminStorePensiun');
+    Route::get('/admin/pensiun/delete/{id}', 'PensiunController@adminDeletePensiun');
 
     Route::get('/admin/rspuskesmas', 'RsController@index');
     Route::get('/admin/rspuskesmas/add', 'RsController@create');

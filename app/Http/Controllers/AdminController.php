@@ -109,7 +109,7 @@ class AdminController extends Controller
         $req->flash();
 
         $attr = $req->all();
-
+        
         Pegawai::find($id)->update($attr);
 
         toastr()->success('Pegawai Berhasil Di Update');

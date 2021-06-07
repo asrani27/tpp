@@ -80,6 +80,7 @@
                                 <select name="jabatan_id" class="form-control select2" required>
                                     @if ($data->jabatan_id != null)   
                                         <option value="{{$data->jabatan_id}}" selected>{{$data->jabatan->nama}} ({{$data->jabatan->rs_puskesmas_id == null ? $data->skpd->nama:$data->jabatan->rs->nama}})</option>
+                                        <option value="">-Kosongkan-</option>
                                     @else
                                         <option value="">-pilih-</option>
                                     @endif

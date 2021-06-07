@@ -78,7 +78,7 @@ class HomeController extends Controller
                 $item->nama_jabatan   = null;
                 $item->jenis_jabatan  = null;
                 $item->nama_kelas     = null;
-                $item->nama_pangkat   = null;
+                $item->nama_pangkat   = $item->pangkat == null ? null:$item->pangkat->nama.' ('.$item->pangkat->golongan.')';
                 $item->basic_tpp      = 0;
                 $item->persentase_tpp = 0;
                 $item->tambahan_persen_tpp  =  0;
@@ -130,7 +130,6 @@ class HomeController extends Controller
             }
             return $item;
         });
-
         
         
         return view('admin.home',compact('data','persentase_tpp','countPegawai','countJabatan','month','year','capaianMenit'));

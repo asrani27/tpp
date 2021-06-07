@@ -53,6 +53,26 @@
     </a>
     </li>
     @endif
+    
+    @if (Auth::user()->hasRole('admin'))
+        
+    <li class="nav-item">
+    <a href="/admin/plt" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+        PLT
+        </p>
+    </a>
+    </li>
+    <li class="nav-item">
+    <a href="/admin/pensiun" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+        Pensiun
+        </p>
+    </a>
+    </li>
+    @endif
     <li class="nav-item">
     <a href="/admin/org" class="nav-link" target="_blank">
         <i class="nav-icon fas fa-sitemap"></i>

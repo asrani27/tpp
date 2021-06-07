@@ -34,6 +34,11 @@ class Jabatan extends Model
         return $this->hasOne(Pegawai::class, 'jabatan_id');
     }
     
+    public function pegawaiplt()
+    {
+        return $this->hasOne(Pegawai::class, 'jabatan_plt');
+    }
+
     public function skp()
     {
         return $this->hasMany(Skp::class, 'jabatan_id')->orderBy('id','DESC');

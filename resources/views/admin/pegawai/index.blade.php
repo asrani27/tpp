@@ -88,7 +88,9 @@
                             <td>{{$item->nip}}<br />
                             </td>
                             <td>{{$item->nama}}</td>
-                            <td>{{$item->jabatan == null ? '-' : $item->jabatan->nama}}</td>
+                            <td>{{$item->jabatan == null ? '-' : $item->jabatan->nama}}<br/>
+                            {{$item->plt == null ? '': 'Plt. '.$item->plt->nama}}
+                            </td>
                             
                             @if (Auth::user()->username == '1.02.01.')
                               <td>{{$item->jabatan->rs_puskesmas_id == null ? 'Dinas Kesehatan' : $item->jabatan->rs->nama}}</td>

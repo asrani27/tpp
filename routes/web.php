@@ -117,6 +117,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/presensi/{bulan}/{tahun}', 'PresensiController@editBulanTahun');
     Route::post('/admin/presensi/{bulan}/{tahun}', 'PresensiController@updateBulanTahun');
 
+    Route::get('/admin/plt', 'PltController@admin');
+    Route::post('/admin/plt/add', 'PltController@adminStorePlt');
+
     Route::get('/admin/rspuskesmas', 'RsController@index');
     Route::get('/admin/rspuskesmas/add', 'RsController@create');
     Route::post('/admin/rspuskesmas/add', 'RsController@store');

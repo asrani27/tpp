@@ -64,7 +64,6 @@ class PltController extends Controller
                 } catch (\Exception $e) {
                     DB::rollback();
                     $req->flash();
-                    
                     toastr()->error('Gagal');
                     return back();
                 }

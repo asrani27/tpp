@@ -64,6 +64,16 @@
         </p>
     </a>
     </li>
+    
+    <li class="nav-item">
+    <a href="/admin/transfer" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+        Transfer Pegawai
+        </p>
+    </a>
+    </li>
+
     <li class="nav-item">
     <a href="/admin/pensiun" class="nav-link">
         <i class="nav-icon fas fa-th"></i>

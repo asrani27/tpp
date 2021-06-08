@@ -121,6 +121,10 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('/admin/plt/add', 'PltController@adminStorePlt');
     Route::get('/admin/plt/delete/{id}', 'PltController@adminDeletePlt');
     
+    Route::get('/admin/transfer', 'TransferController@admin');
+    Route::post('/admin/transfer/add', 'TransferController@adminStoreTransfer');
+    Route::get('/admin/transfer/delete/{id}', 'TransferController@adminDeleteTransfer');
+
     Route::get('/admin/pensiun', 'PensiunController@admin');
     Route::post('/admin/pensiun/add', 'PensiunController@adminStorePensiun');
     Route::get('/admin/pensiun/delete/{id}', 'PensiunController@adminDeletePensiun');

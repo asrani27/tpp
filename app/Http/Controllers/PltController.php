@@ -62,7 +62,6 @@ class PltController extends Controller
                     toastr()->success('Data Berhasil di Simpan');
                     return back();
                 } catch (\Exception $e) {
-                    dd($e);
                     DB::rollback();
                     $req->flash();
                     

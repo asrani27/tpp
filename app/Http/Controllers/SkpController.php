@@ -99,10 +99,10 @@ class SkpController extends Controller
         return redirect('pegawai/skp/rencana-kegiatan/periode/view/'.$periode_id);
     }
 
-    public function delete($id)
+    public function delete($id_kegiatan, $id_skp)
     {
         try{
-            $del = Skp::find($id)->delete();
+            $del = Skp::find($id_kegiatan)->delete();
             toastr()->success('SKP Berhasil Di Hapus');
             return back();
         }catch(\Exception $e)

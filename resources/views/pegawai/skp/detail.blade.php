@@ -13,10 +13,7 @@
 <div class="row">
     <div class="col-md-12">
         <h4>SKP PEGAWAI</h4>
-        <div class="alert alert-warning alert-dismissible">
-          <h5><i class="icon fas fa-info"></i> Informasi!</h5>
-          Form input SKP sedang dalam pembaharuan dan menyesuaikan dengan simpeg sebelumnya, akan aktif kembali pada jam 17:00. terima kasih
-        </div>
+        
         <div class="row">
             <div class="col-12">
               <form method="POST" action="/pegawai/skp/rencana-kegiatan/periode/view/{{$id}}">

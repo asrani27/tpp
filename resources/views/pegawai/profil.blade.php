@@ -77,7 +77,7 @@
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">Pangkat / Golongan</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" value="{{$data->pangkat == null ? '' : $data->pangkat->nama.'('.$data->pangkat->nama.')'}}" readonly>
+                  <input type="text" class="form-control" value="{{$data->pangkat == null ? '' : $data->pangkat->nama.'('.$data->pangkat->golongan.')'}}" readonly>
                 </div>
             </div>
             <div class="form-group row">

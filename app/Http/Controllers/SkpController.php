@@ -33,6 +33,7 @@ class SkpController extends Controller
     {
         $attr = $req->all();
         $attr['skp_periode_id'] = $id;
+        $attr['ak'] = $req->kuantitas * $req->satuan_ak;
         Skp::create($attr);
         toastr()->success('SKP Berhasil Di Simpan');
         return back();
@@ -92,9 +93,13 @@ class SkpController extends Controller
         $data = Skp::find($id);
         return view('pegawai.skp.edit',compact('data','periode_id'));
     }
-    public function update(Request $req, $id, $periode_id)
+    public function updateSkp(Request $req, $id, $periode_id)
     {
-        Skp::find($id)->update($req->all());
+        
+        $attr = $req->all();
+        $attr['ak'] = $req->kuantitas * $req->satuan_ak;
+        
+        Skp::find($id)->update($attr);
         toastr()->success('SKP Berhasil Di Update');
         return redirect('pegawai/skp/rencana-kegiatan/periode/view/'.$periode_id);
     }

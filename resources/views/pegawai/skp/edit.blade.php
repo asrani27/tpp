@@ -25,9 +25,9 @@
                         @csrf
                     <div class="card-body">
                         <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-2 col-form-label text-right">Tahun</label>
-                        <div class="col-sm-10">
-                            <select name="tahun" class="form-control">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Tahun</label>
+                        <div class="col-sm-9">
+                            <select name="tahun" class="form-control" readonly>
                                 <option value="2021" {{$data->tahun == '2021' ? 'selected' :''}}>2021</option>
                                 <option value="2022" {{$data->tahun == '2022' ? 'selected' :''}}>2022</option>
                                 <option value="2023" {{$data->tahun == '2023' ? 'selected' :''}}>2023</option>
@@ -37,43 +37,65 @@
                         </div>
                         </div>
                         <div class="form-group row">
-                        <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Deskripsi Kegiatan</label>
-                        <div class="col-sm-10">
+                        <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Nama Kegiatan</label>
+                        <div class="col-sm-9">
                             <textarea class="form-control"  name="deskripsi" rows="3" required>{{$data->deskripsi}}</textarea>
                         </div>
                         </div>
                         
                         <div class="form-group row">
-                            <label for="inputPassword3" class="col-sm-2 col-form-label text-right">AK</label>
-                            <div class="col-sm-10">
-                            <input type="text" class="form-control" name="ak" value="{{$data->ak}}">
+                            <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Nilai Satuan AK</label>
+                            <div class="col-sm-9">
+                            <input type="text" class="form-control" name="satuan_ak" value="{{$data->satuan_ak}}" onkeypress="return hanyaAngka(event)">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Angka Kredit (Satuan AK * Kuantitas Volume)
+                            </label>
+                            <div class="col-sm-9">
+                            <input type="text" class="form-control" name="ak" value="{{$data->ak}}" readonly>
                             </div>
                         </div>
                         
                         <div class="form-group row">
-                            <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Kuant/Output</label>
-                            <div class="col-sm-10">
+                            <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Kuantitas</label>
+                            <div class="col-sm-9">
+                            <input type="text" class="form-control" name="kuantitas" value="{{$data->kuantitas}}" onkeypress="return hanyaAngka(event)">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Output</label>
+                            <div class="col-sm-9">
                             <input type="text" class="form-control" name="output" value="{{$data->output}}">
                             </div>
                         </div>
                         
                         <div class="form-group row">
-                            <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Kual/Mutu</label>
-                            <div class="col-sm-10">
-                            <input type="text" class="form-control" name="mutu" value="{{$data->mutu}}">
+                            <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Kual/Mutu</label>
+                            <div class="col-sm-9">
+                            <input type="text" class="form-control" name="mutu" value="{{$data->mutu}}" onkeypress="return hanyaAngka(event)">
                             </div>
                         </div>
                         
                         <div class="form-group row">
-                            <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Waktu</label>
-                            <div class="col-sm-10">
-                            <input type="text" class="form-control" name="waktu" value="{{$data->waktu}}">
+                            <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Waktu</label>
+                            <div class="col-sm-9">
+                            <input type="text" class="form-control" name="waktu" value="{{$data->waktu}}" onkeypress="return hanyaAngka(event)">
                             </div>
                         </div>
                         
                         <div class="form-group row">
-                            <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Biaya</label>
-                            <div class="col-sm-10">
+                            <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Satuan Waktu</label>
+                            <div class="col-sm-9">
+                            <input type="text" class="form-control" name="satuan_waktu" value="{{$data->satuan_waktu}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Biaya</label>
+                            <div class="col-sm-9">
                             <input type="text" class="form-control" name="biaya" value="{{$data->biaya}}">
                             </div>
                         </div>
@@ -94,5 +116,12 @@
 
 @push('js')
 
-
+<script>
+    function hanyaAngka(event) {
+          var angka = (event.which) ? event.which : event.keyCode
+          if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
+            return false;
+          return true;
+        }
+  </script>
 @endpush

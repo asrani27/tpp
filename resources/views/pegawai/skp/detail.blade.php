@@ -27,13 +27,13 @@
                   <div class="form-group row">
                       <label for="inputPassword3" class="col-sm-3 col-form-label text-right"> Nama Kegiatan</label>
                       <div class="col-sm-9">
-                        <textarea class="form-control" rows="3" name="deskripsi"></textarea>
+                        <textarea class="form-control" rows="3" name="deskripsi" placeholder="Contoh : Melakukan pemenuhan permintaan dan layanan teknologi informasi"></textarea>
                       </div>
                   </div>
                   <div class="form-group row">
                       <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Nilai Satuan AK</label>
                       <div class="col-sm-9">
-                      <input type="text" class="form-control" name="ak">
+                      <input type="text" class="form-control" name="satuan_ak" placeholder="Contoh : 0.5" onkeypress="return hanyaAngka(event)">
                       </div>
                   </div>
                   
@@ -47,35 +47,42 @@
                   <div class="form-group row">
                       <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Kuantitas Volume</label>
                       <div class="col-sm-9">
-                      <input type="text" class="form-control" name="kuantitas">
+                      <input type="text" class="form-control" name="kuantitas" placeholder="Contoh : 52" onkeypress="return hanyaAngka(event)">
                       </div>
                   </div>
                   
                   <div class="form-group row">
                     <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Output</label>
                     <div class="col-sm-9">
-                    <input type="text" class="form-control" name="output">
+                    <input type="text" class="form-control" name="output" placeholder="Contoh : Laporan">
                     </div>
                   </div>
 
                   <div class="form-group row">
-                      <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Kual/Mutu</label>
+                      <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Kualitas/Mutu (%)</label>
                       <div class="col-sm-9">
-                      <input type="text" class="form-control" name="mutu">
+                      <input type="text" class="form-control" name="mutu" placeholder="Contoh : 100" onkeypress="return hanyaAngka(event)">
                       </div>
                   </div>
                   
                   <div class="form-group row">
-                      <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Waktu</label>
+                      <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Waktu Kegiatan</label>
                       <div class="col-sm-9">
-                      <input type="text" class="form-control" name="waktu">
+                      <input type="text" class="form-control" name="waktu" placeholder="Contoh : 12" onkeypress="return hanyaAngka(event)">
                       </div>
                   </div>
                   
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Satuan Waktu</label>
+                    <div class="col-sm-9">
+                    <input type="text" class="form-control" name="satuan_waktu" placeholder="Contoh : bulan">
+                    </div>
+                  </div>
+
                   <div class="form-group row">
                       <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Biaya</label>
                       <div class="col-sm-9">
-                      <input type="text" class="form-control" name="biaya">
+                      <input type="text" class="form-control" name="biaya" placeholder="Contoh : 0">
                       </div>
                   </div>
                   
@@ -83,7 +90,7 @@
                       <label for="inputPassword3" class="col-sm-3 col-form-label text-right"></label>
                       <div class="col-sm-9">
                         <a href="/pegawai/skp/rencana-kegiatan" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i> Kembali</a>
-                        <button class="btn btn-sm btn-primary" type="submit" disabled><i class="fas fa-save"></i>  Simpan SKP</button>
+                        <button class="btn btn-sm btn-primary" type="submit"><i class="fas fa-save"></i>  Simpan SKP</button>
                       </div>
                   </div>
                 </div>
@@ -115,6 +122,7 @@
                         <th>#</th>
                         <th>Deskripsi Kegiatan/Tugas</th>
                         <th>AK</th>
+                        <th>Satuan AK</th>
                         <th>Kuant/Output</th>
                         <th>Kual/Mutu</th>
                         <th>Waktu</th>
@@ -132,9 +140,10 @@
                             <td>{{$key+ $data->firstItem()}}</td>
                             <td>{{$item->deskripsi}}</td>
                             <td>{{$item->ak}}</td>
-                            <td>{{$item->output}}</td>
-                            <td>{{$item->mutu}}</td>
-                            <td>{{$item->waktu}}</td>
+                            <td>{{$item->satuan_ak}}</td>
+                            <td>{{$item->kuantitas}} {{$item->output}}</td>
+                            <td>{{$item->mutu}} %</td>
+                            <td>{{$item->waktu}} {{$item->satuan_waktu}}</td>
                             <td>{{$item->biaya}}</td>
                             <td>
                                 @if ($item->validasi == null)
@@ -149,8 +158,8 @@
                             </td>
                             <td>
                           
-                            <a href="/pegawai/skp/rencana-kegiatan/edit/{{$item->id}}/{{$id}}" class="btn btn-xs btn-warning disabled" data-toggle="tooltip" title='Edit data'><i class="fas fa-edit"></i></a>
-                            <a href="/pegawai/skp/rencana-kegiatan/delete/{{$item->id}}/{{$id}}" class="btn btn-xs btn-danger disabled" data-toggle="tooltip" title='Hapus data' onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
+                            <a href="/pegawai/skp/rencana-kegiatan/edit/{{$item->id}}/{{$id}}" class="btn btn-xs btn-warning" data-toggle="tooltip" title='Edit data'><i class="fas fa-edit"></i></a>
+                            <a href="/pegawai/skp/rencana-kegiatan/delete/{{$item->id}}/{{$id}}" class="btn btn-xs btn-danger" data-toggle="tooltip" title='Hapus data' onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
                             </td>
                           </tr>
                       @endforeach
@@ -169,6 +178,13 @@
 @endsection
 
 @push('js')
-
+<script>
+  function hanyaAngka(event) {
+        var angka = (event.which) ? event.which : event.keyCode
+        if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
+          return false;
+        return true;
+      }
+</script>
 
 @endpush

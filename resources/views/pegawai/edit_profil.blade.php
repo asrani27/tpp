@@ -91,7 +91,7 @@
                     <select name="eselon_id" class="form-control" required>
                         <option value="">-pilih-</option>
                         @foreach ($eselon as $item)
-                            <option value="{{$item->id}}" {{$data->eselon->id == $item->id ? 'selected':''}}>{{$item->nama}}</option>
+                            <option value="{{$item->id}}" {{$data->eselon_id == $item->id ? 'selected':''}}>{{$item->nama}}</option>
                         @endforeach
                     </select>
                 </div>

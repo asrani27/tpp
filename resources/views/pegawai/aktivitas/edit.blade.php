@@ -20,7 +20,7 @@
         <h3 class="card-title"><i class="fas fa-graduation-cap"></i> Edit Aktivitas</h3>
         </div>
         <!-- form start -->
-        <form class="form-horizontal" method="POST" action="/pegawai/aktivitas/harian/edit/{{$data->id}}">
+        <form id="aktivitas" class="form-horizontal" method="POST" action="/pegawai/aktivitas/harian/edit/{{$data->id}}">
         @csrf
           <div class="card-body">
               <div class="form-group row">
@@ -62,14 +62,14 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Dokumen Pendukung</label>
                 <div class="col-sm-10 custom-file">
-                    <input type="file" class="custom-file-input" name="file" id="customFile">
+                    <input type="file" class="custom-file-input" name="file" id="customFile" disabled>
                     <label class="custom-file-label" for="customFile">Choose file</label>
                 </div>
               </div>
           </div>
           
           <div class="card-footer">
-              <button type="submit" class="btn btn-block btn-info">Update</button>
+              <button type="submit" class="btn btn-block btn-info btnSubmit"><i class="fas fa-save"></i> Update</button>
           </div>
         </form>
     </div>
@@ -80,6 +80,14 @@
 
 @push('js')
 
+<script>
+  $(document).ready(function () {
+      $("#aktivitas").submit(function () {
+      $(".btnSubmit").attr("disabled", true);
+      return true;
+      });
+  });
+</script>
 <!-- Select2 -->
 <script src="/theme/plugins/select2/js/select2.full.min.js"></script>
 <script>

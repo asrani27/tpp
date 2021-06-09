@@ -91,8 +91,20 @@
             </li> --}}
         </ul>
     </li>
+
+    @if (Auth::user()->pegawai->jabatan_plt != null) 
     <li class="nav-item">
-    <a href="/pegawai/profil" class="nav-link">
+    <a href="/pegawai/plt/validasi/harian" class="nav-link {{ Request::is('pegawai/plt/validasi/harian*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-user-check"></i>
+        <p>
+        Validasi Aktivitas PLT
+        </p>
+    </a>
+    </li> 
+    @endif
+
+    <li class="nav-item">
+    <a href="/pegawai/profil" class="nav-link {{ Request::is('pegawai/profil') ? 'active' : '' }}">
         <i class="nav-icon fas fa-user"></i>
         <p>
         Profil
@@ -100,7 +112,7 @@
     </a>
     </li>
     <li class="nav-item">
-    <a href="/pegawai/gaji" class="nav-link">
+    <a href="/pegawai/gaji" class="nav-link {{ Request::is('pegawai/gaji') ? 'active' : '' }}">
         <i class="nav-icon fas fa-money-bill"></i>
         <p>
         Gaji

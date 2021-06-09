@@ -50,6 +50,11 @@ class Pegawai extends Model
         return $this->belongsTo(Jabatan::class, 'jabatan_id');
     }
     
+    public function jabatanPlt()
+    {
+        return $this->belongsTo(Jabatan::class, 'jabatan_plt');
+    }
+
     public function plt()
     {
         return $this->belongsTo(Jabatan::class, 'jabatan_plt');

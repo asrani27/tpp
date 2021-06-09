@@ -70,9 +70,9 @@ class AktivitasController extends Controller
             toastr()->error('Aktivitas tidak bisa di edit, bukan milik anda','Authorize');
             return back();
         }else{
-            $tahun = Carbon::now()->year;
-            $skp = Auth::user()->pegawai->jabatan->skp->where('tahun', $tahun);
-            $data = $aktivitas;
+            $tahun  = Carbon::now()->year;
+            $skp    = $this->user()->pegawai->skp_periode->where('is_aktif',1)->first()->skp;
+            $data   = $aktivitas;
             return view('pegawai.aktivitas.edit',compact('skp','data'));
         }
     }

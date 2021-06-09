@@ -5,14 +5,13 @@
 @endpush
 
 @section('title')
-    JURNAL AKTIVITAS
+    DETAIL AKTIVITAS
 @endsection
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        
         <div class="row">
-            <div class="col-lg-6 col-12">
+            <div class="col-lg-12 col-12">
                 <div class="card card-widget widget-user-2">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header bg-gradient-blue">
@@ -20,59 +19,29 @@
                         <img class="img-circle elevation-2" src="/login_tpp/images/icons/logo.png" alt="User Avatar">
                       </div>
                       <!-- /.widget-user-image -->
-                      @if (Auth::user()->pegawai->jabatan->sekda == 1)
-                          
-                        <h3 class="widget-user-username">WALIKOTA</h3>
-                        <h5 class="widget-user-desc">KOTA BANJARMASIN</h5>
-                      @else
-                          
-                        <h3 class="widget-user-username">{{$atasan->pegawai == null ? '-': $atasan->pegawai->nama}}</h3>
-                        <h5 class="widget-user-desc">{{$atasan->nama}}</h5>
-                      @endif
-                    </div>
-                    
-                </div>
-            </div>
-            <div class="col-lg-6 col-12">
-                <div class="card card-widget widget-user-2">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="widget-user-header bg-gradient-purple">
-                      <div class="widget-user-image">
-                        <img class="img-circle elevation-2" src="/login_tpp/images/icons/logo.png" alt="User Avatar">
-                      </div>
-                      <!-- /.widget-user-image -->
-                      <h3 class="widget-user-username">{{Auth::user()->name}}</h3>
-                      <h5 class="widget-user-desc">{{Auth::user()->pegawai->jabatan->nama}}</h5>
+                      <h3 class="widget-user-username">{{$pegawai->nama}}</h3>
+                      <h5 class="widget-user-desc">{{$pegawai->jabatan->nama}}</h5>
                     </div>
                     
                 </div>
             </div>
             
+            
         </div>
+        
         <div class="row">
             <div class="col-12">
-                <a href="/pegawai/aktivitas/add" class="btn btn-success btn-block"><i class="fas fa-plus"></i> Tambah Aktivitas</a>
+                <a href="/pegawai/plt/validasi/harian" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i> Kembali</a>
+                @if (count($data) != 0)
+                <a href="/pegawai/validasi/harian/acc/{{$id}}" class="btn btn-sm btn-success">
+                    <i class="fas fa-check"></i> SETUJU SEMUA
+                </a>
+                @endif
             </div>
-        </div>
-        <br />
+        </div><br />
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Total : {{$data->total()}} Aktivitas</h3>
-        
-                        <div class="card-tools">
-                          {{-- <form method="get" action="/pegawai/skp/rencana-kegiatan/search">
-                          <div class="input-group input-group-sm" style="width: 300px;">
-                            <input type="text" name="search" class="form-control input-sm float-right" value="{{old('search')}}" placeholder="Cari">
-        
-                            <div class="input-group-append">
-                              <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                            </div>
-                          </div>
-                          </form> --}}
-                        </div>
-                    </div>
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover text-nowrap table-sm">
                         <thead>
@@ -101,19 +70,19 @@
                                     @if ($item->validasi == 0)
                                     <span class="badge bg-info"><i class="fas fa-clock"></i> Diproses</span>
                                     @elseif ($item->validasi == 1)
-                                    <span class="badge bg-success"><i class="fas fa-check"></i> Disetujui</span>
+                                    <span class="badge bg-success">Disetujui</span>
                                     
                                     @else
-                                    <span class="badge bg-danger"><i class="fas fa-times"></i> Ditolak</span>
+                                    <span class="badge bg-danger">Ditolak</span>
                                         
                                     @endif
                                 </td>
                                 <td>
                                     @if ($item->validasi == 0)
-                                    <a href="/pegawai/aktivitas/harian/edit/{{$item->id}}" class="btn btn-xs btn-success text-white" data-toggle="tooltip" title="edit data"><i class="fas fa-edit"></i></a>
-                                    <a href="/pegawai/aktivitas/harian/delete/{{$item->id}}" class="btn btn-xs btn-danger text-white" data-toggle="tooltip" title="hapus data"  onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
+                                    <a href="/pegawai/validasi/harian/acc_aktivitas/{{$item->id}}" class="btn btn-xs btn-success text-white" data-toggle="tooltip" title="Setujui Aktivitas" onclick="return confirm('Yakin ingin di Setujui?');"><i class="fas fa-check"></i> Setuju</a>
+                                    <a href="/pegawai/validasi/harian/tolak/{{$item->id}}" class="btn btn-xs btn-danger text-white" data-toggle="tooltip" title="Tolak Aktivitas"  onclick="return confirm('Yakin ingin di tolak?');"><i class="fas fa-times"></i> Tolak</a>
                                     @else
-                                    
+                                      
                                     @endif
                                 </td>
                                 </tr>
@@ -122,7 +91,8 @@
                         </table>
                     </div>
                 </div>
-                {{-- @foreach ($data as $item)
+{{--                 
+                @foreach ($data as $item)
                     <div class="callout callout-info">
                         <div class="row">
                             <div class="col-8 text-xs">Menit Kerja : {{$item->menit == null ? 0 : $item->menit}}</div>
@@ -146,8 +116,8 @@
                         <div class="col-4 text-xs">
                             
                             @if ($item->validasi == 0)
-                            <a href="/pegawai/aktivitas/harian/edit/{{$item->id}}" class="btn btn-xs btn-success text-white" data-toggle="tooltip" title="edit data"><i class="fas fa-edit"></i></a>
-                            <a href="/pegawai/aktivitas/harian/delete/{{$item->id}}" class="btn btn-xs btn-danger text-white" data-toggle="tooltip" title="hapus data"  onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
+                            <a href="/pegawai/validasi/harian/acc_aktivitas/{{$item->id}}" class="btn btn-xs btn-success text-white" data-toggle="tooltip" title="Setujui Aktivitas"><i class="fas fa-check"></i> Acc</a>
+                            <a href="/pegawai/validasi/harian/tolak/{{$item->id}}" class="btn btn-xs btn-danger text-white" data-toggle="tooltip" title="Tolak Aktivitas"  onclick="return confirm('Yakin ingin di tolak?');"><i class="fas fa-times"></i> Tolak</a>
                             @else
                               
                             @endif

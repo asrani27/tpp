@@ -191,6 +191,12 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::get('/pegawai/validasi/harian/tolak/{id}', 'ValidasiController@tolakAktivitas');
     Route::get('/pegawai/validasi/harian/view/{id}', 'ValidasiController@view');
 
+    Route::get('/pegawai/plt/validasi/harian', 'ValidasiPltController@index');
+    Route::get('/pegawai/plt/validasi/harian/acc/{id}', 'ValidasiPltController@accSemua');
+    Route::get('/pegawai/plt/validasi/harian/acc_aktivitas/{id}', 'ValidasiPltController@accAktivitas');
+    Route::get('/pegawai/plt/validasi/harian/tolak/{id}', 'ValidasiPltController@tolakAktivitas');
+    Route::get('/pegawai/plt/validasi/harian/view/{id}', 'ValidasiPltController@view');
+
     Route::get('/pegawai/validasi/keberatan', 'ValidasiController@keberatan');
 
     Route::get('/pegawai/verifikasi', 'VerifikasiController@index');

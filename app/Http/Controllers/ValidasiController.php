@@ -21,7 +21,7 @@ class ValidasiController extends Controller
             return back();
         }
         $data1 = $this->user()->pegawai->jabatan->bawahan->load('pegawai')->map(function($item){
-            $item->nama_pegawai = $item->pegawai == null ? '-':$item->pegawai->nama;
+            $item->nama_pegawai   = $item->pegawai == null ? '-':$item->pegawai->nama;
             $item->aktivitas_baru = $item->pegawai == null ? 0:$item->pegawai->aktivitas->where('validasi', 0)->count();
             return $item;
         });

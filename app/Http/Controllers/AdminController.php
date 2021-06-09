@@ -31,8 +31,9 @@ class AdminController extends Controller
         $data   = Pegawai::with('jabatan','user')
         ->where('skpd_id', $this->skpd_id())
         ->where('nip', 'LIKE','%'.$search.'%')
-        ->Where('nama', 'LIKE','%'.$search.'%')
+        ->orWhere('nama', 'LIKE','%'.$search.'%')
         ->orderBy('urutan','ASC')->paginate(10);
+        
         request()->flash();
         return view('admin.pegawai.index',compact('data'));
     }

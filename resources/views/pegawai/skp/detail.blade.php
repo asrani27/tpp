@@ -21,51 +21,65 @@
                 <div class="card-body">
                   
                   <div class="form-group row">
-                      <label for="inputPassword3" class="col-sm-2 col-form-label text-right"> Deskripsi Kegiatan</label>
-                      <div class="col-sm-10">
+                      <label for="inputPassword3" class="col-sm-3 col-form-label text-right"> Nama Kegiatan</label>
+                      <div class="col-sm-9">
                         <textarea class="form-control" rows="3" name="deskripsi"></textarea>
                       </div>
                   </div>
                   <div class="form-group row">
-                      <label for="inputPassword3" class="col-sm-2 col-form-label text-right">AK</label>
-                      <div class="col-sm-10">
+                      <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Nilai Satuan AK</label>
+                      <div class="col-sm-9">
                       <input type="text" class="form-control" name="ak">
                       </div>
                   </div>
                   
                   <div class="form-group row">
-                      <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Kuant/Output</label>
-                      <div class="col-sm-10">
-                      <input type="text" class="form-control" name="output">
+                    <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Angka Kredit (Satuan AK * Kuantitas Volume)</label>
+                    <div class="col-sm-9">
+                    <input type="text" class="form-control" name="ak" readonly>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                      <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Kuantitas Volume</label>
+                      <div class="col-sm-9">
+                      <input type="text" class="form-control" name="kuantitas">
                       </div>
                   </div>
                   
                   <div class="form-group row">
-                      <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Kual/Mutu</label>
-                      <div class="col-sm-10">
+                    <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Output</label>
+                    <div class="col-sm-9">
+                    <input type="text" class="form-control" name="output">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                      <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Kual/Mutu</label>
+                      <div class="col-sm-9">
                       <input type="text" class="form-control" name="mutu">
                       </div>
                   </div>
                   
                   <div class="form-group row">
-                      <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Waktu</label>
-                      <div class="col-sm-10">
+                      <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Waktu</label>
+                      <div class="col-sm-9">
                       <input type="text" class="form-control" name="waktu">
                       </div>
                   </div>
                   
                   <div class="form-group row">
-                      <label for="inputPassword3" class="col-sm-2 col-form-label text-right">Biaya</label>
-                      <div class="col-sm-10">
+                      <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Biaya</label>
+                      <div class="col-sm-9">
                       <input type="text" class="form-control" name="biaya">
                       </div>
                   </div>
                   
                   <div class="form-group row">
-                      <label for="inputPassword3" class="col-sm-2 col-form-label text-right"></label>
-                      <div class="col-sm-10">
+                      <label for="inputPassword3" class="col-sm-3 col-form-label text-right"></label>
+                      <div class="col-sm-9">
                         <a href="/pegawai/skp/rencana-kegiatan" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i> Kembali</a>
-                        <button class="btn btn-sm btn-primary" type="submit"><i class="fas fa-save"></i>  Simpan SKP</button>
+                        <button class="btn btn-sm btn-primary" type="submit" disabled><i class="fas fa-save"></i>  Simpan SKP</button>
                       </div>
                   </div>
                 </div>

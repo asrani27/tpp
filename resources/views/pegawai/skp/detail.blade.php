@@ -13,6 +13,10 @@
 <div class="row">
     <div class="col-md-12">
         <h4>SKP PEGAWAI</h4>
+        <div class="alert alert-warning alert-dismissible">
+          <h5><i class="icon fas fa-info"></i> Informasi!</h5>
+          Form input SKP sedang dalam pembaharuan dan menyesuaikan dengan simpeg sebelumnya, akan aktif kembali pada jam 17:00. terima kasih
+        </div>
         <div class="row">
             <div class="col-12">
               <form method="POST" action="/pegawai/skp/rencana-kegiatan/periode/view/{{$id}}">
@@ -145,8 +149,8 @@
                             </td>
                             <td>
                           
-                            <a href="/pegawai/skp/rencana-kegiatan/edit/{{$item->id}}/{{$id}}" class="btn btn-xs btn-warning" data-toggle="tooltip" title='Edit data'><i class="fas fa-edit"></i></a>
-                            <a href="/pegawai/skp/rencana-kegiatan/delete/{{$item->id}}/{{$id}}" class="btn btn-xs btn-danger" data-toggle="tooltip" title='Hapus data' onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
+                            <a href="/pegawai/skp/rencana-kegiatan/edit/{{$item->id}}/{{$id}}" class="btn btn-xs btn-warning disabled" data-toggle="tooltip" title='Edit data'><i class="fas fa-edit"></i></a>
+                            <a href="/pegawai/skp/rencana-kegiatan/delete/{{$item->id}}/{{$id}}" class="btn btn-xs btn-danger disabled" data-toggle="tooltip" title='Hapus data' onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
                             </td>
                           </tr>
                       @endforeach

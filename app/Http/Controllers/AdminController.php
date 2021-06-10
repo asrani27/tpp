@@ -111,7 +111,22 @@ class AdminController extends Controller
 
         $attr = $req->all();
         
-        Pegawai::find($id)->update($attr);
+        DB::beginTransaction();
+        try {
+            $pegawai = Pegawai::find($id);
+            $pegawai->user->update([
+                'username' => $req->nip,
+            ]);
+            $pegawai->update($attr);
+            DB::commit();
+            toastr()->success('Data Berhasil di Update');
+            return back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            $req->flash();
+            toastr()->error('User Gagal Diupdate');
+            return back();
+        }
 
         toastr()->success('Pegawai Berhasil Di Update');
         return redirect('/admin/pegawai');

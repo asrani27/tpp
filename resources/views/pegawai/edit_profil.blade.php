@@ -88,7 +88,7 @@
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">Eselon</label>
                 <div class="col-sm-9">
-                    <select name="eselon_id" class="form-control" required>
+                    <select name="eselon_id" class="form-control">
                         <option value="">-pilih-</option>
                         @foreach ($eselon as $item)
                             <option value="{{$item->id}}" {{$data->eselon_id == $item->id ? 'selected':''}}>{{$item->nama}}</option>

@@ -34,7 +34,7 @@
                               </div>
                               <div class="col-sm-6">
                                 <div class="form-group">
-                                  <label>Pegawai</label>
+                                  <label>NIP Pegawai</label>
                                   <input type="text" class="form-control" name="nip" value="{{old('nip')}}" maxlength="18" onkeypress="return hanyaAngka(event)"/>
                                 </div>
                               </div>

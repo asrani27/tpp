@@ -35,7 +35,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <a href="#" class="brand-link navbar-lightblue">
       <img src="https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png" alt="User" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light text-white text-sm">{{Auth::user()->name}}</span>
+      <span class="brand-text font-weight-light text-white text-sm">{{Auth::user()->pegawai->nama}}</span>
     </a>
     <div class="sidebar">
       

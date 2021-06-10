@@ -17,9 +17,9 @@
             <img class="profile-user-img img-fluid img-circle" src="https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png" alt="User profile picture">
           </div>
 
-          <h3 class="profile-username text-center">{{Auth::user()->name}}</h3>
+          <h3 class="profile-username text-center">{{$daata->nama}}</h3>
 
-          <p class="text-muted text-center">NIP. {{Auth::user()->username}}</p>
+          <p class="text-muted text-center">NIP. {{$data->nip}}</p>
 
           <a href="#" class="btn btn-info btn-block"><i class="fas fa-upload"></i> Upload Foto</a>
           <a href="/pegawai/profil/edit" class="btn btn-success btn-block"><i class="fas fa-user"></i>Edit Profil</a>

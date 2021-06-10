@@ -111,25 +111,25 @@
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">No Rek. BPPD</label>
                 <div class="col-sm-9">
-                <input type="text" class="form-control" name="no_rek" value="{{$data->no_rek == null ? '' : $data->no_rek}}" required>
+                <input type="text" class="form-control" name="no_rek" value="{{$data->no_rek == null ? '' : $data->no_rek}}">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">NPWP</label>
                 <div class="col-sm-9">
-                <input type="text" class="form-control" name="npwp" value="{{$data->npwp == null ? '' : $data->npwp}}" required>
+                <input type="text" class="form-control" name="npwp" value="{{$data->npwp == null ? '' : $data->npwp}}">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">Email</label>
                 <div class="col-sm-9">
-                <input type="email" class="form-control" name="email" value="{{$data->user == null ? '' : $data->user->email}}" required>
+                <input type="email" class="form-control" name="email" value="{{$data->user == null ? '' : $data->user->email}}">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">Alamat Rumah</label>
                 <div class="col-sm-9">
-                <input type="text" class="form-control" name="alamat" value="{{$data->alamat == null ? '' : $data->alamat}}" required>
+                <input type="text" class="form-control" name="alamat" value="{{$data->alamat == null ? '' : $data->alamat}}">
                 </div>
             </div>
             <div class="form-group row">
@@ -144,7 +144,7 @@
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">Pendidikan Terakhir</label>
                 <div class="col-sm-2">
-                    <select name="jenjang_pendidikan" class="form-control" required>
+                    <select name="jenjang_pendidikan" class="form-control">
                         <option value="">-pilih-</option>
                         <option value="SMA" {{$data->jenjang_pendidikan == 'SMA' ? 'selected':''}}>SMA</option>
                         <option value="D3" {{$data->jenjang_pendidikan == 'D3' ? 'selected':''}}>D3</option>
@@ -154,7 +154,7 @@
                     </select>
                 </div>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" name="jurusan" value="{{$data->jurusan}}" required>
+                    <input type="text" class="form-control" name="jurusan" value="{{$data->jurusan}}">
                 </div>
             </div>
             <div class="form-group row">

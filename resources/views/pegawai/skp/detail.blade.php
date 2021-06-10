@@ -35,6 +35,13 @@
                   </div>
                   
                   <div class="form-group row">
+                      <label for="inputPassword3" class="col-sm-3 col-form-label text-right"></label>
+                      <div class="col-sm-9">
+                        <span class="badge badge-danger">Nilai Satuan AK Hanya Untuk jabatan fungsional</span>
+                      </div>
+                  </div>
+
+                  <div class="form-group row">
                     <label for="inputPassword3" class="col-sm-3 col-form-label text-right">Angka Kredit (Satuan AK * Kuantitas Volume)</label>
                     <div class="col-sm-9">
                     <input type="text" class="form-control" name="ak" readonly>

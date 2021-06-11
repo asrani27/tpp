@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jabatan;
 use App\Rspuskesmas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class RsController extends Controller
@@ -71,6 +72,7 @@ class RsController extends Controller
     public function storeJabatan(Request $req, $id)
     {
         $attr = $req->all();
+        
         if($req->jabatan_id == null){
             $attr['tingkat']    = 1;
         }else{
@@ -80,10 +82,22 @@ class RsController extends Controller
         $attr['is_aktif']        = 1;
         $attr['skpd_id']         = Auth::user()->skpd->id;
 
-        Jabatan::create($attr);
-        
-        toastr()->success('Jabatan Berhasil Di Simpan');
-        return back();
+        $jumlah = $req->jumlah;
+
+        DB::beginTransaction();
+        try {
+            for($i=0; $i<$jumlah; $i++){
+                Jabatan::create($attr);
+            }
+            DB::commit();
+            toastr()->success('Jabatan Berhasil Di Simpan');
+            return back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            $req->flash();
+            toastr()->error('Jabatan Gagal Disimpan');
+            return back();
+        }
     }
 
     public function editJabatan($id, $idJab)

@@ -85,7 +85,7 @@
                                                 
                                             </div>
                                             <ul>
-                                                @foreach ($item4->bawahan as $item5)
+                                                @foreach ($item4->bawahanblud($id) as $item5)
                                                     <li>
                                                         <div class="callout callout-danger text-sm" style="padding:5px;">
                                                             {{$item5->kelas == null ? '-':$item5->kelas->nama}} |
@@ -93,7 +93,6 @@
                                                             <a href="/admin/rspuskesmas/{{$id}}/petajabatan/{{$item5->id}}/edit" class="btn btn-tool" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                                             <a href="/admin/rspuskesmas/{{$id}}/petajabatan/{{$item5->id}}/delete" class="btn btn-tool"  data-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-times"></i></a>
 
-                                                            
                                                         </div>
                                                     </li>
                                                 @endforeach

@@ -91,9 +91,12 @@
                             <td>{{$item->jabatan == null ? '-' : $item->jabatan->nama}}<br/>
                             {{$item->plt == null ? '': 'Plt. '.$item->plt->nama}}
                             </td>
-                            
                             @if (Auth::user()->username == '1.02.01.')
+                              @if ($item->jabatan == null)
+                              <td>-</td>
+                              @else
                               <td>{{$item->jabatan->rs_puskesmas_id == null ? 'Dinas Kesehatan' : $item->jabatan->rs->nama}}</td>
+                              @endif
                             @endif
                             <td>
                                 @if ($item->user_id == null)

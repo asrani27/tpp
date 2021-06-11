@@ -111,7 +111,7 @@
                                 <div class="form-group row">
                                     <label for="inputPassword3" class="col-sm-2 col-form-label">Jabatan Tersedia</label>
                                     <div class="col-sm-10">
-                                        <select name="jabatan_id" class="form-control select2" required>
+                                        <select name="jabatan_id" class="form-control select2">
                                             <option value="">-pilih-</option>
                                             @foreach ($jabatan as $item)
                                                 <option value="{{$item->id}}" {{$data->jabatan_id == $item->id ? 'selected':''}}>{{$item->nama}}</option>

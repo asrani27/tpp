@@ -174,24 +174,29 @@ class SuperadminController extends Controller
 
         $attr = $req->all();
         
-        DB::beginTransaction();
-        try {
-            $pegawai = Pegawai::find($id);
-            $pegawai->user->update([
-                'username' => $req->nip,
-            ]);
-            $pegawai->update($attr);
-            DB::commit();
-            toastr()->success('Pegawai Berhasil di Update');
+        $pegawai = Pegawai::find($id);
+        if($pegawai->user == null){
+            toastr()->error('Harap Di create user terlebih dahulu');
             return back();
-        } catch (\Exception $e) {
-            DB::rollback();
-            $req->flash();
-            toastr()->error('Pegawai Gagal Diupdate');
-            return back();
+        }else{
+            DB::beginTransaction();
+            try {
+                $pegawai->user->update([
+                    'username' => $req->nip,
+                ]);
+                $pegawai->update($attr);
+                DB::commit();
+                toastr()->success('Pegawai Berhasil di Update');
+                return back();
+            } catch (\Exception $e) {
+                DB::rollback();
+                $req->flash();
+                toastr()->error('Pegawai Gagal Diupdate');
+                return back();
+            }
         }
 
-        return redirect('/superadmin/skpd/pegawai/'.$skpd_id);
+        //return redirect('/superadmin/skpd/pegawai/'.$skpd_id);
     }
     public function deletePegawaiSkpd($skpd_id, $id)
     {
@@ -465,11 +470,29 @@ class SuperadminController extends Controller
         $req->flash();
 
         $attr = $req->all();
+        $pegawai = Pegawai::find($id);
+        if($pegawai->user == null){
+            toastr()->error('Harap Di create user terlebih dahulu');
+            return back();
+        }else{
+            DB::beginTransaction();
+            try {
+                $pegawai->user->update([
+                    'username' => $req->nip,
+                ]);
+                $pegawai->update($attr);
+                DB::commit();
+                toastr()->success('Pegawai Berhasil di Update');
+                return back();
+            } catch (\Exception $e) {
+                DB::rollback();
+                $req->flash();
+                toastr()->error('Pegawai Gagal Diupdate');
+                return back();
+            }
+        }
         
-        Pegawai::find($id)->update($attr);
-        toastr()->success('Pegawai Berhasil Diupdate');
-
-        return redirect('/superadmin/pegawai');
+        //return redirect('/superadmin/pegawai');
     }
 
     public function deletePegawai($id)

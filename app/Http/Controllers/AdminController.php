@@ -111,25 +111,27 @@ class AdminController extends Controller
 
         $attr = $req->all();
         
-        DB::beginTransaction();
-        try {
-            $pegawai = Pegawai::find($id);
-            $pegawai->user->update([
-                'username' => $req->nip,
-            ]);
-            $pegawai->update($attr);
-            DB::commit();
-            toastr()->success('Data Berhasil di Update');
+        $pegawai = Pegawai::find($id);
+        if($pegawai->user == null){
+            toastr()->error('Harap Di create user terlebih dahulu');
             return back();
-        } catch (\Exception $e) {
-            DB::rollback();
-            $req->flash();
-            toastr()->error('User Gagal Diupdate');
-            return back();
+        }else{
+            DB::beginTransaction();
+            try {
+                $pegawai->user->update([
+                    'username' => $req->nip,
+                ]);
+                $pegawai->update($attr);
+                DB::commit();
+                toastr()->success('Pegawai Berhasil di Update');
+                return back();
+            } catch (\Exception $e) {
+                DB::rollback();
+                $req->flash();
+                toastr()->error('Pegawai Gagal Diupdate');
+                return back();
+            }
         }
-
-        toastr()->success('Pegawai Berhasil Di Update');
-        return redirect('/admin/pegawai');
     }
 
     public function deletePegawai($id)

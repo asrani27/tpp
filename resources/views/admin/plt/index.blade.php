@@ -35,7 +35,7 @@
                               <div class="col-sm-6">
                                 <div class="form-group">
                                   <label>NIP Pegawai</label>
-                                  <input type="text" class="form-control" name="nip" value="{{old('nip')}}" maxlength="18" onkeypress="return hanyaAngka(event)"/>
+                                  <input type="text" class="form-control" name="nip" value="{{old('nip')}}" maxlength="18" onkeypress="return hanyaAngka(event)"/ required>
                                 </div>
                               </div>
                             </div>
@@ -92,7 +92,7 @@
                                 <td>{{$no++}}</td>
                                 <td>{{$item->nip}}</td>
                                 <td>{{$item->nama}}</td>
-                                <td>{{$item->plt->nama}}</td>
+                                <td>{{$item->plt}}</td>
                                 <td>
                                     <a href="/admin/plt/delete/{{$item->id}}" class="btn btn-sm btn-danger"onclick="return confirm('Yakin ingin di hapus?');"> Hapus </a>
                                 </td>

@@ -64,7 +64,9 @@
                             <td>{{$item->nama}}</td>
                             <td>{{$item->skpd->nama}}</td>
                             <td>
-                            <a href="/superadmin/pegawai/detail/{{$item->id}}" class="btn btn-sm btn-info" data-toggle="tooltip" title='lihat data'><i class="fas fa-eye"></i></a>
+                              @if ($item->user != null)
+                              <a href="/superadmin/pegawai/resetpassword/{{$item->id}}" class="btn btn-sm btn-info" data-toggle="tooltip" title='Reset Password'><i class="fas fa-key"></i></a>
+                              @endif
                             <a href="/superadmin/pegawai/edit/{{$item->id}}" class="btn btn-sm btn-warning" data-toggle="tooltip" title='Edit data'><i class="fas fa-edit"></i></a>
                             <a href="/superadmin/pegawai/delete/{{$item->id}}" class="btn btn-sm btn-danger" data-toggle="tooltip" title='Hapus data' onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
                             </td>

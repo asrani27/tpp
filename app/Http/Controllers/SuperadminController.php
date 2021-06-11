@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Imports\PegawaiImport;
 use Illuminate\Cache\NullStore;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
@@ -173,8 +174,22 @@ class SuperadminController extends Controller
 
         $attr = $req->all();
         
-        Pegawai::find($id)->update($attr);
-        toastr()->success('Pegawai Berhasil Diupdate');
+        DB::beginTransaction();
+        try {
+            $pegawai = Pegawai::find($id);
+            $pegawai->user->update([
+                'username' => $req->nip,
+            ]);
+            $pegawai->update($attr);
+            DB::commit();
+            toastr()->success('Pegawai Berhasil di Update');
+            return back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            $req->flash();
+            toastr()->error('Pegawai Gagal Diupdate');
+            return back();
+        }
 
         return redirect('/superadmin/skpd/pegawai/'.$skpd_id);
     }

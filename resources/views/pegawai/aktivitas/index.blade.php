@@ -25,8 +25,18 @@
                         <h3 class="widget-user-username">WALIKOTA</h3>
                         <h5 class="widget-user-desc">KOTA BANJARMASIN</h5>
                       @else
-                          
-                        <h3 class="widget-user-username">{{$atasan->pegawai == null ? '-': $atasan->pegawai->nama}}</h3>
+                        <h3 class="widget-user-username">
+                            @if ($atasan->pegawai == null)
+                                @if ($atasan->pegawaiplt == null)
+                                    -
+                                @else
+                                    {{$atasan->pegawaiplt->nama}}
+                                @endif
+                            @else
+                                {{$atasan->pegawai->nama}}
+                            @endif
+                        </h3>                          
+                        {{-- <h3 class="widget-user-username">{{$atasan->pegawai == null ? '-': $atasan->pegawai->nama}}</h3> --}}
                         <h5 class="widget-user-desc">{{$atasan->nama}}</h5>
                       @endif
                     </div>

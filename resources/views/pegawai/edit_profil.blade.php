@@ -102,12 +102,12 @@
                 <input type="text" class="form-control" value="{{$data->skpd == null ? '' : $data->skpd->nama}}" readonly>
                 </div>
             </div>
-            <div class="form-group row">
+            {{-- <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">Pejabat Penilai</label>
                 <div class="col-sm-9">
                 <input type="text" class="form-control" value="{{($data->jabatan == null ? '' : $data->jabatan->atasan) == null ? 'Sekda' : $data->jabatan->atasan->pegawai->nama}}" readonly>
                 </div>
-            </div>
+            </div> --}}
             <div class="form-group row">
                 <label for="inputName" class="col-sm-3 col-form-label">No Rek. BPPD</label>
                 <div class="col-sm-9">

@@ -44,7 +44,7 @@
                     </div>
 
 					<div class="wrap-input100 validate-input m-b-10" data-validate = "Username is required">
-						<input class="input100" type="text" name="username" placeholder="NIP" autocomplete="off">
+						<input class="input100" type="text" name="username" placeholder="NIP" autocomplete="off" value="{{old('username')}}">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-user"></i>
@@ -52,7 +52,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input m-b-10" data-validate = "Password is required">
-						<input class="input100" type="password" name="password" placeholder="Password" autocomplete="off">
+						<input class="input100" type="password" name="password" placeholder="Password" autocomplete="off" value="{{old('password')}}">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock"></i>

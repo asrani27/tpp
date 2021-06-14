@@ -29,6 +29,7 @@ class LoginController extends Controller
             }
         } else {
             toastr()->error('Username / Password Tidak Ditemukan');
+            $req->flash();
             return back();
         }
     }

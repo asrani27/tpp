@@ -18,14 +18,15 @@ class PltController extends Controller
 
     public function admin()
     {
-        $jabatanTersedia = Jabatan::where('skpd_id', $this->user()->skpd->id)->get()->map(function($item){
+        $jabatan = Jabatan::where('skpd_id', $this->user()->skpd->id)->get()->map(function($item){
             $item->pegawai = $item->pegawai;
             $item->pegawaiplt = $item->pegawaiplt;
             return $item;
-        })->where('pegawai', null)->where('pegawaiplt', null);
-        
-        $dataPlt = Pegawai::where('skpd_id', $this->user()->skpd->id)->where('jabatan_plt', '!=', null)->get();
-
+        });
+        $jabatanTersedia = $jabatan->where('pegawai', null)->where('pegawaiplt', null);
+        $dataPlt = $jabatan->where('pegawaiplt', '!=',null);
+        //$dataPlt = Pegawai::where('skpd_id', $this->user()->skpd->id)->where('jabatan_plt', '!=', null)->get();
+        //dd($jabatanPlt, $dataPlt);
         $riwayat = RiwayatPlt::where('skpd_id', $this->user()->skpd->id)->get();
         return view('admin.plt.index',compact('jabatanTersedia','dataPlt','riwayat'));
     }

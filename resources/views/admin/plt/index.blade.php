@@ -90,9 +90,11 @@
                         @foreach ($dataPlt as $item)
                             <tr>
                                 <td>{{$no++}}</td>
-                                <td>{{$item->nip}}</td>
+                                <td>{{$item->pegawaiplt->nip}}</td>
+                                <td>{{$item->pegawaiplt->nama}}<br/>
+                                    {{$item->pegawaiplt->jabatan == null ? '-': $item->pegawaiplt->jabatan->nama}}
+                                </td>
                                 <td>{{$item->nama}}</td>
-                                <td>{{$item->plt->nama}}</td>
                                 <td>
                                     <a href="/admin/plt/delete/{{$item->id}}" class="btn btn-sm btn-danger"onclick="return confirm('Yakin ingin di hapus?');"> Hapus </a>
                                 </td>

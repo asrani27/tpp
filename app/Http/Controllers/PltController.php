@@ -26,7 +26,7 @@ class PltController extends Controller
         $jabatanTersedia = $jabatan->where('pegawai', null)->where('pegawaiplt', null);
         $dataPlt = $jabatan->where('pegawaiplt', '!=',null);
         //$dataPlt = Pegawai::where('skpd_id', $this->user()->skpd->id)->where('jabatan_plt', '!=', null)->get();
-        //dd($jabatanPlt, $dataPlt);
+        //dd($jabatan->toArray(), $jabatanTersedia, $dataPlt);
         $riwayat = RiwayatPlt::where('skpd_id', $this->user()->skpd->id)->get();
         return view('admin.plt.index',compact('jabatanTersedia','dataPlt','riwayat'));
     }

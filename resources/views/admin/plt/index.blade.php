@@ -96,7 +96,7 @@
                                 </td>
                                 <td>{{$item->nama}}</td>
                                 <td>
-                                    <a href="/admin/plt/delete/{{$item->id}}" class="btn btn-sm btn-danger"onclick="return confirm('Yakin ingin di hapus?');"> Hapus </a>
+                                    <a href="/admin/plt/delete/{{$item->pegawaiplt->id}}" class="btn btn-sm btn-danger"onclick="return confirm('Yakin ingin di hapus?');"> Hapus </a>
                                 </td>
                             </tr>    
                         @endforeach

@@ -196,6 +196,8 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::get('/pegawai/plt/validasi/harian/acc_aktivitas/{id}', 'ValidasiPltController@accAktivitas');
     Route::get('/pegawai/plt/validasi/harian/tolak/{id}', 'ValidasiPltController@tolakAktivitas');
     Route::get('/pegawai/plt/validasi/harian/view/{id}', 'ValidasiPltController@view');
+    Route::get('/pegawai/plt/validasi/harian/acc_aktivitas/{id}', 'ValidasiPltController@accAktivitas');
+    Route::get('/pegawai/plt/validasi/harian/tolak/{id}', 'ValidasiPltController@tolakAktivitas');
 
     Route::get('/pegawai/validasi/keberatan', 'ValidasiController@keberatan');
 

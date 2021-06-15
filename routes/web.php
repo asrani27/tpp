@@ -99,6 +99,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/home/admin/tpp', 'AdminController@tpp');
 
     Route::get('/admin/profil', 'ProfilController@admin');
+    Route::post('/admin/profil', 'ProfilController@changeAdmin');
     Route::get('/admin/org', 'AdminController@org');
     Route::get('/admin/pegawai', 'AdminController@pegawai');
     Route::get('/admin/pegawai/search', 'AdminController@searchPegawai');

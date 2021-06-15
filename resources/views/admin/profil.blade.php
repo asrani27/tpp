@@ -63,7 +63,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form class="form-horizontal" method="POST" action="/superadmin/profil">
+            <form class="form-horizontal" method="POST" action="/admin/profil">
                 @csrf
               <div class="card-body">
                 <div class="form-group row">

@@ -34,6 +34,19 @@ class ProfilController extends Controller
         return back();
     }
     
+    public function changeAdmin(Request $req)
+    {
+        if($req->password != $req->password2){
+            toastr()->error('Password Tidak Sama');
+        }else{
+            $p = Auth::user();
+            $p->password = bcrypt($req->password);
+            $p->save();
+            toastr()->success('Password Berhasil Di Ubah');
+        }
+        return back();
+    }
+
     public function admin()
     {
         return view('admin.profil');

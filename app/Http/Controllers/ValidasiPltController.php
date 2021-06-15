@@ -25,9 +25,13 @@ class ValidasiPltController extends Controller
             $item->aktivitas_baru = $item->pegawai == null ?  0:$item->pegawai->aktivitas->where('validasi', 0)->count();
             return $item;
         });
-        
-        if($this->user()->pegawai->jabatan->sekda == 1){
-            $data2 = Jabatan::where('jabatan_id', null)->where('sekda', null)->get();
+        if($this->user()->pegawai->jabatanPlt->sekda == 1){
+            $data2 = Jabatan::where('jabatan_id', null)->where('sekda', null)->get()->map(function($item){
+                $item->nama = $item->nama.', SKPD : '. $item->skpd->nama;
+                $item->nama_pegawai   = $item->pegawai == null ? '-':$item->pegawai->nama;
+                $item->aktivitas_baru = $item->pegawai == null ?  0:$item->pegawai->aktivitas->where('validasi', 0)->count();
+                return $item;
+            });
         }else{
             $data2 = collect([]);
         }

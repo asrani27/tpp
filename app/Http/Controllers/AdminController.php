@@ -31,12 +31,14 @@ class AdminController extends Controller
         $search = request()->get('search');
         $data   = Pegawai::with('jabatan','user')
         ->where('skpd_id', $this->skpd_id())
-        ->where('nip', 'LIKE','%'.$search.'%')
-        ->orWhere('nama', 'LIKE','%'.$search.'%')
+        ->where('nama', 'LIKE','%'.$search.'%')->orWhere(function($query)use ($search){
+            $query->where('skpd_id', $this->skpd_id())->where('nip','LIKE','%'.$search.'%');
+        })
         ->orderBy('urutan','ASC')->paginate(10);
         
+        $data->appends(['search' => $search])->links();
         request()->flash();
-        return view('admin.pegawai.index',compact('data'));
+        return view('admin.pegawai.index',compact('data'))->withInput(request()->all());
     }
 
     public function addPegawai()

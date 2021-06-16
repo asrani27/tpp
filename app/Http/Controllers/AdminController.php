@@ -285,7 +285,7 @@ class AdminController extends Controller
     public function updatePersen(Request $req)
     {
         DB::beginTransaction();
-        try {
+        try {            
             $count = count($req->jabatan_id);
             for($i=0; $i < $count; $i++){                
                 Jabatan::findOrfail($req->jabatan_id[$i])->update([

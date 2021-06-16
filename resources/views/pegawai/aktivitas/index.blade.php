@@ -51,7 +51,7 @@
                         <img class="img-circle elevation-2" src="/login_tpp/images/icons/logo.png" alt="User Avatar">
                       </div>
                       <!-- /.widget-user-image -->
-                      <h3 class="widget-user-username">{{Auth::user()->name}}</h3>
+                      <h3 class="widget-user-username">{{Auth::user()->pegawai->nama}}</h3>
                       <h5 class="widget-user-desc">{{Auth::user()->pegawai->jabatan->nama}}</h5>
                     </div>
                     

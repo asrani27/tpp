@@ -1,4 +1,3 @@
-
 <!-- jQuery -->
 <script src="/theme/plugins/jquery/jquery.min.js"></script>
 <script src="/theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

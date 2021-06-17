@@ -33,7 +33,7 @@
             <div class="col-12">
                 <a href="/pegawai/validasi/harian" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i> Kembali</a>
                 @if (count($data) != 0)
-                <a href="/pegawai/validasi/harian/acc/{{$id}}" class="btn btn-sm btn-success">
+                <a href="/pegawai/validasi/harian/acc/{{$id}}" class="btn btn-sm btn-success"  onclick="return confirm('Yakin ingin di Setujui?');">
                     <i class="fas fa-check"></i> SETUJU SEMUA
                 </a>
                 @endif

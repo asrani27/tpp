@@ -22,6 +22,7 @@ class ValidasiPltController extends Controller
 
         
         $data1 = $this->user()->pegawai->jabatanPlt->bawahan->load('pegawai')->map(function($item){
+            $item->pegawai_id     = $item->pegawai == null ? '-':$item->pegawai->id;
             $item->nama_pegawai   = $item->pegawai == null ? '-':$item->pegawai->nama;
             $item->aktivitas_baru = $item->pegawai == null ?  0:$item->pegawai->aktivitas->where('validasi', 0)->count();
             return $item;
@@ -29,6 +30,7 @@ class ValidasiPltController extends Controller
         if($this->user()->pegawai->jabatanPlt->sekda == 1){
             $data2 = Jabatan::where('jabatan_id', null)->where('sekda', null)->get()->map(function($item){
                 $item->nama = $item->nama.', SKPD : '. $item->skpd->nama;
+                $item->pegawai_id     = $item->pegawai == null ? '-':$item->pegawai->id;
                 $item->nama_pegawai   = $item->pegawai == null ? '-':$item->pegawai->nama;
                 $item->aktivitas_baru = $item->pegawai == null ?  0:$item->pegawai->aktivitas->where('validasi', 0)->count();
                 return $item;
@@ -37,7 +39,7 @@ class ValidasiPltController extends Controller
             $data2 = collect([]);
         }
 
-        $data = $data1->merge($data2);
+        $data = $data1->merge($data2)->whereNotIn('pegawai_id', $this->user()->pegawai->id);
         
         return view('pegawai.validasiplt.index',compact('data'));
     } 

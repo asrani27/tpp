@@ -21,10 +21,21 @@ class ValidasiController extends Controller
             return back();
         }
         $data1 = $this->user()->pegawai->jabatan->bawahan->load('pegawai')->map(function($item){
-            $item->nama_pegawai   = $item->pegawai == null ? '-':$item->pegawai->nama;
-            $item->aktivitas_baru = $item->pegawai == null ? 0:$item->pegawai->aktivitas->where('validasi', 0)->count();
+            if($item->pegawai == null){
+                if($item->pegawaiplt == null){
+                    $item->nama_pegawai = null;
+                    $item->aktivitas_baru = 0;
+                }else{
+                    $item->nama_pegawai   = $item->pegawaiplt->nama;
+                    $item->aktivitas_baru = $item->pegawaiplt->aktivitas->where('validasi', 0)->count();
+                }
+            }else{
+                $item->nama_pegawai   = $item->pegawai->nama;
+                $item->aktivitas_baru = $item->pegawai->aktivitas->where('validasi', 0)->count();
+            }
             return $item;
         });
+        //dd($data1);
         if($this->user()->pegawai->jabatan->sekda == 1){
             $data2 = Jabatan::where('jabatan_id', null)->where('sekda', null)->get();
         }else{
@@ -59,8 +70,14 @@ class ValidasiController extends Controller
 
     public function view($id)
     {
-        $pegawai = Jabatan::find($id)->pegawai;
-        $data = $pegawai->aktivitas()->where('validasi',0)->paginate(10);
+        $check = Jabatan::find($id);
+        if($check->pegawai == null){
+            $data    = $check->pegawaiplt->aktivitas()->where('validasi',0)->paginate(10);
+            $pegawai = $check->pegawaiplt;
+        }else{
+            $data    = $check->pegawai->aktivitas()->where('validasi',0)->paginate(10);
+            $pegawai = $check->pegawai;
+        }
         
         return view('pegawai.validasi.detail',compact('data','pegawai','id'));
     }

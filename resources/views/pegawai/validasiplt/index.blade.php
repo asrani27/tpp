@@ -35,11 +35,11 @@
                     <tr>
                       <td width="10px">{{$no++}}</td>
                       <td>
-                        {{$item->pegawai == null ? '-': $item->pegawai->nama}} <br />
+                        {{$item->nama_pegawai}} <br />
                         {{$item->nama}}
                       </td>
                       <td>
-                        @if ($item->pegawai == null)
+                        @if ($item->nama_pegawai == null)
                             
                         @else
                         <button href="#" class="btn btn-sm bg-purple">
@@ -48,7 +48,7 @@
                         @endif
                       </td>
                       <td>
-                        @if ($item->pegawai == null)
+                        @if ($item->nama_pegawai == null)
                             
                         @else
                           <a href="/pegawai/plt/validasi/harian/view/{{$item->id}}" class="btn btn-sm btn-info">

@@ -20,7 +20,9 @@
                       </div>
                       <!-- /.widget-user-image -->
                       <h3 class="widget-user-username">{{$pegawai->nama}}</h3>
-                      <h5 class="widget-user-desc">{{$pegawai->jabatan->nama}}</h5>
+                      <h5 class="widget-user-desc">{{$pegawai->jabatan->nama}}<br/>
+                        {{$pegawai->jabatanPlt == null ? '':'Plt. '.$pegawai->jabatanPlt->nama}}
+                      </h5>
                     </div>
                     
                 </div>

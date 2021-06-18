@@ -26,12 +26,36 @@ class AktivitasController extends Controller
             toastr()->info('Tidak bisa melakukan aktivitas, Karena Tidak memiliki jabatan,untuk melihat riwayat silahkan ke menu laporan aktivitas');
             return back();
         }
-        $person = $this->user()->pegawai->with('jabatan');
-        $atasan = $this->user()->pegawai->jabatan->atasan == null ? Jabatan::where('sekda',1)->first():$this->user()->pegawai->jabatan->atasan;
+        $person = $this->user()->pegawai;
+
+        //cek atasan apakah PLT atau Bukan
+        $check = $this->user()->pegawai->jabatan->atasan == null ? Jabatan::where('sekda',1)->first():$this->user()->pegawai->jabatan->atasan;
+        if($check->pegawai == null){
+            //Jika Pegawai kosong, Check Lagi Apakah ada PLT atau Tidak
+            if($check->pegawaiPlt == null){
+                $atasan = $check;
+            }else{
+                // Cek Lagi Apakah yang memPLT atasan adalah bawahan langsung, menghindari aktifitas menilai diri sendiri
+                if($person->id == $check->pegawaiPlt->id){
+                    //cek lagi, jika sekretaris memPLT Kadis, maka pejabat penilai adalah SEKDA
+                    if($check->atasan == null){
+                        $atasan = Jabatan::where('sekda', 1)->first();
+                    }else{
+                        $atasan = $check->atasan;
+                    }
+                }else{
+                    $atasan = $check;
+                }
+            }
+        }else{
+            //Jika Pegawai Ada berarti atasannya adalan jabatan definitif
+            $atasan = $check;
+        }
         
+        //dd($person->id, $atasan->pegawai);
         $data = $this->user()->pegawai->aktivitas()->paginate(10);
         
-        return view('pegawai.aktivitas.index',compact('data','atasan'));
+        return view('pegawai.aktivitas.index',compact('data','atasan', 'person'));
     }
     
     public function add()

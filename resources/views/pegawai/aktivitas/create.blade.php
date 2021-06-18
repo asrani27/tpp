@@ -66,12 +66,6 @@
                     <label class="custom-file-label" for="customFile">Choose file</label>
                 </div>
               </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <span class="small-text">Fitur dokumen pendukung sementara di off kan</span>
-                </div>
-              </div>
           </div>
           
           <div class="card-footer">

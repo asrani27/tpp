@@ -74,16 +74,16 @@ class AktivitasController extends Controller
         $skp = $this->user()->pegawai->skp_periode->where('is_aktif',1)->first()->skp;
         
         $data = Aktivitas::where('pegawai_id', $this->user()->pegawai->id)->latest('id')->first();
+        
         if($data == null){
             $tanggal   = Carbon::now()->format('Y-m-d');
-            $jam_mulai = Carbon::parse('08:01')->format('H:i');
-            $jam_selesai = Carbon::parse('09:00')->format('H:i');
+            $jam_mulai = Carbon::parse('08:01')->format('G:i');
+            $jam_selesai = Carbon::parse('09:00')->format('G:i');
         }else{
             $tanggal = $data->tanggal;
-            $jam_mulai = Carbon::parse($data->jam_selesai)->addMinute()->format('H:i');
-            $jam_selesai = Carbon::parse($data->jam_selesai)->addHour()->format('H:i');
+            $jam_mulai = Carbon::parse($data->jam_selesai)->addMinute()->format('G:i');
+            $jam_selesai = Carbon::parse($data->jam_selesai)->addHour()->format('G:i');
         }
-        
         return view('pegawai.aktivitas.create',compact('skp','tanggal','jam_mulai','jam_selesai'));
     }
     

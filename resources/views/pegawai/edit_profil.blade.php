@@ -109,7 +109,7 @@
                 </div>
             </div> --}}
             <div class="form-group row">
-                <label for="inputName" class="col-sm-3 col-form-label">No Rek. BPPD</label>
+                <label for="inputName" class="col-sm-3 col-form-label">No Rek. Bank Kalsel</label>
                 <div class="col-sm-9">
                 <input type="text" class="form-control" name="no_rek" value="{{$data->no_rek == null ? '' : $data->no_rek}}">
                 </div>

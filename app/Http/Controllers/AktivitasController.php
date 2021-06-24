@@ -77,12 +77,12 @@ class AktivitasController extends Controller
         
         if($data == null){
             $tanggal   = Carbon::now()->format('Y-m-d');
-            $jam_mulai = Carbon::parse('08:01')->format('G:i');
-            $jam_selesai = Carbon::parse('09:00')->format('G:i');
+            $jam_mulai = Carbon::parse('08:01')->format('H:i');
+            $jam_selesai = Carbon::parse('09:00')->format('H:i');
         }else{
             $tanggal = $data->tanggal;
-            $jam_mulai = Carbon::parse($data->jam_selesai)->addMinute()->format('G:i');
-            $jam_selesai = Carbon::parse($data->jam_selesai)->addHour()->format('G:i');
+            $jam_mulai = Carbon::parse($data->jam_selesai)->addMinute()->format('H:i');
+            $jam_selesai = Carbon::parse($data->jam_selesai)->addHour()->format('H:i');
         }
         return view('pegawai.aktivitas.create',compact('skp','tanggal','jam_mulai','jam_selesai'));
     }
@@ -115,8 +115,28 @@ class AktivitasController extends Controller
         
     }
 
+    public function checkdate($param)
+    {
+        $day1 = Carbon::today()->subDays(1)->format('Y-m-d');
+        $day2 = Carbon::today()->format('Y-m-d');
+        
+        if($param == $day1){
+            return true;
+        }elseif($param == $day2){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public function store(Request $req)
     {
+        // if($this->checkdate($req->tanggal) == false){
+        //     toastr()->info('Tidak Bisa Di input Pada Tanggal Tersebut');
+        //     return back();
+        // }
+
+        // dd($this->checkdate($req->tanggal));
         $skp = Skp_periode::where('pegawai_id', $this->user()->pegawai->id)->where('is_aktif', 1)->first();
         $skpMulai = $skp->mulai;
         $skpSampai = $skp->sampai;

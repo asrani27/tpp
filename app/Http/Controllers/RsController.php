@@ -65,8 +65,9 @@ class RsController extends Controller
         $kadis = Auth::user()->skpd->kadis;
         $jabatan = Jabatan::where('rs_puskesmas_id', $id)->get();
         $merge = $kadis->merge($jabatan);
+        $jumlahJabatan = $jabatan->groupBy('nama')->toArray();
         
-        return view('admin.rs.jabatan',compact('data','namarspuskesmas','edit','merge','id','kadis'));
+        return view('admin.rs.jabatan',compact('jumlahJabatan','data','namarspuskesmas','edit','merge','id','kadis'));
     }
     
     public function storeJabatan(Request $req, $id)

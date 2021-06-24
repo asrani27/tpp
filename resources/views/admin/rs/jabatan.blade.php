@@ -42,6 +42,23 @@
                         @endif
                     </div>
                 </div>
+                <div class="card">
+                    
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <th>Nama Jabatan</th>
+                            <th>Jumlah</th>
+                        </tr>
+                        @foreach ($jumlahJabatan as $key =>$item)
+                            <tr>
+                                <td>{{$item[0]['nama']}}</td>
+                                <td>{{count($item)}}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+                </div>
             </div>
             <div class="col-lg-8 col-12">
                 

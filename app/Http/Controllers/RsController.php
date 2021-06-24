@@ -82,8 +82,8 @@ class RsController extends Controller
         $attr['is_aktif']        = 1;
         $attr['skpd_id']         = Auth::user()->skpd->id;
 
-        $jumlah = $req->jumlah;
-
+        $jumlah = (int)$req->jumlah;
+        
         DB::beginTransaction();
         try {
             for($i=0; $i<$jumlah; $i++){

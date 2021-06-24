@@ -20,7 +20,7 @@
         </select>
     </div>
     <div class="form-group">
-        <input type="text" class="form-control" name="jumlah" value="1" required  onkeypress="return hanyaAngka(event)" maxlength="2">
+        <input type="text" class="form-control" name="jumlah" value="1" required  onkeypress="return hanyaAngka(event)" maxlength="3">
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-block btn-primary">Simpan</button>

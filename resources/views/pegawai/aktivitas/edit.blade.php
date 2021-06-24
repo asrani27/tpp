@@ -128,14 +128,14 @@
       })
     })
     
-    //Timepicker
-    $('#timepicker').datetimepicker({
-      //format: 'LT',
-      format: 'hh:mm',
+     //Timepicker
+     $('#timepicker').datetimepicker({
+      format: 'HH:mm',
+      //format: 'hh:mm',
     })
     $('#timepicker2').datetimepicker({
-      //format: 'LT',
-      format: 'hh:mm',
+      format: 'HH:mm',
+      //format: 'hh:mm',
     })
 </script>
 <!-- bs-custom-file-input -->

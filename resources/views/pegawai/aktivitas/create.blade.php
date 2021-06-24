@@ -6,6 +6,11 @@
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     
+<!-- Timepicker -->
+<script src="/theme/plugins/moment/moment.min.js"></script>
+<link rel="stylesheet" href="/theme/plugins/daterangepicker/daterangepicker.css">
+<link rel="stylesheet" href="/theme/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+
 @endpush
 
 @section('title')
@@ -49,16 +54,32 @@
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Jam Mulai</label>
+
                 <div class="col-sm-2">
-                  <input type="time" class="form-control" name="jam_mulai" required value="{{$jam_mulai}}">
+                <div class="input-group date" id="timepicker" data-target-input="nearest">
+                  <input type="text" class="form-control datetimepicker-input" data-target="#timepicker" name="jam_mulai" required value="{{$jam_mulai}}">
+                  <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
+                      <div class="input-group-text"><i class="far fa-clock"></i></div>
+                  </div>
+                  </div>
                 </div>
+                <!-- /.input group -->
               </div>
+              
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Jam Selesai</label>
+
                 <div class="col-sm-2">
-                  <input type="time" class="form-control" name="jam_selesai" required value="{{$jam_selesai}}">
+                <div class="input-group date" id="timepicker2" data-target-input="nearest">
+                  <input type="text" class="form-control datetimepicker-input" data-target="#timepicker2" name="jam_selesai" required value="{{$jam_selesai}}">
+                  <div class="input-group-append" data-target="#timepicker2" data-toggle="datetimepicker">
+                      <div class="input-group-text"><i class="far fa-clock"></i></div>
+                  </div>
+                  </div>
                 </div>
+                <!-- /.input group -->
               </div>
+              
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Dokumen Pendukung</label>
                 <div class="col-sm-10 custom-file">
@@ -87,6 +108,12 @@
         });
     });
 </script>
+
+<!-- Timepicker -->
+<script src="/theme/plugins/moment/moment.min.js"></script>
+<script src="/theme/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="/theme/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
 <!-- Select2 -->
 <script src="/theme/plugins/select2/js/select2.full.min.js"></script>
 <script>
@@ -98,6 +125,16 @@
       $('.select2bs4').select2({
         theme: 'bootstrap4'
       })
+    })
+
+    //Timepicker
+    $('#timepicker').datetimepicker({
+      //format: 'LT',
+      format: 'hh:mm',
+    })
+    $('#timepicker2').datetimepicker({
+      //format: 'LT',
+      format: 'hh:mm',
     })
 </script>
 <!-- bs-custom-file-input -->

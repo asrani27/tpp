@@ -37,7 +37,7 @@
 
 
 			<button class="flex-c-m s1-txt2 size3 how-btn"  data-toggle="modal" data-target="#subscribe">
-				Aktif Kembali Pada Pukul 15:00 WITA
+				Aktif Kembali Pada Pukul 16:00 WITA
 			</button>
 		</div>
 

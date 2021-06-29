@@ -89,7 +89,7 @@
                             </td>
                             <td>{{$item->nama}}</td>
                             <td>{{$item->jabatan == null ? '-' : $item->jabatan->nama}}<br/>
-                            {{$item->plt == null ? '': 'Plt. '.$item->plt->nama}}
+                            {{$item->plt == null ? '': $item->jenis_plt.'., '.$item->plt->nama}}
                             </td>
                             @if (Auth::user()->username == '1.02.01.')
                               @if ($item->jabatan == null)

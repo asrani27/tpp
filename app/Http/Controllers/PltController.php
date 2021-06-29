@@ -58,6 +58,7 @@ class PltController extends Controller
                     //Update Pegawai Untuk Jadi PLT
                     $u = $checkNip;
                     $u->jabatan_plt = $req->jabatan_plt;
+                    $u->jenis_plt   = $req->jenis_plt;
                     $u->save();
                     DB::commit();
                     toastr()->success('Data Berhasil di Simpan');
@@ -76,9 +77,10 @@ class PltController extends Controller
     {
         $u = Pegawai::find($id);
         $u->jabatan_plt = null;
+        $u->jenis_plt = null;
         $u->save();
         
-        toastr()->success('PLt Berhasil di Hapus');
+        toastr()->success('Berhasil di Hapus');
         return back();
     }
 }

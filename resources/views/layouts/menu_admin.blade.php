@@ -72,7 +72,7 @@
     <a href="/admin/plt" class="nav-link {{Request::is('admin/plt') ? 'active' : ''}}">
         <i class="nav-icon fas fa-th"></i>
         <p>
-        PLT
+        PLT/PLH/PJ
         </p>
     </a>
     </li>

@@ -12,7 +12,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <h4>PLT Jabatan</h4>
+        <h4>PLT/PLH/PJ Jabatan</h4>
         <div class="row">
             <div class="col-lg-12 col-12">
                 <div class="card">
@@ -32,10 +32,20 @@
                                   </select>
                                 </div>
                               </div>
-                              <div class="col-sm-6">
+                              <div class="col-sm-4">
                                 <div class="form-group">
                                   <label>NIP Pegawai</label>
                                   <input type="text" class="form-control" name="nip" value="{{old('nip')}}" maxlength="18" onkeypress="return hanyaAngka(event)"/ required>
+                                </div>
+                              </div>
+                              <div class="col-sm-2">
+                                <div class="form-group">
+                                  <label>Jenis</label>
+                                  <select name="jenis_plt" class="form-control">
+                                    <option value="PLT">PLT</option>
+                                    <option value="PLH">PLH</option>
+                                    <option value="PLJ">PLJ</option>
+                                  </select>
                                 </div>
                               </div>
                             </div>
@@ -79,7 +89,8 @@
                         <th>#</th>
                         <th>NIP</th>
                         <th>Nama</th>
-                        <th>Jabatan di PLT</th>
+                        <th>Jenis</th>
+                        <th>Jabatan</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -94,6 +105,7 @@
                                 <td>{{$item->pegawaiplt->nama}}<br/>
                                     {{$item->pegawaiplt->jabatan == null ? '-': $item->pegawaiplt->jabatan->nama}}
                                 </td>
+                                <td>{{$item->pegawaiplt->jenis_plt}}</td>
                                 <td>{{$item->nama}}</td>
                                 <td>
                                     <a href="/admin/plt/delete/{{$item->pegawaiplt->id}}" class="btn btn-sm btn-danger"onclick="return confirm('Yakin ingin di hapus?');"> Hapus </a>
@@ -124,10 +136,10 @@
                         <th>#</th>
                         <th>NIP</th>
                         <th>Nama</th>
-                        <th>Jabatan di PLT</th>
+                        <th>Jenis</th>
+                        <th>Jabatan</th>
                         <th>Mulai</th>
                         <th>Selesai</th>
-                        <th>Aksi</th>
                       </tr>
                     </thead>
                     @php
@@ -139,6 +151,7 @@
                                 <td>{{$no++}}</td>
                                 <td>{{$item->nip}}</td>
                                 <td>{{$item->nama}}</td>
+                                <td>{{$item->jenis_plt}}</td>
                                 <td>{{$item->jabatan}}</td>
                                 <td>{{$item->tgl_mulai_sk}}</td>
                                 <td>{{$item->tgl_selesai_sk}}</td>

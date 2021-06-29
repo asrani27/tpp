@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="/theme/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 @endpush
 @section('title')
     PEGAWAI
@@ -22,11 +23,13 @@
                   <div class="row">
                     <div class="col-md-4 col-12">
                       <label class="col-form-label" for="inputWarning"><i class="far fa-calendar"></i> Periode Mulai</label>
-                      <input type="date" name="mulai" class="form-control" placeholder=".col-3" value="{{$data->mulai}}" required>
+                      
+                      <input type="text" name="mulai" class="form-control" id="periodemulai" required autocomplete="off" value="{{\Carbon\Carbon::parse($data->mulai)->format('d/m/Y')}}">
+                      {{-- <input type="date" name="mulai" class="form-control" placeholder=".col-3" value="{{$data->mulai}}" required> --}}
                     </div>
                     <div class="col-md-4 col-12">
                       <label class="col-form-label" for="inputWarning"><i class="far fa-calendar"></i> Periode Selesai</label>
-                      <input type="date" name="sampai" class="form-control" placeholder=".col-4" value="{{$data->sampai}}" required>
+                      <input type="text" name="sampai" class="form-control" id="periodesampai" required autocomplete="off" value="{{\Carbon\Carbon::parse($data->sampai)->format('d/m/Y')}}">
                     </div>
                     <div class="col-md-4 col-12">
                       <label class="col-form-label" for="inputWarning"><i class="far fa-user"></i> </label><br />
@@ -47,6 +50,19 @@
 @endsection
 
 @push('js')
-
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+  $( function() {
+    $( "#periodemulai" ).datepicker(
+      { dateFormat: 'dd/mm/yy' }
+    );
+  } );
+  $( function() {
+    $( "#periodesampai" ).datepicker(
+      { dateFormat: 'dd/mm/yy' }
+    );
+  } );
+</script>
 
 @endpush

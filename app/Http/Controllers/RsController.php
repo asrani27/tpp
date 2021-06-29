@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Auth;
 
 class RsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->username != env('KODE_DINKES')){
+                toastr()->error('Anda Tidak Punya Akses Ke Halaman ini');
+                return back();
+            }
+            return $next($request);
+        });
+    }
+
     public function index()
     {
         $data = Rspuskesmas::paginate(10);

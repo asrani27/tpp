@@ -1,8 +1,8 @@
 
 <nav class="mt-2">
-<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+<ul class="nav nav-pills nav-sidebar flex-column text-sm" data-widget="treeview" role="menu" data-accordion="false">
     <li class="nav-item">
-    <a href="/home/admin" class="nav-link">
+    <a href="/home/admin" class="nav-link {{Request::is('home/admin') ? 'active' : ''}}">
         <i class="nav-icon fas fa-home"></i>
         <p>
         Beranda
@@ -10,7 +10,7 @@
     </a>
     </li>
     <li class="nav-item">
-    <a href="/admin/profil" class="nav-link">
+    <a href="/admin/profil" class="nav-link {{Request::is('admin/profil') ? 'active' : ''}}">
         <i class="nav-icon fas fa-user"></i>
         <p>
         Profil
@@ -18,7 +18,7 @@
     </a>
     </li>
     <li class="nav-item">
-    <a href="/admin/pegawai" class="nav-link">
+    <a href="/admin/pegawai" class="nav-link {{Request::is('admin/pegawai') ? 'active' : ''}}">
         <i class="nav-icon fas fa-users"></i>
         <p>
         Pegawai
@@ -26,7 +26,7 @@
     </a>
     </li>
     <li class="nav-item">
-    <a href="/admin/presensi" class="nav-link">
+    <a href="/admin/presensi" class="nav-link {{Request::is('admin/presensi') ? 'active' : ''}}">
         <i class="nav-icon fas fa-clock"></i>
         <p>
         Presensi
@@ -34,7 +34,7 @@
     </a>
     </li>
     <li class="nav-item">
-    <a href="/admin/jabatan" class="nav-link">
+    <a href="/admin/jabatan" class="nav-link {{Request::is('admin/jabatan') ? 'active' : ''}}">
         <i class="nav-icon fas fa-map"></i>
         <p>
         Peta Jabatan
@@ -45,7 +45,7 @@
     @if (Auth::user()->username == '1.02.01.')
         
     <li class="nav-item">
-    <a href="/admin/rspuskesmas" class="nav-link">
+    <a href="/admin/rspuskesmas" class="nav-link {{Request::is('admin/rspuskesmas') ? 'active' : ''}}">
         <i class="nav-icon fas fa-hospital"></i>
         <p>
         RS & Puskesmas
@@ -54,10 +54,22 @@
     </li>
     @endif
     
+    @if (Auth::user()->username == '1.01.01.')
+        
+    <li class="nav-item">
+    <a href="/admin/sekolah" class="nav-link {{Request::is('admin/sekolah') ? 'active' : ''}}">
+        <i class="nav-icon fas fa-graduation-cap"></i>
+        <p>
+            Sekolah
+        </p>
+    </a>
+    </li>
+    @endif
+
     @if (Auth::user()->hasRole('admin'))
         
     <li class="nav-item">
-    <a href="/admin/plt" class="nav-link">
+    <a href="/admin/plt" class="nav-link {{Request::is('admin/plt') ? 'active' : ''}}">
         <i class="nav-icon fas fa-th"></i>
         <p>
         PLT
@@ -66,7 +78,7 @@
     </li>
     
     <li class="nav-item">
-    <a href="/admin/transfer" class="nav-link">
+    <a href="/admin/transfer" class="nav-link {{Request::is('admin/transfer') ? 'active' : ''}}">
         <i class="nav-icon fas fa-th"></i>
         <p>
         Transfer Pegawai
@@ -75,7 +87,7 @@
     </li>
 
     <li class="nav-item">
-    <a href="/admin/pensiun" class="nav-link">
+    <a href="/admin/pensiun" class="nav-link {{Request::is('admin/pensiun') ? 'active' : ''}}">
         <i class="nav-icon fas fa-th"></i>
         <p>
         Pensiun
@@ -92,7 +104,7 @@
     </a>
     </li>
     <li class="nav-item">
-    <a href="/admin/rekapitulasi" class="nav-link">
+    <a href="/admin/rekapitulasi" class="nav-link {{Request::is('admin/rekapitulasi') ? 'active' : ''}}">
         <i class="nav-icon fas fa-file"></i>
         <p>
         Cetak TPP

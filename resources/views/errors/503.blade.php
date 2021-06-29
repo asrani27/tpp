@@ -32,7 +32,7 @@
 			</h3>
 
 			<p class="txt-center l1-txt2 p-b-60">
-				Website Sedang Kembali Ke Pengaturan Yang Lama
+				Website Sedang Kembali Ke Pengaturan pYang Lama
 			</p>
 
 

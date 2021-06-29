@@ -151,6 +151,19 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
     Route::get('/admin/rekapitulasi', 'RekapitulasiController@index');
     Route::get('/admin/rekapitulasi/cetaktpp', 'RekapitulasiController@cetaktpp');
+
+    Route::get('/admin/sekolah', 'SekolahController@index');
+    Route::get('/admin/sekolah/add', 'SekolahController@create');
+    Route::post('/admin/sekolah/add', 'SekolahController@store');
+    Route::get('/admin/sekolah/{id}/edit', 'SekolahController@edit');
+    Route::post('/admin/sekolah/{id}/edit', 'SekolahController@update');
+    Route::get('/admin/sekolah/{id}/delete', 'SekolahController@destroy');
+    
+    Route::get('/admin/sekolah/{id}/petajabatan', 'SekolahController@jabatan');
+    Route::post('/admin/sekolah/{id}/petajabatan', 'SekolahController@storeJabatan');
+    Route::get('/admin/sekolah/{id}/petajabatan/{idJab}/delete', 'SekolahController@deleteJabatan');
+    Route::get('/admin/sekolah/{id}/petajabatan/{idJab}/edit', 'SekolahController@editJabatan');
+    Route::post('/admin/sekolah/{id}/petajabatan/{idJab}/edit', 'SekolahController@updateJabatan');
 });
 
 Route::group(['middleware' => ['auth', 'role:pegawai']], function () {

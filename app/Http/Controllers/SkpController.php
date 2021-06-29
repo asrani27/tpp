@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Skp;
 use App\Pegawai;
+use Carbon\Carbon;
 use App\Skp_periode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,8 +26,19 @@ class SkpController extends Controller
 
     public function updatePeriode(Request $req, $id)
     {
-        Skp_periode::find($id)->update($req->all());
-        return redirect('/pegawai/skp/rencana-kegiatan');
+        $attr = $req->all();
+        $attr['mulai'] = Carbon::createFromFormat('d/m/Y', $req->mulai)->format('Y-m-d');
+        $attr['sampai'] = Carbon::createFromFormat('d/m/Y', $req->sampai)->format('Y-m-d');
+        
+        if($attr['sampai'] < $attr['mulai']){
+            toastr()->error('Periode Selesai Tidak Bisa Kurang Dari Periode Mulai');
+            return back();
+        }else{
+            Skp_periode::find($id)->update($attr);
+            toastr()->success('Periode Berhasil Di Simpan');
+            return redirect('/pegawai/skp/rencana-kegiatan');
+        }
+
     }
     
     public function storeSkp(Request $req, $id)
@@ -69,8 +81,16 @@ class SkpController extends Controller
     {
         $attr = $req->all();
         $attr['pegawai_id'] = Auth::user()->pegawai->id;
-        Skp_periode::create($attr);
-        toastr()->success('Periode Berhasil Di Simpan');
+        $attr['mulai'] = Carbon::createFromFormat('d/m/Y', $req->mulai)->format('Y-m-d');
+        $attr['sampai'] = Carbon::createFromFormat('d/m/Y', $req->sampai)->format('Y-m-d');
+
+        if($attr['sampai'] < $attr['mulai']){
+            toastr()->error('Periode Selesai Tidak Bisa Kurang Dari Periode Mulai');
+        }else{
+            Skp_periode::create($attr);
+            toastr()->success('Periode Berhasil Di Simpan');
+        }
+        
         return back();
     }
 

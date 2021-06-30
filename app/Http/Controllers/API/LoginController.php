@@ -20,7 +20,7 @@ class LoginController extends Controller
             if (Auth::attempt(['username' => $req->username, 'password' => $req->password])) {
                 Auth::user()->update([
                     'api_token' => Hash::make(str_random(25));
-                ])
+                ]);
 
                 return response()->json(Auth::user());
                 // if (Auth::user()->hasRole('superadmin')) {

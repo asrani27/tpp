@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,7 @@ class LoginController extends Controller
         }else{
             if (Auth::attempt(['username' => $req->username, 'password' => $req->password])) {
                 Auth::user()->update([
-                    'api_token' => Hash::make(str_random(25));
+                    'api_token' => Hash::make(Str::random(20))
                 ]);
 
                 return response()->json(Auth::user());

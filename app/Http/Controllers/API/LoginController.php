@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -17,6 +18,10 @@ class LoginController extends Controller
             return response()->json($data);
         }else{
             if (Auth::attempt(['username' => $req->username, 'password' => $req->password])) {
+                Auth::user()->update([
+                    'api_token' => Hash::make(str_random(25));
+                ])
+
                 return response()->json(Auth::user());
                 // if (Auth::user()->hasRole('superadmin')) {
                 //     return response()->json('superadmin');

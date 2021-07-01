@@ -161,6 +161,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     
     Route::get('/admin/sekolah/{id}/petajabatan', 'SekolahController@jabatan');
     Route::post('/admin/sekolah/{id}/petajabatan', 'SekolahController@storeJabatan');
+    
     Route::get('/admin/sekolah/{id}/petajabatan/{idJab}/delete', 'SekolahController@deleteJabatan');
     Route::get('/admin/sekolah/{id}/petajabatan/{idJab}/edit', 'SekolahController@editJabatan');
     Route::post('/admin/sekolah/{id}/petajabatan/{idJab}/edit', 'SekolahController@updateJabatan');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Sekolah;
+use App\JabatanSekolah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -58,6 +59,28 @@ class SekolahController extends Controller
     {
         Sekolah::find($id)->delete();
         toastr()->success('Berhasil Di Hapus');
+        return back();
+    }
+
+    public function jabatan($id)
+    {
+        $data = [];
+        $edit = false;
+        $sekolah         = Sekolah::find($id);
+        $kadis           = Auth::user()->skpd->kadis;
+        $jabatan         = JabatanSekolah::where('sekolah_id', $id)->get();
+        //$merge           = $kadis->merge($jabatan);
+        //$jumlahJabatan   = $jabatan->groupBy('nama')->toArray();
+        //dd($sekolah, $jabatan);
+        return view('admin.sekolah.jabatan',compact('data','sekolah','edit','id','kadis', 'jabtaan '));
+    }
+
+    public function storeJabatan(Request $req, $id)
+    {
+        $attr = $req->all();
+        $attr['sekolah_id'] = $id;
+        JabatanSekolah::create($attr);
+        toastr()->success('Berhasil Di Simpan');
         return back();
     }
 }

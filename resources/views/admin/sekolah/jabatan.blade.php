@@ -23,11 +23,11 @@
                         <img class="img-circle elevation-2" src="/login_tpp/images/icons/logo.png" alt="User Avatar">
                       </div>
                       <!-- /.widget-user-image -->
-                      <h3 class="widget-user-username">{{$namarspuskesmas->nama}}</h3>
+                      <h3 class="widget-user-username">{{$sekolah->nama}}</h3>
                       <h5 class="widget-user-desc">Peta Jabatan</h5>
                     </div>
                   </div>
-                  <a href="/admin/rspuskesmas" class="btn btn-sm btn-secondary"> Kembali</a>
+                  <a href="/admin/sekolah" class="btn btn-sm btn-secondary"> Kembali</a>
             </div>
         </div>
         <br/>
@@ -36,15 +36,15 @@
                 <div class="card">
                     <div class="card-body">
                         @if ($edit == true)
-                            @include('admin.rs.partial.edit')
+                            @include('admin.sekolah.partial.edit')
                         @else
-                            @include('admin.rs.partial.create')
+                            @include('admin.sekolah.partial.create')
                         @endif
                     </div>
                 </div>
                 <div class="card">
                     
-                <div class="card-body">
+                {{-- <div class="card-body">
                     <table>
                         <tr>
                             <th>Nama Jabatan</th>
@@ -57,21 +57,19 @@
                             </tr>
                         @endforeach
                     </table>
-                </div>
+                </div> --}}
                 </div>
             </div>
             <div class="col-lg-8 col-12">
                 
             <ul>
-                @foreach ($kadis as $item)
                 <li>
                     <div class="callout callout-info text-sm" style="padding:5px;">
-                        {{$item->kelas == null ? '-':$item->kelas->nama}} |
-                        <strong>{{$item->nama}}</strong> 
+                        <strong>Kepala Sekolah {{$sekolah->nama}}</strong> 
                             
                     </div>       
                     
-                    <ul>
+                    {{-- <ul>
                         @foreach ($item->bawahanblud($id) as $item2)
                         <li>
                             <div class="callout callout-warning text-sm" style="padding:5px;">
@@ -122,9 +120,8 @@
                             </ul>
                         </li>
                         @endforeach
-                    </ul>
+                    </ul> --}}
                 </li>     
-                @endforeach  
             </ul>
             </div>
         </div>

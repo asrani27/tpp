@@ -13,7 +13,7 @@ class RsController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            if(Auth::user()->username != env('KODE_DINKES')){
+            if(Auth::user()->username != '1.02.01.'){
                 toastr()->error('Anda Tidak Punya Akses Ke Halaman ini');
                 return back();
             }

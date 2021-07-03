@@ -12,7 +12,7 @@ class SekolahController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            if(Auth::user()->username != env('KODE_DISDIK')){
+            if(Auth::user()->username != '1.01.01.'){
                 toastr()->error('Anda Tidak Punya Akses Ke Halaman ini');
                 return back();
             }

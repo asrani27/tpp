@@ -122,7 +122,9 @@ class RsController extends Controller
         //$jabatan = Jabatan::where('rs_puskesmas_id', $id)->get();
         //$merge = $kadis->merge($jabatan);
        
-        return view('admin.rs.jabatan',compact('namarspuskesmas','edit','jabatan','id','kadis'));
+        $jabatanrs = Jabatan::where('rs_puskesmas_id', $id)->get();
+        $jumlahJabatan = $jabatanrs->groupBy('nama')->toArray();
+        return view('admin.rs.jabatan',compact('namarspuskesmas','jumlahJabatan','edit','jabatan','id','kadis'));
     }
 
     public function deleteJabatan($id, $idJab)

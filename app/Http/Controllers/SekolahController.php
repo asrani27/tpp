@@ -69,10 +69,8 @@ class SekolahController extends Controller
         $sekolah         = Sekolah::find($id);
         $kadis           = Auth::user()->skpd->kadis;
         $jabatan         = JabatanSekolah::where('sekolah_id', $id)->get();
-        //$merge           = $kadis->merge($jabatan);
-        //$jumlahJabatan   = $jabatan->groupBy('nama')->toArray();
-        //dd($sekolah, $jabatan);
-        return view('admin.sekolah.jabatan',compact('data','sekolah','edit','id','kadis', 'jabtaan '));
+
+        return view('admin.sekolah.jabatan',compact('data','sekolah','edit','id','kadis', 'jabatan'));
     }
 
     public function storeJabatan(Request $req, $id)
@@ -82,5 +80,39 @@ class SekolahController extends Controller
         JabatanSekolah::create($attr);
         toastr()->success('Berhasil Di Simpan');
         return back();
+    }
+
+    public function deleteJabatan($id_sekolah, $id_jabatan)
+    {
+        try {
+            JabatanSekolah::find($id_jabatan)->delete();
+            toastr()->success('Jabatan Berhasil Di Hapus');
+            return back();
+        } catch (\Throwable $th) {
+            toastr()->error('Tidak Bisa Di Hapus');
+            return back();
+        }
+    }
+
+    public function editJabatan($id, $id_jabatan)
+    {
+        $data            = JabatanSekolah::find($id_jabatan);
+        $jabatan         = JabatanSekolah::where('sekolah_id', $id)->get();
+        
+        $edit = true;
+        $sekolah = Sekolah::find($id);
+        $kadis = Auth::user()->skpd->kadis;
+       
+        return view('admin.sekolah.jabatan',compact('data','sekolah','edit','jabatan','id'));
+    }
+
+    public function updateJabatan(Request $req, $id, $idJab)
+    {
+        JabatanSekolah::find($idJab)->update([
+            'nama' => $req->nama, 
+            'kelas_id' => $req->kelas_id,
+        ]);
+        toastr()->success('Jabatan Berhasil Di Update');
+        return redirect('/admin/sekolah/'.$id.'/petajabatan');
     }
 }

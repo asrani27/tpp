@@ -119,8 +119,6 @@ class RsController extends Controller
         $edit = true;
         $namarspuskesmas = Rspuskesmas::find($id);
         $kadis = Auth::user()->skpd->kadis;
-        //$jabatan = Jabatan::where('rs_puskesmas_id', $id)->get();
-        //$merge = $kadis->merge($jabatan);
        
         $jabatanrs = Jabatan::where('rs_puskesmas_id', $id)->get();
         $jumlahJabatan = $jabatanrs->groupBy('nama')->toArray();

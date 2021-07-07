@@ -8,6 +8,7 @@ Route::get('login',function(){
 });
 
 Route::post('/login','API\LoginController@login');
+Route::get('/pegawai/{nip}','API\PegawaiController@pegawai');
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });

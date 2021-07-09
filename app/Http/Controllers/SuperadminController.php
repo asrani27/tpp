@@ -913,6 +913,16 @@ class SuperadminController extends Controller
         return view('superadmin.aktivitas.index',compact('data'));
     }
 
+    public function aktivitasSearch(Request $req)
+    {
+        $data = Aktivitas::whereHas('pegawai', function($q)use($req){
+            $q->where('nip', 'like', '%'.$req->search.'%')->orWhere('nama', 'like', '%'.$req->search.'%');
+        })->paginate(10);
+        
+        $req->flash();
+        return view('superadmin.aktivitas.index',compact('data'));
+    }
+
     public function aktivitasSetujui($id)
     {
         Aktivitas::find($id)->update([

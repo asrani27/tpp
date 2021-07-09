@@ -12,18 +12,17 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <h4>AKTIVITAS PEGAWAI</h4>
+        <h4>DAFTAR PEGAWAI PLT</h4>
         <div class="row">
             <div class="col-12">
-              <a href="/superadmin/aktivitas/setuju" class="btn btn-sm btn-primary"><i class="fas fa-th"></i> Aktivitas Setuju</a>
-              <a href="/superadmin/aktivitas/tolak" class="btn btn-sm bg-danger"><i class="fas fa-th"></i> Aktivitas Ditolak</a>
-              <br/><br/>
+                
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Total Aktivitas</h3>
-                  <div class="card-tools">
+                  <h3 class="card-title">Total</h3>
+  
+                  {{-- <div class="card-tools">
                     <form method="post" action="/superadmin/aktivitas/search">
-                    @csrf
+                        @csrf
                     <div class="input-group input-group-sm" style="width: 300px;">
                       <input type="text" name="search" class="form-control input-sm float-right" value="{{old('search')}}" placeholder="Cari NIP / Nama">
   
@@ -32,7 +31,7 @@
                       </div>
                     </div>
                     </form>
-                  </div>
+                  </div> --}}
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
@@ -40,10 +39,9 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>NIP</th>
-                        <th>Nama</th>
-                        <th>Aktivitas</th>
-                        <th>status</th>
+                        <th>NIP/Nama/SKPD</th>
+                        <th>Jabatan Definitif</th>
+                        <th>Jabatan PLT/PLH/PJ</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>

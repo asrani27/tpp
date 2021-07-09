@@ -40,7 +40,8 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/superadmin/skpd/delete/{skpd_id}', 'SuperadminController@deleteSkpd');
     Route::get('/superadmin/skpd/pegawai/createuser/{skpd_id}', 'SuperadminController@userPegawaiSkpdId');
     
-    Route::get('/superadmin/mutasi', 'SuperadminController@mutasi');
+    Route::get('/superadmin/mutasi', 'MutasiController@mutasi');
+    Route::get('/superadmin/mutasi/plt', 'MutasiController@plt');
     
     Route::get('/superadmin/parameter', 'SuperadminController@parameter');
     Route::get('/superadmin/parameter/edit/{id}', 'SuperadminController@editParameter');

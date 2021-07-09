@@ -898,31 +898,36 @@ class SuperadminController extends Controller
     public function aktivitas()
     {
         $data = Aktivitas::paginate(10);
-        return view('superadmin.aktivitas.index',compact('data'));
+        $validasi = 1;
+        return view('superadmin.aktivitas.index',compact('data','validasi'));
     }
 
     public function aktivitasSetuju()
     {
         $data = Aktivitas::where('validasi', 1)->paginate(10);
-        return view('superadmin.aktivitas.index',compact('data'));
+        $validasi = 1;
+        return view('superadmin.aktivitas.index',compact('data','validasi'));
     }
 
     public function aktivitasTolak()
     {
         $data = Aktivitas::where('validasi', 2)->paginate(10);
-        return view('superadmin.aktivitas.index',compact('data'));
+        $validasi = 2;
+        return view('superadmin.aktivitas.index',compact('data','validasi'));
     }
 
     public function aktivitasSearch()
     {
         $search = request()->get('search');
+        $validasi = request()->get('validasi');
+        
         $data = Aktivitas::whereHas('pegawai', function($q)use($search){
             $q->where('nip', 'like', '%'.$search.'%')->orWhere('nama', 'like', '%'.$search.'%');
-        })->paginate(10);
+        })->where('validasi', $validasi)->paginate(10);
         
-        $data->appends(['search' => $search])->links();
+        $data->appends(['search' => $search, 'validasi' => $validasi])->links();
         request()->flash();
-        return view('superadmin.aktivitas.index',compact('data'));
+        return view('superadmin.aktivitas.index',compact('data','validasi'));
     }
 
     public function aktivitasSetujui($id)

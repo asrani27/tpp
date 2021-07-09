@@ -26,6 +26,7 @@
                         
                     <div class="input-group input-group-sm" style="width: 300px;">
                       <input type="text" name="search" class="form-control input-sm float-right" value="{{old('search')}}" placeholder="Cari NIP / Nama">
+                      <input type="hidden" name="validasi" class="form-control input-sm float-right" value="{{$validasi}}">
   
                       <div class="input-group-append">
                         <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>

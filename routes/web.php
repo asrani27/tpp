@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     
     Route::get('/superadmin/mutasi', 'MutasiController@mutasi');
     Route::get('/superadmin/mutasi/plt', 'MutasiController@plt');
+    Route::get('/superadmin/mutasi/history/plt', 'MutasiController@historyPlt');
     
     Route::get('/superadmin/parameter', 'SuperadminController@parameter');
     Route::get('/superadmin/parameter/edit/{id}', 'SuperadminController@editParameter');

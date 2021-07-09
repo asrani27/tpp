@@ -12,7 +12,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <h4>DAFTAR PEGAWAI PLT/PLH/PJ YANG SEDANG BERJALAN</h4>
+        <h4>HISTORY PLT</h4>
         <div class="row">
             <div class="col-12">
                 
@@ -39,10 +39,10 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>NIP/Nama/SKPD</th>
-                        <th>Jabatan Definitif</th>
+                        <th>NIP/Nama</th>
                         <th>Jabatan PLT/PLH/PJ</th>
-                        <th>Aksi</th>
+                        <th>Tanggal Mulai</th>
+                        <th>Tanggal Selesai</th>
                       </tr>
                     </thead>
                     @php
@@ -56,14 +56,10 @@
                                 {{$item->nama}}
                             </td>
                             <td>
-                                {{$item->jabatan->nama}}<br/>
-                                {{$item->jabatan->skpd->nama}}
+                              {{$item->jenis_plt}}. {{$item->jabatan}}
                             </td>
-                            <td>
-                                {{$item->jenis_plt}}. {{$item->jabatanPlt->nama}}<br/>
-                                {{$item->jabatanPlt->skpd->nama}}
-                                <br/>
-                            </td>
+                            <td>{{$item->tgl_mulai_sk}}</td>
+                            <td>{{$item->tgl_selesai_sk}}</td>
                           </tr>
                       @endforeach
                     </tbody>

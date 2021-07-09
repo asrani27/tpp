@@ -58,6 +58,12 @@
             </a>
             </li>
             <li class="nav-item">
+            <a href="/superadmin/mutasi/history/plt" class="nav-link {{ Request::is('superadmin/mutasi/hisrtory/plt*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-user"></i>
+                <p>History PLT/PJ/PLH</p>
+            </a>
+            </li>
+            <li class="nav-item">
             <a href="/superadmin/mutasi/pindah" class="nav-link {{ Request::is('superadmin/mutasi/pindah*') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-user"></i>
                 <p>Pindah Jabatan</p>

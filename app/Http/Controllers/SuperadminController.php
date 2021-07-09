@@ -10,6 +10,7 @@ use App\Eselon;
 use App\Jabatan;
 use App\Pangkat;
 use App\Pegawai;
+use App\Aktivitas;
 use App\Parameter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -892,5 +893,32 @@ class SuperadminController extends Controller
         
         $jeniscari = 'pendidikan';
         return view('superadmin.rekapitulasi.pns',compact('data','jeniscari','pendidikan'));
+    }
+
+    public function aktivitas()
+    {
+        $data = Aktivitas::paginate(10);
+        return view('superadmin.aktivitas.index',compact('data'));
+    }
+
+    public function aktivitasSetuju()
+    {
+        $data = Aktivitas::where('validasi', 1)->paginate(10);
+        return view('superadmin.aktivitas.index',compact('data'));
+    }
+
+    public function aktivitasTolak()
+    {
+        $data = Aktivitas::where('validasi', 2)->paginate(10);
+        return view('superadmin.aktivitas.index',compact('data'));
+    }
+
+    public function aktivitasSetujui($id)
+    {
+        Aktivitas::find($id)->update([
+            'validasi' => 1,
+        ]);
+        toastr()->success('Berhasil Di Ubah');
+        return back();
     }
 }

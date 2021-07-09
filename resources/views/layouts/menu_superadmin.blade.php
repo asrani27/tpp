@@ -1,6 +1,6 @@
 
 <nav class="mt-2">
-<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+<ul class="nav nav-pills nav-sidebar flex-column text-sm" data-widget="treeview" role="menu" data-accordion="false">
     <li class="nav-item">
     <a href="/home/superadmin" class="nav-link {{ Request::is('home/superadmin*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-home"></i>
@@ -34,6 +34,14 @@
     </a>
     </li>
     
+    <li class="nav-item">
+    <a href="/superadmin/aktivitas" class="nav-link {{ Request::is('superadmin/aktivitas*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-users"></i>
+        <p>
+            Aktivitas Pegawai
+        </p>
+    </a>
+    </li>
     <li class="nav-item has-treeview {{Request::is('superadmin/mutasi*') ? 'menu-open' : ''}}">
         <a href="#" class="nav-link {{Request::is('superadmin/mutasi*') ? 'active' : ''}}">
           <i class="nav-icon fas fa-people-arrows"></i>

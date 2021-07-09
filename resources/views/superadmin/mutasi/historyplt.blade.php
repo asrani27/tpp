@@ -56,7 +56,8 @@
                                 {{$item->nama}}
                             </td>
                             <td>
-                              {{$item->jenis_plt}}. {{$item->jabatan}}
+                              {{$item->jenis_plt}}. {{$item->jabatan}} <br/>
+                              {{$item->skpd->nama}}
                             </td>
                             <td>{{\Carbon\Carbon::parse($item->tgl_mulai_sk)->isoFormat('D MMMM Y')}}</td>
                             <td>{{\Carbon\Carbon::parse($item->tgl_selesai_sk)->isoFormat('D MMMM Y')}}</td>

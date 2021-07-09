@@ -22,8 +22,8 @@
                 <div class="card-header">
                   <h3 class="card-title">Total Aktivitas</h3>
                   <div class="card-tools">
-                    <form method="post" action="/superadmin/aktivitas/search">
-                    @csrf
+                    <form method="get" action="/superadmin/aktivitas/search">
+                        
                     <div class="input-group input-group-sm" style="width: 300px;">
                       <input type="text" name="search" class="form-control input-sm float-right" value="{{old('search')}}" placeholder="Cari NIP / Nama">
   

@@ -919,7 +919,7 @@ class SuperadminController extends Controller
             $q->where('nip', 'like', '%'.$req->search.'%')->orWhere('nama', 'like', '%'.$req->search.'%');
         })->paginate(10);
         
-        $data->appends(['search' => $search])->links();
+        $data->appends(['search' => $req->search])->links();
         $req->flash();
         return view('superadmin.aktivitas.index',compact('data'));
     }

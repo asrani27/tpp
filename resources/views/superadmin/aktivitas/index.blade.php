@@ -53,7 +53,7 @@
                     @endphp
                     <tbody>
                     @foreach ($data as $key => $item)
-                          <tr>
+                          <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" >
                             <td>{{$key+ $data->firstItem()}}</td>
                             <td>{{$item->pegawai->nip}}</td>
                             <td>{{$item->pegawai->nama}}</td>

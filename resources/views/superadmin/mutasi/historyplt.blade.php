@@ -58,8 +58,9 @@
                             <td>
                               {{$item->jenis_plt}}. {{$item->jabatan}}
                             </td>
-                            <td>{{$item->tgl_mulai_sk}}</td>
-                            <td>{{$item->tgl_selesai_sk}}</td>
+                            <td>{{\Carbon\Carbon::parse($item->tgl_mulai_sk)->isoFormat('D MMMM Y')}}</td>
+                            <td>{{\Carbon\Carbon::parse($item->tgl_selesai_sk)->isoFormat('D MMMM Y')}}</td>
+                          
                           </tr>
                       @endforeach
                     </tbody>

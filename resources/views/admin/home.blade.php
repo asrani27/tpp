@@ -224,6 +224,9 @@
                     </div>
                     <!-- /.card-body -->
                   </div>
+                  @if (Auth::user()->skpd->kode_skpd = '1.02.01.')
+                      {{$data->links()}}
+                  @endif
             </div>
         </div>
     </div>

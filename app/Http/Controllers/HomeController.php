@@ -10,9 +10,12 @@ use App\Parameter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\View_aktivitas_pegawai;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class HomeController extends Controller
 {
@@ -61,10 +64,22 @@ class HomeController extends Controller
     {
         return Auth::user()->skpd->id;
     }
+    
+    public function paginate($items, $perPage = 15, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
 
     public function admin()
     {
-        $pegawai        = Pegawai::with('jabatan.kelas','pangkat')->where('skpd_id', $this->skpd_id())->where('is_aktif', 1)->orderBy('urutan','ASC')->get();
+        if(Auth::user()->skpd->kode_skpd == '1.02.01.'){
+            $pegawai        = Pegawai::with('jabatan.kelas','pangkat')->where('skpd_id', $this->skpd_id())->where('is_aktif', 1)->orderBy('urutan','ASC')->paginate(10);
+        } else{
+            $pegawai        = Pegawai::with('jabatan.kelas','pangkat')->where('skpd_id', $this->skpd_id())->where('is_aktif', 1)->orderBy('urutan','ASC')->get();
+        } 
+        
         $countPegawai   = $pegawai->count();
         $persentase_tpp = (float) Parameter::where('name','persentase_tpp')->first()->value;
         $countJabatan   = DB::table('jabatan')->where('skpd_id',$this->skpd_id())->get()->count();
@@ -73,7 +88,7 @@ class HomeController extends Controller
         $year  = Carbon::now()->year;
         $view_aktivitas = View_aktivitas_pegawai::where('tahun', $year)->where('bulan', $month)->get();
         $capaianMenit = Parameter::where('name','menit')->first()->value;
-        $data = $pegawai->map(function($item)use($view_aktivitas, $capaianMenit){
+        $pegawai->getCollection()->transform(function($item, $key)use($view_aktivitas, $capaianMenit){
             if($item->jabatan == null){
                 $item->nama_jabatan   = null;
                 $item->jenis_jabatan  = null;
@@ -131,6 +146,7 @@ class HomeController extends Controller
             return $item;
         });
         
+        $data = $pegawai;
         
         return view('admin.home',compact('data','persentase_tpp','countPegawai','countJabatan','month','year','capaianMenit'));
     }

@@ -110,6 +110,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('/admin/profil', 'ProfilController@changeAdmin');
     Route::get('/admin/org', 'AdminController@org');
     Route::get('/admin/pegawai', 'AdminController@pegawai');
+    Route::get('/admin/pegawai/checktobkd', 'AdminController@checktobkd');
     Route::get('/admin/pegawai/search', 'AdminController@searchPegawai');
     Route::get('/admin/pegawai/add', 'AdminController@addPegawai');
     Route::post('/admin/pegawai/add', 'AdminController@storePegawai');

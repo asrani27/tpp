@@ -8,9 +8,11 @@ use App\User;
 use App\Jabatan;
 use App\Pegawai;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -50,22 +52,34 @@ class AdminController extends Controller
             return $item;
         })->where('pegawai',null);
         
-        return view('admin.pegawai.create',compact('jabatan'));
+        $data['nip'] = '';
+        $data['nm_lengkap'] = '';
+        
+        return view('admin.pegawai.create',compact('jabatan','data'));
     }
 
     public function storePegawai(Request $req)
     {
-        $messages = [
-            'numeric' => 'Inputan Harus Angka',
-            'min'     => 'Harus 18 Digit',
-            'unique'  => 'NIP sudah Ada',
-        ];
+        // $messages = [
+        //     'numeric' => 'Inputan Harus Angka',
+        //     'min'     => 'Harus 18 Digit',
+        //     'unique'  => 'NIP sudah Ada',
+        // ];
 
-        $rules = [
+        // $rules = [
+        // ];
+
+        $validator = Validator::make($req->all(), [
             'nip' =>  'unique:pegawai|min:18|numeric',
             'nama' => 'required'
-        ];
-        $req->validate($rules, $messages);
+        ]);
+
+        if ($validator->fails()) {
+            $req->flash();
+            toastr()->error('NIP sudah ada');
+            return back();
+        }
+        //$req->validate($rules, $messages);
         
         $req->flash();
         
@@ -330,5 +344,30 @@ class AdminController extends Controller
         $tahun = request()->get('tahun');
         toastr()->info('Dalam Tahap pengembangan');
         return back();
+    }
+
+    public function checktobkd(Request $req)
+    {
+        try{
+            $nip = request()->nip.'/api20211';
+            $client = new Client(['base_uri' => 'http://114.7.16.53:1028/ci4-bkd/pegawai/']);
+            $response = $client->request('GET', 'apipegawai/'.$nip);
+            $resp = json_decode($response->getBody())->isidata[0];
+    
+            $data['nip'] = $resp->nip;
+            $data['nm_lengkap'] = $resp->nm_lengkap;
+            
+            $jabatan = Jabatan::where('skpd_id',Auth::user()->skpd->id)->get()->map(function($item){
+                $item->pegawai = $item->pegawai;
+                return $item;
+            })->where('pegawai',null);
+            request()->flash();
+            //toastr()->success('Data Pegawai berhasil Di Temukan');
+            return view('admin.pegawai.create',compact('jabatan','data'));
+        }catch(\Exception $e){
+            
+            toastr()->error('Data Pegawai Tidak Di Temukan, mungkin NIP anda salah');
+            return back();
+        }
     }
 }

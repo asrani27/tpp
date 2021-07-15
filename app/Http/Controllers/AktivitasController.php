@@ -52,7 +52,6 @@ class AktivitasController extends Controller
             $atasan = $check;
         }
         
-        //dd($person->id, $atasan->pegawai);
         $data = $this->user()->pegawai->aktivitas()->paginate(10);
         
         return view('pegawai.aktivitas.index',compact('data','atasan', 'person'));

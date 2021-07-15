@@ -62,7 +62,7 @@
                             @endif
                             </td>
                             <td>{{$item->nama}}</td>
-                            <td>{{$item->skpd->nama}}</td>
+                            <td>{{$item->skpd == null ? '-': $item->skpd->nama}}</td>
                             <td>
                               @if ($item->user != null)
                               <a href="/superadmin/pegawai/resetpassword/{{$item->id}}" class="btn btn-sm btn-info" data-toggle="tooltip" title='Reset Password'><i class="fas fa-key"></i></a>

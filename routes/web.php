@@ -68,6 +68,8 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/superadmin/aktivitas', 'SuperadminController@aktivitas');
     Route::get('/superadmin/aktivitas/setuju', 'SuperadminController@aktivitasSetuju');
     Route::get('/superadmin/aktivitas/tolak', 'SuperadminController@aktivitasTolak');
+    Route::get('/superadmin/aktivitas/proses', 'SuperadminController@aktivitasProses');
+    Route::get('/superadmin/aktivitas/sistem', 'SuperadminController@aktivitasSistem');
     Route::get('/superadmin/aktivitas/search', 'SuperadminController@aktivitasSearch');
     Route::get('/superadmin/aktivitas/setujui/{id}', 'SuperadminController@aktivitasSetujui');
 

@@ -17,6 +17,8 @@
             <div class="col-12">
               <a href="/superadmin/aktivitas/setuju" class="btn btn-sm btn-primary"><i class="fas fa-th"></i> Aktivitas Setuju</a>
               <a href="/superadmin/aktivitas/tolak" class="btn btn-sm bg-danger"><i class="fas fa-th"></i> Aktivitas Ditolak</a>
+              <a href="/superadmin/aktivitas/proses" class="btn btn-sm bg-info"><i class="fas fa-th"></i> Aktivitas Diproses</a>
+              <a href="/superadmin/aktivitas/sistem" class="btn btn-sm bg-purple"><i class="fas fa-th"></i> Setujui Oleh Sistem</a>
               <br/><br/>
               <div class="card">
                 <div class="card-header">
@@ -42,7 +44,7 @@
                       <tr>
                         <th>#</th>
                         <th>NIP</th>
-                        <th>Nama</th>
+                        <th>Tanggal Dan Jam</th>
                         <th>Aktivitas</th>
                         <th>status</th>
                         <th>Aksi</th>
@@ -55,9 +57,11 @@
                     @foreach ($data as $key => $item)
                           <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" >
                             <td>{{$key+ $data->firstItem()}}</td>
-                            <td>{{$item->pegawai->nip}}</td>
-                            <td>{{$item->pegawai->nama}}</td>
-                            <td>{{$item->deskripsi}}</td>
+                            <td>{{$item->pegawai->nip}}<br/>
+                              {{$item->pegawai->nama}}</td>
+                            <td>{{\Carbon\carbon::parse($item->tanggal)->format('d-m-Y')}}<br/>
+                            {{$item->jam_mulai}} - {{$item->jam_selesai}}</td>
+                            <td>{!!wordwrap($item->deskripsi,155,"<br>")!!}</td>
                             <td>
                                 @if ($item->validasi == 0)
                                     <span class="badge badge-info">diproses</span>

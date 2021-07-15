@@ -950,7 +950,7 @@ class SuperadminController extends Controller
     public function aktivitasSistem()
     {
         $tanggal   = Carbon::today()->subDays(6)->format('Y-m-d');
-        $aktivitas = Aktivitas::where('validasi', 0)->where('tanggal', '<=', $tanggal)->get()->take(200);
+        $aktivitas = Aktivitas::where('validasi', 0)->where('tanggal', '<=', $tanggal)->get()->take(10);
 
         $aktivitas->map(function($item){
             $item->nip      = $item->pegawai->nip;
@@ -1012,11 +1012,12 @@ class SuperadminController extends Controller
                 $s->skpd            = $item->skpd;
                 $s->save();
             }
+            
             DB::commit();
             toastr()->success('Berhasil Di Proses');
             return back();
         } catch (\Exception $e) {
-            dd($e);
+            
             DB::rollback();
             toastr()->error(' Gagal Diproses');
             return back();

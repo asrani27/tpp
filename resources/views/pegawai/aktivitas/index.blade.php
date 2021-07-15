@@ -95,6 +95,7 @@
                             <th>Menit</th>
                             <th>Aktivitas</th>
                             <th>Status</th>
+                            <th>Di nilai Oleh</th>
                             <th></th>
                             </tr>
                         </thead>
@@ -120,6 +121,7 @@
                                         
                                     @endif
                                 </td>
+                                <td>{{$item->validator == null ? null : $item->penilai->nama}}</td>
                                 <td>
                                     @if ($item->validasi == 0)
                                     <a href="/pegawai/aktivitas/harian/edit/{{$item->id}}" class="btn btn-xs btn-success text-white" data-toggle="tooltip" title="edit data"><i class="fas fa-edit"></i></a>
@@ -134,39 +136,7 @@
                         </table>
                     </div>
                 </div>
-                {{-- @foreach ($data as $item)
-                    <div class="callout callout-info">
-                        <div class="row">
-                            <div class="col-8 text-xs">Menit Kerja : {{$item->menit == null ? 0 : $item->menit}}</div>
-                            <div class="col-4 text-xs"><i class="fas fa-calendar-alt"></i> {{\Carbon\Carbon::parse($item->tanggal)->format('d M Y')}} {{\Carbon\Carbon::createFromFormat('H:i:s',$item->jam_mulai)->format('H:i')}} - {{\Carbon\Carbon::createFromFormat('H:i:s',$item->jam_selesai)->format('H:i')}}</div>
-                        </div>
-                    
-                    <h5><b>{{$item->deskripsi}}</b></h5>
-                    
-                    <div class="row">
-                        <div class="col-8 text-xs">
-                            Status : 
-                            @if ($item->validasi == 0)
-                            <span data-toggle="tooltip" title="3 New Messages" class="badge badge-info"><i class="fas fa-clock"></i></span>  Belum Di Validasi
-                            @elseif($item->validasi == 1)
-                            <span data-toggle="tooltip" title="3 New Messages" class="badge badge-success"><i class="fas fa-check"></i></span> Di setujui
-                            @else
-                                
-                            <span data-toggle="tooltip" title="3 New Messages" class="badge badge-danger"><i class="fas fa-times"></i></span> Di Tolak    
-                            @endif
-                        </div>
-                        <div class="col-4 text-xs">
-                            
-                            @if ($item->validasi == 0)
-                            <a href="/pegawai/aktivitas/harian/edit/{{$item->id}}" class="btn btn-xs btn-success text-white" data-toggle="tooltip" title="edit data"><i class="fas fa-edit"></i></a>
-                            <a href="/pegawai/aktivitas/harian/delete/{{$item->id}}" class="btn btn-xs btn-danger text-white" data-toggle="tooltip" title="hapus data"  onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
-                            @else
-                              
-                            @endif
-                        </div>
-                        </div>
-                    </div>
-                @endforeach --}}
+                
                 {{$data->links()}}
             </div>
         </div>

@@ -11,6 +11,11 @@ class Aktivitas extends Model
 
     public function pegawai()
     {
-        return $this->BelongsTo(Pegawai::class, 'pegawai_id');
+        return $this->belongsTo(Pegawai::class, 'pegawai_id');
+    }
+
+    public function penilai()
+    {
+        return $this->belongsTo(Pegawai::class, 'validator');
     }
 }

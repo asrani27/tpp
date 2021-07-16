@@ -19,6 +19,7 @@ class AktivitasController extends Controller
     {
         return Auth::user();
     }
+
     public function index()
     {
         if($this->user()->pegawai->jabatan == null)
@@ -52,7 +53,8 @@ class AktivitasController extends Controller
             $atasan = $check;
         }
         
-        $data = $this->user()->pegawai->aktivitas()->paginate(10);
+        $data = Aktivitas::where('pegawai_id', $this->user()->pegawai->id)->orderBy('tanggal','DESC')->orderBy('jam_mulai','DESC')->paginate(10);
+        //$data = $this->user()->pegawai->aktivitas()->orderBy('tanggal','DESC')->orderBy('jam_mulai','DESC')->paginate(10);
         
         return view('pegawai.aktivitas.index',compact('data','atasan', 'person'));
     }

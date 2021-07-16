@@ -144,12 +144,20 @@ class AktivitasController extends Controller
             }else{
                 $item->status_jam_selesai = false;
             }
+
+            if($req->jam_mulai.':00' <= $item->jam_mulai && $req->jam_selesai.':00' >= $item->jam_selesai){
+                $item->status_jam_antara = true;
+            }else{
+                $item->status_jam_antara = false;
+            }
             return $item;
         });
+        
         $status_jam_mulai = $data->where('status_jam_mulai', true)->first();
         $status_jam_selesai = $data->where('status_jam_selesai', true)->first();
+        $status_jam_antara = $data->where('status_jam_antara', true)->first();
         
-        if($status_jam_mulai != null || $status_jam_selesai != null){
+        if($status_jam_mulai != null || $status_jam_selesai != null || $status_jam_antara != null){
             toastr()->error('Jam ini telah di gunakan');
             $req->flash();
             return back();

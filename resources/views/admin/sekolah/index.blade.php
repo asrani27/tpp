@@ -82,7 +82,7 @@
                 </div>
                 <!-- /.card-body -->
               </div>
-              <!-- /.card -->
+              {{$data->links()}}
             </div>
         </div>
         

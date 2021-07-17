@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jabatan;
 use App\Sekolah;
 use App\JabatanSekolah;
 use Illuminate\Http\Request;
@@ -68,7 +69,7 @@ class SekolahController extends Controller
         $edit = false;
         $sekolah         = Sekolah::find($id);
         $kadis           = Auth::user()->skpd->kadis;
-        $jabatan         = JabatanSekolah::where('sekolah_id', $id)->get();
+        $jabatan         = Jabatan::where('sekolah_id', $id)->get();
 
         return view('admin.sekolah.jabatan',compact('data','sekolah','edit','id','kadis', 'jabatan'));
     }
@@ -77,7 +78,7 @@ class SekolahController extends Controller
     {
         $attr = $req->all();
         $attr['sekolah_id'] = $id;
-        JabatanSekolah::create($attr);
+        Jabatan::create($attr);
         toastr()->success('Berhasil Di Simpan');
         return back();
     }

@@ -57,7 +57,7 @@
 
                 <div class="col-sm-2">
                 <div class="input-group date" id="timepicker" data-target-input="nearest">
-                  <input type="text" class="form-control datetimepicker-input" data-target="#timepicker" name="jam_mulai" required value="{{$jam_mulai}}">
+                  <input type="time" class="form-control datetimepicker-input" data-target="#timepicker" name="jam_mulai" required value="{{$jam_mulai}}">
                   <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
                       <div class="input-group-text"><i class="far fa-clock"></i></div>
                   </div>
@@ -71,7 +71,7 @@
 
                 <div class="col-sm-2">
                 <div class="input-group date" id="timepicker2" data-target-input="nearest">
-                  <input type="text" class="form-control datetimepicker-input" data-target="#timepicker2" name="jam_selesai" required value="{{$jam_selesai}}">
+                  <input type="time" class="form-control datetimepicker-input" data-target="#timepicker2" name="jam_selesai" required value="{{$jam_selesai}}">
                   <div class="input-group-append" data-target="#timepicker2" data-toggle="datetimepicker">
                       <div class="input-group-text"><i class="far fa-clock"></i></div>
                   </div>

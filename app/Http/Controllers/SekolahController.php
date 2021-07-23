@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ErrorLog;
 use App\Jabatan;
 use App\Sekolah;
 use App\JabatanSekolah;
@@ -58,9 +59,18 @@ class SekolahController extends Controller
     
     public function destroy($id)
     {
-        Sekolah::find($id)->delete();
-        toastr()->success('Berhasil Di Hapus');
-        return back();
+        try {
+            Sekolah::find($id)->delete();
+            toastr()->success('Berhasil Di Hapus');
+            return back();
+        } catch (\Throwable $th) {            
+            
+            $error['message'] = 'test';
+            ErrorLog::create($error);
+
+            toastr()->error('Tidak Bisa Di Hapus');
+            return back();
+        }
     }
 
     public function jabatan($id)
@@ -89,7 +99,7 @@ class SekolahController extends Controller
             JabatanSekolah::find($id_jabatan)->delete();
             toastr()->success('Jabatan Berhasil Di Hapus');
             return back();
-        } catch (\Throwable $th) {
+        } catch (\Throwable $th) {            
             toastr()->error('Tidak Bisa Di Hapus');
             return back();
         }

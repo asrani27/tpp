@@ -55,7 +55,8 @@ class ValidasiController extends Controller
             toastr()->error('Tidak Bisa Validasi , bukan bawahan anda','Authorize');
             return back();
         }else{
-            $data = $jabatan->pegawai->aktivitas;
+            $data = $jabatan->pegawai->aktivitas->where('validasi', 0);
+            
             $data->map(function($item){
                 $item->update([
                     'validasi' => 1,

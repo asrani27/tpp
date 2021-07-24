@@ -106,14 +106,16 @@ class ValidasiPltController extends Controller
 
     public function accSemua($id)
     {
-        $jabatan_saya = $this->user()->pegawai->jabatan;
+        $jabatan_saya = $this->user()->pegawai->jabatanPlt;
+        
         $jabatan = Jabatan::with('pegawai.aktivitas')->findOrFail($id);
-        dd($jabatan_saya, $jabatan->atasan);
+        
         if($jabatan_saya->id != $jabatan->atasan->id){
             toastr()->error('Tidak Bisa Validasi , bukan bawahan anda','Authorize');
             return back();
         }else{
-            $data = $jabatan->pegawai->aktivitas;
+            $data = $jabatan->pegawai->aktivitas->where('validasi', 0);
+            
             $data->map(function($item){
                 $item->update([
                     'validasi' => 1,

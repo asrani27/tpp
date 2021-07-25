@@ -87,6 +87,7 @@ class SekolahController extends Controller
     public function storeJabatan(Request $req, $id)
     {
         $attr = $req->all();
+        $attr['skpd_id'] = Auth::user()->skpd->id;
         $attr['sekolah_id'] = $id;
         Jabatan::create($attr);
         toastr()->success('Berhasil Di Simpan');
@@ -96,7 +97,7 @@ class SekolahController extends Controller
     public function deleteJabatan($id_sekolah, $id_jabatan)
     {
         try {
-            JabatanSekolah::find($id_jabatan)->delete();
+            Jabatan::find($id_jabatan)->delete();
             toastr()->success('Jabatan Berhasil Di Hapus');
             return back();
         } catch (\Throwable $th) {            
@@ -107,8 +108,8 @@ class SekolahController extends Controller
 
     public function editJabatan($id, $id_jabatan)
     {
-        $data            = JabatanSekolah::find($id_jabatan);
-        $jabatan         = JabatanSekolah::where('sekolah_id', $id)->get();
+        $data            = Jabatan::find($id_jabatan);
+        $jabatan         = Jabatan::where('sekolah_id', $id)->get();
         
         $edit = true;
         $sekolah = Sekolah::find($id);
@@ -119,7 +120,7 @@ class SekolahController extends Controller
 
     public function updateJabatan(Request $req, $id, $idJab)
     {
-        JabatanSekolah::find($idJab)->update([
+        Jabatan::find($idJab)->update([
             'nama' => $req->nama, 
             'kelas_id' => $req->kelas_id,
         ]);

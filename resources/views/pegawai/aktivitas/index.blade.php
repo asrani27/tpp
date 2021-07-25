@@ -109,7 +109,7 @@
                                 <td>{{\Carbon\Carbon::parse($item->tanggal)->isoFormat('D MMMM Y')}}</td>
                                 <td>{{\Carbon\Carbon::parse($item->jam_mulai)->format('H:i')}} - {{\Carbon\Carbon::parse($item->jam_selesai)->format('H:i')}}</td>
                                 <td>{{$item->menit}}</td>
-                                <td>{{$item->deskripsi}}</td>
+                                <td>{!!wordwrap($item->deskripsi,100,"<br>")!!}</td>
                                 <td>
                                     @if ($item->validasi == 0)
                                     <span class="badge bg-info"><i class="fas fa-clock"></i> Diproses</span>

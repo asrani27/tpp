@@ -46,7 +46,6 @@
                 
             <ul>
                 @foreach (jabatan($skpd_id)->where('jabatan_id', null) as $item)
-                
                 <li>
                     <div class="callout callout-info text-sm" style="padding:5px;">
                         {{$item->kelas == null ? '-':$item->kelas->nama}} |

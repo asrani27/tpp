@@ -121,7 +121,7 @@
                           @foreach ($data as $key => $item)
                               
                           <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif">
-                          
+                        
                             <td>
                               @if ($key == 0)
                                 <a href="/home/admin/down/{{$item->id}}/{{$item->urutan}}"><i class="fas fa-caret-down"></i></a>

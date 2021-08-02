@@ -28,7 +28,7 @@ class PegawaiController extends Controller
     public function pegawaiSkpd($id)
     {
         $skpd_id = Skpd::where('kode_skpd', $id)->first()->id;
-        $pegawai = Pegawai::where('skpd_id', $skpd_id)->get();
+        $pegawai = Pegawai::with('jabatan')->where('skpd_id', $skpd_id)->get();
         $data['message_error'] = 200;
         $data['message']       = 'data ditemukan';
         $data['data']          = $pegawai;

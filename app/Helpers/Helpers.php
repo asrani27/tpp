@@ -96,7 +96,7 @@ function terbilang($angka) {
 
  function jabatan($skpd_id)
  {
-    return Jabatan::where('skpd_id', $skpd_id)->where('sekolah_id', null)->get();
+    return Jabatan::where('skpd_id', $skpd_id)->get();
  }
 
  function pegawaiSkpd($id)

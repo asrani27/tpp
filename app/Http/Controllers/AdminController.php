@@ -24,7 +24,7 @@ class AdminController extends Controller
     public function pegawai()
     { 
         $data = Pegawai::with('jabatan','user')->where('skpd_id', $this->skpd_id())->orderBy('urutan','ASC')->paginate(10);
-        dd($data);
+        
         return view('admin.pegawai.index',compact('data'));
     }
 
@@ -214,6 +214,7 @@ class AdminController extends Controller
     {
         $skpd_id = Auth::user()->skpd->id;
         $edit = false;
+        dd($skpd_id, $edit);
         return view('admin.jabatan.index',compact('skpd_id','edit'));
     }
 

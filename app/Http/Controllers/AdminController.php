@@ -214,7 +214,7 @@ class AdminController extends Controller
     {
         $skpd_id = Auth::user()->skpd->id;
         $edit = false;
-        dd($skpd_id, $edit);
+        
         return view('admin.jabatan.index',compact('skpd_id','edit'));
     }
 

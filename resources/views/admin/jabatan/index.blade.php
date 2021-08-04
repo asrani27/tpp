@@ -45,7 +45,7 @@
             <div class="col-lg-8 col-12">
                 
             <ul>
-                @foreach (jabatan($skpd_id)->where('jabatan_id', null) as $item)
+                @foreach (jabatan($skpd_id)->where('jabatan_id', null)->where('sekolah_id', null) as $item)
                 <li>
                     <div class="callout callout-info text-sm" style="padding:5px;">
                         {{$item->kelas == null ? '-':$item->kelas->nama}} |

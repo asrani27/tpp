@@ -9,7 +9,8 @@
             @php
                 $tingkat = $skpd_id == 21 ? 5 : 4;
             @endphp
-                @foreach (jabatan($skpd_id)->where('tingkat', '!=', $tingkat)->where('rs_puskesmas_id', null) as $item)
+            
+                @foreach (jabatan($skpd_id)->where('tingkat', '!=', $tingkat)->where('rs_puskesmas_id', null)->where('sekolah_id', null) as $item)
                 <option value="{{$item->id}}">{{$item->nama}}</option>
                 @endforeach
             @endif

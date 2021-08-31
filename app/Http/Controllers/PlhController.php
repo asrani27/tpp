@@ -2,14 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Jabatan;
-use App\Pegawai;
-use App\RiwayatPLT;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
-class PltController extends Controller
+class PlhController extends Controller
 {
     public function user()
     {

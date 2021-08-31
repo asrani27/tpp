@@ -72,11 +72,20 @@
     <a href="/admin/plt" class="nav-link {{Request::is('admin/plt') ? 'active' : ''}}">
         <i class="nav-icon fas fa-th"></i>
         <p>
-        PLT/PLH/PJ
+        PLT/PJ
         </p>
     </a>
     </li>
     
+    <li class="nav-item">
+    <a href="/admin/plh" class="nav-link {{Request::is('admin/plh') ? 'active' : ''}}">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+        PLH
+        </p>
+    </a>
+    </li>
+
     <li class="nav-item">
     <a href="/admin/transfer" class="nav-link {{Request::is('admin/transfer') ? 'active' : ''}}">
         <i class="nav-icon fas fa-th"></i>

@@ -133,6 +133,10 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('/admin/plt/add', 'PltController@adminStorePlt');
     Route::get('/admin/plt/delete/{id}', 'PltController@adminDeletePlt');
     
+    Route::get('/admin/plh', 'PlhController@admin');
+    Route::post('/admin/plh/add', 'PlhController@adminStorePlh');
+    Route::get('/admin/plh/delete/{id}', 'PlhController@adminDeletePlh');
+
     Route::get('/admin/transfer', 'TransferController@admin');
     Route::post('/admin/transfer/add', 'TransferController@adminStoreTransfer');
     Route::get('/admin/transfer/delete/{id}', 'TransferController@adminDeleteTransfer');

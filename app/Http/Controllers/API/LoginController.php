@@ -20,22 +20,11 @@ class LoginController extends Controller
         }else{
             if (Auth::attempt(['username' => $req->username, 'password' => $req->password])) {
                 Auth::user()->update([
-                    'api_token' => Hash::make(Str::random(20))
+                    'api_token' => Hash::make(Str::random(100))
                 ]);
 
                 return response()->json(Auth::user());
-                // if (Auth::user()->hasRole('superadmin')) {
-                //     return response()->json('superadmin');
-    
-                // } elseif(Auth::user()->hasRole('admin')) {
-                //     return response()->json('admin');
-    
-                // } elseif(Auth::user()->hasRole('pegawai')) {
-                //     return response()->json('pegawai');
-    
-                // } elseif(Auth::user()->hasRole('walikota')) {
-                //     return response()->json('walikota');
-                // }
+                
             } else {
                 $data['message_error'] = 201;
                 $data['message']       = 'username atau password anda tidak ditemukan';

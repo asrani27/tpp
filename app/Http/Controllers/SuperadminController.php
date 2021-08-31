@@ -953,10 +953,10 @@ class SuperadminController extends Controller
         $aktivitas = Aktivitas::where('validasi', 0)->where('tanggal', '<=', $tanggal)->get()->take(10);
 
         $aktivitas->map(function($item){
-            dd($item, $item->pegawai);
+            
             $item->nip      = $item->pegawai->nip;
             $item->nama     = $item->pegawai->nama;
-            $item->jabatan  = $item->pegawai->jabatan->nama;
+            $item->jabatan  = $item->pegawai->jabatan == null ? null $item->pegawai->jabatan->nama;
             $item->skpd     = $item->pegawai->skpd->nama;
 
             $check = $item->pegawai->jabatan->atasan == null ? Jabatan::where('sekda',1)->first():$item->pegawai->jabatan->atasan;

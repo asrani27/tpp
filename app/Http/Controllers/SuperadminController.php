@@ -956,7 +956,7 @@ class SuperadminController extends Controller
             
             $item->nip      = $item->pegawai->nip;
             $item->nama     = $item->pegawai->nama;
-            $item->jabatan  = $item->pegawai->jabatan == null ? null $item->pegawai->jabatan->nama;
+            $item->jabatan  = $item->pegawai->jabatan == null ? null :$item->pegawai->jabatan->nama;
             $item->skpd     = $item->pegawai->skpd->nama;
 
             $check = $item->pegawai->jabatan->atasan == null ? Jabatan::where('sekda',1)->first():$item->pegawai->jabatan->atasan;

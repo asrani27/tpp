@@ -950,13 +950,13 @@ class SuperadminController extends Controller
     public function aktivitasSistem()
     {
         $tanggal   = Carbon::today()->subDays(6)->format('Y-m-d');
-        $aktivitas = Aktivitas::where('validasi', 0)->where('tanggal', '<=', $tanggal)->get()->take(10);
+        $aktivitas = Aktivitas::where('validasi', 0)->where('tanggal', '<=', $tanggal)->where('jabatan_id', '!=', null)->get()->take(10);
 
         $aktivitas->map(function($item){
             
             $item->nip      = $item->pegawai->nip;
             $item->nama     = $item->pegawai->nama;
-            $item->jabatan  = $item->pegawai->jabatan == null ? null :$item->pegawai->jabatan->nama;
+            $item->jabatan  = $item->pegawai->jabatan->nama;
             $item->skpd     = $item->pegawai->skpd->nama;
 
             $check = $item->pegawai->jabatan->atasan == null ? Jabatan::where('sekda',1)->first():$item->pegawai->jabatan->atasan;

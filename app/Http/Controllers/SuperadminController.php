@@ -950,43 +950,45 @@ class SuperadminController extends Controller
     public function aktivitasSistem()
     {
         $tanggal   = Carbon::today()->subDays(6)->format('Y-m-d');
-        $aktivitas = Aktivitas::where('validasi', 0)->where('tanggal', '<=', $tanggal)->where('jabatan_id', '!=', null)->get()->take(10);
+        $aktivitas = Aktivitas::where('validasi', 0)->where('tanggal', '<=', $tanggal)->get()->take(10);
 
         $aktivitas->map(function($item){
-            
-            $item->nip      = $item->pegawai->nip;
-            $item->nama     = $item->pegawai->nama;
-            $item->jabatan  = $item->pegawai->jabatan->nama;
-            $item->skpd     = $item->pegawai->skpd->nama;
+            if($item->pegawai->jabatan == null){
 
-            $check = $item->pegawai->jabatan->atasan == null ? Jabatan::where('sekda',1)->first():$item->pegawai->jabatan->atasan;
-            if($check->pegawai == null){
-                //Jika Pegawai kosong, Check Lagi Apakah ada PLT atau Tidak
-                if($check->pegawaiPlt == null){
-                    $atasan = $check;
-                }else{
-                    // Cek Lagi Apakah yang memPLT atasan adalah bawahan langsung, menghindari aktifitas menilai diri sendiri
-                    if($item->pegawai->id == $check->pegawaiPlt->id){
-                        //cek lagi, jika sekretaris memPLT Kadis, maka pejabat penilai adalah SEKDA
-                        if($check->atasan == null){
-                            $atasan = Jabatan::where('sekda', 1)->first();
-                        }else{
-                            $atasan = $check->atasan;
-                        }
-                    }else{
-                        $atasan = $check;
-                    }
-                }
             }else{
-                //Jika Pegawai Ada berarti atasannya adalan jabatan definitif
-                $atasan = $check;
-            }
-            $item->nip_penilai = $atasan->pegawai == null ? $atasan->pegawaiPlt == null ? null:$atasan->pegawaiPlt->nip:$atasan->pegawai->nip;
-            $item->nama_penilai = $atasan->pegawai  == null ?$atasan->pegawaiPlt == null ? null:$atasan->pegawaiPlt->nama:$atasan->pegawai->nama;
-            $item->skpd_penilai = $atasan->pegawai == null ? $atasan->pegawaiPlt == null ? null:$atasan->skpd->nama:$atasan->skpd->nama  ;
-            $item->jabatan_penilai = $atasan->nama;
-            return $item;
-            
+                $item->nip      = $item->pegawai->nip;
+                $item->nama     = $item->pegawai->nama;
+                $item->jabatan  = $item->pegawai->jabatan->nama;
+                $item->skpd     = $item->pegawai->skpd->nama;
+    
+                $check = $item->pegawai->jabatan->atasan == null ? Jabatan::where('sekda',1)->first():$item->pegawai->jabatan->atasan;
+                if($check->pegawai == null){
+                    //Jika Pegawai kosong, Check Lagi Apakah ada PLT atau Tidak
+                    if($check->pegawaiPlt == null){
+                        $atasan = $check;
+                    }else{
+                        // Cek Lagi Apakah yang memPLT atasan adalah bawahan langsung, menghindari aktifitas menilai diri sendiri
+                        if($item->pegawai->id == $check->pegawaiPlt->id){
+                            //cek lagi, jika sekretaris memPLT Kadis, maka pejabat penilai adalah SEKDA
+                            if($check->atasan == null){
+                                $atasan = Jabatan::where('sekda', 1)->first();
+                            }else{
+                                $atasan = $check->atasan;
+                            }
+                        }else{
+                            $atasan = $check;
+                        }
+                    }
+                }else{
+                    //Jika Pegawai Ada berarti atasannya adalan jabatan definitif
+                    $atasan = $check;
+                }
+                $item->nip_penilai = $atasan->pegawai == null ? $atasan->pegawaiPlt == null ? null:$atasan->pegawaiPlt->nip:$atasan->pegawai->nip;
+                $item->nama_penilai = $atasan->pegawai  == null ?$atasan->pegawaiPlt == null ? null:$atasan->pegawaiPlt->nama:$atasan->pegawai->nama;
+                $item->skpd_penilai = $atasan->pegawai == null ? $atasan->pegawaiPlt == null ? null:$atasan->skpd->nama:$atasan->skpd->nama  ;
+                $item->jabatan_penilai = $atasan->nama;
+                return $item;
+            }            
         });
 
         DB::beginTransaction();

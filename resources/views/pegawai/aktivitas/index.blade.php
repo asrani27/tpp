@@ -21,14 +21,18 @@
                       </div>
                       <!-- /.widget-user-image -->
                       @if (Auth::user()->pegawai->jabatan->sekda == 1)
-                          
                         <h3 class="widget-user-username">WALIKOTA</h3>
                         <h5 class="widget-user-desc">KOTA BANJARMASIN</h5>
                       @else
                         <h3 class="widget-user-username">
                             @if ($atasan->pegawai == null)
                                 @if ($atasan->pegawaiplt == null)
-                                    -
+                            
+                                    @if ($atasan->pegawaiplh == null)
+                                        -
+                                    @else
+                                        {{$atasan->pegawaiplh->nama}}
+                                    @endif
                                 @else
                                     {{$atasan->pegawaiplt->nama}}
                                 @endif
@@ -37,7 +41,7 @@
                             @endif
                         </h3>                          
                         {{-- <h3 class="widget-user-username">{{$atasan->pegawai == null ? '-': $atasan->pegawai->nama}}</h3> --}}
-                        <h5 class="widget-user-desc">{{$atasan->pegawaiplt == null ? $atasan->nama:'Plt. '.$atasan->nama}}</h5>
+                        <h5 class="widget-user-desc">{{$atasan->pegawaiplt == null ? "":'Plt. '}} {{$atasan->pegawaiplh == null ? "":'Plh. '}}  {{$atasan->nama}}</h5>
                       @endif
                     </div>
                     

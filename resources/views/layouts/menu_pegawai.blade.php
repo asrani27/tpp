@@ -103,6 +103,17 @@
     </li> 
     @endif
 
+    @if (Auth::user()->pegawai->jabatan_plh != null) 
+    <li class="nav-item">
+    <a href="/pegawai/plh/validasi/harian" class="nav-link {{ Request::is('pegawai/plh/validasi/harian*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-user-check"></i>
+        <p>
+        Validasi Aktivitas PLH
+        </p>
+    </a>
+    </li> 
+    @endif
+
     <li class="nav-item">
     <a href="/pegawai/profil" class="nav-link {{ Request::is('pegawai/profil') ? 'active' : '' }}">
         <i class="nav-icon fas fa-user"></i>

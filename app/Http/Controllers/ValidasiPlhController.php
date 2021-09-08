@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jabatan;
 use App\Aktivitas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ValidasiPlhController extends Controller
 {
@@ -26,9 +27,9 @@ class ValidasiPlhController extends Controller
                     $item->nama_pegawai = null;
                     $item->aktivitas_baru = 0;
                 }else{
-                    $item->pegawai_id     = $item->pegawaiplh->id;
-                    $item->nama_pegawai   = $item->pegawaiplh->nama;
-                    $item->aktivitas_baru = $item->pegawaiplh->aktivitas->where('validasi', 0)->count();
+                    $item->pegawai_id     = $item->pegawaiplt->id;
+                    $item->nama_pegawai   = $item->pegawaiplt->nama;
+                    $item->aktivitas_baru = $item->pegawaiplt->aktivitas->where('validasi', 0)->count();
                 }
             }else{
                 $item->pegawai_id     = $item->pegawai->id;
@@ -42,16 +43,16 @@ class ValidasiPlhController extends Controller
             
             $data2 = Jabatan::where('jabatan_id', null)->where('sekda', null)->get()->map(function($item){
                 if($item->pegawai == null){
-                    if($item->pegawaiplh == null){
+                    if($item->pegawaiplt == null){
                         $item->nama = $item->nama.', SKPD : '. $item->skpd->nama;
                         $item->pegawai_id     = '-';
                         $item->nama_pegawai   = '-';
                         $item->aktivitas_baru = 0;
                     }else{
-                        $item->nama = 'Plh. '.$item->nama.', SKPD : '. $item->skpd->nama;
-                        $item->pegawai_id     = $item->pegawaiplh->id;
-                        $item->nama_pegawai   = $item->pegawaiplh->nama;
-                        $item->aktivitas_baru = $item->pegawaiplh->aktivitas->where('validasi', 0)->count();
+                        $item->nama = 'Plt. '.$item->nama.', SKPD : '. $item->skpd->nama;
+                        $item->pegawai_id     = $item->pegawaiplt->id;
+                        $item->nama_pegawai   = $item->pegawaiplt->nama;
+                        $item->aktivitas_baru = $item->pegawaiplt->aktivitas->where('validasi', 0)->count();
                     }
                 }else{
                     $item->nama = $item->nama.', SKPD : '. $item->skpd->nama;
@@ -67,7 +68,7 @@ class ValidasiPlhController extends Controller
 
         $data = $data1->merge($data2)->whereNotIn('pegawai_id', $this->user()->pegawai->id);
         
-        return view('pegawai.validasiplt.index',compact('data'));
+        return view('pegawai.validasiplh.index',compact('data'));
     } 
     
     public function view($id)
@@ -80,7 +81,7 @@ class ValidasiPlhController extends Controller
             $data    = $check->pegawai->aktivitas()->where('validasi',0)->paginate(10);
             $pegawai = $check->pegawai;
         }
-        return view('pegawai.validasiplt.detail',compact('data','pegawai','id'));
+        return view('pegawai.validasiplh.detail',compact('data','pegawai','id'));
     }
 
     public function accAktivitas($id)
@@ -108,11 +109,7 @@ class ValidasiPlhController extends Controller
         $jabatan_saya = $this->user()->pegawai->jabatanPlh;
         
         $jabatan = Jabatan::with('pegawai.aktivitas')->findOrFail($id);
-        
-        if($jabatan_saya->id != $jabatan->atasan->id){
-            toastr()->error('Tidak Bisa Validasi , bukan bawahan anda','Authorize');
-            return back();
-        }else{
+        if($jabatan->atasan == null){
             $data = $jabatan->pegawai->aktivitas->where('validasi', 0);
             
             $data->map(function($item){
@@ -124,6 +121,23 @@ class ValidasiPlhController extends Controller
             });
             toastr()->success('Semua Aktivitas Di Setujui');
             return back();
+        }else{
+            if($jabatan_saya->id != $jabatan->atasan->id){
+                toastr()->error('Tidak Bisa Validasi , bukan bawahan anda','Authorize');
+                return back();
+            }else{
+                $data = $jabatan->pegawai->aktivitas->where('validasi', 0);
+                
+                $data->map(function($item){
+                    $item->update([
+                        'validasi' => 1,
+                        'validator' => Auth::user()->pegawai->id,
+                    ]);
+                    return $item;
+                });
+                toastr()->success('Semua Aktivitas Di Setujui');
+                return back();
+            }
         }
     }
 }

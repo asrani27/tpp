@@ -75,8 +75,9 @@ class ValidasiPlhController extends Controller
     {
         $check = Jabatan::find($id);
         if($check->pegawai == null){
-            $data    = $check->pegawaiplh->aktivitas()->where('validasi',0)->paginate(10);
-            $pegawai = $check->pegawaiplh;
+            
+            $data    = $check->pegawaiplt->aktivitas()->where('validasi',0)->paginate(10);
+            $pegawai = $check->pegawaiplt;
         }else{
             $data    = $check->pegawai->aktivitas()->where('validasi',0)->paginate(10);
             $pegawai = $check->pegawai;

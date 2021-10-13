@@ -11,7 +11,7 @@ class PegawaiController extends Controller
 {
     public function pegawai($nip)
     {
-        $pegawai = Pegawai::where('nip', $nip)->first();
+        $pegawai = Pegawai::with('jabatan','pangkat')->where('nip', $nip)->first();
         if($pegawai == null){
             $data['message_error'] = 101;
             $data['message']       = 'username atau password kosong';

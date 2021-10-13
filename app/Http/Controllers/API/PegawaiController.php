@@ -9,6 +9,18 @@ use App\Http\Controllers\Controller;
 
 class PegawaiController extends Controller
 {
+
+    public function allpegawai()
+    {
+        $pegawai = Pegawai::with('jabatan','pangkat')->where('is_aktif', 1)->get();
+
+        $data['message_error'] = 200;
+        $data['message']       = 'data ditemukan';
+        $data['data']          = $pegawai;
+        $data['jumlah']        = count($pegawai);
+        return response()->json($data);
+
+    }
     public function pegawai($nip)
     {
         $pegawai = Pegawai::with('jabatan','pangkat')->where('nip', $nip)->first();

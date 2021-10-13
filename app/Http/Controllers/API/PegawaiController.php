@@ -12,7 +12,7 @@ class PegawaiController extends Controller
 
     public function allpegawai()
     {
-        $pegawai = Pegawai::with('jabatan','pangkat')->where('is_aktif', 1)->get();
+        $pegawai = Pegawai::with('jabatan','pangkat')->get();
 
         $data['message_error'] = 200;
         $data['message']       = 'data ditemukan';

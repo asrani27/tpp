@@ -55,7 +55,7 @@ class AktivitasController extends Controller
         
         $data = Aktivitas::where('pegawai_id', $this->user()->pegawai->id)->orderBy('tanggal','DESC')->orderBy('jam_mulai','DESC')->paginate(10);
         //$data = $this->user()->pegawai->aktivitas()->orderBy('tanggal','DESC')->orderBy('jam_mulai','DESC')->paginate(10);
-        
+    
         return view('pegawai.aktivitas.index',compact('data','atasan', 'person'));
     }
     

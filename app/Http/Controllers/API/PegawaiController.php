@@ -44,6 +44,7 @@ class PegawaiController extends Controller
         $data['message_error'] = 200;
         $data['message']       = 'data ditemukan';
         $data['data']          = $pegawai;
+        $data['jumlah']        = count($pegawai);
         return response()->json($data);
     }
 }

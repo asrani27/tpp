@@ -16,55 +16,91 @@ class ValidasiController extends Controller
     }
     public function index()
     {
-        if($this->user()->pegawai->jabatan == null){
+        if ($this->user()->pegawai->jabatan == null) {
             toastr()->info('Tidak bisa melakukan validasi karena anda tidak memiliki jabatan, hub admin SKPD');
             return back();
         }
-        $data1 = $this->user()->pegawai->jabatan->bawahan->load('pegawai')->map(function($item){
-            if($item->pegawai == null){
-                if($item->pegawaiplt == null){
+
+        $data1 = $this->user()->pegawai->jabatan->bawahan->load('pegawai')->map(function ($item) {
+            if ($item->pegawai == null) {
+                if ($item->pegawaiplt == null) {
                     $item->nama_pegawai = null;
                     $item->aktivitas_baru = 0;
-                }else{
+                } else {
                     $item->nama_pegawai   = $item->pegawaiplt->nama;
                     $item->aktivitas_baru = $item->pegawaiplt->aktivitas->where('validasi', 0)->count();
                 }
-            }else{
+            } else {
                 $item->nama_pegawai   = $item->pegawai->nama;
                 $item->aktivitas_baru = $item->pegawai->aktivitas->where('validasi', 0)->count();
             }
             return $item;
         });
-        //dd($data1);
-        if($this->user()->pegawai->jabatan->sekda == 1){
-            $data2 = Jabatan::where('jabatan_id', null)->where('sekda', null)->get();
-        }else{
+
+        if ($this->user()->pegawai->jabatan->sekda == 1) {
+            $data2 = Jabatan::where('jabatan_id', null)->where('sekda', null)->get()->map(function ($item) {
+                $item->nama = $item->skpd->nama;
+                if ($item->pegawai == null) {
+                    if ($item->pegawaiplt == null) {
+                        $item->nama_pegawai = null;
+                        $item->aktivitas_baru = 0;
+                    } else {
+                        $item->nama_pegawai   = $item->pegawaiplt->nama;
+                        $item->aktivitas_baru = $item->pegawaiplt->aktivitas->where('validasi', 0)->count();
+                    }
+                } else {
+                    $item->nama_pegawai   = $item->pegawai->nama;
+                    $item->aktivitas_baru = $item->pegawai->aktivitas->where('validasi', 0)->count();
+                }
+                return $item;
+            });
+        } else {
             $data2 = collect([]);
         }
 
         $data = $data1->merge($data2);
-        
-        return view('pegawai.validasi.index',compact('data'));
+
+        return view('pegawai.validasi.index', compact('data'));
     }
 
     public function accSemua($id)
     {
         $jabatan_saya = $this->user()->pegawai->jabatan;
         $jabatan = Jabatan::with('pegawai.aktivitas')->findOrFail($id);
-        if($jabatan_saya->id != $jabatan->atasan->id){
-            toastr()->error('Tidak Bisa Validasi , bukan bawahan anda','Authorize');
-            return back();
-        }else{
-            //Cari Pegawai ID
-            if($jabatan->pegawai == null){
+
+        if ($jabatan->atasan == null) {
+            //maka penilainya adalah sekda
+            if ($jabatan->pegawai == null) {
                 $pegawai_id = $jabatan->pegawaiplt->id;
-            }else{
+            } else {
                 $pegawai_id = $jabatan->pegawai->id;
             }
 
             $data = Aktivitas::where('pegawai_id', $pegawai_id)->where('validasi', 0)->get();
-            
-            $data->map(function($item){
+
+            $data->map(function ($item) {
+                $item->update([
+                    'validasi' => 1,
+                    'validator' => Auth::user()->pegawai->id,
+                ]);
+                return $item;
+            });
+            toastr()->success('Semua Aktivitas Di Setujui');
+            return back();
+        } elseif ($jabatan_saya->id != $jabatan->atasan->id) {
+            toastr()->error('Tidak Bisa Validasi , bukan bawahan anda', 'Authorize');
+            return back();
+        } else {
+            //Cari Pegawai ID
+            if ($jabatan->pegawai == null) {
+                $pegawai_id = $jabatan->pegawaiplt->id;
+            } else {
+                $pegawai_id = $jabatan->pegawai->id;
+            }
+
+            $data = Aktivitas::where('pegawai_id', $pegawai_id)->where('validasi', 0)->get();
+
+            $data->map(function ($item) {
                 $item->update([
                     'validasi' => 1,
                     'validator' => Auth::user()->pegawai->id,
@@ -79,30 +115,30 @@ class ValidasiController extends Controller
     public function view($id)
     {
         $check = Jabatan::find($id);
-        if($check->pegawai == null){
-            $data    = $check->pegawaiplt->aktivitas()->where('validasi',0)->paginate(10);
+        if ($check->pegawai == null) {
+            $data    = $check->pegawaiplt->aktivitas()->where('validasi', 0)->paginate(10);
             $pegawai = $check->pegawaiplt;
-        }else{
-            $data    = $check->pegawai->aktivitas()->where('validasi',0)->paginate(10);
+        } else {
+            $data    = $check->pegawai->aktivitas()->where('validasi', 0)->paginate(10);
             $pegawai = $check->pegawai;
         }
-        
-        return view('pegawai.validasi.detail',compact('data','pegawai','id'));
+
+        return view('pegawai.validasi.detail', compact('data', 'pegawai', 'id'));
     }
-    
+
     public function keberatan()
     {
         $tingkat = Auth::user()->pegawai->jabatan->tingkat + 2;
-        
+
         $jabatan = Jabatan::where('skpd_id', Auth::user()->pegawai->skpd_id)->where('tingkat', $tingkat)->get();
-        
-        $data = $jabatan->map(function($item){
-            $item->nama_pegawai = $item->pegawai == null ? '-':$item->pegawai->nama;
-            $item->aktivitas_baru = $item->pegawai == null ? 0:$item->pegawai->aktivitas->where('validasi', 0)->count();
+
+        $data = $jabatan->map(function ($item) {
+            $item->nama_pegawai = $item->pegawai == null ? '-' : $item->pegawai->nama;
+            $item->aktivitas_baru = $item->pegawai == null ? 0 : $item->pegawai->aktivitas->where('validasi', 0)->count();
             return $item;
         });
-        
-        return view('pegawai.validasi.keberatan',compact('data'));
+
+        return view('pegawai.validasi.keberatan', compact('data'));
     }
 
     public function accAktivitas($id)
@@ -127,7 +163,7 @@ class ValidasiController extends Controller
 
     public function riwayat()
     {
-        $data = Aktivitas::with('pegawai')->where('validator',Auth::user()->pegawai->id)->paginate(10);
-        return view('pegawai.validasi.riwayat',compact('data'));
+        $data = Aktivitas::with('pegawai')->where('validator', Auth::user()->pegawai->id)->paginate(10);
+        return view('pegawai.validasi.riwayat', compact('data'));
     }
 }

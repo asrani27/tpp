@@ -26,9 +26,6 @@
       Harap Lengkapi Form Di Bawah Ini:
     </div>
     <div class="card card-info">
-      <div class="card-header">
-        <h3 class="card-title">Horizontal Form</h3>
-      </div>
       <!-- /.card-header -->
       <!-- form start -->
       <form class="form-horizontal" method="POST" action="/pegawai/profil/bio">
@@ -93,7 +90,7 @@
           <div class=" form-group row">
             <div class="offset-sm-2">
               <div class="col-sm-10">
-                <button type="submit" class="btn btn-info">SIMPAN</button>
+                <button type="submit" class="btn btn-block btn-info">SIMPAN</button>
               </div>
             </div>
           </div>

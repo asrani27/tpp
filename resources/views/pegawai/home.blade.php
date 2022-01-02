@@ -87,177 +87,176 @@
               </select>
             </div>
           </div>
-          <div class=" form-group row">
-            <label class="col-sm-2 col-form-label"></label>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">.</label>
             <div class="col-sm-10">
               <button type="submit" class="btn btn-block btn-info">SIMPAN</button>
             </div>
           </div>
         </div>
+      </form>
     </div>
     <!-- /.card-footer -->
-    </form>
-  </div>
-  @endif
+    @endif
 
-  <div class="row">
-    <div class="col-lg-12 col-12">
-      <div class="card card-widget widget-user">
-        <!-- Add the bg color to the header using any of the bg-* classes -->
-        <div class="widget-user-header bg-info">
-          <h3 class="widget-user-username">{{$data->nama}}</h3>
-          <h5 class="widget-user-desc">Rp. {{currency(($data->total_tpp - $data->pph21))}},-</h5>
-        </div>
-        <div class="widget-user-image">
-          <img class="img-circle elevation-2"
-            src="https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
-            alt="User Avatar">
-        </div>
-        <div class="card-footer">
-          <div class="row">
-            <div class="col-4 border-right">
-              <div class="description-block">
-                <h5 class="description-header">{{$acc}}</h5>
-                <span class="description-text"><i class="fas fa-check-circle"></i> DISETUJUI</span>
-              </div>
-              <!-- /.description-block -->
-            </div>
-            <!-- /.col -->
-            <div class="col-4 border-right">
-              <div class="description-block">
-                <h5 class="description-header">{{$tolak}}</h5>
-                <span class="description-text"><i class="fas fa-times-circle"></i> DITOLAK</span>
-              </div>
-              <!-- /.description-block -->
-            </div>
-            <!-- /.col -->
-            <div class="col-4">
-              <div class="description-block">
-                <h5 class="description-header">{{$pending}}</h5>
-                <span class="description-text"><i class="fas fa-list-alt"></i> DIPROSES</span>
-              </div>
-              <!-- /.description-block -->
-            </div>
-            <!-- /.col -->
+    <div class="row">
+      <div class="col-lg-12 col-12">
+        <div class="card card-widget widget-user">
+          <!-- Add the bg color to the header using any of the bg-* classes -->
+          <div class="widget-user-header bg-info">
+            <h3 class="widget-user-username">{{$data->nama}}</h3>
+            <h5 class="widget-user-desc">Rp. {{currency(($data->total_tpp - $data->pph21))}},-</h5>
           </div>
-          <!-- /.row -->
+          <div class="widget-user-image">
+            <img class="img-circle elevation-2"
+              src="https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
+              alt="User Avatar">
+          </div>
+          <div class="card-footer">
+            <div class="row">
+              <div class="col-4 border-right">
+                <div class="description-block">
+                  <h5 class="description-header">{{$acc}}</h5>
+                  <span class="description-text"><i class="fas fa-check-circle"></i> DISETUJUI</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-4 border-right">
+                <div class="description-block">
+                  <h5 class="description-header">{{$tolak}}</h5>
+                  <span class="description-text"><i class="fas fa-times-circle"></i> DITOLAK</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-4">
+                <div class="description-block">
+                  <h5 class="description-header">{{$pending}}</h5>
+                  <span class="description-text"><i class="fas fa-list-alt"></i> DIPROSES</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col-lg-6 col-12">
+
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-success"><i class="far fa-clock"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Jumlah Menit Bekerja</span>
+                <span class="info-box-number">{{$jmlmenit}} / 6750 Menit</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-lg-6 col-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-warning"><i class="far fa-calendar-alt"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Presensi</span>
+                <span class="info-box-number">100%</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+        </div>
+
+        <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+
+      </div>
+      <div class="col-lg-6 col-12">
+        <div class="card">
+          <div class="card-header border-transparent bg-gradient-primary">
+            <h3 class="card-title">Detail Perhitungan TPP Bulan {{\Carbon\Carbon::now()->isoFormat("MMMM Y")}}</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool">
+                <i class="fas fa-print"></i>
+              </button>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table m-0 table-sm">
+
+                <tbody>
+                  <tr>
+                    <td class="text-sm" width="120px">Kelas Jabatan</td>
+                    <td class="text-right">{{$data->nama_kelas}}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-sm" width="120px">Basic TPP</td>
+                    <td class="text-right">{{currency($data->basic_tpp)}}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-sm" width="120px">Persentase TPP</td>
+                    <td class="text-right">{{$data->persentase_tpp}} %</td>
+                  </tr>
+                  <tr>
+                    <td class="text-sm" width="170px">Tambahan Persen TPP</td>
+                    <td class="text-right">{{$data->tambahan_persen_tpp}} %</td>
+                  </tr>
+                  <tr>
+                    <td class="text-sm" width="170px">Jumlah Persentase</td>
+                    <td class="text-right">{{$data->jumlah_persentase}} %</td>
+                  </tr>
+                  <tr>
+                    <td class="text-sm" width="170px">Total Pagu</td>
+                    <td class="text-right">{{currency($data->total_pagu)}}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-sm" width="250px">Disiplin 40% dari Total Pagu (Jika Presensi 100%)</td>
+                    <td class="text-right">{{currency($data->total_disiplin)}}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-sm" width="170px">Produktivitas 60% dari Total Pagu (Jika Aktivitas Mencapai 6750
+                      Menit)</td>
+                    <td class="text-right">{{currency($data->total_produktivitas)}}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-sm" width="170px">Total TPP Bruto</td>
+                    <td class="text-right">{{currency($data->total_tpp)}}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-sm" width="170px">PPH 21 {{$data->pph}} %</td>
+                    <td class="text-right">{{currency($data->pph_angka)}}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-sm" width="170px">BPJS</td>
+                    <td class="text-right">0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer clearfix">
+            <strong>TOTAL TPP DITERIMA</strong>
+            <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">Rp. {{currency(($data->total_tpp -
+              $data->pph_angka))}}</a>
+          </div>
+          <!-- /.card-footer -->
         </div>
       </div>
     </div>
   </div>
-  <div class="row">
-
-    <div class="col-lg-6 col-12">
-
-      <div class="row">
-        <div class="col-lg-6 col-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-success"><i class="far fa-clock"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Jumlah Menit Bekerja</span>
-              <span class="info-box-number">{{$jmlmenit}} / 6750 Menit</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-lg-6 col-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-warning"><i class="far fa-calendar-alt"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Presensi</span>
-              <span class="info-box-number">100%</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-      </div>
-
-      <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-
-    </div>
-    <div class="col-lg-6 col-12">
-      <div class="card">
-        <div class="card-header border-transparent bg-gradient-primary">
-          <h3 class="card-title">Detail Perhitungan TPP Bulan {{\Carbon\Carbon::now()->isoFormat("MMMM Y")}}</h3>
-
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool">
-              <i class="fas fa-print"></i>
-            </button>
-          </div>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body p-0">
-          <div class="table-responsive">
-            <table class="table m-0 table-sm">
-
-              <tbody>
-                <tr>
-                  <td class="text-sm" width="120px">Kelas Jabatan</td>
-                  <td class="text-right">{{$data->nama_kelas}}</td>
-                </tr>
-                <tr>
-                  <td class="text-sm" width="120px">Basic TPP</td>
-                  <td class="text-right">{{currency($data->basic_tpp)}}</td>
-                </tr>
-                <tr>
-                  <td class="text-sm" width="120px">Persentase TPP</td>
-                  <td class="text-right">{{$data->persentase_tpp}} %</td>
-                </tr>
-                <tr>
-                  <td class="text-sm" width="170px">Tambahan Persen TPP</td>
-                  <td class="text-right">{{$data->tambahan_persen_tpp}} %</td>
-                </tr>
-                <tr>
-                  <td class="text-sm" width="170px">Jumlah Persentase</td>
-                  <td class="text-right">{{$data->jumlah_persentase}} %</td>
-                </tr>
-                <tr>
-                  <td class="text-sm" width="170px">Total Pagu</td>
-                  <td class="text-right">{{currency($data->total_pagu)}}</td>
-                </tr>
-                <tr>
-                  <td class="text-sm" width="250px">Disiplin 40% dari Total Pagu (Jika Presensi 100%)</td>
-                  <td class="text-right">{{currency($data->total_disiplin)}}</td>
-                </tr>
-                <tr>
-                  <td class="text-sm" width="170px">Produktivitas 60% dari Total Pagu (Jika Aktivitas Mencapai 6750
-                    Menit)</td>
-                  <td class="text-right">{{currency($data->total_produktivitas)}}</td>
-                </tr>
-                <tr>
-                  <td class="text-sm" width="170px">Total TPP Bruto</td>
-                  <td class="text-right">{{currency($data->total_tpp)}}</td>
-                </tr>
-                <tr>
-                  <td class="text-sm" width="170px">PPH 21 {{$data->pph}} %</td>
-                  <td class="text-right">{{currency($data->pph_angka)}}</td>
-                </tr>
-                <tr>
-                  <td class="text-sm" width="170px">BPJS</td>
-                  <td class="text-right">0</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <!-- /.table-responsive -->
-        </div>
-        <!-- /.card-body -->
-        <div class="card-footer clearfix">
-          <strong>TOTAL TPP DITERIMA</strong>
-          <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">Rp. {{currency(($data->total_tpp -
-            $data->pph_angka))}}</a>
-        </div>
-        <!-- /.card-footer -->
-      </div>
-    </div>
-  </div>
-</div>
 </div>
 @endsection
 

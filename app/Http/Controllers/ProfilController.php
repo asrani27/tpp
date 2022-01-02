@@ -23,9 +23,9 @@ class ProfilController extends Controller
 
     public function changeSuperadmin(Request $req)
     {
-        if($req->password != $req->password2){
+        if ($req->password != $req->password2) {
             toastr()->error('Password Tidak Sama');
-        }else{
+        } else {
             $p = Auth::user();
             $p->password = bcrypt($req->password);
             $p->save();
@@ -33,12 +33,12 @@ class ProfilController extends Controller
         }
         return back();
     }
-    
+
     public function changeAdmin(Request $req)
     {
-        if($req->password != $req->password2){
+        if ($req->password != $req->password2) {
             toastr()->error('Password Tidak Sama');
-        }else{
+        } else {
             $p = Auth::user();
             $p->password = bcrypt($req->password);
             $p->save();
@@ -55,7 +55,7 @@ class ProfilController extends Controller
     public function pegawai()
     {
         $data = Auth::user()->pegawai;
-        return view('pegawai.profil',compact('data'));
+        return view('pegawai.profil', compact('data'));
     }
 
     public function editPegawai()
@@ -63,7 +63,7 @@ class ProfilController extends Controller
         $data = Auth::user()->pegawai;
         $pangkat = Pangkat::get();
         $eselon  = Eselon::get();
-        return view('pegawai.edit_profil',compact('data','pangkat','eselon'));
+        return view('pegawai.edit_profil', compact('data', 'pangkat', 'eselon'));
     }
 
     public function updatePegawai(Request $req)
@@ -71,7 +71,7 @@ class ProfilController extends Controller
         DB::beginTransaction();
         try {
             $p = $this->user()->pegawai;
-            
+
             $p->nama       = $req->nama;
             $p->pangkat_id = $req->pangkat_id;
             $p->eselon_id  = $req->eselon_id;
@@ -82,6 +82,8 @@ class ProfilController extends Controller
             $p->jurusan    = $req->jurusan;
             $p->tanggal_lahir      = $req->tanggal_lahir;
             $p->jenjang_pendidikan = $req->jenjang_pendidikan;
+            $p->telp         = $req->telp;
+            $p->gol_darah    = $req->gol_darah;
             $p->save();
             $u = $this->user();
             $u->email = $req->email;
@@ -97,6 +99,17 @@ class ProfilController extends Controller
         return redirect('/pegawai/profil');
     }
 
+    public function updateDataPegawai(Request $req)
+    {
+        $d = Auth::user()->pegawai;
+        $d->no_rek = $req->no_rek;
+        $d->telp = $req->telp;
+        $d->gol_darah = $req->gol_darah;
+        $d->npwp = $req->npwp;
+        $d->save();
+        toastr()->success('Data Berhasil di Update');
+        return back();
+    }
     public function walikota()
     {
         return view('walikota.profil');
@@ -104,10 +117,10 @@ class ProfilController extends Controller
 
     public function gantiPassPegawai(Request $req)
     {
-        if($req->password1 != $req->password2){
+        if ($req->password1 != $req->password2) {
             toastr()->info('Password tidak sama');
             return back();
-        }else{
+        } else {
             Auth::user()->update([
                 'password' => bcrypt($req->password1)
             ]);

@@ -102,10 +102,12 @@ class ProfilController extends Controller
     public function updateDataPegawai(Request $req)
     {
         $d = Auth::user()->pegawai;
-        $d->no_rek = $req->no_rek;
-        $d->telp = $req->telp;
-        $d->gol_darah = $req->gol_darah;
-        $d->npwp = $req->npwp;
+        $d->no_rek      = $req->no_rek;
+        $d->telp        = $req->telp;
+        $d->gol_darah   = $req->gol_darah;
+        $d->npwp        = $req->npwp;
+        $d->jenjang_pendidikan = $req->jenjang_pendidikan;
+        $d->jkel         = $req->jkel;
         $d->save();
         toastr()->success('Data Berhasil di Update');
         return back();

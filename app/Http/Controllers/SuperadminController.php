@@ -35,17 +35,17 @@ class SuperadminController extends Controller
     {
         return view('superadmin.skpd.create');
     }
-    
+
     public function editSkpd($skpd_id)
     {
         $data = Skpd::find($skpd_id);
-        return view('superadmin.skpd.edit',compact('id','data'));
+        return view('superadmin.skpd.edit', compact('id', 'data'));
     }
 
     public function updateSkpd(Request $req, $id)
     {
         $validator = Validator::make($req->all(), [
-            'kode_skpd' =>  'unique:skpd,kode_skpd,'.$id
+            'kode_skpd' =>  'unique:skpd,kode_skpd,' . $id
         ]);
 
         if ($validator->fails()) {
@@ -57,17 +57,17 @@ class SuperadminController extends Controller
         toastr()->success('Skpd Berhasil Di Update');
         return redirect('/superadmin/skpd');
     }
-    
+
     public function deleteSkpd($skpd_id)
     {
-        try{
+        try {
             $s = Skpd::find($skpd_id);
-            if($s->user != null){
+            if ($s->user != null) {
                 $s->user->delete();
             }
             Skpd::find($skpd_id)->delete();
             toastr()->success('Skpd Berhasil Di Hapus');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             toastr()->error('Skpd Tidak Bisa Di Hapus Karena terkait Dengan Data Lain');
         }
         return redirect('/superadmin/skpd');
@@ -76,11 +76,11 @@ class SuperadminController extends Controller
     public function storeSkpd(Request $req)
     {
         $checkKode = Skpd::where('kode_skpd', $req->kode_skpd)->first();
-        if($checkKode == null){
+        if ($checkKode == null) {
             Skpd::create($req->all());
             toastr()->success('SKPD Berhasil Disimpan');
             return redirect('/superadmin/skpd');
-        }else{
+        } else {
             toastr()->error('Kode SKPD Sudah Ada');
             return back();
         }
@@ -89,47 +89,44 @@ class SuperadminController extends Controller
     public function jabatan($skpd_id)
     {
         $edit = false;
-        return view('superadmin.jabatan.index',compact('skpd_id','edit'));
+        return view('superadmin.jabatan.index', compact('skpd_id', 'edit'));
     }
 
     public function pegawaiSkpd($skpd_id)
     {
         $data = Pegawai::with('jabatan')->where('skpd_id', $skpd_id)->paginate(10);
-        return view('superadmin.skpd.pegawai',compact('skpd_id','data'));
+        return view('superadmin.skpd.pegawai', compact('skpd_id', 'data'));
     }
 
     public function addPegawaiSkpd($skpd_id)
     {
         $nama_skpd = Skpd::find($skpd_id)->nama;
-        $jabatan   = Jabatan::with('pegawai')->where('skpd_id', $skpd_id)->get()->where('pegawai',null);
-        return view('superadmin.skpd.create_pegawai',compact('skpd_id','nama_skpd','jabatan'));
+        $jabatan   = Jabatan::with('pegawai')->where('skpd_id', $skpd_id)->get()->where('pegawai', null);
+        return view('superadmin.skpd.create_pegawai', compact('skpd_id', 'nama_skpd', 'jabatan'));
     }
 
     public function addImport($skpd_id)
     {
-        return view('superadmin.skpd.import',compact('skpd_id'));
+        return view('superadmin.skpd.import', compact('skpd_id'));
     }
 
     public function importPegawai(Request $req, $skpd_id)
     {
         $data = Excel::toCollection(new PegawaiImport, $req->file('file'))->first();
-        foreach($data as $key=>$item)
-        {
+        foreach ($data as $key => $item) {
             $check = Pegawai::where('nip', $item[2])->first();
-            if($check == null){
+            if ($check == null) {
                 $attr['nama'] = $item[1];
                 $attr['nip'] = $item[2];
-                $attr['tanggal_lahir'] = Carbon::createFromFormat('dmY',$item[3])->format('Y-m-d');
+                $attr['tanggal_lahir'] = Carbon::createFromFormat('dmY', $item[3])->format('Y-m-d');
                 $attr['urutan'] = $item[0];
                 $attr['skpd_id'] = $skpd_id;
                 Pegawai::create($attr);
             }
-            
         }
 
         toastr()->success('Data Pegawai Berhasil Di Import');
         return back();
-        
     }
 
     public function storePegawaiSkpd(Request $req, $skpd_id)
@@ -145,21 +142,21 @@ class SuperadminController extends Controller
             'nama' => 'required'
         ];
         $req->validate($rules, $messages);
-        
+
         $req->flash();
 
         $attr = $req->all();
         $attr['skpd_id'] = $skpd_id;
         $attr['verified'] = 1;
-        
+
         Pegawai::create($attr);
         toastr()->success('Pegawai Berhasil Disimpan');
 
-        return redirect('/superadmin/skpd/pegawai/'.$skpd_id);
+        return redirect('/superadmin/skpd/pegawai/' . $skpd_id);
     }
 
     public function updatePegawaiSkpd(Request $req, $skpd_id, $id)
-    { 
+    {
         $messages = [
             'numeric' => 'Inputan Harus Angka',
             'min'     => 'Harus 18 Digit',
@@ -167,20 +164,20 @@ class SuperadminController extends Controller
         ];
 
         $rules = [
-            'nip' =>  'min:18|numeric|unique:pegawai,nip,'.$id,
+            'nip' =>  'min:18|numeric|unique:pegawai,nip,' . $id,
             'nama' => 'required'
         ];
         $req->validate($rules, $messages);
-        
+
         $req->flash();
 
         $attr = $req->all();
-        
+
         $pegawai = Pegawai::find($id);
-        if($pegawai->user == null){
+        if ($pegawai->user == null) {
             toastr()->error('Harap Di create user terlebih dahulu');
             return back();
-        }else{
+        } else {
             DB::beginTransaction();
             try {
                 $pegawai->user->update([
@@ -202,41 +199,39 @@ class SuperadminController extends Controller
     }
     public function deletePegawaiSkpd($skpd_id, $id)
     {
-        try{
+        try {
             $s = Pegawai::find($id);
-            if($s->user != null)
-            {
+            if ($s->user != null) {
                 $s->user->delete();
             }
             $s->delete();
             toastr()->success('Pegawai Berhasil Di Hapus');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             toastr()->error('Pegawai Tidak Bisa Di Hapus Karena terkait Dengan Data Lain');
         }
         return back();
     }
-    
+
     public function editPegawaiSkpd($skpd_id, $id)
     {
         $nama_skpd = Skpd::find($skpd_id)->nama;
         $data      = Pegawai::find($id);
-        $jabatan   = Jabatan::with('pegawai')->where('skpd_id', $skpd_id)->get()->where('pegawai',null);
-        
-        return view('superadmin.skpd.edit_pegawai',compact('skpd_id','nama_skpd','data','jabatan'));
+        $jabatan   = Jabatan::with('pegawai')->where('skpd_id', $skpd_id)->get()->where('pegawai', null);
 
+        return view('superadmin.skpd.edit_pegawai', compact('skpd_id', 'nama_skpd', 'data', 'jabatan'));
     }
 
     public function userSkpd()
     {
-        $roleAdminSkpd = Role::where('name','admin')->first();
+        $roleAdminSkpd = Role::where('name', 'admin')->first();
         $data = Skpd::get();
-        foreach($data as $key => $item){
+        foreach ($data as $key => $item) {
             $checkUsername = User::where('username', $item->kode_skpd)->first();
-            if($checkUsername == null){
+            if ($checkUsername == null) {
                 $attr['name'] = $item->nama;
                 $attr['username'] = $item->kode_skpd;
                 $attr['password'] = bcrypt('adminskpd');
-                
+
                 //create User di table user
                 $u = User::create($attr);
 
@@ -248,8 +243,7 @@ class SuperadminController extends Controller
                 $u->roles()->attach($roleAdminSkpd);
 
                 toastr()->success('Username : Kode SKPD , Password : adminskpd');
-            }else{
-
+            } else {
             }
         }
         return back();
@@ -257,14 +251,14 @@ class SuperadminController extends Controller
 
     public function userSkpdId($skpd_id)
     {
-        $roleAdminSkpd = Role::where('name','admin')->first();
+        $roleAdminSkpd = Role::where('name', 'admin')->first();
         $data = Skpd::find($skpd_id);
         $checkUsername = User::where('username', $data->kode_skpd)->first();
-        if($checkUsername == null){
+        if ($checkUsername == null) {
             $attr['name'] = $data->nama;
             $attr['username'] = $data->kode_skpd;
             $attr['password'] = bcrypt('adminskpd');
-            
+
             //create User di table user
             $u = User::create($attr);
 
@@ -276,21 +270,19 @@ class SuperadminController extends Controller
             $u->roles()->attach($roleAdminSkpd);
 
             toastr()->success('Username : Kode SKPD , Password : adminskpd');
-        }else{
+        } else {
             toastr()->error('Tidak bisa dibuat karena kode SKPD sudah Ada');
         }
         return back();
-
     }
 
     public function userPegawaiSkpdId($skpd_id)
     {
         $data = Pegawai::with('user')->where('skpd_id', $skpd_id)->get();
-        $rolePegawai = Role::where('name','pegawai')->first();
-        
-        foreach($data as $key => $item)
-        {
-            if($item->user == null){
+        $rolePegawai = Role::where('name', 'pegawai')->first();
+
+        foreach ($data as $key => $item) {
+            if ($item->user == null) {
                 $attr['name'] = $item->nama;
                 $attr['username'] = $item->nip;
                 $attr['password'] = bcrypt(Carbon::parse($item->tanggal_lahir)->format('dmY'));
@@ -299,7 +291,7 @@ class SuperadminController extends Controller
                 //Update user_id di table skpd
                 $item->user_id = $u->id;
                 $item->save();
-    
+
                 //Create Role
                 $u->roles()->attach($rolePegawai);
             }
@@ -316,12 +308,12 @@ class SuperadminController extends Controller
 
     public function deleteUserSkpd()
     {
-        $data = Skpd::get()->map(function($item){
+        $data = Skpd::get()->map(function ($item) {
             return $item->user;
         });
-        foreach($data as $item){
+        foreach ($data as $item) {
             User::find($item->id)->delete();
-            toastr()->success('User '.$item->nama.' Telah Di Hapus');
+            toastr()->success('User ' . $item->nama . ' Telah Di Hapus');
         }
         return back();
     }
@@ -330,43 +322,43 @@ class SuperadminController extends Controller
     {
         $edit = true;
         $jabatan = Jabatan::find($id);
-        
-        return view('superadmin.jabatan.index',compact('id','edit', 'jabatan','skpd_id'));
+
+        return view('superadmin.jabatan.index', compact('id', 'edit', 'jabatan', 'skpd_id'));
     }
 
     public function updateJabatan(Request $req, $skpd_id, $id)
     {
-        if($req->jabatan_id == null){            
+        if ($req->jabatan_id == null) {
             $jabatan = Jabatan::find($id);
             $jabatan->nama = $req->nama;
             $jabatan->kelas_id = $req->kelas_id;
             $jabatan->save();
             toastr()->success('Jabatan Berhasil Di Update');
-            return redirect('/superadmin/skpd/jabatan/'.$skpd_id);
-        }else{
+            return redirect('/superadmin/skpd/jabatan/' . $skpd_id);
+        } else {
             $tingkat1 = Jabatan::find($req->jabatan_id)->tingkat;
             $tingkat2 = Jabatan::find($id)->tingkat;
-            
-            if($tingkat1 == $tingkat2){
+
+            if ($tingkat1 == $tingkat2) {
                 toastr()->error('Jabatan Tidak bisa di pindah karena setara');
                 return back();
-            }elseif($tingkat1 > $tingkat2){
+            } elseif ($tingkat1 > $tingkat2) {
                 toastr()->error('Jabatan Tidak bisa di pindah Ke tingkat yang lebih rendah');
                 return back();
-            }elseif(abs($tingkat1-$tingkat2) >= 2){
+            } elseif (abs($tingkat1 - $tingkat2) >= 2) {
                 toastr()->error('Jabatan Tidak bisa di pindah Ke tingkat yang lebih Tinggi');
                 return back();
-            }else{
-                
+            } else {
+
                 $jabatan = Jabatan::find($id);
                 $jabatan->jabatan_id = $req->jabatan_id;
                 $jabatan->nama = $req->nama;
                 $jabatan->kelas_id = $req->kelas_id;
                 $jabatan->save();
                 toastr()->success('Jabatan Berhasil Di Update');
-                
-                return redirect('/superadmin/skpd/jabatan/'.$skpd_id);
-            } 
+
+                return redirect('/superadmin/skpd/jabatan/' . $skpd_id);
+            }
         }
     }
 
@@ -377,9 +369,9 @@ class SuperadminController extends Controller
         $attr['skpd_id']    = $skpd_id;
         $attr['kelas_id']    = $req->kelas_id;
 
-        if($req->jabatan_id == null){
+        if ($req->jabatan_id == null) {
             $attr['tingkat']    = 1;
-        }else{
+        } else {
             $attr['tingkat']    = Jabatan::find($req->jabatan_id)->tingkat + 1;
         }
 
@@ -390,41 +382,40 @@ class SuperadminController extends Controller
 
     public function deleteJabatan($skpd_id, $id)
     {
-        try{
+        try {
             Jabatan::find($id)->delete();
             toastr()->success('Jabatan Berhasil Di Hapus');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             toastr()->error('Jabatan Tidak Bisa Di Hapus Karena Memiliki Bawahan');
         }
-        return redirect('/superadmin/skpd/jabatan/'.$skpd_id);
+        return redirect('/superadmin/skpd/jabatan/' . $skpd_id);
     }
 
     public function pegawai()
     {
-        $data = Pegawai::orderBy('id','DESC')->paginate(10);
-        return view('superadmin.pegawai.index',compact('data'));
+        $data = Pegawai::orderBy('id', 'DESC')->paginate(10);
+        return view('superadmin.pegawai.index', compact('data'));
     }
     public function searchPegawai()
     {
         $search = request()->get('search');
-        $data   = Pegawai::where('nip', 'like', '%'.$search.'%')
-        ->orWhere('nama', 'like', '%'.$search.'%')
-        ->orderBy('id','DESC')
-        ->paginate(10);
+        $data   = Pegawai::where('nip', 'like', '%' . $search . '%')
+            ->orWhere('nama', 'like', '%' . $search . '%')
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
         request()->flash();
-        return view('superadmin.pegawai.index',compact('data'));
-
+        return view('superadmin.pegawai.index', compact('data'));
     }
     public function addPegawai()
     {
         return view('superadmin.pegawai.create');
     }
-    
+
     public function editPegawai($id)
     {
         $data = Pegawai::find($id);
-        
-        return view('superadmin.pegawai.edit',compact('data'));
+
+        return view('superadmin.pegawai.edit', compact('data'));
     }
 
     public function storePegawai(Request $req)
@@ -440,15 +431,15 @@ class SuperadminController extends Controller
             'nama' => 'required'
         ];
         $req->validate($rules, $messages);
-        
+
         $req->flash();
 
-        $urutan          = Skpd::find($req->skpd_id)->pegawai->sortBy('urutan')->last() == null ? 1: Skpd::find($req->skpd_id)->pegawai->sortBy('urutan')->last()->urutan + 1;
+        $urutan          = Skpd::find($req->skpd_id)->pegawai->sortBy('urutan')->last() == null ? 1 : Skpd::find($req->skpd_id)->pegawai->sortBy('urutan')->last()->urutan + 1;
 
         $attr = $req->all();
         $attr['verified'] = 1;
         $attr['urutan'] = $urutan;
-        
+
         Pegawai::create($attr);
         toastr()->success('Pegawai Berhasil Disimpan');
 
@@ -464,19 +455,19 @@ class SuperadminController extends Controller
         ];
 
         $rules = [
-            'nip' =>  'min:18|unique:pegawai,nip,'.$id,
+            'nip' =>  'min:18|unique:pegawai,nip,' . $id,
             'nama' => 'required'
         ];
         $req->validate($rules, $messages);
-        
+
         $req->flash();
 
         $attr = $req->all();
         $pegawai = Pegawai::find($id);
-        if($pegawai->user == null){
+        if ($pegawai->user == null) {
             toastr()->error('Harap Di create user terlebih dahulu');
             return back();
-        }else{
+        } else {
             DB::beginTransaction();
             try {
                 $pegawai->user->update([
@@ -493,21 +484,20 @@ class SuperadminController extends Controller
                 return back();
             }
         }
-        
+
         //return redirect('/superadmin/pegawai');
     }
 
     public function deletePegawai($id)
     {
-        try{
+        try {
             $s = Pegawai::find($id);
-            if($s->user != null)
-            {
+            if ($s->user != null) {
                 $s->user->delete();
             }
             Pegawai::find($id)->delete();
             toastr()->success('Pegawai Berhasil Di Hapus');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return $e;
             toastr()->error('Pegawai Tidak Bisa Di Hapus Karena terkait Dengan Data Lain');
         }
@@ -517,20 +507,19 @@ class SuperadminController extends Controller
     public function userPegawaiId($id)
     {
         $data = Pegawai::find($id);
-        $role = Role::where('name','pegawai')->first();
+        $role = Role::where('name', 'pegawai')->first();
         $checkUsername = User::where('username', $data->nip)->first();
-        if($checkUsername == null){
+        if ($checkUsername == null) {
             $u = User::create([
-                'name'=> $data->nama,
-                'username'=> $data->nip,
+                'name' => $data->nama,
+                'username' => $data->nip,
                 'password' => bcrypt(Carbon::parse($data->tanggal_lahir)->format('dmY')),
             ]);
             $data->user_id = $u->id;
             $data->save();
             $u->roles()->attach($role);
             toastr()->success('Berhasil, Username : NIP anda, Password : tanggal Lahir Anda Contoh : 09121990');
-
-        }else{
+        } else {
             toastr()->error('NIP/Username Sudah Ada');
         }
         return back();
@@ -542,7 +531,7 @@ class SuperadminController extends Controller
         $data->user->update([
             'password' => bcrypt(Carbon::parse($data->tanggal_lahir)->format('dmY'))
         ]);
-        toastr()->success('Password '.Carbon::parse($data->tanggal_lahir)->format('dmY'));
+        toastr()->success('Password ' . Carbon::parse($data->tanggal_lahir)->format('dmY'));
         return back();
     }
     public function kelas()
@@ -554,7 +543,7 @@ class SuperadminController extends Controller
     {
         return view('superadmin.kelas.create');
     }
-    
+
     public function storeKelas(Request $req)
     {
         $messages = [
@@ -573,24 +562,23 @@ class SuperadminController extends Controller
         $req->flash();
 
         if ($validator->fails()) {
-            foreach($messages as $item)
-            {
+            foreach ($messages as $item) {
                 toastr()->error($item);
             }
             return back();
         }
         Kelas::create($req->all());
         toastr()->success('Nama Kelas Berhasil Disimpan');
-        
+
         return redirect('/superadmin/kelas');
     }
-    
+
     public function editKelas($id)
     {
         $data = Kelas::find($id);
-        return view('superadmin.kelas.edit',compact('data'));
+        return view('superadmin.kelas.edit', compact('data'));
     }
-    
+
     public function updateKelas(Request $req, $id)
     {
         $messages = [
@@ -599,7 +587,7 @@ class SuperadminController extends Controller
         ];
 
         $rules = [
-            'nama' =>  'unique:kelas,nama,'.$id,
+            'nama' =>  'unique:kelas,nama,' . $id,
             'nilai' => 'numeric'
         ];
 
@@ -608,8 +596,7 @@ class SuperadminController extends Controller
         $validator = Validator::make($attr, $rules, $messages);
 
         if ($validator->fails()) {
-            foreach($messages as $item)
-            {
+            foreach ($messages as $item) {
                 toastr()->error($item);
             }
             return back();
@@ -619,18 +606,18 @@ class SuperadminController extends Controller
         toastr()->success('Kelas Berhasil Di Update');
         return redirect('/superadmin/kelas');
     }
-    
+
     public function deleteKelas($id)
     {
-        try{
+        try {
             Kelas::find($id)->delete();
             toastr()->success('Kelas Berhasil Di Hapus');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             toastr()->error('Kelas Tidak Bisa Di Hapus Karena Memiliki Data yang terkait');
         }
         return back();
     }
-    
+
     public function pangkat()
     {
         return view('superadmin.pangkat.index');
@@ -644,7 +631,7 @@ class SuperadminController extends Controller
     public function editPangkat($id)
     {
         $data = Pangkat::find($id);
-        return view('superadmin.pangkat.edit',compact('data'));
+        return view('superadmin.pangkat.edit', compact('data'));
     }
 
     public function storePangkat(Request $req)
@@ -659,7 +646,7 @@ class SuperadminController extends Controller
             'pph' => 'required',
         ];
         $req->validate($rules, $messages);
-        
+
         $req->flash();
 
         Pangkat::create($req->all());
@@ -674,12 +661,12 @@ class SuperadminController extends Controller
         ];
 
         $rules = [
-            'nama' =>  'required|unique:pangkat,nama,'.$id,
-            'golongan' => 'required|unique:pangkat,golongan,'.$id,
+            'nama' =>  'required|unique:pangkat,nama,' . $id,
+            'golongan' => 'required|unique:pangkat,golongan,' . $id,
             'pph' => 'required',
         ];
         $req->validate($rules, $messages);
-        
+
         $req->flash();
 
         Pangkat::find($id)->update($req->all());
@@ -689,10 +676,10 @@ class SuperadminController extends Controller
 
     public function deletePangkat($id)
     {
-        try{
+        try {
             Pangkat::find($id)->delete();
             toastr()->success('Pangkat Berhasil Di Hapus');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             toastr()->error('Pangkat Tidak Bisa Di Hapus Karena Memiliki Data yang terkait');
         }
         return back();
@@ -703,7 +690,7 @@ class SuperadminController extends Controller
         return view('superadmin.eselon.index');
     }
 
-    
+
     public function addEselon()
     {
         return view('superadmin.eselon.create');
@@ -712,7 +699,7 @@ class SuperadminController extends Controller
     public function editEselon($id)
     {
         $data = Eselon::find($id);
-        return view('superadmin.eselon.edit',compact('data'));
+        return view('superadmin.eselon.edit', compact('data'));
     }
 
     public function storeEselon(Request $req)
@@ -725,7 +712,7 @@ class SuperadminController extends Controller
             'nama' =>  'required|unique:eselon,nama',
         ];
         $req->validate($rules, $messages);
-        
+
         $req->flash();
 
         Eselon::create($req->all());
@@ -740,10 +727,10 @@ class SuperadminController extends Controller
         ];
 
         $rules = [
-            'nama' =>  'required|unique:eselon,nama,'.$id,
+            'nama' =>  'required|unique:eselon,nama,' . $id,
         ];
         $req->validate($rules, $messages);
-        
+
         $req->flash();
 
         Eselon::find($id)->update($req->all());
@@ -753,14 +740,14 @@ class SuperadminController extends Controller
 
     public function deleteEselon($id)
     {
-        try{
-            if(Eselon::find($id) == null){
+        try {
+            if (Eselon::find($id) == null) {
                 toastr()->error('Tidak ada Data untuk Di Hapus');
-            }else{
+            } else {
                 Eselon::find($id)->delete();
                 toastr()->success('Eselon Berhasil Di Hapus');
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             toastr()->error('Eselon Tidak Bisa Di Hapus Karena Memiliki Data yang terkait');
         }
         return back();
@@ -773,18 +760,18 @@ class SuperadminController extends Controller
 
     public function parameter()
     {
-        $toplevel = Jabatan::where('sekda',1)->first();
+        $toplevel = Jabatan::where('sekda', 1)->first();
         $parameter = Parameter::get();
-        return view('superadmin.parameter.index',compact('toplevel','parameter'));
+        return view('superadmin.parameter.index', compact('toplevel', 'parameter'));
     }
-    
+
     public function editParameter($id)
     {
         $data = Parameter::find($id);
-        return view('superadmin.parameter.edit',compact('data'));
+        return view('superadmin.parameter.edit', compact('data'));
     }
-    
-    public function updateParameter(Request $req,$id)
+
+    public function updateParameter(Request $req, $id)
     {
         Parameter::find($id)->update([
             'value' => $req->value,
@@ -796,22 +783,22 @@ class SuperadminController extends Controller
     public function topLevel()
     {
         $data = Jabatan::paginate(10);
-        return view('superadmin.parameter.jabatan',compact('data'));
+        return view('superadmin.parameter.jabatan', compact('data'));
     }
 
     public function sekda($id)
     {
         $new = Jabatan::find($id);
         $j = jabatan::where('sekda', '!=', null)->first();
-        if($j == null){
+        if ($j == null) {
             $new->update([
                 'sekda' => 1
             ]);
-        }else{
+        } else {
             $j->update([
                 'sekda' => null
             ]);
-            
+
             $new->update([
                 'sekda' => 1
             ]);
@@ -823,51 +810,142 @@ class SuperadminController extends Controller
     public function searchSekda()
     {
         $search = request()->get('search');
-        $data   = Jabatan::where('nama','LIKE','%'.$search.'%')->paginate(10);
-        return view('superadmin.parameter.jabatan',compact('data'));
+        $data   = Jabatan::where('nama', 'LIKE', '%' . $search . '%')->paginate(10);
+        return view('superadmin.parameter.jabatan', compact('data'));
     }
 
     public function rekapASN()
     {
-        $data = Pegawai::paginate(10);
-        $jeniscari = Null;
-        return view('superadmin.rekapitulasi.pns',compact('data','jeniscari'));
+        $total = Pegawai::get()->count();
+        $l = Pegawai::where('jkel', 'L')->get()->count();
+        $p = Pegawai::where('jkel', 'P')->get()->count();
+
+        //berdasarkan eselon
+        $eselon = Eselon::get()->map(function ($item) {
+            $item->total = $item->pegawai == null ? 0 : $item->pegawai->count();
+            return $item;
+        });
+
+        //berdasarkan Pangkat
+        $pangkat = Pangkat::get()->map(function ($item) {
+            $item->total = $item->pegawai == null ? 0 : $item->pegawai->count();
+            return $item;
+        });
+
+        //berdasarkan Golongan Darah
+        $darah_a = Pegawai::where('gol_darah', 'A')->count();
+        $darah_b = Pegawai::where('gol_darah', 'B')->count();
+        $darah_ab = Pegawai::where('gol_darah', 'AB')->count();
+        $darah_o = Pegawai::where('gol_darah', 'O')->count();
+
+        //berdasarkan Tingkat Pendidikan
+        $sma = Pegawai::where('jenjang_pendidikan', 'SMA')->count();
+        $d3 = Pegawai::where('jenjang_pendidikan', 'D3')->count();
+        $s1 = Pegawai::where('jenjang_pendidikan', 'S1')->count();
+        $s2 = Pegawai::where('jenjang_pendidikan', 'S2')->count();
+        $s3 = Pegawai::where('jenjang_pendidikan', 'S3')->count();
+
+        //berdasarkan Kelas Jabatan
+        // $kelas = Kelas::get()->map(function ($item) {
+        //     $item->total = $item->jabatan == null ? 0 : $item->jabatan->map(function ($item2) {
+        //         $item2->pegawai = $item2->pegawai;
+        //         return $item2;
+        //     })->where('pegawai', '!=', null)->count();
+        //     return $item;
+        // });
+
+        return view('superadmin.rekapitulasi.pns', compact('total', 'l', 'p', 'eselon', 'pangkat', 'darah_a', 'darah_b', 'darah_ab', 'darah_o', 'sma', 'd3', 's1', 's2', 's3'));
     }
 
+    public function rekapData($param)
+    {
+        $total = Pegawai::get()->count();
+        if ($param == 'laki') {
+            $data = Pegawai::where('jkel', 'L')->get();
+            return view('superadmin.rekapitulasi.jkel', compact('total', 'data'));
+        } elseif ($param == 'perempuan') {
+            $data = Pegawai::where('jkel', 'P')->get();
+            return view('superadmin.rekapitulasi.jkel', compact('total', 'data'));
+        } elseif ($param == 'jkel') {
+            $data = Pegawai::where('jkel', null)->get();
+            return view('superadmin.rekapitulasi.jkel', compact('total', 'data'));
+        } elseif ($param == 'darah_a') {
+            $data = Pegawai::where('gol_darah', 'A')->get();
+            return view('superadmin.rekapitulasi.darah', compact('total', 'data'));
+        } elseif ($param == 'darah_b') {
+            $data = Pegawai::where('gol_darah', 'B')->get();
+            return view('superadmin.rekapitulasi.darah', compact('total', 'data'));
+        } elseif ($param == 'darah_ab') {
+            $data = Pegawai::where('gol_darah', 'AB')->get();
+            return view('superadmin.rekapitulasi.darah', compact('total', 'data'));
+        } elseif ($param == 'darah_o') {
+            $data = Pegawai::where('gol_darah', 'O')->get();
+            return view('superadmin.rekapitulasi.darah', compact('total', 'data'));
+        } elseif ($param == 'sma') {
+            $data = Pegawai::where('jenjang_pendidikan', 'SMA')->get();
+            return view('superadmin.rekapitulasi.jenjang', compact('total', 'data'));
+        } elseif ($param == 'd3') {
+            $data = Pegawai::where('jenjang_pendidikan', 'D3')->get();
+            return view('superadmin.rekapitulasi.jenjang', compact('total', 'data'));
+        } elseif ($param == 's1') {
+            $data = Pegawai::where('jenjang_pendidikan', 'S1')->get();
+            return view('superadmin.rekapitulasi.jenjang', compact('total', 'data'));
+        } elseif ($param == 's2') {
+            $data = Pegawai::where('jenjang_pendidikan', 'S2')->get();
+            return view('superadmin.rekapitulasi.jenjang', compact('total', 'data'));
+        } elseif ($param == 's3') {
+            $data = Pegawai::where('jenjang_pendidikan', 'S3')->get();
+            return view('superadmin.rekapitulasi.jenjang', compact('total', 'data'));
+        }
+    }
+
+    public function rekapDataEselon($param)
+    {
+        $total = Pegawai::get()->count();
+        $data = Eselon::find($param)->pegawai;
+        return view('superadmin.rekapitulasi.eselon', compact('total', 'data'));
+    }
+
+    public function rekapDataGolongan($param)
+    {
+        $total = Pegawai::get()->count();
+        $data = Pangkat::find($param)->pegawai;
+        return view('superadmin.rekapitulasi.golongan', compact('total', 'data'));
+    }
     public function rekapASNjkel()
     {
-        $data = Pegawai::orderBy('jkel','ASC')->paginate(10);
+        $data = Pegawai::orderBy('jkel', 'ASC')->paginate(10);
         $l = Pegawai::where('jkel', 'L')->get()->count();
         $p = Pegawai::where('jkel', 'P')->get()->count();
         $jeniscari = 'jkel';
-        return view('superadmin.rekapitulasi.pns',compact('data','jeniscari','l','p'));
+        return view('superadmin.rekapitulasi.pns', compact('data', 'jeniscari', 'l', 'p'));
     }
     public function rekapASNkelas()
     {
         $data = Pegawai::with('jabatan')->paginate(10);
         $kelas = Kelas::with('jabatan')->get();
-        
+
         $jeniscari = 'kelas';
-        return view('superadmin.rekapitulasi.pns',compact('data','jeniscari','kelas'));
+        return view('superadmin.rekapitulasi.pns', compact('data', 'jeniscari', 'kelas'));
     }
 
     public function searchRekapASNkelas()
     {
         $kelas_id = request()->get('kelas_id');
         $jabatan  = Jabatan::where('kelas_id', $kelas_id)->get();
-        $map      = $jabatan->map(function($item){
+        $map      = $jabatan->map(function ($item) {
             return $item->pegawai;
         })->whereNotNull();
-        
+
         $data = $this->paginate($map);
-        
+
         request()->flash();
         $kelas = Kelas::get();
-        
+
         $jeniscari = 'kelas';
-        return view('superadmin.rekapitulasi.pns',compact('data','jeniscari','kelas'));
+        return view('superadmin.rekapitulasi.pns', compact('data', 'jeniscari', 'kelas'));
     }
-    
+
     public function paginate($items, $perPage = 5, $page = null, $options = [])
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
@@ -878,57 +956,57 @@ class SuperadminController extends Controller
     public function rekapASNpendidikan()
     {
         $data = Pegawai::with('jabatan')->paginate(10);
-        $pendidikan = collect(['SMA','D3','S1','S2','S3']);
-        
+        $pendidikan = collect(['SMA', 'D3', 'S1', 'S2', 'S3']);
+
         $jeniscari = 'pendidikan';
-        return view('superadmin.rekapitulasi.pns',compact('data','jeniscari','pendidikan'));
+        return view('superadmin.rekapitulasi.pns', compact('data', 'jeniscari', 'pendidikan'));
     }
 
     public function searchRekapASNpendidikan()
     {
         $jenjang = request()->get('jenjang');
         $data = Pegawai::where('jenjang_pendidikan', $jenjang)->paginate(10);
-        
+
         request()->flash();
-        $pendidikan = collect(['SMA','D3','S1','S2','S3']);
-        
+        $pendidikan = collect(['SMA', 'D3', 'S1', 'S2', 'S3']);
+
         $jeniscari = 'pendidikan';
-        return view('superadmin.rekapitulasi.pns',compact('data','jeniscari','pendidikan'));
+        return view('superadmin.rekapitulasi.pns', compact('data', 'jeniscari', 'pendidikan'));
     }
 
     public function aktivitas()
     {
         $data = Aktivitas::paginate(10);
         $validasi = 1;
-        return view('superadmin.aktivitas.index',compact('data','validasi'));
+        return view('superadmin.aktivitas.index', compact('data', 'validasi'));
     }
 
     public function aktivitasSetuju()
     {
         $data = Aktivitas::where('validasi', 1)->paginate(10);
         $validasi = 1;
-        return view('superadmin.aktivitas.index',compact('data','validasi'));
+        return view('superadmin.aktivitas.index', compact('data', 'validasi'));
     }
 
     public function aktivitasTolak()
     {
         $data = Aktivitas::where('validasi', 2)->paginate(10);
         $validasi = 2;
-        return view('superadmin.aktivitas.index',compact('data','validasi'));
+        return view('superadmin.aktivitas.index', compact('data', 'validasi'));
     }
 
     public function aktivitasSearch()
     {
         $search = request()->get('search');
         $validasi = request()->get('validasi');
-        
-        $data = Aktivitas::whereHas('pegawai', function($q)use($search){
-            $q->where('nip', 'like', '%'.$search.'%')->orWhere('nama', 'like', '%'.$search.'%');
+
+        $data = Aktivitas::whereHas('pegawai', function ($q) use ($search) {
+            $q->where('nip', 'like', '%' . $search . '%')->orWhere('nama', 'like', '%' . $search . '%');
         })->where('validasi', $validasi)->paginate(10);
-        
+
         $data->appends(['search' => $search, 'validasi' => $validasi])->links();
         request()->flash();
-        return view('superadmin.aktivitas.index',compact('data','validasi'));
+        return view('superadmin.aktivitas.index', compact('data', 'validasi'));
     }
 
     public function aktivitasSetujui($id)
@@ -944,7 +1022,7 @@ class SuperadminController extends Controller
     {
         $data = Aktivitas::where('validasi', 0)->paginate(10);
         $validasi = 0;
-        return view('superadmin.aktivitas.index',compact('data','validasi'));
+        return view('superadmin.aktivitas.index', compact('data', 'validasi'));
     }
 
     public function aktivitasSistem()
@@ -952,57 +1030,55 @@ class SuperadminController extends Controller
         $tanggal   = Carbon::today()->subDays(6)->format('Y-m-d');
         $aktivitas = Aktivitas::where('validasi', 0)->where('tanggal', '<=', $tanggal)->get()->take(100);
 
-        $aktivitas->map(function($item){
-            if($item->pegawai->jabatan == null){
-
-            }else{
+        $aktivitas->map(function ($item) {
+            if ($item->pegawai->jabatan == null) {
+            } else {
                 $item->nip      = $item->pegawai->nip;
                 $item->nama     = $item->pegawai->nama;
                 $item->jabatan  = $item->pegawai->jabatan->nama;
                 $item->skpd     = $item->pegawai->skpd->nama;
-    
-                $check = $item->pegawai->jabatan->atasan == null ? Jabatan::where('sekda',1)->first():$item->pegawai->jabatan->atasan;
-                if($check->pegawai == null){
+
+                $check = $item->pegawai->jabatan->atasan == null ? Jabatan::where('sekda', 1)->first() : $item->pegawai->jabatan->atasan;
+                if ($check->pegawai == null) {
                     //Jika Pegawai kosong, Check Lagi Apakah ada PLT atau Tidak
-                    if($check->pegawaiPlt == null){
+                    if ($check->pegawaiPlt == null) {
                         $atasan = $check;
-                    }else{
+                    } else {
                         // Cek Lagi Apakah yang memPLT atasan adalah bawahan langsung, menghindari aktifitas menilai diri sendiri
-                        if($item->pegawai->id == $check->pegawaiPlt->id){
+                        if ($item->pegawai->id == $check->pegawaiPlt->id) {
                             //cek lagi, jika sekretaris memPLT Kadis, maka pejabat penilai adalah SEKDA
-                            if($check->atasan == null){
+                            if ($check->atasan == null) {
                                 $atasan = Jabatan::where('sekda', 1)->first();
-                            }else{
+                            } else {
                                 $atasan = $check->atasan;
                             }
-                        }else{
+                        } else {
                             $atasan = $check;
                         }
                     }
-                }else{
+                } else {
                     //Jika Pegawai Ada berarti atasannya adalan jabatan definitif
                     $atasan = $check;
                 }
-                $item->nip_penilai = $atasan->pegawai == null ? $atasan->pegawaiPlt == null ? null:$atasan->pegawaiPlt->nip:$atasan->pegawai->nip;
-                $item->nama_penilai = $atasan->pegawai  == null ?$atasan->pegawaiPlt == null ? null:$atasan->pegawaiPlt->nama:$atasan->pegawai->nama;
-                $item->skpd_penilai = $atasan->pegawai == null ? $atasan->pegawaiPlt == null ? null:$atasan->skpd->nama:$atasan->skpd->nama  ;
+                $item->nip_penilai = $atasan->pegawai == null ? $atasan->pegawaiPlt == null ? null : $atasan->pegawaiPlt->nip : $atasan->pegawai->nip;
+                $item->nama_penilai = $atasan->pegawai  == null ? $atasan->pegawaiPlt == null ? null : $atasan->pegawaiPlt->nama : $atasan->pegawai->nama;
+                $item->skpd_penilai = $atasan->pegawai == null ? $atasan->pegawaiPlt == null ? null : $atasan->skpd->nama : $atasan->skpd->nama;
                 $item->jabatan_penilai = $atasan->nama;
                 return $item;
-            }            
+            }
         });
 
         DB::beginTransaction();
         try {
-            foreach($aktivitas as $item)
-            {
+            foreach ($aktivitas as $item) {
                 $u = Aktivitas::find($item->id);
                 $u->validasi = 1;
                 $u->validator = 999999;
                 $u->save();
-                
+
                 $s = new Sanksi;
                 $s->tanggal_nilai    = Carbon::parse($item->tanggal)->addDays(6)->format('Y-m-d');
-                $s->tanggal_aktivitas=$item->tanggal;
+                $s->tanggal_aktivitas = $item->tanggal;
                 $s->nip_penilai     = $item->nip_penilai;
                 $s->nama_penilai    = $item->nama_penilai;
                 $s->jabatan_penilai = $item->jabatan_penilai;
@@ -1015,12 +1091,12 @@ class SuperadminController extends Controller
                 $s->skpd            = $item->skpd;
                 $s->save();
             }
-            
+
             DB::commit();
             toastr()->success('Berhasil Di Proses');
             return back();
         } catch (\Exception $e) {
-            
+
             DB::rollback();
             dd($e);
             toastr()->error(' Gagal Diproses');

@@ -88,7 +88,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label">.</label>
+            <label class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
               <button type="submit" class="btn btn-block btn-info">SIMPAN</button>
             </div>

@@ -91,6 +91,9 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/superadmin/parameter/jabatan/search', 'SuperadminController@searchSekda');
 
     Route::get('/superadmin/rekapitulasi/pns', 'SuperadminController@rekapASN');
+    Route::get('/superadmin/rekapitulasi/pns/data/{param}', 'SuperadminController@rekapData');
+    Route::get('/superadmin/rekapitulasi/pns/eselon/{param}', 'SuperadminController@rekapDataEselon');
+    Route::get('/superadmin/rekapitulasi/pns/golongan/{param}', 'SuperadminController@rekapDataGolongan');
     Route::get('/superadmin/rekapitulasi/pns/jkel', 'SuperadminController@rekapASNjkel');
     Route::get('/superadmin/rekapitulasi/pns/kelas-jabatan', 'SuperadminController@rekapASNkelas');
     Route::get('/superadmin/rekapitulasi/pns/kelas-jabatan/search', 'SuperadminController@searchRekapASNkelas');

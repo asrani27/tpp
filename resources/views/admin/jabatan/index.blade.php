@@ -42,7 +42,8 @@ ADMIN SKPD
                         @endif
                     </div>
                 </div>
-                <a href="/admin/org2" target="_blank" class="btn btn-success btn-block">Struktur Organisasi</a>
+                {{-- <a href="/admin/org2" target="_blank" class="btn btn-success btn-block">Struktur Organisasi</a>
+                --}}
             </div>
             <div class="col-lg-8 col-12">
                 <ul>

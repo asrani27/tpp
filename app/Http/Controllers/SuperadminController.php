@@ -39,7 +39,7 @@ class SuperadminController extends Controller
     public function editSkpd($skpd_id)
     {
         $data = Skpd::find($skpd_id);
-        return view('superadmin.skpd.edit', compact('id', 'data'));
+        return view('superadmin.skpd.edit', compact('data'));
     }
 
     public function updateSkpd(Request $req, $id)

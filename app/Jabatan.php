@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Jabatan extends Model
 {
-    protected $table ='jabatan';
+    protected $table = 'jabatan';
     protected $guarded = ['id'];
 
     public function atasan()
@@ -16,7 +16,7 @@ class Jabatan extends Model
 
     public function bawahan()
     {
-        return $this->hasMany(Jabatan::class, 'jabatan_id')->where('rs_puskesmas_id', null);
+        return $this->hasMany(Jabatan::class, 'jabatan_id');
     }
 
     public function bawahanblud($param)
@@ -33,7 +33,7 @@ class Jabatan extends Model
     {
         return $this->hasOne(Pegawai::class, 'jabatan_id');
     }
-    
+
     public function pegawaiplt()
     {
         return $this->hasOne(Pegawai::class, 'jabatan_plt');
@@ -46,14 +46,14 @@ class Jabatan extends Model
 
     public function skp()
     {
-        return $this->hasMany(Skp::class, 'jabatan_id')->orderBy('id','DESC');
+        return $this->hasMany(Skp::class, 'jabatan_id')->orderBy('id', 'DESC');
     }
 
     public function skpd()
     {
         return $this->belongsTo(Skpd::class, 'skpd_id');
     }
-    
+
     public function rs()
     {
         return $this->belongsTo(Rspuskesmas::class, 'rs_puskesmas_id');

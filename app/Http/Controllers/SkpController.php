@@ -43,10 +43,8 @@ class SkpController extends Controller
     public function storeSkp(Request $req, $id)
     {
         $attr = $req->all();
-        $satuan_ak = str_replace(',', '.', $req->satuan_ak);
-        $kuantitas = str_replace(',', '.', $req->satuan_ak);
         $attr['skp_periode_id'] = $id;
-        $attr['ak'] = (float)$kuantitas * (float)$satuan_ak;
+        $attr['ak'] = $req->kuantitas * $req->satuan_ak;
         Skp::create($attr);
         toastr()->success('SKP Berhasil Di Simpan');
         return back();

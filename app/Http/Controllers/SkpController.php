@@ -181,7 +181,7 @@ class SkpController extends Controller
         $plh = Auth::user()->pegawai->jabatanplh;
         if ($plt != null) {
             $bawahanplt = $plt->bawahan->map(function ($item) {
-                $item->pegawai_id = $item->pegawai->id;
+                $item->pegawai_id = $item->pegawai == null ? '-' : $item->pegawai->id;
                 $item->nama_pegawai = $item->pegawai == null ? '-' : $item->pegawai->nama;
                 $item->skp_baru = $item->pegawai == null ? 0 : $item->pegawai->skp_periode->map(function ($item2) {
                     return $item2->skp->where('validasi', null);
@@ -193,7 +193,7 @@ class SkpController extends Controller
         }
         if ($plh != null) {
             $bawahanplh = $plh->bawahan->map(function ($item) {
-                $item->pegawai_id = $item->pegawai->id;
+                $item->pegawai_id = $item->pegawai == null ? '-' : $item->pegawai->id;
                 $item->nama_pegawai = $item->pegawai == null ? '-' : $item->pegawai->nama;
                 $item->skp_baru = $item->pegawai == null ? 0 : $item->pegawai->skp_periode->map(function ($item2) {
                     return $item2->skp->where('validasi', null);

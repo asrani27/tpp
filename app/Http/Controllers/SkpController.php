@@ -175,7 +175,38 @@ class SkpController extends Controller
 
         return view('pegawai.skp.validasi', compact('data'));
     }
+    public function validasiSkpPLT()
+    {
+        $plt = Auth::user()->pegawai->jabatanplt;
+        $plh = Auth::user()->pegawai->jabatanplh;
+        if ($plt != null) {
+            $bawahanplt = $plt->bawahan->map(function ($item) {
+                $item->pegawai_id = $item->pegawai->id;
+                $item->nama_pegawai = $item->pegawai == null ? '-' : $item->pegawai->nama;
+                $item->skp_baru = $item->pegawai == null ? 0 : $item->pegawai->skp_periode->map(function ($item2) {
+                    return $item2->skp->where('validasi', null);
+                })->collapse()->count();
+                return $item;
+            });
+        } else {
+            $bawahanplt = collect([]);
+        }
+        if ($plh != null) {
+            $bawahanplh = $plh->bawahan->map(function ($item) {
+                $item->pegawai_id = $item->pegawai->id;
+                $item->nama_pegawai = $item->pegawai == null ? '-' : $item->pegawai->nama;
+                $item->skp_baru = $item->pegawai == null ? 0 : $item->pegawai->skp_periode->map(function ($item2) {
+                    return $item2->skp->where('validasi', null);
+                })->collapse()->count();
+                return $item;
+            });
+        } else {
+            $bawahanplh = collect([]);
+        }
 
+        $data = $bawahanplh->merge($bawahanplt)->whereNotIn('pegawai_id', Auth::user()->pegawai->id);
+        return view('pegawai.skp.validasi', compact('data'));
+    }
     public function viewSkp($id)
     {
         $id_periode = Pegawai::find($id)->skp_periode->pluck('id')->toArray();

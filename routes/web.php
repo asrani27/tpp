@@ -192,6 +192,7 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
 
     Route::get('/pegawai/skp/rencana-kegiatan', 'SkpController@index');
     Route::get('/pegawai/skp/validasi', 'SkpController@validasiSkp');
+    Route::get('/pegawai/skp/plt/validasi', 'SkpController@validasiSkpPLT');
     Route::get('/pegawai/skp/validasi/view/{id}', 'SkpController@viewSkp');
     Route::get('/pegawai/skp/validasi/acc/{id}', 'SkpController@setujuiSkp');
     Route::get('/pegawai/skp/validasi/acc_semua/{id}', 'SkpController@accSemuaSkp');

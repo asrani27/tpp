@@ -31,9 +31,10 @@ PRESENSI
     </div>
     <div class="row">
       <div class="col-12">
-        <a href="/admin/presensi/list" class="btn btn-sm btn-info"><i class="fas fa-list"></i> List Presensi</a>
-
-        <br /><br />
+        <a href="/admin/presensi/list" class="btn btn-sm btn-secondary" class="fas fa"></i> Kembali</a>
+        <a href="#" class="btn btn-sm bg-gradient-purple"><i class="fas fa-refresh"></i> Sinkron
+          Presensi</a>
+        <br /> <br />
 
         <div class="card">
           <div class="card-header">
@@ -51,8 +52,6 @@ PRESENSI
                 </div>
               </form> --}}
 
-              <a href="/admin/presensi/edit" class="btn btn-sm bg-gradient-purple"><i class="fas fa-edit"></i> Edit
-                Presensi</a>
             </div>
           </div>
           <!-- /.card-header -->
@@ -79,9 +78,9 @@ PRESENSI
                   </td>
                   <td>
                     {{-- {{$item->persen == null ? 0:$item->persen}} --}}
-                    0 %
+                    <font size="4">0 %</font>
                   </td>
-                  <td>{{$item->hukuman}} %</td>
+                  <td>-</td>
                 </tr>
                 @endforeach
               </tbody>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BulanTahun;
 use App\Pegawai;
 use App\Presensi;
 use Carbon\Carbon;
@@ -16,30 +17,29 @@ class PresensiController extends Controller
         $month = Carbon::now()->month;
         $year = Carbon::now()->year;
         $skpd_id = Auth::user()->skpd->id;
-        $pegawai = Pegawai::with('presensi')->where('skpd_id', Auth::user()->skpd->id)->orderBy('urutan','ASC')->get()
-                            ->map(function($item)use($month, $year, $skpd_id){
-                                $check = $item->presensi->where('bulan', $month)->where('tahun', $year)->where('skpd_id', $skpd_id)->first();
-                                if($check == null){
-                                    $item->persen = 100;
-                                    $item->hukuman = 0;
-                                }else{
-                                    $item->persen = $check == null ? 100 : $check->persen;
-                                    $item->hukuman = $check->hukuman;
-                                }
-                                
-                                return $item;
-                            });
-                            
+        $pegawai = Pegawai::with('presensi')->where('skpd_id', Auth::user()->skpd->id)->orderBy('urutan', 'ASC')->get()
+            ->map(function ($item) use ($month, $year, $skpd_id) {
+                $check = $item->presensi->where('bulan', $month)->where('tahun', $year)->where('skpd_id', $skpd_id)->first();
+                if ($check == null) {
+                    $item->persen = 100;
+                    $item->hukuman = 0;
+                } else {
+                    $item->persen = $check == null ? 100 : $check->persen;
+                    $item->hukuman = $check->hukuman;
+                }
+
+                return $item;
+            });
+
         $bulanTahun = Carbon::now();
-        return view('admin.presensi.index',compact('pegawai','bulanTahun'));
+        return view('admin.presensi.index', compact('pegawai', 'bulanTahun'));
     }
 
     public function list()
     {
-        $presensiSkpd = Presensi::where('skpd_id', Auth::user()->skpd->id)->select("bulan", "tahun")->groupBy(['bulan','tahun'])->get()->sortByDesc('bulan')->sortByDesc('tahun');
-        
-        return view('admin.presensi.list',compact('presensiSkpd'));
-        
+        //$presensiSkpd = Presensi::where('skpd_id', Auth::user()->skpd->id)->select("bulan", "tahun")->groupBy(['bulan','tahun'])->get()->sortByDesc('bulan')->sortByDesc('tahun');
+        $presensiSkpd = BulanTahun::orderBy('id', 'DESC')->get();
+        return view('admin.presensi.list', compact('presensiSkpd'));
     }
 
     public function edit()
@@ -47,21 +47,21 @@ class PresensiController extends Controller
         $month = Carbon::now()->month;
         $year = Carbon::now()->year;
         $skpd_id = Auth::user()->skpd->id;
-        $pegawai = Pegawai::with('presensi')->where('skpd_id', Auth::user()->skpd->id)->orderBy('urutan','ASC')->get()
-                            ->map(function($item)use($month, $year, $skpd_id){
-                                $check = $item->presensi->where('bulan', $month)->where('tahun', $year)->where('skpd_id', $skpd_id)->first();
-                                if($check == null){
-                                    $item->persen = 100;
-                                    $item->hukuman = 0;
-                                }else{
-                                    $item->persen = $check == null ? 100 : $check->persen;
-                                    $item->hukuman = $check->hukuman;
-                                }
-                                return $item;
-                            });
+        $pegawai = Pegawai::with('presensi')->where('skpd_id', Auth::user()->skpd->id)->orderBy('urutan', 'ASC')->get()
+            ->map(function ($item) use ($month, $year, $skpd_id) {
+                $check = $item->presensi->where('bulan', $month)->where('tahun', $year)->where('skpd_id', $skpd_id)->first();
+                if ($check == null) {
+                    $item->persen = 100;
+                    $item->hukuman = 0;
+                } else {
+                    $item->persen = $check == null ? 100 : $check->persen;
+                    $item->hukuman = $check->hukuman;
+                }
+                return $item;
+            });
         $data = Presensi::where('skpd_id', Auth::user()->id)->get();
         $bulanTahun = Carbon::now();
-        return view('admin.presensi.edit',compact('data','pegawai','bulanTahun'));
+        return view('admin.presensi.edit', compact('data', 'pegawai', 'bulanTahun'));
     }
 
     public function update(Request $req)
@@ -71,10 +71,10 @@ class PresensiController extends Controller
             $month = Carbon::now()->month;
             $year = Carbon::now()->year;
             $skpd_id = Auth::user()->skpd->id;
-            $pegawai = Pegawai::with('presensi')->where('skpd_id', Auth::user()->skpd->id)->orderBy('urutan','ASC')->get();
-            $update = $pegawai->map(function($item, $value)use($month, $year, $skpd_id, $req){
+            $pegawai = Pegawai::with('presensi')->where('skpd_id', Auth::user()->skpd->id)->orderBy('urutan', 'ASC')->get();
+            $update = $pegawai->map(function ($item, $value) use ($month, $year, $skpd_id, $req) {
                 $check = $item->presensi->where('bulan', $month)->where('tahun', $year)->where('skpd_id', $skpd_id)->first();
-                if($check == null){
+                if ($check == null) {
                     //create baru
                     $attr['pegawai_id'] = $item->id;
                     $attr['bulan'] = $month;
@@ -83,7 +83,7 @@ class PresensiController extends Controller
                     $attr['persen'] = $req->persen[$value];
                     $attr['hukuman'] = $req->hukuman[$value];
                     Presensi::create($attr);
-                }else{
+                } else {
                     //update data
                     $check->update([
                         'persen' => $req->persen[$value],
@@ -92,12 +92,12 @@ class PresensiController extends Controller
                 }
                 return $item;
             });
-            
+
             DB::commit();
             toastr()->success('Data Berhasil di Update');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
-            
+
             toastr()->error('Gagal Update Data');
         }
         return back();
@@ -108,36 +108,36 @@ class PresensiController extends Controller
         $month = $bulan;
         $year = $tahun;
         $skpd_id = Auth::user()->skpd->id;
-        $pegawai = Pegawai::with('presensi')->where('skpd_id', Auth::user()->skpd->id)->orderBy('urutan','ASC')->get()
-                            ->map(function($item)use($month, $year, $skpd_id){
-                                $check = $item->presensi->where('bulan', $month)->where('tahun', $year)->where('skpd_id', $skpd_id)->first();
-                                if($check == null){
-                                    $item->persen = 100;
-                                    $item->hukuman = 0;
-                                }else{
-                                    $item->persen = $check == null ? 100 : $check->persen;
-                                    $item->hukuman = $check->hukuman;
-                                }
-                                return $item;
-                            });
-                            
-        $bulanTahun = Carbon::createFromFormat('m/Y', $bulan.'/'.$tahun);
-        return view('admin.presensi.editbulan',compact('pegawai','bulanTahun'));
+        $pegawai = Pegawai::with('presensi')->where('skpd_id', Auth::user()->skpd->id)->orderBy('urutan', 'ASC')->get()
+            ->map(function ($item) use ($month, $year, $skpd_id) {
+                $check = $item->presensi->where('bulan', $month)->where('tahun', $year)->where('skpd_id', $skpd_id)->first();
+                if ($check == null) {
+                    $item->persen = 100;
+                    $item->hukuman = 0;
+                } else {
+                    $item->persen = $check == null ? 100 : $check->persen;
+                    $item->hukuman = $check->hukuman;
+                }
+                return $item;
+            });
+
+        $bulanTahun = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun);
+        return view('admin.presensi.index', compact('pegawai', 'bulanTahun'));
     }
 
     public function updateBulanTahun(Request $req, $bulan, $tahun)
     {
-      
+
         DB::beginTransaction();
         try {
             $month = $bulan;
             $year = $tahun;
             $skpd_id = Auth::user()->skpd->id;
-            $pegawai = Pegawai::with('presensi')->where('skpd_id', Auth::user()->skpd->id)->orderBy('urutan','ASC')->get();
-            $update = $pegawai->map(function($item, $value)use($month, $year, $skpd_id, $req){
+            $pegawai = Pegawai::with('presensi')->where('skpd_id', Auth::user()->skpd->id)->orderBy('urutan', 'ASC')->get();
+            $update = $pegawai->map(function ($item, $value) use ($month, $year, $skpd_id, $req) {
                 $check = $item->presensi->where('bulan', $month)->where('tahun', $year)->where('skpd_id', $skpd_id)->first();
-                
-                if($check == null){
+
+                if ($check == null) {
                     //create baru
                     $attr['pegawai_id'] = $item->id;
                     $attr['bulan'] = $month;
@@ -146,7 +146,7 @@ class PresensiController extends Controller
                     $attr['persen'] = $req->persen[$value];
                     $attr['hukuman'] = $req->hukuman[$value];
                     Presensi::create($attr);
-                }else{
+                } else {
                     //update data
                     $check->update([
                         'persen' => $req->persen[$value],
@@ -155,14 +155,14 @@ class PresensiController extends Controller
                 }
                 return $item;
             });
-            
+
             DB::commit();
             toastr()->success('Data Berhasil di Update');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
-            
+
             toastr()->error('Gagal Update Data');
         }
-        return back();     
+        return back();
     }
 }

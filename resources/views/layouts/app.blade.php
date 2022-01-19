@@ -35,8 +35,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar  sidebar-light-lightblue elevation-4">
       <a href="#" class="brand-link navbar-lightblue">
-        <img src="https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
-          alt="User" class="brand-image img-circle elevation-3" style="opacity: .8">
+        {{-- <img src="https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
+          alt="User" class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
         <span class="brand-text font-weight-light text-white text-sm">
 
           @if (Auth::user()->hasRole('pegawai'))

@@ -109,7 +109,7 @@
           </div>
           <div class="widget-user-image">
             <img class="img-circle elevation-2"
-              src="https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/2048px-User_icon_2.svg.png"
               alt="User Avatar">
           </div>
           <div class="card-footer">

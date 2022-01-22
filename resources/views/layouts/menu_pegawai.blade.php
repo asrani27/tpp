@@ -1,7 +1,8 @@
 <nav class="mt-2">
-    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-child-indent" data-widget="treeview" role="menu"
+        data-accordion="false">
         <li class="nav-item">
-            <a href="/home/pegawai" class="nav-link">
+            <a href="/home/pegawai" class="nav-link {{Request::is('home/pegawai') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-home"></i>
                 <p>
                     Beranda
@@ -9,8 +10,7 @@
             </a>
         </li>
         <li class="nav-item">
-
-        <li class="nav-item has-treeview {{Request::is('pegawai/skp*') ? 'menu-open' : ''}}">
+        <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link {{Request::is('pegawai/skp*') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-address-book"></i>
                 <p>
@@ -18,11 +18,11 @@
                     <i class="fas fa-angle-left right"></i>
                 </p>
             </a>
-            <ul class="nav nav-treeview" style="display: {{Request::is('pegawai/skp*') ? 'block' : 'none'}};">
+            <ul class="nav nav-treeview" style="display: block">
                 <li class="nav-item">
                     <a href="/pegawai/skp/rencana-kegiatan"
                         class="nav-link {{ Request::is('pegawai/skp/rencana-kegiatan') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-list"></i>
+                        <i class="nav-icon far fa-circle nav-icon"></i>
                         <p>Rencana Kegiatan</p>
                     </a>
                 </li>
@@ -31,7 +31,7 @@
                 <li class="nav-item">
                     <a href="/pegawai/skp/validasi"
                         class="nav-link {{ Request::is('pegawai/skp/validasi') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-list"></i>
+                        <i class="nav-icon far fa-circle nav-icon"></i>
                         <p>Validasi SKP</p>
                     </a>
                 </li>
@@ -42,7 +42,7 @@
                 <li class="nav-item">
                     <a href="/pegawai/skp/plt/validasi"
                         class="nav-link {{ Request::is('pegawai/skp/plt/validasi*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-list"></i>
+                        <i class="nav-icon far fa-circle nav-icon"></i>
                         <p>
                             Validasi SKP PLT
                         </p>
@@ -52,7 +52,7 @@
             </ul>
         </li>
 
-        <li class="nav-item has-treeview {{Request::is('pegawai/aktivitas*') ? 'menu-open' : ''}}">
+        <li class="nav-item has-treeview  menu-open">
             <a href="#" class="nav-link {{Request::is('pegawai/aktivitas*') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-clock"></i>
                 <p>
@@ -60,11 +60,11 @@
                     <i class="fas fa-angle-left right"></i>
                 </p>
             </a>
-            <ul class="nav nav-treeview" style="display: {{Request::is('pegawai/aktivitas*') ? 'block' : 'none'}};">
+            <ul class="nav nav-treeview" style="display: block">
                 <li class="nav-item">
                     <a href="/pegawai/aktivitas/harian"
                         class="nav-link {{ Request::is('pegawai/aktivitas/harian') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-list"></i>
+                        <i class="nav-icon far fa-circle nav-icon"></i>
                         <p>Aktivitas Harian</p>
                     </a>
                 </li>
@@ -77,7 +77,7 @@
                 </li> --}}
             </ul>
         </li>
-        <li class="nav-item has-treeview {{Request::is('pegawai/validasi*') ? 'menu-open' : ''}}">
+        <li class="nav-item has-treeview  menu-open">
             <a href="#" class="nav-link {{Request::is('pegawai/validasi*') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-user-check"></i>
                 <p>
@@ -85,18 +85,18 @@
                     <i class="fas fa-angle-left right"></i>
                 </p>
             </a>
-            <ul class="nav nav-treeview" style="display: {{Request::is('pegawai/validasi*') ? 'block' : 'none'}};">
+            <ul class="nav nav-treeview" style="display: block">
                 <li class="nav-item">
                     <a href="/pegawai/validasi/harian"
                         class="nav-link {{ Request::is('pegawai/validasi/harian') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-list"></i>
+                        <i class="nav-icon far fa-circle nav-icon"></i>
                         <p>Validasi Aktivitas</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="/pegawai/validasi/riwayat"
                         class="nav-link {{ Request::is('pegawai/validasi/riwayat') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-list"></i>
+                        <i class="nav-icon far fa-circle nav-icon"></i>
                         <p>Riwayat Validasi</p>
                     </a>
                 </li>

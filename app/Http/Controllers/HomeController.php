@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Skpd;
 use App\Jabatan;
 use App\Pegawai;
+use App\Presensi;
 use App\Aktivitas;
 use App\Parameter;
 use Carbon\Carbon;

@@ -212,7 +212,7 @@ class HomeController extends Controller
         $tolak   = $aktivitas->where('validasi', 2)->count();
         $pending = $aktivitas->where('validasi', 0)->count();
 
-        $data = $pegawai->map(function ($item) use ($persentase_tpp, $jmlmenit) {
+        $data = $pegawai->map(function ($item) use ($persentase_tpp, $jmlmenit, $month, $year) {
 
             if ($item->jabatan == null) {
                 $item->nama_jabatan = null;

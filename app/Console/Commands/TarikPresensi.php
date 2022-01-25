@@ -59,7 +59,7 @@ class TarikPresensi extends Command
                 $p->save();
             } else {
                 $tarik = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
-                dd($tarik);
+
                 $item->update([
                     'persen' => $tarik == null ? 0 : $tarik->persen_kehadiran,
                 ]);

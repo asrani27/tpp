@@ -105,7 +105,7 @@
           <!-- Add the bg color to the header using any of the bg-* classes -->
           <div class="widget-user-header bg-info">
             <h3 class="widget-user-username">{{$data->nama}}</h3>
-            <h5 class="widget-user-desc">Rp. {{currency(($data->total_tpp - $data->pph21))}},-</h5>
+            <h5 class="widget-user-desc">Rp. {{currency(($data->total_tpp - $data->pph_angka))}},-</h5>
           </div>
           <div class="widget-user-image">
             <img class="img-circle elevation-2"

@@ -239,7 +239,8 @@ class HomeController extends Controller
                 $item->jumlah_persentase = $persentase_tpp + $item->jabatan->tambahan_persen_tpp;
                 $item->total_pagu = ceil($item->basic_tpp * ($persentase_tpp + $item->tambahan_persen_tpp) / 100);
                 $presensi = Presensi::where('pegawai_id', $item->id)->where('bulan', $month)->where('tahun', $year)->first();
-                $item->persen_disiplin =  0;
+
+                $item->persen_disiplin =  ($presensi == null ? 0 : $presensi->persen) == null ? 0 : $presensi->persen;
                 $item->total_disiplin =  $item->total_pagu * 40 / 100;
                 $item->persen_produktivitas = 100;
                 if ($jmlmenit >= 6750) {

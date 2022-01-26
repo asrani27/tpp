@@ -168,7 +168,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Presensi</span>
-                <span class="info-box-number">0%</span>
+                <span class="info-box-number">{{$data->persen_disiplin}} %</span>
               </div>
               <!-- /.info-box-content -->
             </div>

@@ -241,7 +241,7 @@ class HomeController extends Controller
                 $presensi = Presensi::where('pegawai_id', $item->id)->where('bulan', $month)->where('tahun', $year)->first();
 
                 $item->persen_disiplin =  ($presensi == null ? 0 : $presensi->persen) == null ? 0 : $presensi->persen;
-                $item->total_disiplin =  $item->total_pagu * (0.4 * $item->persen_disiplin);
+                $item->total_disiplin =  $item->total_pagu * (0.4 * $item->persen_disiplin) / 100;
                 $item->persen_produktivitas = 100;
                 if ($jmlmenit >= 6750) {
                     $item->total_produktivitas =  $item->total_pagu * 60 / 100;

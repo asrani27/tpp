@@ -101,7 +101,8 @@ ADMIN SKPD
                                         @else
 
                                         <option value="{{$item->id}}" {{$item->id == $data->jabatan_id ?
-                                            'selected':''}}>{{$item->nama}}</option>
+                                            'selected':''}}>{{$item->nama}} - Atasan : Kepsek {{$item->sekolah->nama}}
+                                        </option>
                                         @endif
                                         @endforeach
                                     </select>

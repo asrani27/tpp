@@ -356,7 +356,7 @@ class AdminController extends Controller
     {
         try {
             $nip = request()->nip . '/api20211';
-            $client = new Client(['base_uri' => 'http://114.7.16.53:1028/ci4-bkd/pegawai/']);
+            $client = new Client(['base_uri' => 'http://103.178.83.6:1028/ci4-bkd/pegawai/']);
             $response = $client->request('GET', 'apipegawai/' . $nip);
             $resp = json_decode($response->getBody())->isidata[0];
 

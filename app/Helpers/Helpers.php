@@ -6,8 +6,10 @@ use App\Eselon;
 use App\Jabatan;
 use App\Pangkat;
 use App\Pegawai;
+use App\Aktivitas;
 use App\Parameter;
 use App\BulanTahun;
+use Illuminate\Support\Facades\Auth;
 
 function terbilang($angka)
 {

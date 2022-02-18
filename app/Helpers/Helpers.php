@@ -125,5 +125,5 @@ function totalMenit($bulan, $tahun)
 {
     $pegawai_id = Auth::user()->pegawai->id;
     $data = Aktivitas::where('pegawai_id', $pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
-    return $data;
+    return $data->sum('menit');
 }

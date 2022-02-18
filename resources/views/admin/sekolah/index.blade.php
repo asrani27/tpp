@@ -67,7 +67,7 @@ SUPERADMIN
               <tbody>
                 @foreach ($data as $key => $item)
                 <tr>
-                  <td>{{$key+ $data->firstItem()}}</td>
+                  <td>{{$no++}}</td>
                   <td>{{$item->nama}}</td>
                   <td>{{$item->alamat}}</td>
                   <td>{{$item->nama_kepsek}}</td>

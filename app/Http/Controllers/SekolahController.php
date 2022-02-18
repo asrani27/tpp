@@ -24,7 +24,7 @@ class SekolahController extends Controller
 
     public function index()
     {
-        $data = Sekolah::paginate(10);
+        $data = Sekolah::get();
         return view('admin.sekolah.index', compact('data'));
     }
 

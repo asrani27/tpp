@@ -159,9 +159,22 @@ ADMIN SKPD
                                         <select class="form-control select2" name="jabatan_id">
                                             <option value="">-pilih-</option>
                                             @foreach ($jabatan as $item)
-                                            <option value="{{$item->id}}">{{$item->nama}} ({{$item->rs == null ?
+                                            {{-- <option value="{{$item->id}}">{{$item->nama}} ({{$item->rs == null ?
                                                 $item->skpd->nama:$item->rs->nama}}) - {{$item->atasan == null ?
-                                                '-':'Atasan : '.$item->atasan->nama}}</option>
+                                                '-':'Atasan : '.$item->atasan->nama}}</option> --}}
+                                            @if ($item->sekolah_id == null)
+                                            <option value="{{$item->id}}" {{$item->id == $data->jabatan_id ?
+                                                'selected':''}}>{{$item->nama}} ({{$item->rs == null ?
+                                                $item->skpd->nama:$item->rs->nama}}) - {{$item->atasan == null ?
+                                                '-':'Atasan
+                                                : '.$item->atasan->nama}}</option>
+                                            @else
+
+                                            <option value="{{$item->id}}" {{$item->id == $data->jabatan_id ?
+                                                'selected':''}}>{{$item->nama}} - Atasan : Kepsek
+                                                {{$item->sekolah->nama}}
+                                            </option>
+                                            @endif
                                             @endforeach
                                         </select>
                                     </div>

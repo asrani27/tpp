@@ -145,7 +145,12 @@ JURNAL AKTIVITAS
                                             title="hapus data" onclick="return confirm('Yakin ingin di hapus?');"><i
                                                 class="fas fa-trash"></i></a>
                                         @else
-
+                                        @if (Auth::user()->username == '198709162010012005')
+                                        <a href="/pegawai/aktivitas/harian/delete/{{$item->id}}"
+                                            class="btn btn-xs btn-danger text-white" data-toggle="tooltip"
+                                            title="hapus data" onclick="return confirm('Yakin ingin di hapus?');"><i
+                                                class="fas fa-trash"></i></a>
+                                        @endif
                                         @endif
                                     </td>
                                 </tr>

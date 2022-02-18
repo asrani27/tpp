@@ -7,6 +7,7 @@ use App\Jabatan;
 use App\Pangkat;
 use App\Pegawai;
 use App\Parameter;
+use App\BulanTahun;
 
 function terbilang($angka)
 {

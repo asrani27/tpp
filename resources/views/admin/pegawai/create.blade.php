@@ -163,15 +163,13 @@ ADMIN SKPD
                                                 $item->skpd->nama:$item->rs->nama}}) - {{$item->atasan == null ?
                                                 '-':'Atasan : '.$item->atasan->nama}}</option> --}}
                                             @if ($item->sekolah_id == null)
-                                            <option value="{{$item->id}}" {{$item->id == $data->jabatan_id ?
-                                                'selected':''}}>{{$item->nama}} ({{$item->rs == null ?
+                                            <option value="{{$item->id}}">{{$item->nama}} ({{$item->rs == null ?
                                                 $item->skpd->nama:$item->rs->nama}}) - {{$item->atasan == null ?
                                                 '-':'Atasan
                                                 : '.$item->atasan->nama}}</option>
                                             @else
 
-                                            <option value="{{$item->id}}" {{$item->id == $data->jabatan_id ?
-                                                'selected':''}}>{{$item->nama}} - Atasan : Kepsek
+                                            <option value="{{$item->id}}">{{$item->nama}} - Atasan : Kepsek
                                                 {{$item->sekolah->nama}}
                                             </option>
                                             @endif

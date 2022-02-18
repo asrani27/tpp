@@ -38,8 +38,9 @@ LAPORAN AKTIVITAS
               <thead>
                 <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif" class="bg-gradient-primary">
                   <th>#</th>
-                  <th>Bulan</th>
-                  <th>Tahun</th>
+                  <th>Bulan & Tahun</th>
+                  <th>Total Menit</th>
+                  <th>Total Kehadiran</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -51,8 +52,9 @@ LAPORAN AKTIVITAS
                 @foreach (bulanTahun() as $key => $item)
                 <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
                   <td>{{$no++}}</td>
-                  <td>{{\Carbon\Carbon::createFromFormat('m',$item->bulan)->translatedFormat('F')}}</td>
-                  <td>{{$item->tahun}}</td>
+                  <td>{{\Carbon\Carbon::createFromFormat('m',$item->bulan)->translatedFormat('F')}} {{$item->tahun}}
+                  </td>
+                  <td>{{totalMenit($item->bulan, $item->tahun)}}</td>
                   <td><a href="/puskesmas/laporan/rekap/{{$item->bulan}}/{{$item->tahun}}"
                       class="btn btn-xs btn-success"><i class="fas fa-eye"></i> Detail</a></td>
                 </tr>

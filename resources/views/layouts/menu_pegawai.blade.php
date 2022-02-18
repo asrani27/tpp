@@ -170,7 +170,7 @@
                     <a href="/pegawai/laporan/aktivitas"
                         class="nav-link {{ Request::is('pegawai/laporan/aktivitas') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-list"></i>
-                        <p>Laporan Aktivitas</p>
+                        <p>Laporan Aktivitas & presensi</p>
                     </a>
                 </li>
                 <li class="nav-item">

@@ -24,6 +24,9 @@ JURNAL AKTIVITAS
                         @if (Auth::user()->pegawai->jabatan->sekda == 1)
                         <h3 class="widget-user-username">WALIKOTA</h3>
                         <h5 class="widget-user-desc">KOTA BANJARMASIN</h5>
+                        @elseif (Auth::user()->pegawai->jabatan->sekolah_id != null)
+                        <h3 class="widget-user-username">Kepala Sekolah</h3>
+                        <h5 class="widget-user-desc">{{Auth::user()->pegawai->jabatan->sekolah->nama}}</h5>
                         @else
                         <h3 class="widget-user-username">
                             @if ($atasan->pegawai == null)

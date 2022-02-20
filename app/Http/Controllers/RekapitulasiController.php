@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Pangkat;
 use App\Pegawai;
+use App\RekapTpp;
 use App\Aktivitas;
 use App\Parameter;
-use App\RekapTpp;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\View_aktivitas_pegawai;
-use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class RekapitulasiController extends Controller
@@ -28,8 +29,116 @@ class RekapitulasiController extends Controller
 
     public function bulanTahun($bulan, $tahun)
     {
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('pangkat_id', 'DESC')->get();
+        return view('admin.rekapitulasi.bulantahun', compact('data', 'bulan', 'tahun'));
+    }
+
+    public function masukkanPegawai($bulan, $tahun)
+    {
+        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->get();
+        foreach ($pegawai as $item) {
+            $check = RekapTpp::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+            if ($check == null) {
+                $n = new RekapTpp;
+                $n->pegawai_id  = $item->id;
+                $n->nip         = $item->nip;
+                $n->nama        = $item->nama;
+                $n->pangkat_id  = $item->pangkat == null ? null : $item->pangkat->id;
+                $n->pangkat     = $item->pangkat == null ? null : $item->pangkat->nama;
+                $n->golongan    = $item->pangkat == null ? null : $item->pangkat->golongan;
+                $n->jabatan     = $item->jabatan == null ? null : $item->jabatan->nama;
+                $n->kelas       = $item->jabatan == null ? null : $item->jabatan->kelas->nama;
+                $n->basic_tpp   = $item->jabatan == null ? null : $item->jabatan->kelas->nilai;
+                $n->persen      = $item->jabatan == null ? null : $item->jabatan->persentase_tpp;
+                $n->tambahan_persen      = $item->jabatan == null ? null : $item->jabatan->tambahan_persen_tpp;
+                $n->jumlah_persen        = $item->jabatan == null ? null : $item->jabatan->persentase_tpp + $item->jabatan->tambahan_persen_tpp;
+                $n->skpd_id     = Auth::user()->skpd->id;
+                $n->bulan     = $bulan;
+                $n->tahun     = $tahun;
+                $n->save();
+            } else {
+                $check->update([
+                    'nip' => $item->nip,
+                    'nama' => $item->nama,
+                    'pangkat' => $item->pangkat == null ? null : $item->pangkat->nama,
+                    'golongan' => $item->pangkat == null ? null : $item->pangkat->golongan,
+                    'skpd_id' => Auth::user()->skpd->id,
+                    'bulan' => $bulan,
+                    'tahun' => $tahun,
+                ]);
+            }
+        }
+
+        toastr()->success('Berhasil Memasukkan Pegawai');
+        return back();
+    }
+
+    public function totalPagu($bulan, $tahun)
+    {
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
-        return view('admin.rekapitulasi.bulantahun', compact('data'));
+        foreach ($data as $item) {
+            $totalPagu = $item->basic_tpp * ($item->jumlah_persen / 100);
+            $item->update([
+                'total_pagu' => $totalPagu,
+            ]);
+        }
+        toastr()->success('Total Pagu Di hitung');
+        return back();
+    }
+
+    public function tarikPresensi($bulan, $tahun)
+    {
+        $data = DB::connection('presensi')->table('ringkasan')->where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->get();
+
+        $data2 = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
+        foreach ($data2 as $item) {
+            if ($data->where('nip', $item->nip)->first() == null) {
+                $absensi = 0;
+            } else {
+                $absensi = $data->where('nip', $item->nip)->first()->persen_kehadiran;
+            }
+            $item->update([
+                'absensi' => $absensi,
+                'total_absensi' => $item->total_pagu * ((40 / 100) * $absensi / 100),
+            ]);
+        }
+        toastr()->success('Presensi Di hitung');
+        return back();
+    }
+
+    public function aktivitas($bulan, $tahun)
+    {
+        $pegawai = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
+        foreach ($pegawai as $item) {
+            $aktivitas = Aktivitas::where('pegawai_id', $item->pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('validasi', 1)->get();
+            if ($aktivitas->sum('menit') >= 6750) {
+                $total_aktivitas = $item->total_pagu * (60 / 100);
+            } else {
+                $total_aktivitas = 0;
+            }
+            $item->update([
+                'aktivitas' => $aktivitas->sum('menit'),
+                'total_aktivitas' => $total_aktivitas,
+            ]);
+        }
+        toastr()->success('Aktivitas Di hitung');
+        return back();
+    }
+
+    public function pph21($bulan, $tahun)
+    {
+        $pegawai = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
+        foreach ($pegawai as $item) {
+            $pph21 = Pangkat::find($item->pangkat_id)->pph;
+            $total_tpp = $item->total_absensi + $item->total_aktivitas;
+            //dd($pph21, $total_tpp, $total_tpp * ($pph21 / 100));
+            $item->update([
+                'pph21' => $pph21,
+                'total_pph21' => $total_tpp * ($pph21 / 100),
+            ]);
+        }
+        toastr()->success('PPh 21 Di hitung');
+        return back();
     }
     public function cetaktpp()
     {
@@ -117,5 +226,12 @@ class RekapitulasiController extends Controller
             $pdf = PDF::loadView('admin.rekapitulasi.cetak', compact('data', 'persentase_tpp', 'month', 'year', 'capaianMenit', 'tampil', 'bulantahun', 'tpp'))->setPaper('legal', 'landscape');
             return $pdf->stream();
         }
+    }
+
+    public function delete($bulan, $tahun, $id)
+    {
+        RekapTpp::find($id)->delete();
+        toastr()->success('Berhasil Di Hapus');
+        return back();
     }
 }

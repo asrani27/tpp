@@ -16,8 +16,8 @@ class TppController extends Controller
         return view('pegawai.tpp.grafik');
     }
 
-    public function tppBulanTahun($bulan, $tahun)
-    {
-        return view('superadmin.')
-    }
+    // public function tppBulanTahun($bulan, $tahun)
+    // {
+    //     return view('superadmin.')
+    // }
 }

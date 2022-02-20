@@ -1,5 +1,6 @@
 <?php
 
+use App\Cuti;
 use App\Skpd;
 use App\Kelas;
 use App\Eselon;
@@ -128,4 +129,10 @@ function totalMenit($bulan, $tahun)
     $pegawai_id = Auth::user()->pegawai->id;
     $data = Aktivitas::where('pegawai_id', $pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
     return $data->sum('menit');
+}
+
+function totalAbsensi($bulan, $tahun)
+{
+    $pegawai_id = Auth::user()->pegawai->id;
+    return Cuti::where('pegawai_id', $pegawai_id)->where('bulan', $bulan)->where('tahun', $tahun)->first()->absensi;
 }

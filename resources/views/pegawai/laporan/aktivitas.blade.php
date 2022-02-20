@@ -55,7 +55,7 @@ LAPORAN AKTIVITAS
                   <td>{{\Carbon\Carbon::createFromFormat('m',$item->bulan)->translatedFormat('F')}} {{$item->tahun}}
                   </td>
                   <td>{{totalMenit($item->bulan, $item->tahun)}} Menit</td>
-                  <td>proses</td>
+                  <td>{{totalAbsensi($item->bulan, $item->tahun)}}</td>
                   <td><a href="/puskesmas/laporan/rekap/{{$item->bulan}}/{{$item->tahun}}"
                       class="btn btn-xs btn-success"><i class="fas fa-eye"></i> Detail</a></td>
                 </tr>

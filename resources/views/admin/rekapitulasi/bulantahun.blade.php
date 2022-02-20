@@ -52,7 +52,7 @@ SUPERADMIN
                     Presensi</a>
 
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/aktivitas" class="btn btn-xs btn-primary"
-                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung
+                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung Cuti &
                     Aktivitas</a>
 
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/pph21" class="btn btn-xs btn-primary"

@@ -148,179 +148,29 @@ SUPERADMIN
                             </td>
                         </tr>
                         @endforeach
+                        <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif; font-weight:bold">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{currency($data->sum('total_absensi') + $data->sum('total_aktivitas'))}}</td>
+                            <td>{{currency($data->sum('total_pph21'))}}</td>
+                            <td>{{currency($data->sum('total_absensi') + $data->sum('total_aktivitas') -
+                                $data->sum('total_pph21'))}}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
-        {{-- @if ($tampil == true)
-
-        <div class="row">
-            <div class="col-12 text-center">
-                <strong>DAFTAR TPP ASN<br />
-                    BULAN {{strtoupper($bulantahun)}}<br />
-                    {{strtoupper(Auth::user()->name)}}</strong>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-sm table-bordered">
-                            <thead>
-                                <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif"
-                                    class="text-center bg-gradient-primary">
-                                    <th rowspan=2 style="width: 10px"></th>
-                                    <th rowspan=2 style="width: 10px">#</th>
-                                    <th rowspan=2>Nama /NIP/Pangkat/Golongan</th>
-                                    <th rowspan=2>Jabatan</th>
-                                    <th rowspan=2>Jenis Jabatan</th>
-                                    <th rowspan=2>Kelas</th>
-                                    <th rowspan=2>Basic TPP</th>
-                                    <th colspan=4>Beban Kerja</th>
-                                    <th colspan=2>Disiplin 40%</th>
-                                    <th colspan=2>Produktivitas 60%</th>
-                                    <th rowspan=2>TPP ASN</th>
-                                    <th rowspan=2>PPH 21</th>
-                                    <th rowspan=2>Hukuman Disiplin</th>
-                                    <th rowspan=2>Potongan BPJS</th>
-                                    <th rowspan=2>TPP DIterima</th>
-                                </tr>
-                                <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif"
-                                    class="text-center bg-gradient-primary">
-                                    <th>Persentase TPP</th>
-                                    <th>Tambahan Persentase TPP</th>
-                                    <th>Jumlah Persentase</th>
-                                    <th>Total Pagu</th>
-                                    <th>%</th>
-                                    <th>Rp.</th>
-                                    <th>{{$capaianMenit}} menit</th>
-                                    <th>Rp.</th>
-                                </tr>
-                            </thead>
-                            @if ($tpp == true)
-                            @php
-                            $no=1;
-                            $count = $data->count();
-                            @endphp
-
-                            <tbody>
-                                @foreach ($data as $key => $item)
-                                <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif">
-
-                                    <td>
-                                        @if ($key == 0)
-                                        <a href="/home/admin/down/{{$item->id}}/{{$item->urutan}}"><i
-                                                class="fas fa-caret-down"></i></a>
-                                        @elseif($key == $count-1)
-                                        <a href="/home/admin/up/{{$item->id}}/{{$item->urutan}}"><i
-                                                class="fas fa-caret-up"></i></a>
-                                        @else
-                                        <a href="/home/admin/up/{{$item->id}}/{{$item->urutan}}"><i
-                                                class="fas fa-caret-up"></i></a>
-                                        <a href="/home/admin/down/{{$item->id}}/{{$item->urutan}}"><i
-                                                class="fas fa-caret-down"></i></a>
-                                        @endif
-                                    </td>
-                                    <td>{{$no++}}</td>
-                                    <td>
-                                        {{$item->nama}} <br />
-                                        @if ($item->nama_pangkat == null)
-                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Pangkat Kosong!">
-                                            <span class="text-danger"><i
-                                                    class="fas fa-exclamation-triangle"></i></span></a>
-                                        @else
-                                        {{$item->nama_pangkat}}<br />
-                                        @endif
-                                        NIP.{{$item->nip}}
-
-                                    </td>
-                                    <td class="text-center">
-                                        {{$item->nama_jabatan}}
-                                    </td>
-                                    <td class="text-center">
-                                        {{$item->jenis_jabatan}}
-                                    </td>
-                                    <td class="text-center">
-                                        {{$item->nama_kelas}}
-                                    </td>
-                                    <td class="text-right">
-                                        {{currency($item->basic_tpp)}}
-                                    </td>
-                                    <td class="text-center">
-                                        {{$item->persentase_tpp}} %
-                                    </td>
-                                    <td class="text-center">
-                                        {{$item->tambahan_persen_tpp == null ? 0: $item->tambahan_persen_tpp}} %
-                                    </td>
-                                    <td class="text-center">
-                                        {{$item->jumlah_persentase}} %
-                                    </td>
-                                    <td class="text-right">
-                                        {{currency($item->total_pagu)}}
-                                    </td>
-                                    <td>{{$item->persen_disiplin}}</td>
-                                    <td class="text-right">
-                                        {{currency($item->total_disiplin)}}
-                                    </td>
-                                    <td>{{$item->persen_produktivitas}} m</td>
-                                    <td class="text-right">
-                                        {{currency($item->total_produktivitas)}}
-                                    </td>
-                                    <td class="text-right">
-                                        {{currency($item->total_tpp)}}
-                                    </td>
-                                    <td class="text-right">
-                                        {{$item->pph}} % <br>
-                                        {{$item->pph_angka == 0 ? '':'-'}}{{currency($item->pph_angka)}}
-                                    </td>
-                                    <td class="text-right">
-                                        {{$item->hukuman}} % <br>
-                                        {{$item->hukuman_angka == 0 ? '':'-'}}{{currency($item->hukuman_angka)}}
-                                    </td>
-                                    <td class="text-right">
-                                        0
-                                    </td>
-                                    <td class="text-right">
-                                        {{currency($item->tpp_diterima)}}
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Total</td>
-                                    <td>{{currency($data->sum('tpp_diterima'))}}</td>
-                                </tr>
-                            </tfoot>
-                            @endif
-                        </table>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-            </div>
-        </div>
-        @endif --}}
-
     </div>
 </div>
 

@@ -25,13 +25,21 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="/admin/cuti" class="nav-link {{Request::is('admin/cuti') ? 'active' : ''}}">
+                <i class="nav-icon fas fa-calendar"></i>
+                <p>
+                    Cuti
+                </p>
+            </a>
+        </li>
+        {{-- <li class="nav-item">
             <a href="/admin/presensi/list" class="nav-link {{Request::is('admin/presensi/*') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-clock"></i>
                 <p>
                     Presensi
                 </p>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a href="/admin/jabatan" class="nav-link {{Request::is('admin/jabatan') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-map"></i>

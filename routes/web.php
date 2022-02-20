@@ -192,6 +192,12 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/sekolah/{id}/petajabatan/{idJab}/delete', 'SekolahController@deleteJabatan');
     Route::get('/admin/sekolah/{id}/petajabatan/{idJab}/edit', 'SekolahController@editJabatan');
     Route::post('/admin/sekolah/{id}/petajabatan/{idJab}/edit', 'SekolahController@updateJabatan');
+
+
+    Route::get('/admin/cuti', 'CutiController@admin');
+    Route::get('/admin/cuti/search', 'CutiController@search');
+    Route::get('/admin/cuti/{nip}/detail', 'CutiController@detail');
+    Route::get('/admin/cuti/tarik', 'CutiController@tarik');
 });
 
 Route::group(['middleware' => ['auth', 'role:pegawai']], function () {

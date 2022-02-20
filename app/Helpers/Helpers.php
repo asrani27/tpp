@@ -7,6 +7,7 @@ use App\Eselon;
 use App\Jabatan;
 use App\Pangkat;
 use App\Pegawai;
+use App\RekapTpp;
 use App\Aktivitas;
 use App\Parameter;
 use App\BulanTahun;
@@ -134,5 +135,5 @@ function totalMenit($bulan, $tahun)
 function totalAbsensi($bulan, $tahun)
 {
     $pegawai_id = Auth::user()->pegawai->id;
-    return Cuti::where('pegawai_id', $pegawai_id)->where('bulan', $bulan)->where('tahun', $tahun)->first()->absensi;
+    return RekapTpp::where('pegawai_id', $pegawai_id)->where('bulan', $bulan)->where('tahun', $tahun)->first()->absensi;
 }

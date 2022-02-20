@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cuti;
 use App\Pangkat;
 use App\Pegawai;
 use App\RekapTpp;
@@ -111,13 +112,15 @@ class RekapitulasiController extends Controller
         $pegawai = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
         foreach ($pegawai as $item) {
             $aktivitas = Aktivitas::where('pegawai_id', $item->pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('validasi', 1)->get();
-            if ($aktivitas->sum('menit') >= 6750) {
+            $cutiDiakui = Cuti::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->sum('menit');
+f
+            if ($aktivitas->sum('menit') + $cutiDiakui >= 6750) {
                 $total_aktivitas = $item->total_pagu * (60 / 100);
             } else {
                 $total_aktivitas = 0;
             }
             $item->update([
-                'aktivitas' => $aktivitas->sum('menit'),
+                'aktivitas' => $aktivitas->sum('menit') + $cutiDiakui,
                 'total_aktivitas' => $total_aktivitas,
             ]);
         }

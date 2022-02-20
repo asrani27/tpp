@@ -12,6 +12,7 @@ Route::get('/logout', 'LoginController@logout');
 Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/home/superadmin', 'HomeController@superadmin');
     Route::get('/superadmin/profil', 'ProfilController@superadmin');
+    Route::get('/superadmin/tpp/{bulan}/{tahun}', 'TppController@tppBulanTahun');
     Route::post('/superadmin/profil', 'ProfilController@changeSuperadmin');
     Route::get('/superadmin/skpd', 'SuperadminController@skpd');
 
@@ -169,6 +170,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
     Route::get('/admin/rekapitulasi', 'RekapitulasiController@index');
     Route::get('/admin/rekapitulasi/cetaktpp', 'RekapitulasiController@cetaktpp');
+    Route::get('/admin/rekapitulasi/{bulan}/{tahun}', 'RekapitulasiController@bulanTahun');
 
     Route::get('/admin/sekolah', 'SekolahController@index');
     Route::get('/admin/sekolah/add', 'SekolahController@create');

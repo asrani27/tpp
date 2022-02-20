@@ -113,7 +113,6 @@ class RekapitulasiController extends Controller
         foreach ($pegawai as $item) {
             $aktivitas = Aktivitas::where('pegawai_id', $item->pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('validasi', 1)->get();
             $cutiDiakui = Cuti::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->sum('menit');
-f
             if ($aktivitas->sum('menit') + $cutiDiakui >= 6750) {
                 $total_aktivitas = $item->total_pagu * (60 / 100);
             } else {

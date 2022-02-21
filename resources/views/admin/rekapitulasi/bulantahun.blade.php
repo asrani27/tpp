@@ -168,7 +168,16 @@ SUPERADMIN
                                 $data->sum('total_pph21'))}}</td>
                         </tr>
                     </tbody>
-                </table>
+                </table><br />
+                Isi NIP dan Jabatan Lama di bawah ini, Jika Yang bersangkutan sudah pindah/promosi ke skpd lain
+                <form method="post" action="/admin/rekaptpp/create">
+                    @csrf
+                    <input type="text" name="nip" class="form-control-sm" placeholder="nip" required>
+                    <input type="text" name="jabatan" class="form-control-sm" placeholder="Nama Jabatan" required>
+                    <input type="hidden" name="bulan" value="{{$bulan}}" class="form-control-sm" placeholder="bulan">
+                    <input type="hidden" name="tahun" value="{{$tahun}}" class="form-control-sm" placeholder="tahun">
+                    <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                </form>
             </div>
         </div>
     </div>

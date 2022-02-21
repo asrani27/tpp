@@ -135,5 +135,12 @@ function totalMenit($bulan, $tahun)
 function totalAbsensi($bulan, $tahun)
 {
     $pegawai_id = Auth::user()->pegawai->id;
-    return RekapTpp::where('pegawai_id', $pegawai_id)->where('bulan', $bulan)->where('tahun', $tahun)->first()->absensi;
+
+    $check = RekapTpp::where('pegawai_id', $pegawai_id)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+    if ($check == null) {
+        $hasil = 0;
+    } else {
+        $hasil = $check->absensi;
+    }
+    return $hasil;
 }

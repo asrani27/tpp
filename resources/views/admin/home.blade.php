@@ -69,7 +69,7 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
     </div>
 
     <br />
-
+    {{--
 
     <div class="row">
       <div class="col-12 text-center">
@@ -232,7 +232,7 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
         {{$data->links()}}
         @endif
       </div>
-    </div>
+    </div> --}}
   </div>
 </div>
 @endsection

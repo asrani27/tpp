@@ -49,7 +49,7 @@ ADMIN SKPD
                 <ul>
                     @foreach (jabatan($skpd_id)->where('jabatan_id', null)->where('sekolah_id', null) as $item)
                     <li>
-                        <div class="callout callout-info text-sm" style="padding:5px;">
+                        <div class="callout callout-info text-sm" style="padding:5px;margin-bottom:0.5rem">
                             {{$item->kelas == null ? '-':$item->kelas->nama}} |
                             <strong>{{$item->nama}}</strong>
                             <a href="/admin/jabatan/edit/{{$item->id}}" class="btn btn-tool" data-toggle="tooltip"
@@ -62,7 +62,7 @@ ADMIN SKPD
                         <ul>
                             @foreach ($item->bawahan as $item2)
                             <li>
-                                <div class="callout callout-warning text-sm" style="padding:5px;">
+                                <div class="callout callout-warning text-sm" style="padding:5px;margin-bottom:0.5rem">
                                     {{$item2->kelas == null ? '-':$item2->kelas->nama}} |
                                     <strong>{{$item2->nama}}</strong>
                                     <a href="/admin/jabatan/edit/{{$item2->id}}" class="btn btn-tool"
@@ -76,7 +76,8 @@ ADMIN SKPD
 
                                     @foreach ($item2->bawahan as $item3)
                                     <li>
-                                        <div class="callout callout-danger text-sm" style="padding:5px;">
+                                        <div class="callout callout-danger text-sm"
+                                            style="padding:5px;margin-bottom:0.5rem">
                                             {{$item3->kelas == null ? '-':$item3->kelas->nama}} |
                                             <strong>{{$item3->nama}}</strong>
                                             <a href="/admin/jabatan/edit/{{$item3->id}}" class="btn btn-tool"
@@ -89,7 +90,8 @@ ADMIN SKPD
                                         <ul>
                                             @foreach ($item3->bawahan as $item4)
                                             <li>
-                                                <div class="callout callout-danger text-sm" style="padding:5px;">
+                                                <div class="callout callout-danger text-sm"
+                                                    style="padding:5px;margin-bottom:0.5rem">
                                                     {{$item4->kelas == null ? '-':$item4->kelas->nama}} |
                                                     <strong>{{$item4->nama}}</strong>
                                                     <a href="/admin/jabatan/edit/{{$item4->id}}" class="btn btn-tool"

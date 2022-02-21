@@ -50,13 +50,15 @@ ADMIN SKPD
                     @foreach (jabatan($skpd_id)->where('jabatan_id', null)->where('sekolah_id', null) as $item)
                     <li>
                         <div class="callout callout-info text-sm" style="padding:5px;margin-bottom:0.5rem">
-                            {{$item->kelas == null ? '-':$item->kelas->nama}} |
+                            {{$item->kelas == null ? '-':$item->kelas->nama}}
                             <strong>{{$item->nama}}</strong>
                             <a href="/admin/jabatan/edit/{{$item->id}}" class="btn btn-tool" data-toggle="tooltip"
                                 title="Edit"><i class="fas fa-edit"></i></a>
                             <a href="/admin/jabatan/delete/{{$item->id}}" class="btn btn-tool" data-toggle="tooltip"
                                 title="Hapus" onclick="return confirm('Yakin ingin di hapus?');"><i
-                                    class="fas fa-times"></i></a>
+                                    class="fas fa-times"></i></a> | {{$item->pegawai == null ? '':
+                            $item->pegawai->nama}} {{$item->pegawaiplt == null ? '':
+                            $item->pegawaiplt->nama.'(PLT)'}}
 
                         </div>
                         <ul>
@@ -70,7 +72,9 @@ ADMIN SKPD
                                     <a href="/admin/jabatan/delete/{{$item2->id}}" class="btn btn-tool"
                                         data-toggle="tooltip" title="Hapus"
                                         onclick="return confirm('Yakin ingin di hapus?');"><i
-                                            class="fas fa-times"></i></a>
+                                            class="fas fa-times"></i></a>| {{$item2->pegawai == null ? '-':
+                                    $item2->pegawai->nama}} {{$item2->pegawaiplt == null ? '':
+                                    $item2->pegawaiplt->nama.'(PLT)'}}
                                 </div>
                                 <ul>
 
@@ -85,7 +89,9 @@ ADMIN SKPD
                                             <a href="/admin/jabatan/delete/{{$item3->id}}" class="btn btn-tool"
                                                 data-toggle="tooltip" title="Hapus"
                                                 onclick="return confirm('Yakin ingin di hapus?');"><i
-                                                    class="fas fa-times"></i></a>
+                                                    class="fas fa-times"></i></a>| {{$item3->pegawai == null ? '-':
+                                            $item3->pegawai->nama}} {{$item3->pegawaiplt == null ? '':
+                                            $item3->pegawaiplt->nama.'(PLT)'}}
                                         </div>
                                         <ul>
                                             @foreach ($item3->bawahan as $item4)
@@ -100,7 +106,10 @@ ADMIN SKPD
                                                     <a href="/admin/jabatan/delete/{{$item4->id}}" class="btn btn-tool"
                                                         data-toggle="tooltip" title="Hapus"
                                                         onclick="return confirm('Yakin ingin di hapus?');"><i
-                                                            class="fas fa-times"></i></a>
+                                                            class="fas fa-times"></i></a>| {{$item4->pegawai == null ?
+                                                    '-':
+                                                    $item4->pegawai->nama}} {{$item4->pegawaiplt == null ? '':
+                                                    $item4->pegawaiplt->nama.'(PLT)'}}
                                                 </div>
                                                 <ul>
                                                     @foreach ($item4->bawahan as $item5)

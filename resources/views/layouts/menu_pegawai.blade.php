@@ -159,13 +159,13 @@
                 </p>
             </a>
             <ul class="nav nav-treeview" style="display: {{Request::is('pegawai/laporan*') ? 'block' : 'none'}};">
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="/pegawai/laporan/tpp"
                         class="nav-link {{ Request::is('pegawai/laporan/tpp') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-list"></i>
                         <p>Laporan TPP</p>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a href="/pegawai/laporan/aktivitas"
                         class="nav-link {{ Request::is('pegawai/laporan/aktivitas') ? 'active' : '' }}">
@@ -173,13 +173,13 @@
                         <p>Laporan Aktivitas & presensi</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="/pegawai/laporan/penghasilan"
                         class="nav-link {{ Request::is('pegawai/laporan/penghasilan') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-list"></i>
                         <p>Laporan Penghasilan</p>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </li>
         <li class="nav-item">

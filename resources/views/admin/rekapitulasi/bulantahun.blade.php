@@ -43,6 +43,10 @@ SUPERADMIN
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
                     Semua Pegawai & Update Jabatan</a>
 
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/hitungpersen" class="btn btn-xs btn-primary"
+                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">
+                    Hitung Persen</a>
+
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/totalpagu" class="btn btn-xs btn-primary"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung Total
                     Pagu</a>

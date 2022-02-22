@@ -50,9 +50,6 @@ class RekapitulasiController extends Controller
                 $n->jabatan     = $item->jabatan == null ? null : $item->jabatan->nama;
                 $n->kelas       = $item->jabatan == null ? null : $item->jabatan->kelas->nama;
                 $n->basic_tpp   = $item->jabatan == null ? null : $item->jabatan->kelas->nilai;
-                $n->persen      = $item->jabatan == null ? null : $item->jabatan->persentase_tpp;
-                $n->tambahan_persen      = $item->jabatan == null ? null : $item->jabatan->tambahan_persen_tpp;
-                $n->jumlah_persen        = $item->jabatan == null ? null : $item->jabatan->persentase_tpp + $item->jabatan->tambahan_persen_tpp;
                 $n->skpd_id     = Auth::user()->skpd->id;
                 $n->bulan     = $bulan;
                 $n->tahun     = $tahun;
@@ -65,9 +62,6 @@ class RekapitulasiController extends Controller
                     'golongan' => $item->pangkat == null ? null : $item->pangkat->golongan,
                     'kelas' => $item->jabatan == null ? null : $item->jabatan->kelas->nama,
                     'basic_tpp' => $item->jabatan == null ? null : $item->jabatan->kelas->nilai,
-                    'persen' => $item->jabatan == null ? null : $item->jabatan->persentase_tpp,
-                    'tambahan_persen' => $item->jabatan == null ? null : $item->jabatan->tambahan_persen_tpp,
-                    'jumlah_persen' => $item->jabatan == null ? null : $item->jabatan->persentase_tpp + $item->jabatan->tambahan_persen_tpp,
                     'skpd_id' => Auth::user()->skpd->id,
                     'bulan' => $bulan,
                     'tahun' => $tahun,
@@ -77,6 +71,18 @@ class RekapitulasiController extends Controller
 
         toastr()->success('Berhasil Memasukkan Pegawai');
         return back();
+    }
+
+    public function hitungPersen($bulan, $tahun)
+    {
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->get();
+        foreach ($data as $item) {
+            $item->update([
+                'persen' => $item->jabatan == null ? null : $item->jabatan->persentase_tpp,
+                'tambahan_persen' => $item->jabatan == null ? null : $item->jabatan->tambahan_persen_tpp,
+                'jumlah_persen' => $item->jabatan == null ? null : $item->jabatan->persentase_tpp + $item->jabatan->tambahan_persen_tpp,
+            ]);
+        }
     }
 
     public function totalPagu($bulan, $tahun)

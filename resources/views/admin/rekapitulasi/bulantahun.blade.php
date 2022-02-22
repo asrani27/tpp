@@ -106,7 +106,7 @@ SUPERADMIN
                                 NIP.{{$item->nip}}
                             </td>
                             <td class="text-center">
-                                {{$item->jabatan}}
+                                {!!wordwrap($item->jabatan,100,"<br>")!!}
                             </td>
                             <td class="text-center">
                                 {{$item->kelas}}

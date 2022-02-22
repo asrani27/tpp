@@ -173,11 +173,17 @@ SUPERADMIN
                         </tr>
                     </tbody>
                 </table><br />
-                Isi NIP dan Jabatan Lama di bawah ini, Jika Yang bersangkutan sudah pindah/promosi ke skpd lain
-                <form method="post" action="/admin/rekaptpp/create">
+                Isi NIP dan Jabatan Lama di bawah ini, Jika Yang bersangkutan sudah pindah/promosi ke skpd lain dan yang
+                membayarkan SKPD lama
+                <form method="post" action="/admin/rekapitulasi/tambahpegawai">
                     @csrf
                     <input type="text" name="nip" class="form-control-sm" placeholder="nip" required>
-                    <input type="text" name="jabatan" class="form-control-sm" placeholder="Nama Jabatan" required>
+                    <select name="jabatan" class="form-control-sm" required>
+                        <option value="">-Pilih Kelas | jabatan (Sebelum Pindah)-</option>
+                        @foreach (jabatan(Auth::user()->skpd->id) as $item)
+                        <option value="{{$item->id}}">{{$item->kelas->nama}} | {{$item->nama}}</option>
+                        @endforeach
+                    </select>
                     <input type="hidden" name="bulan" value="{{$bulan}}" class="form-control-sm" placeholder="bulan">
                     <input type="hidden" name="tahun" value="{{$tahun}}" class="form-control-sm" placeholder="tahun">
                     <button type="submit" class="btn btn-sm btn-primary">Simpan</button>

@@ -28,6 +28,55 @@ class RekapitulasiController extends Controller
         return Auth::user()->skpd->id;
     }
 
+    public function tambahPegawai(Request $req)
+    {
+        $checkDataPegawai = Pegawai::where('nip', $req->nip)->first();
+        if ($checkDataPegawai == null) {
+            toastr()->error('Tidak Ada data Di TPP');
+            return back();
+        } else {
+            $check = RekapTpp::where('nip', $req->nip)->where('bulan', $req->bulan)->where('tahun', $req->tahun)->first();
+            //dd($check);
+            if ($check == null) {
+
+                $jabatan = Jabatan::find($req->jabatan);
+
+                $n = new Ringkasan;
+                $n->nip = $req->nip;
+                $n->nama = $checkDataPegawai->nama;
+                $n->pangkat_id  = $checkDataPegawai->pangkat == null ? null : $checkDataPegawai->pangkat->id;
+                $n->pangkat     = $checkDataPegawai->pangkat == null ? null : $checkDataPegawai->pangkat->nama;
+                $n->golongan    = $checkDataPegawai->pangkat == null ? null : $checkDataPegawai->pangkat->golongan;
+
+                $n->jabatan     = $jabatan->nama;
+                $n->kelas       = $jabatan->kelas->nama;
+                $n->basic_tpp   = $jabatan->kelas->nilai;
+
+
+                $n->skpd_id = Auth::user()->skpd->id;
+                $n->bulan = $req->bulan;
+                $n->tahun = $req->tahun;
+                $n->save();
+                toastr()->success('Berhasil Di Tambahkan');
+                return back();
+            } else {
+                if (Auth::user()->skpd->id == $check->skpd_id) {
+                    toastr()->error('NIP Sudah Ada Di Laporan');
+                    return back();
+                } else {
+                    $jabatan = Jabatan::find($req->jabatan);
+                    $check->update([
+                        'skpd_id' => Auth::user()->skpd->id,
+                        'jabatan' => $jabatan->nama,
+                        'kelas' => $jabatan->kelas->nama,
+                        'basic_tpp' => $jabatan->kelas->nilai,
+                    ]);
+                    toastr()->success('Berhasil Di Tambahkan');
+                    return back();
+                }
+            }
+        }
+    }
     public function bulanTahun($bulan, $tahun)
     {
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('pangkat_id', 'DESC')->get();

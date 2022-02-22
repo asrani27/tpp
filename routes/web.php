@@ -178,6 +178,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/aktivitas', 'RekapitulasiController@aktivitas');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/pph21', 'RekapitulasiController@pph21');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/{id}/delete', 'RekapitulasiController@delete');
+    Route::post('/admin/rekapitulasi/tambahpegawai', 'RekapitulasiController@tambahPegawai');
 
 
     Route::get('/admin/sekolah', 'SekolahController@index');

@@ -77,12 +77,15 @@ class RekapitulasiController extends Controller
     {
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->get();
         foreach ($data as $item) {
+            $pegawai = Pegawai::where('nip', $item->nip)->first();
             $item->update([
-                'persen' => $item->jabatan == null ? null : $item->jabatan->persentase_tpp,
-                'tambahan_persen' => $item->jabatan == null ? null : $item->jabatan->tambahan_persen_tpp,
-                'jumlah_persen' => $item->jabatan == null ? null : $item->jabatan->persentase_tpp + $item->jabatan->tambahan_persen_tpp,
+                'persen' => $pegawai->jabatan == null ? null : $pegawai->jabatan->persentase_tpp,
+                'tambahan_persen' => $pegawai->jabatan == null ? null : $pegawai->jabatan->tambahan_persen_tpp,
+                'jumlah_persen' => $pegawai->jabatan == null ? null : $pegawai->jabatan->persentase_tpp + $pegawai->jabatan->tambahan_persen_tpp,
             ]);
         }
+        toastr()->success('Berhasil di hitung');
+        return back();
     }
 
     public function totalPagu($bulan, $tahun)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cuti;
+use App\Jabatan;
 use App\Pangkat;
 use App\Pegawai;
 use App\RekapTpp;

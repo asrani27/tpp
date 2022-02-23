@@ -42,8 +42,9 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
                     <td>{{$no++}}</td>
                     <td>
                       <input type="hidden" name="jabatan_id[]" value="{{$item->id}}">
-                      {{$item->nama}}
-                      {{$item->pegawai == null ? '' : $item->pegawai->nama}}
+                      {{$item->nama}} <br />
+                      {{$item->pegawai == null ? '' : $item->pegawai->nama}} <br />
+                      {{$item->pegawai == null ? '' : $item->pegawai->nip}}
                     </td>
                     <td class="text-center">
                       <select name="jenis_jabatan[]" class="form-control form-control-sm">

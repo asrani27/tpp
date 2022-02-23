@@ -300,4 +300,13 @@ class RekapitulasiController extends Controller
         toastr()->success('Berhasil Di Hapus');
         return back();
     }
+
+    public function pdf($bulan, $tahun)
+    {
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('pangkat_id', 'DESC')->get();
+        $skpd = Auth::user()->skpd;
+
+        $pdf = PDF::loadView('admin.rekapitulasi.bulanpdf', compact('data', 'skpd', 'bulan', 'tahun'))->setPaper('legal', 'landscape');
+        return $pdf->stream();
+    }
 }

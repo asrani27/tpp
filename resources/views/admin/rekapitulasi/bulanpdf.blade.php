@@ -66,11 +66,11 @@
 
 <body>
     <header>
-        <p><span class="auto-style1"><strong>LAPORAN RINGKASAN KEHADIRAN PEGAWAI PER
-                    PERIODE</strong></span><strong><br class="auto-style1" />
+        <p><span class="auto-style1"><strong>LAPORAN DAFTAR TPP ASN</strong></span><strong><br class="auto-style1" />
             </strong><span class="auto-style1"><strong>{{strtoupper($skpd->nama)}}</strong></span><strong><br
                     class="auto-style1" />
-            </strong><span class="auto-style1"><strong>Periode : {{$mulai}} - {{$sampai}}
+            </strong><span class="auto-style1"><strong>Bulan : {{\Carbon\Carbon::parse('m',
+                    $bulan)->translatedFormat('F')}} {{$tahun}}
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -78,8 +78,7 @@
     </header>
     <footer>
         <hr>
-        <p>*Ketidakhadiran: A=Alpha ; S=Sakit ; TR=Training / Diklat ; D=Tugas Kantor / Dinas / SPPD ; I=Ijin ; C=Cuti ;
-            L=Lain-lain ; O=Off / Hari Libur
+        <p>*
         </p>
     </footer>
     <main>
@@ -119,7 +118,7 @@
                 @php
                 $no = 1;
                 @endphp
-                @foreach ($data as $item)
+                {{-- @foreach ($data as $item)
                 <tr>
                     <td>{{$no++}}</td>
                     <td>{{$item->nip}}</td>
@@ -146,7 +145,7 @@
                     <td>{{$item->persen_kehadiran}}</td>
                     <td>{{$item->kerja}}</td>
                 </tr>
-                @endforeach
+                @endforeach --}}
             </tbody>
         </table>
     </main>

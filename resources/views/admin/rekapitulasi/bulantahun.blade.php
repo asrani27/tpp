@@ -37,6 +37,8 @@ SUPERADMIN
 
             <div class="card-body table-responsive p-2">
 
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/excel" target="_blank"
+                    class="btn btn-xs btn-danger">Export Excel</a>
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/pdf" target="_blank"
                     class="btn btn-xs btn-danger">Export PDF</a>
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/masukkanpegawai" class="btn btn-xs btn-primary"

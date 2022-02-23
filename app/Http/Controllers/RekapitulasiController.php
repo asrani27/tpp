@@ -10,11 +10,13 @@ use App\RekapTpp;
 use App\Aktivitas;
 use App\Parameter;
 use Carbon\Carbon;
+use App\Exports\TppExport;
 use Illuminate\Http\Request;
 use App\View_aktivitas_pegawai;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RekapitulasiController extends Controller
 {
@@ -308,5 +310,13 @@ class RekapitulasiController extends Controller
 
         $pdf = PDF::loadView('admin.rekapitulasi.bulanpdf', compact('data', 'skpd', 'bulan', 'tahun'))->setPaper('legal', 'landscape');
         return $pdf->stream();
+    }
+
+    public function excel($bulan, $tahun)
+    {
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('pangkat_id', 'DESC')->get();
+        $skpd = Auth::user()->skpd;
+        return view('admin.rekapitulasi.bulanexcel', compact('data', 'skpd', 'bulan', 'tahun'));
+        //        return Excel::download(new TppExport, 'tppexport.xlsx');
     }
 }

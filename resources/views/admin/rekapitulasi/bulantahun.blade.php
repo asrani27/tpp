@@ -41,6 +41,7 @@ SUPERADMIN
                     class="btn btn-xs btn-danger">Export Excel</a>
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/pdf" target="_blank"
                     class="btn btn-xs btn-danger">Export PDF</a>
+                <a href="/home/admin/persen" class="btn btn-xs btn-danger">Edit Persen</a>
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/masukkanpegawai" class="btn btn-xs btn-primary"
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
                     Semua Pegawai & Update Jabatan</a>

@@ -74,11 +74,11 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    Tanggal Cetak : {{\Carbon\Carbon::now()->format('d-m-Y H:i:s')}}</strong></span></p>
+                </strong></span></p>
     </header>
     <footer>
         <hr>
-        <p>*
+        <p>Tanggal Cetak : {{\Carbon\Carbon::now()->format('d-m-Y H:i:s')}}
         </p>
     </footer>
     <main>
@@ -86,66 +86,63 @@
             <thead>
                 <tr>
                     <th rowspan="2">No</th>
-                    <th rowspan="2">NIP</th>
-                    <th rowspan="2">Nama</th>
+                    <th rowspan="2">Nama<br />NIP<br />Pangkat/Golongan</th>
                     <th rowspan="2">Jabatan</th>
-                    <th rowspan="2">Jum<br /> hari</th>
-                    <th colspan="2">Hadir di hari</th>
-                    <th colspan="8">ketidakhadiran</th>
-                    <th colspan="2">Total Absensi</th>
-                    <th rowspan="2">Jam Kerja<br /> Pegawai</th>
-                    <th rowspan="2">Datang<br /> Lambat</th>
-                    <th rowspan="2">Pulang<br /> Cepat</th>
-                    <th rowspan="2">%</th>
-                    <th rowspan="2">Total<br /> Hari<br /> Kerja</th>
+                    <th rowspan="2">Kelas</th>
+                    <th rowspan="2">Basic TPP</th>
+                    <th colspan="4">Beban Kerja</th>
+                    <th colspan="2">Disiplin 40%</th>
+                    <th colspan="2">Produktivitas 60%</th>
+                    <th rowspan="2">TPP ASN</th>
+                    <th rowspan="2">PPH21</th>
+                    <th rowspan="2">TPP Diterima</th>
                 </tr>
                 <tr>
-                    <th>Kerja</th>
-                    <th>Libur</th>
-                    <th>A</th>
-                    <th>S</th>
-                    <th>TR</th>
-                    <th>D</th>
-                    <th>I</th>
-                    <th>C</th>
-                    <th>L</th>
-                    <th>O</th>
-                    <th>Masuk</th>
-                    <th>keluar</th>
+                    <th>Persentase <br />TPP</th>
+                    <th>Tambahan<br />Persentase<br />TPP</th>
+                    <th>Jumlah<br />Persentase</th>
+                    <th>Total<br />Pagu</th>
+                    <th>%</th>
+                    <th>Rp.</th>
+                    <th>Menit</th>
+                    <th>Rp.</th>
                 </tr>
             </thead>
             <tbody>
                 @php
                 $no = 1;
                 @endphp
-                {{-- @foreach ($data as $item)
+                @foreach ($data as $item)
                 <tr>
                     <td>{{$no++}}</td>
-                    <td>{{$item->nip}}</td>
-                    <td>{{strtoupper($item->nama)}}</td>
-                    <td>{{Str::limit(strtoupper($item->jabatan), 50)}}</td>
-                    <td>{{$item->jumlah_hari}}</td>
-                    <td>{{$item->kerja}}</td>
-                    <td>0</td>
-                    <td align="center">{{$item->a == null ? '0': $item->a}}</td>
-                    <td align="center">{{$item->s == null ? '0': $item->s}}</td>
-                    <td align="center">{{$item->tr == null ? '0': $item->tr}}</td>
-                    <td align="center">{{$item->d == null ? '0': $item->d}}</td>
-                    <td align="center">{{$item->i == null ? '0': $item->i}}</td>
-                    <td align="center">{{$item->c == null ? '0': $item->c}}</td>
-                    <td align="center">{{$item->l == null ? '0': $item->l}}</td>
-                    <td align="center">{{$item->o == null ? '0': $item->o}}</td>
-                    <td>{{$item->masuk}}</td>
-                    <td>{{$item->keluar}}</td>
-                    <td>{{intdiv(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat),
-                        60)}}:{{($item->jumlah_jam
-                        - $item->datang_lambat - $item->pulang_cepat) % 60}}</td>
-                    <td>{{intdiv($item->datang_lambat, 60)}}:{{$item->datang_lambat % 60}}</td>
-                    <td>{{intdiv($item->pulang_cepat, 60)}}:{{$item->pulang_cepat % 60}}</td>
-                    <td>{{$item->persen_kehadiran}}</td>
-                    <td>{{$item->kerja}}</td>
+                    <td>
+                        {{$item->nama}} <br />
+                        {{$item->pangkat}} ({{$item->golongan}})<br />
+                        NIP.{{$item->nip}}
+                    </td>
+                    <td>{{$item->jabatan}}</td>
+                    <td style="text-align: center">{{$item->kelas}}</td>
+                    <td>{{currency($item->basic_tpp)}}</td>
+                    <td style="text-align: center">{{$item->persen}}</td>
+                    <td style="text-align: center">{{$item->tambahan_persen}}</td>
+                    <td style="text-align: center">{{$item->jumlah_persen}}</td>
+                    <td>{{currency($item->total_pagu)}}</td>
+                    <td>{{$item->absensi}}</td>
+                    <td>{{currency($item->total_absensi)}}</td>
+                    <td>{{$item->aktivitas}}</td>
+                    <td>{{currency($item->total_aktivitas)}}</td>
+                    <td>{{currency($item->total_absensi + $item->total_aktivitas)}}</td>
+                    <td style="text-align: right">{{$item->pph21}}<br />{{currency($item->total_pph21)}}</td>
+                    <td>{{currency($item->total_absensi + $item->total_aktivitas - $item->total_pph21)}}</td>
                 </tr>
-                @endforeach --}}
+                @endforeach
+                <tr>
+                    <td colspan=13>Total </td>
+                    <td>{{currency($data->sum('total_absensi') + $data->sum('total_aktivitas'))}}</td>
+                    <td>{{currency($data->sum('total_pph21'))}}</td>
+                    <td>{{currency($data->sum('total_absensi') + $data->sum('total_aktivitas') -
+                        $data->sum('total_pph21'))}}</td>
+                </tr>
             </tbody>
         </table>
     </main>

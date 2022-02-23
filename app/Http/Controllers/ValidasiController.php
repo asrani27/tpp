@@ -38,7 +38,7 @@ class ValidasiController extends Controller
         });
         //dd($data1, $this->user()->pegawai->jabatan->bawahan);
         if ($this->user()->pegawai->jabatan->sekda == 1) {
-            $data2 = Jabatan::where('jabatan_id', null)->where('sekda', null)->->where('sekolah_id', null)get()->map(function ($item) {
+            $data2 = Jabatan::where('jabatan_id', null)->where('sekda', null)->where('sekolah_id', null)->get()->map(function ($item) {
                 $item->nama = $item->skpd->nama;
                 if ($item->pegawai == null) {
                     if ($item->pegawaiplt == null) {

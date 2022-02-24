@@ -91,7 +91,7 @@ SUPERADMIN
                   </td>
                   <td>{{$item->nama}}</td>
                   <td>{{$item->jabatan == null ? '-' : $item->jabatan->nama}}<br />
-                    {{$item->jabatanPlt == null ? '': 'Plt., '.$item->jabatanPlt->nama}}<br />
+                    {{$item->jabatanPlt == null ? '': 'Plt., '.$item->jabatanPlt->nama}}
                     {{$item->jabatanPlh == null ? '': 'Plh., '.$item->jabatanPlh->nama}}
                   </td>
                   @if (Auth::user()->username == '1.02.01.')

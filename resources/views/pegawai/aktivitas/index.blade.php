@@ -54,11 +54,15 @@ JURNAL AKTIVITAS
                         </h3>
                         {{-- <h3 class="widget-user-username">{{$atasan->pegawai == null ? '-': $atasan->pegawai->nama}}
                         </h3> --}}
-                        <h5 class="widget-user-desc">{{$atasan->pegawaiplt == null ? "":'Plt. '}}
+                        <h5 class="widget-user-desc">{{$atasan->pegawaiplt == null ? "":'Plt. '.$atasan->nama}}
                             @if ($atasan->pegawaiplh == null)
-
+                            {{$atasan->nama}}
                             @else
-                            'Plh. '{{$atasan->nama}}
+                            @if ($atasan->pegawaiPlh->id == $person->id)
+                            {{$atasan->atasan->nama}}
+                            @else
+                            Plh. {{$atasan->nama}}
+                            @endif
                             @endif
                             {{-- {{dd($person, $atasan->pegawaiPlh)}}
                             @if ($atasan->pegawaiPlh->id == $person->id)

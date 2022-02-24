@@ -99,6 +99,7 @@ class RekapitulasiController extends Controller
                 $n->pangkat_id  = $item->pangkat == null ? null : $item->pangkat->id;
                 $n->pangkat     = $item->pangkat == null ? null : $item->pangkat->nama;
                 $n->golongan    = $item->pangkat == null ? null : $item->pangkat->golongan;
+                $n->jabatan_id  = $item->jabatan == null ? null : $item->jabatan->id;
                 $n->jabatan     = $item->jabatan == null ? null : $item->jabatan->nama;
                 $n->kelas       = $item->jabatan == null ? null : $item->jabatan->kelas->nama;
                 $n->basic_tpp   = $item->jabatan == null ? null : $item->jabatan->kelas->nilai;

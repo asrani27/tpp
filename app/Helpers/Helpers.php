@@ -179,6 +179,9 @@ function checkAtasan($atasan, $person)
                 }
             }
         } else {
+
+            $jabatan = 'Plt. ' . $atasan->nama;
+            $nama = $atasan->pegawaiPlt->nama;
         }
     }
 

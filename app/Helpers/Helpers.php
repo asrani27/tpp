@@ -144,3 +144,66 @@ function totalAbsensi($bulan, $tahun)
     }
     return $hasil;
 }
+
+
+function checkAtasan($atasan, $person)
+{
+    //check atasan
+    if ($atasan == null) {
+        $jabatan = '-';
+        $nama = '-';
+    } else {
+        //check Atasan Apakah PLT
+        if ($atasan->pegawaiPlt == null) {
+            //Check Atasan apakah PLH
+            if ($atasan->pegawaiPlh == null) {
+                $jabatan = '-';
+                $nama = '-';
+            } else {
+                //Jika Atasan == dengan Bawahan
+                if ($atasan->pegawaiPlh->id == $person->id) {
+                    if ($atasan->atasan->pegawai == null) {
+                        //check jika atasan atasannya lagi PLT
+                        if ($atasan->atasan->pegawaiPlt == null) {
+                        } else {
+                            $jabatan = 'Plt. ' . $atasan->atasan->nama;
+                            $nama = $atasan->atasan->pegawaiPlt->nama;
+                        }
+                    } else {
+                        $jabatan = $atasan->atasan->nama;
+                        $nama = $atasan->atasan->pegawai->nama;
+                    }
+                } else {
+                    $jabatan = $atasan->nama;
+                    $nama = $atasan->pegawai->nama;
+                }
+            }
+        } else {
+        }
+    }
+
+    $data['nama'] = $nama;
+    $data['jabatan'] = $jabatan;
+    //dd($data);
+    return $data;
+}
+
+function checkPlt($atasan)
+{
+    if ($atasan->pegawaiPlt == null) {
+        $hasil = '';
+    } else {
+        $hasil = 'Plt.';
+    }
+    return $hasil;
+}
+
+function checkPlh($atasan)
+{
+    if ($atasan->pegawaiPlh == null) {
+        $hasil = '';
+    } else {
+        $hasil = 'Plh.';
+    }
+    return $hasil;
+}

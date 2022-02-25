@@ -29,48 +29,10 @@ JURNAL AKTIVITAS
                         <h5 class="widget-user-desc">{{Auth::user()->pegawai->jabatan->sekolah->nama}}</h5>
                         @else
                         <h3 class="widget-user-username">
-                            @if ($atasan->pegawai == null)
-                            @if ($atasan->pegawaiplt == null)
-
-                            @if ($atasan->pegawaiplh == null)
-                            -
-                            @else
-                            {{$atasan->pegawaiplh->nama}}
-                            @endif
-                            @else
-                            {{$atasan->pegawaiplt->nama}}
-                            @endif
-                            @else
-                            @if ($atasan->pegawaiPlh == null)
-                            {{$atasan->pegawai->nama}}
-                            @else
-                            @if ($atasan->pegawaiPlh->id == $person->id)
-                            {{$atasan->atasan->pegawai->nama}}
-                            @else
-                            {{$atasan->pegawaiPlh->nama}}
-                            @endif
-                            @endif
-                            @endif
+                            {{checkAtasan($atasan, $person)['nama']}}
                         </h3>
-                        {{-- <h3 class="widget-user-username">{{$atasan->pegawai == null ? '-': $atasan->pegawai->nama}}
-                        </h3> --}}
-                        <h5 class="widget-user-desc">{{$atasan->pegawaiplt == null ? "":'Plt. '.$atasan->nama}}
-                            @if ($atasan->pegawaiplh == null)
-                            {{$atasan->nama}}
-                            @else
-                            @if ($atasan->pegawaiPlh->id == $person->id)
-                            {{$atasan->atasan->nama}}
-                            @else
-                            Plh. {{$atasan->nama}}
-                            @endif
-                            @endif
-                            {{-- {{dd($person, $atasan->pegawaiPlh)}}
-                            @if ($atasan->pegawaiPlh->id == $person->id)
-                            {{$atasan->atasan->nama}}
-                            @else
-                            {{$atasan->pegawaiplh == null ? "":'Plh. '}} {{$atasan->nama}}
-                            @endif --}}
-
+                        <h5 class="widget-user-desc">
+                            {{checkAtasan($atasan, $person)['jabatan']}}
                         </h5>
                         @endif
                     </div>

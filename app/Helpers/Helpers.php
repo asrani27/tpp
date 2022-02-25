@@ -157,8 +157,8 @@ function checkAtasan($atasan, $person)
         if ($atasan->pegawaiPlt == null) {
             //Check Atasan apakah PLH
             if ($atasan->pegawaiPlh == null) {
-                $jabatan = '-';
-                $nama = '-';
+                $jabatan = $atasan->nama;
+                $nama = $atasan->pegawai->nama;
             } else {
                 //Jika Atasan == dengan Bawahan
                 if ($atasan->pegawaiPlh->id == $person->id) {

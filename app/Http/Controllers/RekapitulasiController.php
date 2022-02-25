@@ -34,6 +34,7 @@ class RekapitulasiController extends Controller
     public function tambahPegawai(Request $req)
     {
         $checkDataPegawai = Pegawai::where('nip', $req->nip)->first();
+
         if ($checkDataPegawai == null) {
             toastr()->error('Tidak Ada data Di TPP');
             return back();
@@ -67,15 +68,21 @@ class RekapitulasiController extends Controller
                     toastr()->error('NIP Sudah Ada Di Laporan');
                     return back();
                 } else {
-                    $jabatan = Jabatan::find($req->jabatan);
-                    $check->update([
-                        'skpd_id' => Auth::user()->skpd->id,
-                        'jabatan' => $jabatan->nama,
-                        'kelas' => $jabatan->kelas->nama,
-                        'basic_tpp' => $jabatan->kelas->nilai,
-                    ]);
-                    toastr()->success('Berhasil Di Tambahkan');
-                    return back();
+                    if ($check->skpd_id == null) {
+                        $jabatan = Jabatan::find($req->jabatan);
+                        $check->update([
+                            'skpd_id' => Auth::user()->skpd->id,
+                            'jabatan' => $jabatan->nama,
+                            'kelas' => $jabatan->kelas->nama,
+                            'basic_tpp' => $jabatan->kelas->nilai,
+                        ]);
+                        toastr()->success('Berhasil Di Tambahkan');
+                        return back();
+                    } else {
+                        $skpd = $check->skpd->nama;
+                        toastr()->error('Tidak Bisa Di tambahkan, TPP an.' . $check->nama . ' telah di rekap di ' . $skpd . ', Hubungi SKPD tersebut agar menghapus di laporan rekap');
+                        return back();
+                    }
                 }
             }
         }
@@ -137,13 +144,15 @@ class RekapitulasiController extends Controller
             if ($pegawai->jabatan == null) {
             } else {
                 $item->update([
-                    'jabatan_id' => $jabatan_id,
+                    'jabatan_id' => $pegawai->jabatan_id,
                     'jabatan' => $pegawai->jabatan->nama,
                     'kelas' => $pegawai->jabatan->kelas->nama,
                     'basic_tpp' => $pegawai->jabatan->kelas->nilai,
                 ]);
             }
         }
+        toastr()->success('Berhasil Memasukkan Jabatan');
+        return back();
     }
 
     public function hitungPersen($bulan, $tahun)

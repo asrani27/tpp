@@ -99,31 +99,51 @@ class RekapitulasiController extends Controller
                 $n->pangkat_id  = $item->pangkat == null ? null : $item->pangkat->id;
                 $n->pangkat     = $item->pangkat == null ? null : $item->pangkat->nama;
                 $n->golongan    = $item->pangkat == null ? null : $item->pangkat->golongan;
-                $n->jabatan_id  = $item->jabatan == null ? null : $item->jabatan->id;
-                $n->jabatan     = $item->jabatan == null ? null : $item->jabatan->nama;
-                $n->kelas       = $item->jabatan == null ? null : $item->jabatan->kelas->nama;
-                $n->basic_tpp   = $item->jabatan == null ? null : $item->jabatan->kelas->nilai;
+                // $n->jabatan_id  = $item->jabatan == null ? null : $item->jabatan->id;
+                // $n->jabatan     = $item->jabatan == null ? null : $item->jabatan->nama;
+                // $n->kelas       = $item->jabatan == null ? null : $item->jabatan->kelas->nama;
+                // $n->basic_tpp   = $item->jabatan == null ? null : $item->jabatan->kelas->nilai;
                 $n->skpd_id     = Auth::user()->skpd->id;
                 $n->bulan     = $bulan;
                 $n->tahun     = $tahun;
                 $n->save();
             } else {
-                $check->update([
-                    'nip' => $item->nip,
-                    'nama' => $item->nama,
-                    'pangkat' => $item->pangkat == null ? null : $item->pangkat->nama,
-                    'golongan' => $item->pangkat == null ? null : $item->pangkat->golongan,
-                    'kelas' => $item->jabatan == null ? null : $item->jabatan->kelas->nama,
-                    'basic_tpp' => $item->jabatan == null ? null : $item->jabatan->kelas->nilai,
-                    'skpd_id' => Auth::user()->skpd->id,
-                    'bulan' => $bulan,
-                    'tahun' => $tahun,
-                ]);
+                if ($check->skpd_id == Auth::user()->skpd->id || $check->skpd_id == null) {
+                    $check->update([
+                        'nip' => $item->nip,
+                        'nama' => $item->nama,
+                        'pangkat' => $item->pangkat == null ? null : $item->pangkat->nama,
+                        'golongan' => $item->pangkat == null ? null : $item->pangkat->golongan,
+                        // 'kelas' => $item->jabatan == null ? null : $item->jabatan->kelas->nama,
+                        // 'basic_tpp' => $item->jabatan == null ? null : $item->jabatan->kelas->nilai,
+                        'skpd_id' => Auth::user()->skpd->id,
+                        'bulan' => $bulan,
+                        'tahun' => $tahun,
+                    ]);
+                } else {
+                }
             }
         }
 
         toastr()->success('Berhasil Memasukkan Pegawai');
         return back();
+    }
+
+    public function updateJabatan($bulan, $tahun)
+    {
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->get();
+        foreach ($data as $item) {
+            $pegawai = Pegawai::where('nip', $item->nip)->first();
+            if ($pegawai->jabatan == null) {
+            } else {
+                $item->update([
+                    'jabatan_id' => $jabatan_id,
+                    'jabatan' => $pegawai->jabatan->nama,
+                    'kelas' => $pegawai->jabatan->kelas->nama,
+                    'basic_tpp' => $pegawai->jabatan->kelas->nilai,
+                ]);
+            }
+        }
     }
 
     public function hitungPersen($bulan, $tahun)

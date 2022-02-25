@@ -44,8 +44,9 @@ SUPERADMIN
                 <a href="/home/admin/persen" class="btn btn-xs btn-danger">Edit Persen</a>
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/masukkanpegawai" class="btn btn-xs btn-primary"
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
-                    Semua Pegawai & Update Jabatan</a>
-
+                    Semua Pegawai</a>
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/updatejabatan" class="btn btn-xs btn-primary"
+                    onclick="return confirm('Update Jabatan Pegawai?');">Update Jabatan</a>
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/hitungpersen" class="btn btn-xs btn-primary"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">
                     Hitung Persen</a>

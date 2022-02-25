@@ -174,6 +174,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/pdf', 'RekapitulasiController@pdf');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/excel', 'RekapitulasiController@excel');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/masukkanpegawai', 'RekapitulasiController@masukkanPegawai');
+    Route::get('/admin/rekapitulasi/{bulan}/{tahun}/updatejabatan', 'RekapitulasiController@updateJabatan');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/hitungpersen', 'RekapitulasiController@hitungPersen');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/totalpagu', 'RekapitulasiController@totalPagu');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/presensi', 'RekapitulasiController@tarikPresensi');

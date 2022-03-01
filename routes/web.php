@@ -208,6 +208,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
 
     Route::get('/home/pegawai', 'HomeController@pegawai');
+    Route::get('/home/pegawai/submonth', 'HomeController@pegawaiSubMonth');
     Route::post('/pegawai/profil/gantipass', 'ProfilController@gantiPassPegawai');
 
     Route::get('/pegawai/skp/rencana-kegiatan', 'SkpController@index');

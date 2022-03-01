@@ -8,6 +8,7 @@ use App\Pegawai;
 use App\Presensi;
 use App\Aktivitas;
 use App\Parameter;
+use App\RekapTpp;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\View_aktivitas_pegawai;
@@ -213,6 +214,8 @@ class HomeController extends Controller
         $tolak   = $aktivitas->where('validasi', 2)->count();
         $pending = $aktivitas->where('validasi', 0)->count();
 
+        $riwayatTpp = RekapTpp::where('nip', Auth::user()->username)->orderBy('bulan', 'DESC')->orderBy('tahun', 'DESC')->get();
+        //$data = $pegawai;
         $data = $pegawai->map(function ($item) use ($persentase_tpp, $jmlmenit, $month, $year) {
 
             if ($item->jabatan == null) {
@@ -262,11 +265,16 @@ class HomeController extends Controller
             return $item;
         })->first();
 
-        return view('pegawai.home', compact('data', 'acc', 'tolak', 'pending', 'jmlmenit'));
+        return view('pegawai.home', compact('data', 'acc', 'tolak', 'pending', 'jmlmenit', 'riwayatTpp'));
     }
 
     public function walikota()
     {
         return view('walikota.home');
+    }
+
+    public function pegawaiSubMonth()
+    {
+        return view('pegawai.homesubmonth');
     }
 }

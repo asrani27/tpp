@@ -162,16 +162,24 @@ function checkAtasan($atasan, $person)
             } else {
                 //Jika Atasan == dengan Bawahan
                 if ($atasan->pegawaiPlh->id == $person->id) {
-                    if ($atasan->atasan->pegawai == null) {
-                        //check jika atasan atasannya lagi PLT
-                        if ($atasan->atasan->pegawaiPlt == null) {
-                        } else {
-                            $jabatan = 'Plt. ' . $atasan->atasan->nama;
-                            $nama = $atasan->atasan->pegawaiPlt->nama;
-                        }
+
+                    if ($atasan->atasan == null) {
+                        //Penilainya adalah Sekda
+                        $sekda = Jabatan::where('sekda', 1)->first();
+                        $jabatan = $sekda->nama;
+                        $nama = $sekda->pegawai->nama;
                     } else {
-                        $jabatan = $atasan->atasan->nama;
-                        $nama = $atasan->atasan->pegawai->nama;
+                        if ($atasan->atasan->pegawai == null) {
+                            //check jika atasan atasannya lagi PLT
+                            if ($atasan->atasan->pegawaiPlt == null) {
+                            } else {
+                                $jabatan = 'Plt. ' . $atasan->atasan->nama;
+                                $nama = $atasan->atasan->pegawaiPlt->nama;
+                            }
+                        } else {
+                            $jabatan = $atasan->atasan->nama;
+                            $nama = $atasan->atasan->pegawai->nama;
+                        }
                     }
                 } else {
                     $jabatan = $atasan->nama;

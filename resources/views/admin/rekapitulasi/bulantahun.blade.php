@@ -111,6 +111,7 @@ SUPERADMIN
                             </td>
                             <td class="text-center">
                                 {!!wordwrap($item->jabatan,50,"<br>")!!}
+                                <a href="/asd"><i class="fas fa-edit"></i></a>
                             </td>
                             <td class="text-center">
                                 {{$item->kelas}}

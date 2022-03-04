@@ -188,10 +188,14 @@ class RekapitulasiController extends Controller
 
         $data2 = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
         foreach ($data2 as $item) {
-            if ($data->where('nip', $item->nip)->first() == null) {
+            $check = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+            if ($check == null) {
                 $absensi = 0;
             } else {
-                $absensi = $data->where('nip', $item->nip)->first()->persen_kehadiran;
+                $absensi = $check->persen_kehadiran;
+            }
+            if ($data->where('nip', $item->nip)->first() == null) {
+            } else {
             }
             $item->update([
                 'absensi' => $absensi,

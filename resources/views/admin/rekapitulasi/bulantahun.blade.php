@@ -184,7 +184,7 @@ SUPERADMIN
                 <form method="post" action="/admin/rekapitulasi/tambahpegawai">
                     @csrf
                     <input type="text" name="nip" class="form-control-sm" placeholder="nip" required>
-                    <select name="jabatan" class="form-control-sm" required>
+                    <select name="jabatan" class="form-control-sm select2" required>
                         <option value="">-Pilih Kelas | jabatan (Sebelum Pindah)-</option>
                         @foreach (jabatan(Auth::user()->skpd->id) as $item)
                         <option value="{{$item->id}}">{{$item->kelas->nama}} | {{$item->nama}}</option>
@@ -203,4 +203,16 @@ SUPERADMIN
 
 @push('js')
 
+<script src="/theme/plugins/select2/js/select2.full.min.js"></script>
+<script>
+    $(function () {
+      //Initialize Select2 Elements
+      $('.select2').select2()
+  
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+        theme: 'bootstrap4'
+      })
+    })
+</script>
 @endpush

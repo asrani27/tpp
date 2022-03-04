@@ -13,4 +13,9 @@ class RekapTpp extends Model
     {
         return $this->belongsTo(Skpd::class, 'skpd_id');
     }
+
+    public function pangkat()
+    {
+        return $this->belongsTo(Pangkat::class, 'pangkat_id');
+    }
 }

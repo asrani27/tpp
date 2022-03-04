@@ -349,4 +349,38 @@ class RekapitulasiController extends Controller
         return view('admin.rekapitulasi.bulanexcel', compact('data', 'skpd', 'bulan', 'tahun'));
         //        return Excel::download(new TppExport, 'tppexport.xlsx');
     }
+
+    public function editJabatan($bulan, $tahun, $id)
+    {
+        $data = RekapTpp::find($id);
+        $jabatan = Jabatan::where('skpd_id', Auth::user()->skpd->id)->get();
+        return view('admin.rekapitulasi.editjabatan', compact('bulan', 'tahun', 'id', 'data', 'jabatan'));
+    }
+
+    public function editJabatanLaporan(Request $req, $bulan, $tahun, $id)
+    {
+
+        $jabatan = Jabatan::find($req->jabatan_id);
+        $rekapTpp = RekapTpp::find($id);
+
+        $rekapTpp->update([
+            'jabatan' => $jabatan->nama,
+            'jabatan_id' => $jabatan->id,
+            'kelas' => $jabatan->kelas->nama,
+            'basic_tpp' => $jabatan->kelas->nilai,
+            'persen' => $jabatan->persentase_tpp,
+            'tambahan_persen' => $jabatan->tambahan_persen_tpp,
+            'jumlah_persen' => $jabatan->persentase_tpp + $jabatan->tambahan_persen_tpp,
+            'total_pagu' => $jabatan->kelas->nilai * (($jabatan->persentase_tpp + $jabatan->tambahan_persen_tpp) / 100),
+            'absensi' => 0,
+            'total_absensi' => 0,
+            'aktivitas' => 0,
+            'total_aktivitas' => 0,
+            'pph21' => 0,
+            'total_pph21' => 0,
+        ]);
+
+        toastr()->success('Jabatan Berhasil Di Ubah');
+        return redirect('/admin/rekapitulasi/' . $bulan . '/' . $tahun);
+    }
 }

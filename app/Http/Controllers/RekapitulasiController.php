@@ -44,7 +44,6 @@ class RekapitulasiController extends Controller
             if ($check == null) {
 
                 $jabatan = Jabatan::find($req->jabatan);
-
                 $n = new RekapTpp;
                 $n->nip = $req->nip;
                 $n->nama = $checkDataPegawai->nama;

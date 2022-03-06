@@ -132,6 +132,14 @@ class AktivitasController extends Controller
     public function store(Request $req)
     {
 
+        $bulan = Carbon::parse($req->tanggal)->format('m');
+        $tahun = Carbon::parse($req->tanggal)->format('Y');
+
+        if (lockSkpd(Auth::user()->pegawai->skpd_id, $bulan, $tahun) == 1) {
+            toastr()->error('Aktivitas Pada Bulan ' . convertBulan($bulan) . ' telah Di Kunci');
+            return back();
+        }
+
         $data = Aktivitas::where('tanggal', $req->tanggal)->where('pegawai_id', $this->user()->pegawai->id)->get()
             ->map(function ($item) use ($req) {
                 if ($req->jam_mulai . ':00' >= $item->jam_mulai && $req->jam_mulai . ':00' <= $item->jam_selesai) {

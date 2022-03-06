@@ -182,6 +182,18 @@
                 </li> --}}
             </ul>
         </li>
+
+        @if (isKadis() == true)
+        <li class="nav-item">
+            <a href="/pegawai/penguncian" class="nav-link {{ Request::is('pegawai/penguncian') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-key"></i>
+                <p>
+                    Kunci Aktivitas
+                </p>
+            </a>
+        </li>
+        @endif
+
         <li class="nav-item">
             <a href="/logout" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt"></i>

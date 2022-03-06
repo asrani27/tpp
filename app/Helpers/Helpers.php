@@ -1,6 +1,7 @@
 <?php
 
 use App\Cuti;
+use App\Lock;
 use App\Skpd;
 use App\Kelas;
 use App\Eselon;
@@ -245,6 +246,44 @@ function checkPlh($atasan)
         $hasil = '';
     } else {
         $hasil = 'Plh.';
+    }
+    return $hasil;
+}
+
+function isKadis()
+{
+    $check = Auth::user()->pegawai->jabatan;
+    if ($check == null) {
+        $hasil = false;
+    } else {
+        if ($check->jabatan_id == null && $check->sekolah_id == null) {
+            $hasil = true;
+        } else {
+            $hasil = false;
+        }
+    }
+
+    return $hasil;
+}
+
+function lockSkpd($skpd_id, $bulan, $tahun)
+{
+    $check = Lock::where('skpd_id', $skpd_id)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+    if ($check == null) {
+        $hasil = null;
+    } else {
+        $hasil = $check->lock;
+    }
+    return $hasil;
+}
+
+function lockBy($skpd_id, $bulan, $tahun)
+{
+    $check = Lock::where('skpd_id', $skpd_id)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+    if ($check == null) {
+        $hasil = null;
+    } else {
+        $hasil = $check->oleh;
     }
     return $hasil;
 }

@@ -284,6 +284,11 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::get('/pegawai/laporan/tpp', 'LaporanController@tpp');
     Route::get('/pegawai/laporan/aktivitas', 'LaporanController@aktivitas');
     Route::get('/pegawai/laporan/penghasilan', 'LaporanController@penghasilan');
+
+
+    Route::get('/pegawai/penguncian', 'LockController@kadis');
+    Route::get('/pegawai/penguncian/{bulan}/{tahun}/lock', 'LockController@kadisLock');
+    Route::get('/pegawai/penguncian/{bulan}/{tahun}/unlock', 'LockController@kadisUnlock');
 });
 
 Route::group(['middleware' => ['auth', 'role:walikota']], function () {

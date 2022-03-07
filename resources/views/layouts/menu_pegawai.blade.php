@@ -183,7 +183,7 @@
             </ul>
         </li>
 
-        @if (isKadis() == true)
+        {{-- @if (isKadis() == true)
         <li class="nav-item">
             <a href="/pegawai/penguncian" class="nav-link {{ Request::is('pegawai/penguncian') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-key"></i>
@@ -192,7 +192,7 @@
                 </p>
             </a>
         </li>
-        @endif
+        @endif --}}
 
         <li class="nav-item">
             <a href="/logout" class="nav-link">

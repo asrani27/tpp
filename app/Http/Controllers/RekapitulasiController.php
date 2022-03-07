@@ -47,6 +47,7 @@ class RekapitulasiController extends Controller
                 $n = new RekapTpp;
                 $n->nip = $req->nip;
                 $n->nama = $checkDataPegawai->nama;
+                $n->pegawai_id  = $checkDataPegawai->id;
                 $n->pangkat_id  = $checkDataPegawai->pangkat == null ? null : $checkDataPegawai->pangkat->id;
                 $n->pangkat     = $checkDataPegawai->pangkat == null ? null : $checkDataPegawai->pangkat->nama;
                 $n->golongan    = $checkDataPegawai->pangkat == null ? null : $checkDataPegawai->pangkat->golongan;

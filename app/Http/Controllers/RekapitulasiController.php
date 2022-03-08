@@ -158,12 +158,12 @@ class RekapitulasiController extends Controller
     public function hitungPersen($bulan, $tahun)
     {
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->get();
+
         foreach ($data as $item) {
-            $pegawai = Pegawai::where('nip', $item->nip)->first();
             $item->update([
-                'persen' => $pegawai->jabatan == null ? null : $pegawai->jabatan->persentase_tpp,
-                'tambahan_persen' => $pegawai->jabatan == null ? null : $pegawai->jabatan->tambahan_persen_tpp,
-                'jumlah_persen' => $pegawai->jabatan == null ? null : $pegawai->jabatan->persentase_tpp + $pegawai->jabatan->tambahan_persen_tpp,
+                'persen' => $item->persenjabatan == null ? null : $item->persenjabatan->persentase_tpp,
+                'tambahan_persen' => $item->persenjabatan == null ? null : $item->persenjabatan->tambahan_persen_tpp,
+                'jumlah_persen' => $item->persenjabatan == null ? null : $item->persenjabatan->persentase_tpp + $item->persenjabatan->tambahan_persen_tpp,
             ]);
         }
         toastr()->success('Berhasil di hitung');

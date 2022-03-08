@@ -18,4 +18,9 @@ class RekapTpp extends Model
     {
         return $this->belongsTo(Pangkat::class, 'pangkat_id');
     }
+
+    public function persenjabatan()
+    {
+        return $this->belongsTo(Jabatan::class, 'jabatan_id');
+    }
 }

@@ -287,3 +287,8 @@ function lockBy($skpd_id, $bulan, $tahun)
     }
     return $hasil;
 }
+
+function pegawaiByNip($param)
+{
+    return Pegawai::find($param);
+}

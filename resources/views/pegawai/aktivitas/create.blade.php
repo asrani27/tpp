@@ -54,7 +54,7 @@ TAMBAH AKTIVITAS HARIAN
             <label class="col-sm-2 col-form-label">Nama Aktivitas</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" name="deskripsi" placeholder="Nama Aktivitas"
-                value="{{old('deskripsi')}}">
+                value="{{old('deskripsi')}}" required>
             </div>
           </div>
           <div class="form-group row">

@@ -1103,4 +1103,16 @@ class SuperadminController extends Controller
             return back();
         }
     }
+
+    public function aktivitasPegawai($id)
+    {
+        return view('superadmin.pegawai.aktivitas', compact('id'));
+    }
+
+    public function detailAktivitasPegawai($id, $bulan, $tahun)
+    {
+        $aktivitas_disetujui = Aktivitas::where('pegawai_id', $id)->where('validasi', 1)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+        $aktivitas_ditolak = Aktivitas::where('pegawai_id', $id)->where('validasi', 2)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+        return view('superadmin.pegawai.detail_aktivitas', compact('id', 'aktivitas_disetujui', 'aktivitas_ditolak'));
+    }
 }

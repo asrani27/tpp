@@ -89,8 +89,10 @@ class RekapitulasiController extends Controller
     }
     public function bulanTahun($bulan, $tahun)
     {
-        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-        return view('admin.rekapitulasi.bulantahun', compact('data', 'bulan', 'tahun'));
+        toastr()->error('Mohon maaf, ada perubahan format Rekap TPP, akan kembali dalam 24 jam');
+        return back();
+        //$data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        //return view('admin.rekapitulasi.bulantahun', compact('data', 'bulan', 'tahun'));
     }
 
     public function masukkanPegawai($bulan, $tahun)

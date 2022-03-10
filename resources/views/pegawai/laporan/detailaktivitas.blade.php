@@ -38,10 +38,9 @@ LAPORAN AKTIVITAS
               <thead>
                 <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif" class="bg-gradient-primary">
                   <th>#</th>
-                  <th>Bulan & Tahun</th>
-                  <th>Total Menit</th>
-                  <th>Total Kehadiran</th>
-                  <th>Aksi</th>
+                  <th>Tanggal</th>
+                  <th>Aktivitas</th>
+                  <th>Menit Diakui</th>
                 </tr>
               </thead>
               @php
@@ -49,7 +48,7 @@ LAPORAN AKTIVITAS
               @endphp
               <tbody>
 
-                @foreach (bulanTahun() as $key => $item)
+                {{-- @foreach (bulanTahun() as $key => $item)
                 <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
                   <td>{{$no++}}</td>
                   <td>{{\Carbon\Carbon::createFromFormat('m',$item->bulan)->translatedFormat('F')}} {{$item->tahun}}
@@ -61,7 +60,7 @@ LAPORAN AKTIVITAS
                       class='btn btn-xs btn-primary'>Detail Aktivitas</a>
                   </td>
                 </tr>
-                @endforeach
+                @endforeach --}}
               </tbody>
             </table>
             {{-- <table class="table table-hover text-nowrap table-sm">

@@ -12,18 +12,23 @@ class LaporanController extends Controller
     public function tpp()
     {
         $data = R_tpp::where('pegawai_id', Auth::user()->pegawai->id)->paginate(10);
-        return view('pegawai.laporan.tpp',compact('data'));
+        return view('pegawai.laporan.tpp', compact('data'));
     }
-    
+
     public function aktivitas()
     {
         $data = Aktivitas::where('pegawai_id', Auth::user()->pegawai->id)->paginate(10);
-        return view('pegawai.laporan.aktivitas',compact('data'));
+        return view('pegawai.laporan.aktivitas', compact('data'));
     }
-    
+
     public function penghasilan()
     {
         $data = R_tpp::where('pegawai_id', Auth::user()->pegawai->id)->paginate(10);
-        return view('pegawai.laporan.penghasilan',compact('data'));
+        return view('pegawai.laporan.penghasilan', compact('data'));
+    }
+
+    public function detailAktivitas($bulan, $tahun)
+    {
+        return view('pegawai.laporan.detailaktivitas');
     }
 }

@@ -283,6 +283,7 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
 
     Route::get('/pegawai/laporan/tpp', 'LaporanController@tpp');
     Route::get('/pegawai/laporan/aktivitas', 'LaporanController@aktivitas');
+    Route::get('/pegawai/laporan/aktivitas/{bulan}/{tahun}', 'LaporanController@detailAktivitas');
     Route::get('/pegawai/laporan/penghasilan', 'LaporanController@penghasilan');
 
 

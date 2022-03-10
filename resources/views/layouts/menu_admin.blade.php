@@ -123,7 +123,7 @@
             <a href="/admin/rekapitulasi" class="nav-link {{Request::is('admin/rekapitulasi') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
-                    Cetak TPP
+                    Rekap TPP
                 </p>
             </a>
         </li>

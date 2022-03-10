@@ -16,7 +16,7 @@ SUPERADMIN
         <a href="/superadmin/pegawai" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</a>
         <br /><br />
         <div class="card">
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 <table class="table table-hover table-striped text-nowrap table-sm">
                     <thead>
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif"

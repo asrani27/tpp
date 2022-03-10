@@ -39,7 +39,7 @@ SUPERADMIN
                             <td>{{$no++}}</td>
                             <td>{{$item->tanggal}}</td>
                             <td>{{$item->jam_mulai}} - {{$item->jam_selesai}}</td>
-                            <td>{{$item->deskripsi}}</td>
+                            <td>{!!wordwrap($item->deskripsi,100,"<br>")!!}</td>
                             <td>{{$item->menit}}</td>
                             <td>{{$item->penilai->nama}}</td>
                         </tr>
@@ -77,7 +77,7 @@ SUPERADMIN
                             <td>{{$no++}}</td>
                             <td>{{$item->tanggal}}</td>
                             <td>{{$item->jam_mulai}} - {{$item->jam_selesai}}</td>
-                            <td>{{$item->deskripsi}}</td>
+                            <td>{!!wordwrap($item->deskripsi,100,"<br>")!!}</td>
                             <td>{{$item->menit}}</td>
                             <td>{{$item->validator}}</td>
                         </tr>

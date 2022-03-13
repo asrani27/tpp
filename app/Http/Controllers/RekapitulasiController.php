@@ -12,12 +12,14 @@ use App\Aktivitas;
 use App\Parameter;
 use Carbon\Carbon;
 use App\Exports\TppExport;
+use App\Imports\BpjsImport;
 use Illuminate\Http\Request;
 use App\View_aktivitas_pegawai;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 class RekapitulasiController extends Controller
 {
@@ -381,17 +383,24 @@ class RekapitulasiController extends Controller
             'jabatan' => $jabatan->nama,
             'jabatan_id' => $jabatan->id,
             'kelas' => $jabatan->kelas->nama,
-            'basic_tpp' => $jabatan->kelas->nilai,
-            'persen' => $jabatan->persentase_tpp,
-            'tambahan_persen' => $jabatan->tambahan_persen_tpp,
-            'jumlah_persen' => $jabatan->persentase_tpp + $jabatan->tambahan_persen_tpp,
-            'total_pagu' => $jabatan->kelas->nilai * (($jabatan->persentase_tpp + $jabatan->tambahan_persen_tpp) / 100),
-            'absensi' => 0,
-            'total_absensi' => 0,
-            'aktivitas' => 0,
-            'total_aktivitas' => 0,
-            'pph21' => 0,
-            'total_pph21' => 0,
+            'perhitungan_basic_tpp' => 0,
+            'perhitungan_pagu' => 0,
+            'perhitungan_disiplin' => 0,
+            'perhitungan_produktivitas' => 0,
+            'perhitungan_kondisi_kerja' => 0,
+            'perhitungan_pagu_tpp_asn' => 0,
+            'pembayaran_absensi' => 0,
+            'pembayaran_aktivitas' => 0,
+            'pembayaran_bk_disiplin' => 0,
+            'pembayaran_bk_produktivitas' => 0,
+            'pembayaran_beban_kerja' => 0,
+            'pembayaran_pk_disiplin' => 0,
+            'pembayaran_pk_produktivitas' => 0,
+            'pembayaran_prestasi_kerja' => 0,
+            'pembayaran_kondisi_kerja' => 0,
+            'pembayaran' => 0,
+            'potongan_pph21' => 0,
+            'tpp_diterima' => 0,
         ]);
 
         toastr()->success('Jabatan Berhasil Di Ubah');
@@ -430,20 +439,20 @@ class RekapitulasiController extends Controller
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
             $aktivitas = Aktivitas::where('pegawai_id', $item->pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('validasi', 1)->get();
             $menit_aktivitas = $aktivitas->sum('menit') + ($presensi == null ? 0 : $presensi->c * 360);
-
+            $jabatan = Jabatan::find($item->jabatan_id);
             if ($presensi == null) {
                 $absensi = 0;
             } else {
                 $absensi = $presensi->persen_kehadiran;
             }
 
-            $bk_disiplin = (($item->perhitungan_basic_tpp * Jabatan::find($item->jabatan_id)->persen_beban_kerja / 100) * ((40 / 100) * $absensi / 100));
-            $bk_produktivitas = $menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * Jabatan::find($item->jabatan_id)->persen_beban_kerja / 100) * 0.6 : 0;
+            $bk_disiplin = (($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * ((40 / 100) * $absensi / 100));
+            $bk_produktivitas = $menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * 0.6 : 0;
 
-            $pk_disiplin = (($item->perhitungan_basic_tpp * Jabatan::find($item->jabatan_id)->persen_prestasi_kerja / 100) * ((40 / 100) * $absensi / 100));
-            $pk_produktivitas = $menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * Jabatan::find($item->jabatan_id)->persen_prestasi_kerja / 100) * 0.6 : 0;
+            $pk_disiplin = (($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * ((40 / 100) * $absensi / 100));
+            $pk_produktivitas = $menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * 0.6 : 0;
 
-            $kondisi_kerja = $item->perhitungan_basic_tpp * Jabatan::find($item->jabatan_id)->tambahan_persen_tpp / 100;
+            $kondisi_kerja = $item->perhitungan_basic_tpp * $jabatan->tambahan_persen_tpp / 100;
 
             $jumlah_pembayaran =  $bk_disiplin + $bk_produktivitas + $pk_disiplin + $pk_produktivitas + $kondisi_kerja;
 
@@ -462,9 +471,47 @@ class RekapitulasiController extends Controller
                 'pembayaran_kondisi_kerja' => $kondisi_kerja,
                 'pembayaran' => $jumlah_pembayaran,
                 'potongan_pph21' => $potongan_pph21,
+                'tpp_diterima' => $jumlah_pembayaran - $potongan_pph21 - $item->potongan_bpjs_1persen,
             ]);
         }
         toastr()->success('Berhasil di hitung');
         return back();
+    }
+    public function bpjs($bulan, $tahun)
+    {
+        return view('admin.rekapitulasi.bpjs', compact('bulan', 'tahun'));
+    }
+
+    public function uploadBpjs(Request $req, $bulan, $tahun)
+    {
+        $file = $req->file;
+        $reader = new Xlsx();
+        $spreadsheet = $reader->load($file);
+        $sheet = $spreadsheet->getActiveSheet()->toArray();
+
+        $data = [];
+        foreach ($sheet as $item) {
+            $attr['nip'] = $item[1];
+            $attr['bpjs_1persen'] = (int)str_replace(',', '', $item[19]);
+            $attr['bpjs_4persen'] = (int)str_replace(',', '', $item[20]);
+            array_push($data, $attr);
+        }
+
+        foreach ($data as $d) {
+            if ($d['nip'] == null) {
+            } else {
+                $check = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->where('nip', $d['nip'])->orderBy('kelas', 'DESC')->first();
+                if ($check == null) {
+                } else {
+                    $check->update([
+                        'potongan_bpjs_1persen' => $d['bpjs_1persen'],
+                        'potongan_bpjs_4persen' => $d['bpjs_4persen'],
+                    ]);
+                }
+            }
+        }
+
+        toastr()->success('BPJS Berhasil di upload');
+        return redirect('/admin/rekapitulasi/' . $bulan . '/' . $tahun);
     }
 }

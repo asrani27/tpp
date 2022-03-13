@@ -190,6 +190,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/perhitungan', 'RekapitulasiController@perhitungan');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/pembayaran', 'RekapitulasiController@pembayaran');
+    Route::get('/admin/rekapitulasi/{bulan}/{tahun}/bpjs', 'RekapitulasiController@bpjs');
+    Route::post('/admin/rekapitulasi/{bulan}/{tahun}/bpjs', 'RekapitulasiController@uploadBpjs');
 
     Route::get('/admin/sekolah', 'SekolahController@index');
     Route::get('/admin/sekolah/add', 'SekolahController@create');

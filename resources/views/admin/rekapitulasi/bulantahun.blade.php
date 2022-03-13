@@ -34,14 +34,38 @@ SUPERADMIN
                 <h3 class="card-title">Daftar TPP Bulan
                     {{\Carbon\Carbon::createFromFormat('m',$bulan)->translatedFormat('F')}} {{$tahun}}</h3>
             </div>
-
             <div class="card-body p-2">
 
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/excel" target="_blank"
+                <div class="alert alert-default alert-dismissible text-sm">
+                    <h5><i class="icon fas fa-info"></i> Informasi</h5>
+                    Format Laporan TPP terbaru, langkah-langkahnya adalah<br />
+                    1. Melakukan pengaturan persentase TPP, klik <span class="badge badge-danger">
+                        pengaturan persen tpp</span>, anda
+                    akan melihat kolom
+                    persen tpp, beban kerja, prestasi kerja, dan kondisi kerja.
+                    silahkan sesuaikan kemudian, klik simpan, di bagian paling bawah<br />
+
+                    2. Klik <span class="badge badge-primary">masukkan semua pegawai</span> ,
+                    Memasukkan semua pegawai ke laporan tpp, jika
+                    ada pegawai baru dan yang membayarkan SKPD yang lama, klik tombol <span
+                        class="badge badge-danger">hapus</span> paling kanan di daftar
+                    laporan. Jika ada pegawai yang sudah mutasi/keluar namun masih di bayarkan TPP nya, ada form untuk
+                    menambah di paling bawah<br />
+
+                    3. Melakukan perhitungan dengan mengklik tombol <span class="badge badge-warning">perhitungan</span>
+                    akan menghitung di kolom perhitungan<br />
+
+                    4. Hitung pembayaran dengan mengklik tombol <span class="badge badge-success">pembayaran</span>
+                    akan menghitung di kolom pembayaran<br />
+
+                    5. Upload Data Potongan BPJS dengan mengklik tombol <span class="badge badge-info">BPJS</span>
+                    akan menghitung di kolom BPJS
+                </div>
+                {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/excel" target="_blank"
                     class="btn btn-xs btn-danger">Export Excel</a>
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/pdf" target="_blank"
-                    class="btn btn-xs btn-danger">Export PDF</a>
-                <a href="/home/admin/persen" class="btn btn-xs btn-danger">Edit Persen</a>
+                    class="btn btn-xs btn-danger">Export PDF</a> --}}
+                <a href="/home/admin/persen" class="btn btn-xs btn-danger">Pengaturan Persen TPP</a>
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/masukkanpegawai" class="btn btn-xs btn-primary"
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
                     Semua Pegawai</a>
@@ -51,6 +75,7 @@ SUPERADMIN
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/pembayaran" class="btn btn-xs btn-success"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Pembayaran</a>
 
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/bpjs" class="btn btn-xs btn-info">BPJS</a>
                 {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/updatejabatan" class="btn btn-xs btn-primary"
                     onclick="return confirm('Update Jabatan Pegawai?');">Update Jabatan</a>
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/hitungpersen" class="btn btn-xs btn-primary"
@@ -197,16 +222,22 @@ SUPERADMIN
                                 {{currency($item->pembayaran_pk_produktivitas)}}<br />
                                 {{$item->pembayaran_aktivitas}} Menit
                             </td>
-                            <td>{{currency($item->pembayaran_prestasi_kerja)}}</td>
-                            <td>{{currency($item->pembayaran_kondisi_kerja)}}</td>
-                            <td>{{currency($item->pembayaran_kondisi_kerja)}}</td>
-                            <td>{{currency($item->pembayaran)}}</td>
+                            <td class="text-right">{{currency($item->pembayaran_prestasi_kerja)}}</td>
+                            <td class="text-right">{{currency($item->pembayaran_kondisi_kerja)}}</td>
+                            <td class="text-right">{{currency($item->pembayaran_kondisi_kerja)}}</td>
+                            <td class="text-right">{{currency($item->pembayaran)}}</td>
                             <td class="text-right">
-                                {{$item->pph21}} % <br>
-                                {{currency($item->total_pph21)}}
+                                {{currency($item->potongan_pph21)}} <br />
+                                {{$item->potonganPPH21->pph}} %
                             </td>
                             <td class="text-right">
-                                {{currency($item->total_absensi + $item->total_aktivitas - $item->total_pph21)}}
+                                {{currency($item->potongan_bpjs_1persen)}}
+                            </td>
+                            <td class="text-right">
+                                {{currency($item->potongan_bpjs_4persen)}}
+                            </td>
+                            <td class="text-right">
+                                {{currency($item->tpp_diterima)}}
                             </td>
                             <td>
                                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/{{$item->id}}/delete"

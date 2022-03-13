@@ -301,6 +301,7 @@ class AdminController extends Controller
         DB::beginTransaction();
         try {
             $count = count($req->jabatan_id);
+            dd($req->all());
             for ($i = 0; $i < $count; $i++) {
                 Jabatan::findOrfail($req->jabatan_id[$i])->update([
                     'jenis_jabatan' => $req->jenis_jabatan[$i],

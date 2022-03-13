@@ -314,6 +314,7 @@ class AdminController extends Controller
             DB::commit();
             toastr()->success('Data Berhasil di Update');
         } catch (\Exception $e) {
+
             DB::rollback();
 
             toastr()->error('Gagal Update Data');

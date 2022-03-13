@@ -431,9 +431,37 @@ class RekapitulasiController extends Controller
             $aktivitas = Aktivitas::where('pegawai_id', $item->pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('validasi', 1)->get();
             $menit_aktivitas = $aktivitas->sum('menit') + ($presensi == null ? 0 : $presensi->c * 360);
 
+            if ($presensi == null) {
+                $absensi = 0;
+            } else {
+                $absensi = $presensi->persen_kehadiran;
+            }
+
+            $bk_disiplin = (($item->perhitungan_basic_tpp * Jabatan::find($item->jabatan_id)->persen_beban_kerja / 100) * ((40 / 100) * $absensi / 100));
+            $bk_produktivitas = $menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * Jabatan::find($item->jabatan_id)->persen_beban_kerja / 100) * 0.6 : 0;
+
+            $pk_disiplin = (($item->perhitungan_basic_tpp * Jabatan::find($item->jabatan_id)->persen_prestasi_kerja / 100) * ((40 / 100) * $absensi / 100));
+            $pk_produktivitas = $menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * Jabatan::find($item->jabatan_id)->persen_prestasi_kerja / 100) * 0.6 : 0;
+
+            $kondisi_kerja = $item->perhitungan_basic_tpp * Jabatan::find($item->jabatan_id)->tambahan_persen_tpp / 100;
+
+            $jumlah_pembayaran =  $bk_disiplin + $bk_produktivitas + $pk_disiplin + $pk_produktivitas + $kondisi_kerja;
+
+            $pph21 = Pangkat::find($item->pangkat_id)->pph;
+            $potongan_pph21 = $jumlah_pembayaran * ($pph21 / 100);
+
             $item->update([
                 'pembayaran_absensi' => $presensi == null ? null : $presensi->persen_kehadiran,
                 'pembayaran_aktivitas' => $menit_aktivitas,
+                'pembayaran_bk_disiplin' => $bk_disiplin,
+                'pembayaran_bk_produktivitas' => $bk_produktivitas,
+                'pembayaran_beban_kerja' => $bk_disiplin + $bk_produktivitas,
+                'pembayaran_pk_disiplin' => $pk_disiplin,
+                'pembayaran_pk_produktivitas' => $pk_produktivitas,
+                'pembayaran_prestasi_kerja' => $pk_disiplin + $pk_produktivitas,
+                'pembayaran_kondisi_kerja' => $kondisi_kerja,
+                'pembayaran' => $jumlah_pembayaran,
+                'potongan_pph21' => $potongan_pph21,
             ]);
         }
         toastr()->success('Berhasil di hitung');

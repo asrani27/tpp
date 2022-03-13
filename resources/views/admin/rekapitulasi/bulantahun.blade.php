@@ -179,18 +179,28 @@ SUPERADMIN
                             <td class="text-right">
                                 {{currency($item->perhitungan_pagu_tpp_asn)}}
                             </td>
-                            <td>{{$item->absensi}} %</td>
                             <td class="text-right">
-                                {{currency($item->total_absensi)}}
+                                {{currency($item->pembayaran_bk_disiplin)}}<br />
+                                {{$item->pembayaran_absensi}} %
                             </td>
-                            <td>{{$item->aktivitas}} m</td>
                             <td class="text-right">
-                                {{currency($item->total_aktivitas)}}
+                                {{currency($item->pembayaran_bk_produktivitas)}}<br />
+                                {{$item->pembayaran_aktivitas}} Menit
+                            </td>
+                            <td>{{currency($item->pembayaran_beban_kerja)}}</td>
+                            <td class="text-right">
+                                {{currency($item->pembayaran_pk_disiplin)}}<br />
+                                {{$item->pembayaran_absensi}} %
                             </td>
 
                             <td class="text-right">
-                                {{currency($item->total_absensi + $item->total_aktivitas)}}
+                                {{currency($item->pembayaran_pk_produktivitas)}}<br />
+                                {{$item->pembayaran_aktivitas}} Menit
                             </td>
+                            <td>{{currency($item->pembayaran_prestasi_kerja)}}</td>
+                            <td>{{currency($item->pembayaran_kondisi_kerja)}}</td>
+                            <td>{{currency($item->pembayaran_kondisi_kerja)}}</td>
+                            <td>{{currency($item->pembayaran)}}</td>
                             <td class="text-right">
                                 {{$item->pph21}} % <br>
                                 {{currency($item->total_pph21)}}

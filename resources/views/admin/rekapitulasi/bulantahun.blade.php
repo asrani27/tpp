@@ -46,9 +46,9 @@ SUPERADMIN
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
                     Semua Pegawai</a>
 
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/totalpagu" class="btn btn-xs btn-warning"
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/perhitungan" class="btn btn-xs btn-warning"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/totalpagu" class="btn btn-xs btn-success"
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/pembayaran" class="btn btn-xs btn-success"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Pembayaran</a>
 
                 {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/updatejabatan" class="btn btn-xs btn-primary"
@@ -160,19 +160,24 @@ SUPERADMIN
                                 {{$item->kelas}}
                             </td>
                             <td class="text-right">
-                                {{currency($item->basic_tpp)}}
-                            </td>
-                            <td class="text-center">
-                                {{$item->persen}} %
-                            </td>
-                            <td class="text-center">
-                                {{$item->tambahan_persen == null ? 0: $item->tambahan_persen}} %
-                            </td>
-                            <td class="text-center">
-                                {{$item->jumlah_persen}} %
+                                {{currency($item->perhitungan_basic_tpp)}}
                             </td>
                             <td class="text-right">
-                                {{currency($item->total_pagu)}}
+                                {{currency($item->perhitungan_pagu)}}<br />
+                                {{$item->persenJabatan->persentase_tpp}} %
+                            </td>
+                            <td class="text-right">
+                                {{currency($item->perhitungan_disiplin)}}
+                            </td>
+                            <td class="text-right">
+                                {{currency($item->perhitungan_produktivitas)}}
+                            </td>
+                            <td class="text-center">
+                                {{currency($item->perhitungan_kondisi_kerja)}} <br />
+                                {{$item->persenJabatan->tambahan_persen_tpp}} %
+                            </td>
+                            <td class="text-right">
+                                {{currency($item->perhitungan_pagu_tpp_asn)}}
                             </td>
                             <td>{{$item->absensi}} %</td>
                             <td class="text-right">

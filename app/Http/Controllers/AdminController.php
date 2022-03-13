@@ -305,6 +305,8 @@ class AdminController extends Controller
                 Jabatan::findOrfail($req->jabatan_id[$i])->update([
                     'jenis_jabatan' => $req->jenis_jabatan[$i],
                     'persentase_tpp' => $req->persentase_tpp[$i],
+                    'persen_beban_kerja' => $req->persen_beban_kerja[$i],
+                    'persen_prestasi_kerja' => $req->persen_prestasi_kerja[$i],
                     'tambahan_persen_tpp' => $req->tambahan_persen_tpp[$i],
                 ]);
             }

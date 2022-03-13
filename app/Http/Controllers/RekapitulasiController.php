@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cuti;
+use App\Kelas;
 use App\Jabatan;
 use App\Pangkat;
 use App\Pegawai;
@@ -395,5 +396,47 @@ class RekapitulasiController extends Controller
 
         toastr()->success('Jabatan Berhasil Di Ubah');
         return redirect('/admin/rekapitulasi/' . $bulan . '/' . $tahun);
+    }
+
+    public function perhitungan($bulan, $tahun)
+    {
+        // menghitung kolom berwarna orange
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        foreach ($data as $item) {
+            $basic_tpp = Kelas::where('nama', $item->kelas)->first()->nilai;
+            $pagu      = $basic_tpp * Jabatan::find($item->jabatan_id)->persentase_tpp / 100;
+            $disiplin  = $pagu * 40 / 100;
+            $produktivitas  = $pagu * 60 / 100;
+            $kondisi_kerja  = $basic_tpp * Jabatan::find($item->jabatan_id)->tambahan_persen_tpp / 100;
+            $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja;
+
+            $item->update([
+                'perhitungan_basic_tpp' => $basic_tpp,
+                'perhitungan_pagu' => $pagu,
+                'perhitungan_disiplin' => $disiplin,
+                'perhitungan_produktivitas' => $produktivitas,
+                'perhitungan_kondisi_kerja' => $kondisi_kerja,
+                'perhitungan_pagu_tpp_asn' => $pagu_asn,
+            ]);
+        }
+        toastr()->success('Berhasil di hitung');
+        return back();
+    }
+
+    public function pembayaran($bulan, $tahun)
+    {
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        foreach ($data as $item) {
+            $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+            $aktivitas = Aktivitas::where('pegawai_id', $item->pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('validasi', 1)->get();
+            $menit_aktivitas = $aktivitas->sum('menit') + ($presensi == null ? 0 : $presensi->c * 360);
+
+            $item->update([
+                'pembayaran_absensi' => $presensi == null ? null : $presensi->persen_kehadiran,
+                'pembayaran_aktivitas' => $menit_aktivitas,
+            ]);
+        }
+        toastr()->success('Berhasil di hitung');
+        return back();
     }
 }

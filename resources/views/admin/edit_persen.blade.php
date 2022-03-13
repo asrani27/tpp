@@ -11,7 +11,8 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
 @section('content')
 <div class="row">
   <div class="col-md-12">
-    <a href="/home/admin" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i> Kembali</a>
+    <a href="/admin/rekapitulasi" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i>
+      Kembali</a>
     <br /><br />
     <div class="row">
       <div class="col-12">
@@ -27,8 +28,10 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
                     <th style="width: 10px">#</th>
                     <th>Nama /NIP/Pangkat/Golongan</th>
                     <th>Jenis Jabatan</th>
-                    <th>Persentase TPP</th>
-                    <th>Tambahan Persentase TPP</th>
+                    <th>Persentase<br /> TPP<br />%</th>
+                    <th>Beban <br />Kerja<br />%</th>
+                    <th>Prestasi <br />Kerja<br />%</th>
+                    <th>Kondisi <br />Kerja<br />%</th>
                   </tr>
                 </thead>
                 @php
@@ -67,6 +70,14 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
                     <td class="text-center">
                       <input type="text" name="persentase_tpp[]" class="form-control form-control-sm"
                         value="{{$item->persentase_tpp == null ? 0 : $item->persentase_tpp}}">
+                    </td>
+                    <td class="text-center">
+                      <input type="text" name="persen_beban_kerja[]" class="form-control form-control-sm"
+                        value="{{$item->persen_beban_kerja == null ? 37.5 : $item->persen_beban_kerja}}">
+                    </td>
+                    <td class="text-center">
+                      <input type="text" name="persen_prestasi_kerja[]" class="form-control form-control-sm"
+                        value="{{$item->persen_prestasi_kerja == null ? 50 : $item->persen_prestasi_kerja}}">
                     </td>
                     <td class="text-center">
                       <input type="text" name="tambahan_persen_tpp[]" class="form-control form-control-sm"

@@ -53,6 +53,15 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
                         </option>
                         <option value="jfu" {{$item->jenis_jabatan == 'jfu' ? 'selected':''}}>JFU</option>
                         <option value="jft" {{$item->jenis_jabatan == 'jft' ? 'selected':''}}>JFT</option>
+                        <option value="JPT Pratama" {{$item->jenis_jabatan == 'JPT Pratama' ? 'selected':''}}>JPT
+                          Pratama
+                        </option>
+                        <option value="Administrator" {{$item->jenis_jabatan == 'Administrator' ? 'selected':''}}>
+                          Administrator
+                        </option>
+                        <option value="Pengawas" {{$item->jenis_jabatan == 'Pengawas' ? 'selected':''}}>
+                          Pengawas
+                        </option>
                       </select>
                     </td>
                     <td class="text-center">

@@ -35,7 +35,7 @@ SUPERADMIN
                     {{\Carbon\Carbon::createFromFormat('m',$bulan)->translatedFormat('F')}} {{$tahun}}</h3>
             </div>
 
-            <div class="card-body table-responsive p-2">
+            <div class="card-body p-2">
 
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/excel" target="_blank"
                     class="btn btn-xs btn-danger">Export Excel</a>
@@ -45,7 +45,13 @@ SUPERADMIN
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/masukkanpegawai" class="btn btn-xs btn-primary"
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
                     Semua Pegawai</a>
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/updatejabatan" class="btn btn-xs btn-primary"
+
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/totalpagu" class="btn btn-xs btn-warning"
+                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/totalpagu" class="btn btn-xs btn-success"
+                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Pembayaran</a>
+
+                {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/updatejabatan" class="btn btn-xs btn-primary"
                     onclick="return confirm('Update Jabatan Pegawai?');">Update Jabatan</a>
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/hitungpersen" class="btn btn-xs btn-primary"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">
@@ -65,36 +71,69 @@ SUPERADMIN
 
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/pph21" class="btn btn-xs btn-primary"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung
-                    PPH 21</a>
+                    PPH 21</a> --}}
                 <br /><br />
 
-                <table class="table table-hover table-striped text-nowrap table-sm">
+                <table class="table table-hover table-striped text-nowrap table-sm table-responsive ">
                     <thead>
-                        <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif"
-                            class="text-center bg-gradient-primary">
-                            <th rowspan=2 style="width: 10px">#</th>
-                            <th rowspan=2>Nama /NIP/Pangkat/Golongan</th>
-                            <th rowspan=2>Jabatan</th>
-                            <th rowspan=2>Kelas</th>
-                            <th rowspan=2>Basic TPP</th>
-                            <th colspan=4>Beban Kerja</th>
-                            <th colspan=2>Disiplin 40%</th>
-                            <th colspan=2>Produktivitas 60%</th>
-                            <th rowspan=2>TPP ASN</th>
-                            <th rowspan=2>PPH 21</th>
-                            <th rowspan=2>TPP DIterima</th>
-                            <th rowspan=2>Aksi</th>
+                        <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center">
+                            <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4
+                                style="width: 10px">#</th>
+                            <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Nama
+                                <br />NIP<br />Pangkat<br />Golongan
+                            </th>
+                            <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Jabatan</th>
+                            <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Jenis
+                                <br />Jabatan
+                            </th>
+                            <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Kelas</th>
+                            <th style="border:1px solid silver" colspan=6 class="bg-warning">Perhitungan</th>
+                            <th colspan=9 style="border:1px solid silver" class="bg-success">Pembayaran</th>
+                            <th rowspan=4 style="border:1px solid silver" class="bg-info">PPH 21</th>
+                            <th rowspan=4 style="border:1px solid silver" class="bg-info">BPJS 1%</th>
+                            <th rowspan=4 style="border:1px solid silver" class="bg-info">BPJS 4%</th>
+                            <th rowspan=4 style="border:1px solid silver" class="bg-info">TPP Diterima <br /> Transfer
+                            </th>
+                            <th rowspan=4 style="border:1px solid silver">Aksi</th>
                         </tr>
-                        <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif"
-                            class="text-center bg-gradient-primary">
-                            <th>Persentase<br /> TPP</th>
-                            <th>Tambahan <br />Persentase<br /> TPP</th>
-                            <th>Jumlah<br /> Persentase</th>
-                            <th>Total<br /> Pagu</th>
-                            <th>%</th>
-                            <th>Rp.</th>
-                            <th>menit</th>
-                            <th>Rp.</th>
+                        <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center">
+                            <th rowspan=3 style="border:1px solid silver" class="bg-warning">Basic<br /> TPP</th>
+                            <th rowspan=3 style="border:1px solid silver" class="bg-warning">Pagu Disiplin<br />
+                                Kerja dan<br /> Produktivitas</th>
+                            <th colspan=2 style="border:1px solid silver" class="bg-warning">Penilaian TPP</th>
+                            <th rowspan=3 style="border:1px solid silver" class="bg-warning">Kondisi Kerja</th>
+                            <th rowspan=3 style="border:1px solid silver" class="bg-warning">Pagu TPP ASN</th>
+                            <th class="bg-info" style="border:1px solid silver" colspan=2>Beban Kerja</th>
+                            <th rowspan=3 class="bg-info" style="border:1px solid silver">Jumlah Beban Kerja
+                                <br />5.1.01.02.01.0001
+                            </th>
+                            <th colspan=2 style="background-color:bisque; border:1px solid silver" colspan=2>
+                                Prestasi Kerja</th>
+                            <th rowspan=3 style="background-color:bisque; border:1px solid silver">Jumlah Prestasi Kerja
+                                <br />5.1.01.02.05.0001
+                            </th>
+                            <th rowspan=3 style="border:1px solid silver" class='bg-secondary'>
+                                Kondisi Kerja</th>
+                            <th rowspan=3 style="border:1px solid silver" class='bg-secondary'>
+                                Jumlah Kondisi Kerja <br /> 5.1.01.02.03.0001</th>
+                            <th rowspan=3 style="border:1px solid silver" class='bg-success'>
+                                Jumlah Pembayaran</th>
+                        </tr>
+                        <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center">
+                            <th style="border:1px solid silver" class="bg-warning">Disiplin</th>
+                            <th style="border:1px solid silver" class="bg-warning">Produktivitas</th>
+                            <th style="border:1px solid silver" class="bg-info">Disiplin</th>
+                            <th style="border:1px solid silver" class="bg-info">Produktivitas</th>
+                            <th style="background-color:bisque; border:1px solid silver">Disiplin</th>
+                            <th style="background-color:bisque; border:1px solid silver">Produktivitas</th>
+                        </tr>
+                        <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center">
+                            <th style="border:1px solid silver" class="bg-warning">40 %</th>
+                            <th style="border:1px solid silver" class="bg-warning">60 %</th>
+                            <th style="border:1px solid silver" class="bg-info">40 %</th>
+                            <th style="border:1px solid silver" class="bg-info">60 %</th>
+                            <th style="background-color:bisque; border:1px solid silver">40 %</th>
+                            <th style="background-color:bisque; border:1px solid silver">60 %</th>
                         </tr>
                     </thead>
                     @php
@@ -113,6 +152,9 @@ SUPERADMIN
                                 {!!wordwrap($item->jabatan,50,"<br>")!!}
                                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/editjabatan/{{$item->id}}"><i
                                         class="fas fa-edit"></i></a>
+                            </td>
+                            <td class="text-center">
+                                {{$item->jenis_jabatan}}
                             </td>
                             <td class="text-center">
                                 {{$item->kelas}}

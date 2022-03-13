@@ -89,29 +89,32 @@ class RekapitulasiController extends Controller
     }
     public function bulanTahun($bulan, $tahun)
     {
-        toastr()->error('Mohon maaf, ada perubahan format Rekap TPP, akan kembali dalam 24 jam');
-        return back();
-        //$data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-        //return view('admin.rekapitulasi.bulantahun', compact('data', 'bulan', 'tahun'));
+        // toastr()->error('Mohon maaf, ada perubahan format Rekap TPP, akan kembali dalam 24 jam');
+        // return back();
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        return view('admin.rekapitulasi.bulantahun', compact('data', 'bulan', 'tahun'));
     }
 
     public function masukkanPegawai($bulan, $tahun)
     {
-        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->get();
+        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('jabatan_id', '!=', null)->wherehas('jabatan', function ($query) {
+            return $query->where('rs_puskesmas_id', null)->where('sekolah_id', null);
+        })->get();
+
         foreach ($pegawai as $item) {
             $check = RekapTpp::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
             if ($check == null) {
                 $n = new RekapTpp;
-                $n->pegawai_id  = $item->id;
                 $n->nip         = $item->nip;
                 $n->nama        = $item->nama;
+                $n->pegawai_id  = $item->id;
                 $n->pangkat_id  = $item->pangkat == null ? null : $item->pangkat->id;
                 $n->pangkat     = $item->pangkat == null ? null : $item->pangkat->nama;
                 $n->golongan    = $item->pangkat == null ? null : $item->pangkat->golongan;
-                // $n->jabatan_id  = $item->jabatan == null ? null : $item->jabatan->id;
-                // $n->jabatan     = $item->jabatan == null ? null : $item->jabatan->nama;
-                // $n->kelas       = $item->jabatan == null ? null : $item->jabatan->kelas->nama;
-                // $n->basic_tpp   = $item->jabatan == null ? null : $item->jabatan->kelas->nilai;
+                $n->jabatan_id  = $item->jabatan == null ? null : $item->jabatan->id;
+                $n->jabatan     = $item->jabatan == null ? null : $item->jabatan->nama;
+                $n->jenis_jabatan     = $item->jabatan == null ? null : $item->jabatan->jenis_jabatan;
+                $n->kelas       = $item->jabatan == null ? null : $item->jabatan->kelas->nama;
                 $n->skpd_id     = Auth::user()->skpd->id;
                 $n->bulan     = $bulan;
                 $n->tahun     = $tahun;
@@ -119,12 +122,16 @@ class RekapitulasiController extends Controller
             } else {
                 if ($check->skpd_id == Auth::user()->skpd->id || $check->skpd_id == null) {
                     $check->update([
-                        'nip' => $item->nip,
-                        'nama' => $item->nama,
-                        'pangkat' => $item->pangkat == null ? null : $item->pangkat->nama,
-                        'golongan' => $item->pangkat == null ? null : $item->pangkat->golongan,
-                        // 'kelas' => $item->jabatan == null ? null : $item->jabatan->kelas->nama,
-                        // 'basic_tpp' => $item->jabatan == null ? null : $item->jabatan->kelas->nilai,
+                        'nip'           => $item->nip,
+                        'nama'          => $item->nama,
+                        'pegawai_id'    => $item->id,
+                        'pangkat_id'    => $item->pangkat == null ? null : $item->pangkat->id,
+                        'pangkat'       => $item->pangkat == null ? null : $item->pangkat->nama,
+                        'golongan'      => $item->pangkat == null ? null : $item->pangkat->golongan,
+                        'jabatan_id'    => $item->jabatan == null ? null : $item->jabatan->id,
+                        'jabatan'       => $item->jabatan == null ? null : $item->jabatan->nama,
+                        'jenis_jabatan' => $item->jabatan == null ? null : $item->jabatan->jenis_jabatan,
+                        'kelas'         => $item->jabatan == null ? null : $item->jabatan->kelas->nama,
                         'skpd_id' => Auth::user()->skpd->id,
                         'bulan' => $bulan,
                         'tahun' => $tahun,

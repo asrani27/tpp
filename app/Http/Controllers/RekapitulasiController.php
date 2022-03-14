@@ -56,10 +56,10 @@ class RekapitulasiController extends Controller
                 $n->pangkat_id  = $checkDataPegawai->pangkat == null ? null : $checkDataPegawai->pangkat->id;
                 $n->pangkat     = $checkDataPegawai->pangkat == null ? null : $checkDataPegawai->pangkat->nama;
                 $n->golongan    = $checkDataPegawai->pangkat == null ? null : $checkDataPegawai->pangkat->golongan;
-                $n->jabatan_id  = $checkDataPegawai->jabatan == null ? null : $checkDataPegawai->jabatan->id;
-                $n->jabatan     = $checkDataPegawai->jabatan == null ? null : $checkDataPegawai->jabatan->nama;
-                $n->jenis_jabatan     = $checkDataPegawai->jabatan == null ? null : $checkDataPegawai->jabatan->jenis_jabatan;
-                $n->kelas       = $checkDataPegawai->jabatan == null ? null : $checkDataPegawai->jabatan->kelas->nama;
+                $n->jabatan_id  = $jabatan->id;
+                $n->jabatan     = $jabatan->nama;
+                $n->jenis_jabatan     = $jabatan->jenis_jabatan;
+                $n->kelas       = $jabatan->kelas->nama;
 
                 $n->skpd_id = Auth::user()->skpd->id;
                 $n->bulan = $req->bulan;
@@ -74,6 +74,7 @@ class RekapitulasiController extends Controller
                 } else {
                     if ($check->skpd_id == null) {
                         $jabatan = Jabatan::find($req->jabatan);
+
                         $check->update([
                             'skpd_id' => Auth::user()->skpd->id,
                             'jabatan' => $jabatan->nama,

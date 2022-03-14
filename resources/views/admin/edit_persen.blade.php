@@ -76,12 +76,10 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
                         value="{{$item->tambahan_persen_tpp == null ? 0 : $item->tambahan_persen_tpp}}">
                     </td>
                     <td class="text-center">
-                      <input type="text" name="persen_beban_kerja[]" class="form-control form-control-sm" value="37.5"
-                        readonly>
+                      <input type="text" name="" class="form-control form-control-sm" value="37.5" readonly>
                     </td>
                     <td class="text-center">
-                      <input type="text" name="persen_prestasi_kerja[]" class="form-control form-control-sm" value="50"
-                        readonly>
+                      <input type="text" name="" class="form-control form-control-sm" value="50" readonly>
                     </td>
                   </tr>
                   @endforeach

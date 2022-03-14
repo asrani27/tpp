@@ -484,6 +484,10 @@ class RekapitulasiController extends Controller
 
     public function uploadBpjs(Request $req, $bulan, $tahun)
     {
+        $req->validate([
+            'file' => 'required|mimes:xlx,xls'
+        ]);
+
         $file = $req->file;
         $reader = new Xlsx();
         $spreadsheet = $reader->load($file);

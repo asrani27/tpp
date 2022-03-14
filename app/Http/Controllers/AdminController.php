@@ -291,7 +291,8 @@ class AdminController extends Controller
     public function editPersen()
     {
 
-        $data = Auth::user()->skpd->jabatan;
+
+        $data = Skpd::where('skpd_id', Auth::user()->skpd->id)->get();
 
         return view('admin.edit_persen', compact('data'));
     }

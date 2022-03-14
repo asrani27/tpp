@@ -260,10 +260,17 @@ SUPERADMIN
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>{{currency($data->sum('total_absensi') + $data->sum('total_aktivitas'))}}</td>
-                            <td>{{currency($data->sum('total_pph21'))}}</td>
-                            <td>{{currency($data->sum('total_absensi') + $data->sum('total_aktivitas') -
-                                $data->sum('total_pph21'))}}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{currency($data->sum('tpp_diterima'))}}</td>
                         </tr>
                     </tbody>
                 </table><br />

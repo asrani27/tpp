@@ -30,8 +30,8 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
                     <th>Jenis Jabatan</th>
                     <th>Persentase<br /> TPP<br />%</th>
                     <th>Kondisi <br />Kerja<br />%</th>
-                    {{-- <th>Beban <br />Kerja<br />%</th>
-                    <th>Prestasi <br />Kerja<br />%</th> --}}
+                    <th>Beban <br />Kerja<br />%</th>
+                    <th>Prestasi <br />Kerja<br />%</th>
                   </tr>
                 </thead>
                 @php
@@ -75,14 +75,14 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
                       <input type="text" name="tambahan_persen_tpp[]" class="form-control form-control-sm"
                         value="{{$item->tambahan_persen_tpp == null ? 0 : $item->tambahan_persen_tpp}}">
                     </td>
-                    {{-- <td class="text-center">
-                      <input type="text" name="persen_beban_kerja[]" class="form-control form-control-sm"
-                        value="{{$item->persen_beban_kerja == 0.0 ? 37.5 : $item->persen_beban_kerja}}">
+                    <td class="text-center">
+                      <input type="text" name="persen_beban_kerja[]" class="form-control form-control-sm" value="37.5"
+                        readonly>
                     </td>
                     <td class="text-center">
-                      <input type="text" name="persen_prestasi_kerja[]" class="form-control form-control-sm"
-                        value="{{$item->persen_prestasi_kerja == 0.0 ? 50 : $item->persen_prestasi_kerja}}">
-                    </td> --}}
+                      <input type="text" name="persen_prestasi_kerja[]" class="form-control form-control-sm" value="50"
+                        readonly>
+                    </td>
                   </tr>
                   @endforeach
 

@@ -486,7 +486,7 @@ class RekapitulasiController extends Controller
     public function uploadBpjs(Request $req, $bulan, $tahun)
     {
         $validator = Validator::make($req->all(), [
-            'file' => 'mimes:xlx,xls',
+            'file' => 'mimes:xlx,xlsx,xls',
         ]);
 
         if ($validator->fails()) {

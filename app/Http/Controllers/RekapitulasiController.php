@@ -79,6 +79,25 @@ class RekapitulasiController extends Controller
                             'jabatan' => $jabatan->nama,
                             'jenis_jabatan' => $jabatan->jenis_jabatan,
                             'kelas' => $jabatan->kelas->nama,
+
+                            'perhitungan_basic_tpp' => 0,
+                            'perhitungan_pagu' => 0,
+                            'perhitungan_disiplin' => 0,
+                            'perhitungan_produktivitas' => 0,
+                            'perhitungan_kondisi_kerja' => 0,
+                            'perhitungan_pagu_tpp_asn' => 0,
+                            'pembayaran_absensi' => 0,
+                            'pembayaran_aktivitas' => 0,
+                            'pembayaran_bk_disiplin' => 0,
+                            'pembayaran_bk_produktivitas' => 0,
+                            'pembayaran_beban_kerja' => 0,
+                            'pembayaran_pk_disiplin' => 0,
+                            'pembayaran_pk_produktivitas' => 0,
+                            'pembayaran_prestasi_kerja' => 0,
+                            'pembayaran_kondisi_kerja' => 0,
+                            'pembayaran' => 0,
+                            'potongan_pph21' => 0,
+                            'tpp_diterima' => 0,
                         ]);
                         toastr()->success('Berhasil Di Tambahkan');
                         return back();

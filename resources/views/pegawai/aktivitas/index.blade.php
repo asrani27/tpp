@@ -66,24 +66,14 @@ JURNAL AKTIVITAS
             </div>
         </div>
         <br />
+
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Total : {{$data->total()}} Aktivitas</h3>
+                        <h3 class="card-title">Aktivitas Belum Di Nilai</h3>
 
                         <div class="card-tools">
-                            {{-- <form method="get" action="/pegawai/skp/rencana-kegiatan/search">
-                                <div class="input-group input-group-sm" style="width: 300px;">
-                                    <input type="text" name="search" class="form-control input-sm float-right"
-                                        value="{{old('search')}}" placeholder="Cari">
-
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-default"><i
-                                                class="fas fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </form> --}}
                         </div>
                     </div>
                     <div class="card-body table-responsive p-0">
@@ -104,9 +94,9 @@ JURNAL AKTIVITAS
                             $no =1;
                             @endphp
                             <tbody>
-                                @foreach ($data as $key => $item)
+                                @foreach ($aktivitasBelumDinilai as $key => $item)
                                 <tr style="font-size:12px; font-family:Arial, Helvetica, sans-serif">
-                                    <td>{{$key+ $data->firstItem()}}</td>
+                                    <td>{{$key+ $aktivitasBelumDinilai->firstItem()}}</td>
                                     <td>{{\Carbon\Carbon::parse($item->tanggal)->isoFormat('D MMMM Y')}}</td>
                                     <td>{{\Carbon\Carbon::parse($item->jam_mulai)->format('H:i')}} -
                                         {{\Carbon\Carbon::parse($item->jam_selesai)->format('H:i')}}</td>
@@ -149,7 +139,92 @@ JURNAL AKTIVITAS
                     </div>
                 </div>
 
-                {{$data->links()}}
+                {{$aktivitasBelumDinilai->links()}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Rekap Aktivitas Perbulan</h3>
+
+                        <div class="card-tools">
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap table-sm">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Bulan Tahun</th>
+                                    <th>Jumlah Aktivitas</th>
+                                    <th>Jumlah Menit (Disetujui)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            @php
+                            $no =1;
+                            @endphp
+                            <tbody>
+                                @foreach (bulanTahun() as $key => $item)
+                                <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
+                                    <td>{{$no++}}</td>
+                                    <td>{{\Carbon\Carbon::createFromFormat('m',$item->bulan)->translatedFormat('F')}}
+                                        {{$item->tahun}}
+                                    </td>
+                                    <td>{{totalAktivitas($item->bulan, $item->tahun)}} Aktivitas</td>
+                                    <td>{{totalMenit($item->bulan, $item->tahun)}} Menit</td>
+                                    <td>
+                                        <a href="/pegawai/aktivitas/harian/detail/{{$item->bulan}}/{{$item->tahun}}"
+                                            class='btn btn-xs btn-primary'>Detail Aktivitas</a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                {{-- @foreach ($data as $key => $item)
+                                <tr style="font-size:12px; font-family:Arial, Helvetica, sans-serif">
+                                    <td>{{$key+ $data->firstItem()}}</td>
+                                    <td>{{\Carbon\Carbon::parse($item->tanggal)->isoFormat('D MMMM Y')}}</td>
+                                    <td>{{\Carbon\Carbon::parse($item->jam_mulai)->format('H:i')}} -
+                                        {{\Carbon\Carbon::parse($item->jam_selesai)->format('H:i')}}</td>
+                                    <td>{{$item->menit}}</td>
+                                    <td>{!!wordwrap($item->deskripsi,100,"<br>")!!}</td>
+                                    <td>
+                                        @if ($item->validasi == 0)
+                                        <span class="badge bg-info"><i class="fas fa-clock"></i> Diproses</span>
+                                        @elseif ($item->validasi == 1)
+                                        <span class="badge bg-success"><i class="fas fa-check"></i> Disetujui</span>
+
+                                        @else
+                                        <span class="badge bg-danger"><i class="fas fa-times"></i> Ditolak</span>
+
+                                        @endif
+                                    </td>
+                                    <td>{{$item->validator == null ? null : $item->penilai->nama}}</td>
+                                    <td>
+                                        @if ($item->validasi == 0)
+                                        <a href="/pegawai/aktivitas/harian/edit/{{$item->id}}"
+                                            class="btn btn-xs btn-success text-white" data-toggle="tooltip"
+                                            title="edit data"><i class="fas fa-edit"></i></a>
+                                        <a href="/pegawai/aktivitas/harian/delete/{{$item->id}}"
+                                            class="btn btn-xs btn-danger text-white" data-toggle="tooltip"
+                                            title="hapus data" onclick="return confirm('Yakin ingin di hapus?');"><i
+                                                class="fas fa-trash"></i></a>
+                                        @else
+                                        @if (Auth::user()->username == '198709162010012005')
+                                        <a href="/pegawai/aktivitas/harian/delete/{{$item->id}}"
+                                            class="btn btn-xs btn-danger text-white" data-toggle="tooltip"
+                                            title="hapus data" onclick="return confirm('Yakin ingin di hapus?');"><i
+                                                class="fas fa-trash"></i></a>
+                                        @endif
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach --}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
         <br />

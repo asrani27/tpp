@@ -240,6 +240,7 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::get('/pegawai/skp/rencana-kegiatan/periode/aktifkan/{id}', 'SkpController@aktifkan');
 
     Route::get('/pegawai/aktivitas/harian', 'AktivitasController@index');
+    Route::get('/pegawai/aktivitas/harian/detail/{bulan}/{tahun}', 'AktivitasController@detail');
     Route::get('/pegawai/aktivitas/add', 'AktivitasController@add');
     Route::post('/pegawai/aktivitas/add', 'AktivitasController@store');
     Route::get('/pegawai/aktivitas/harian/edit/{id}', 'AktivitasController@edit');

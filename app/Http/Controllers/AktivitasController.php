@@ -53,12 +53,17 @@ class AktivitasController extends Controller
             $atasan = $check;
         }
 
-        $data = Aktivitas::where('pegawai_id', $this->user()->pegawai->id)->orderBy('tanggal', 'DESC')->orderBy('jam_mulai', 'DESC')->paginate(10);
+        $aktivitasBelumDinilai = Aktivitas::where('pegawai_id', $this->user()->pegawai->id)->where('validasi', 0)->orderBy('id', 'DESC')->paginate(20);
         //$data = $this->user()->pegawai->aktivitas()->orderBy('tanggal','DESC')->orderBy('jam_mulai','DESC')->paginate(10);
 
-        return view('pegawai.aktivitas.index', compact('data', 'atasan', 'person'));
+        return view('pegawai.aktivitas.index', compact('atasan', 'person', 'aktivitasBelumDinilai'));
     }
 
+    public function detail($bulan, $tahun)
+    {
+        $data = Aktivitas::where('pegawai_id', $this->user()->pegawai->id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->orderBy('tanggal', 'DESC')->orderBy('jam_mulai', 'DESC')->get();
+        return view('pegawai.aktivitas.detail', compact('data', 'bulan', 'tahun'));
+    }
     public function add()
     {
         $tahun = Carbon::now()->year;
@@ -107,11 +112,11 @@ class AktivitasController extends Controller
         $aktivitas = Aktivitas::find($id);
         if ($this->user()->pegawai->id != $aktivitas->pegawai_id) {
             toastr()->error('Aktivitas tidak bisa di hapus, bukan milik anda', 'Authorize');
-            return back();
+            return redirect('/pegawai/aktivitas/harian');
         } else {
             $aktivitas->delete();
             toastr()->success('Aktivitas berhasil Di Hapus');
-            return back();
+            return redirect('/pegawai/aktivitas/harian');
         }
     }
 

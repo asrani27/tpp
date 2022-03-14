@@ -164,6 +164,13 @@ function totalMenit($bulan, $tahun)
     return $data->sum('menit');
 }
 
+function totalAktivitas($bulan, $tahun)
+{
+    $pegawai_id = Auth::user()->pegawai->id;
+    $data = Aktivitas::where('pegawai_id', $pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+    return count($data);
+}
+
 function totalAbsensi($bulan, $tahun)
 {
     $pegawai_id = Auth::user()->pegawai->id;

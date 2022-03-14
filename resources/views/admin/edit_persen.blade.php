@@ -71,14 +71,14 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
                       <input type="text" name="persentase_tpp[]" class="form-control form-control-sm"
                         value="{{$item->persentase_tpp == null ? 0 : $item->persentase_tpp}}">
                     </td>
-                    {{-- <td class="text-center">
+                    <td class="text-center">
                       <input type="text" name="persen_beban_kerja[]" class="form-control form-control-sm"
-                        value="{{$item->persen_beban_kerja == null ? 37.5 : $item->persen_beban_kerja}}">
+                        value="{{$item->persen_beban_kerja == 0 ? 37.5 : $item->persen_beban_kerja}}">
                     </td>
                     <td class="text-center">
                       <input type="text" name="persen_prestasi_kerja[]" class="form-control form-control-sm"
-                        value="{{$item->persen_prestasi_kerja == null ? 50 : $item->persen_prestasi_kerja}}">
-                    </td> --}}
+                        value="{{$item->persen_prestasi_kerja == 0 ? 50 : $item->persen_prestasi_kerja}}">
+                    </td>
                     <td class="text-center">
                       <input type="text" name="tambahan_persen_tpp[]" class="form-control form-control-sm"
                         value="{{$item->tambahan_persen_tpp == null ? 0 : $item->tambahan_persen_tpp}}">

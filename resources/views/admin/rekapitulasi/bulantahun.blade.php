@@ -42,7 +42,7 @@ SUPERADMIN
                     1. Melakukan pengaturan persentase TPP, klik <span class="badge badge-danger">
                         pengaturan persen tpp</span>, anda
                     akan melihat kolom
-                    persen tpp, beban kerja, prestasi kerja, dan kondisi kerja.
+                    persen tpp dan kondisi kerja.
                     silahkan sesuaikan kemudian, klik simpan, di bagian paling bawah<br />
 
                     2. Klik <span class="badge badge-primary">masukkan semua pegawai</span> ,

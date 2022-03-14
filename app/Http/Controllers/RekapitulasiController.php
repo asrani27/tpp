@@ -49,17 +49,17 @@ class RekapitulasiController extends Controller
 
                 $jabatan = Jabatan::find($req->jabatan);
                 $n = new RekapTpp;
-                $n->nip = $req->nip;
-                $n->nama = $checkDataPegawai->nama;
+
+                $n->nip         = $req->nip;
+                $n->nama        = $checkDataPegawai->nama;
                 $n->pegawai_id  = $checkDataPegawai->id;
                 $n->pangkat_id  = $checkDataPegawai->pangkat == null ? null : $checkDataPegawai->pangkat->id;
                 $n->pangkat     = $checkDataPegawai->pangkat == null ? null : $checkDataPegawai->pangkat->nama;
                 $n->golongan    = $checkDataPegawai->pangkat == null ? null : $checkDataPegawai->pangkat->golongan;
-
-                $n->jabatan     = $jabatan->nama;
-                $n->kelas       = $jabatan->kelas->nama;
-                $n->basic_tpp   = $jabatan->kelas->nilai;
-
+                $n->jabatan_id  = $checkDataPegawai->jabatan == null ? null : $checkDataPegawai->jabatan->id;
+                $n->jabatan     = $checkDataPegawai->jabatan == null ? null : $checkDataPegawai->jabatan->nama;
+                $n->jenis_jabatan     = $checkDataPegawai->jabatan == null ? null : $checkDataPegawai->jabatan->jenis_jabatan;
+                $n->kelas       = $checkDataPegawai->jabatan == null ? null : $checkDataPegawai->jabatan->kelas->nama;
 
                 $n->skpd_id = Auth::user()->skpd->id;
                 $n->bulan = $req->bulan;
@@ -78,7 +78,6 @@ class RekapitulasiController extends Controller
                             'skpd_id' => Auth::user()->skpd->id,
                             'jabatan' => $jabatan->nama,
                             'kelas' => $jabatan->kelas->nama,
-                            'basic_tpp' => $jabatan->kelas->nilai,
                         ]);
                         toastr()->success('Berhasil Di Tambahkan');
                         return back();

@@ -26,6 +26,20 @@ SUPERADMIN
                     4. Data yang di ambil dari CELL U8 (untuk Bpjs 4%)<br />
                     5. Data Yang di ambil dari sheet pertama
                 </div>
+                @if ($message = Session::get('success'))
+                <div class="alert alert-success">
+                    <strong>{{ $message }}</strong>
+                </div>
+                @endif
+                @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 <form method="post" action="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/bpjs"
                     enctype="multipart/form-data">
                     @csrf

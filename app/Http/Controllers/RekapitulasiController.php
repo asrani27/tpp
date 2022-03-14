@@ -77,6 +77,7 @@ class RekapitulasiController extends Controller
                         $check->update([
                             'skpd_id' => Auth::user()->skpd->id,
                             'jabatan' => $jabatan->nama,
+                            'jenis_jabatan' => $jabatan->jenis_jabatan,
                             'kelas' => $jabatan->kelas->nama,
                         ]);
                         toastr()->success('Berhasil Di Tambahkan');

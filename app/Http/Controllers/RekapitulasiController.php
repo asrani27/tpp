@@ -19,6 +19,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 class RekapitulasiController extends Controller
@@ -484,9 +485,14 @@ class RekapitulasiController extends Controller
 
     public function uploadBpjs(Request $req, $bulan, $tahun)
     {
-        $req->validate([
-            'file' => 'required|mimes:xlx,xls'
+        $validator = Validator::make($req->all(), [
+            'title' => 'required|mimes:xlx,xls',
         ]);
+
+        if ($validator->fails()) {
+            toastr()->error('File Harus Excel');
+            return back();
+        }
 
         $file = $req->file;
         $reader = new Xlsx();

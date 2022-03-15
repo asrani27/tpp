@@ -541,6 +541,13 @@ class RekapitulasiController extends Controller
             }
         }
 
+        $rekaptpp = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        foreach ($rekaptpp as $item) {
+            $item->update([
+                'tpp_diterima' => $item->pembayaran - ($item->potongan_pph21 + $item->potongan_bpjs_1persen),
+            ]);
+        }
+
         toastr()->success('BPJS Berhasil di upload');
         return redirect('/admin/rekapitulasi/' . $bulan . '/' . $tahun);
     }

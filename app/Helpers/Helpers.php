@@ -160,7 +160,7 @@ function bulanTahun()
 function totalMenit($bulan, $tahun)
 {
     $pegawai_id = Auth::user()->pegawai->id;
-    $data = Aktivitas::where('pegawai_id', $pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+    $data = Aktivitas::where('pegawai_id', $pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('validasi', 1)->get();
     return $data->sum('menit');
 }
 

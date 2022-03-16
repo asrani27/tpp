@@ -18,7 +18,6 @@ class TppController extends Controller
 
     public function tppBulanTahun($bulan, $tahun)
     {
-        toastr()->error('Fitur Dalam pengembangan');
-        return back();
+        return view('superadmin.tpp.skpd', compact('bulan', 'tahun'));
     }
 }

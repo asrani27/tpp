@@ -179,7 +179,7 @@ function totalAbsensi($bulan, $tahun)
     if ($check == null) {
         $hasil = 0;
     } else {
-        $hasil = $check->absensi;
+        $hasil = $check->pembayaran_absensi;
     }
     return $hasil;
 }

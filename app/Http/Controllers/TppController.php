@@ -20,4 +20,9 @@ class TppController extends Controller
     {
         return view('superadmin.tpp.skpd', compact('bulan', 'tahun'));
     }
+
+    public function tppSkpd($bulan, $tahun, $id)
+    {
+        return view('superadmin.tpp.skpd', compact('bulan', 'tahun'));
+    }
 }

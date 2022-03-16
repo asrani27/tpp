@@ -13,6 +13,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/home/superadmin', 'HomeController@superadmin');
     Route::get('/superadmin/profil', 'ProfilController@superadmin');
     Route::get('/superadmin/tpp/{bulan}/{tahun}', 'TppController@tppBulanTahun');
+    Route::get('/superadmin/tpp/{bulan}/{tahun}/laporan/{id}', 'TppController@tppSkpd');
     Route::post('/superadmin/profil', 'ProfilController@changeSuperadmin');
     Route::get('/superadmin/skpd', 'SuperadminController@skpd');
 

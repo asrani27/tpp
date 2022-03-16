@@ -90,7 +90,7 @@ JURNAL AKTIVITAS
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td>{{$data->sum('menit')}} Menit</td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>

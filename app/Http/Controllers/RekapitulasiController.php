@@ -458,8 +458,12 @@ class RekapitulasiController extends Controller
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+            $pembayaran_ct = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 7)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+            $pembayaran_tl = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 5)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+            $pembayaran_co = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 9)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 360;
+
             $aktivitas = Aktivitas::where('pegawai_id', $item->pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('validasi', 1)->get();
-            $menit_aktivitas = $aktivitas->sum('menit') + ($presensi == null ? 0 : $presensi->c * 360);
+            $menit_aktivitas = $aktivitas->sum('menit') + $pembayaran_ct + $pembayaran_tl + $pembayaran_co;
             $jabatan = Jabatan::find($item->jabatan_id);
             if ($presensi == null) {
                 $absensi = 0;
@@ -490,6 +494,10 @@ class RekapitulasiController extends Controller
                 'pembayaran_pk_produktivitas' => $pk_produktivitas,
                 'pembayaran_prestasi_kerja' => $pk_disiplin + $pk_produktivitas,
                 'pembayaran_kondisi_kerja' => $kondisi_kerja,
+                'pembayaran_cutitahunan' => $pembayaran_ct,
+                'pembayaran_tugasluar' => $pembayaran_tl,
+                'pembayaran_covid' => $pembayaran_co,
+                'pembayaran_at' => $aktivitas->sum('menit'),
                 'pembayaran' => $jumlah_pembayaran,
                 'potongan_pph21' => $potongan_pph21,
                 'tpp_diterima' => $jumlah_pembayaran - $potongan_pph21 - $item->potongan_bpjs_1persen,

@@ -29,13 +29,12 @@ SUPERADMIN
                             $no =1;
                             @endphp
                             <tbody>
-
                                 @foreach (skpd() as $key => $item)
                                 <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
                                     <td>{{$no++}}</td>
                                     <td>{{$item->kode_skpd}}</td>
                                     <td>{{$item->nama}}</td>
-                                    <td><a href="/superadmin/tpp/{{$bulan}}/{{$tahun}}"
+                                    <td><a href="/superadmin/tpp/{{$bulan}}/{{$tahun}}/laporan/{id}"
                                             class="btn btn-xs btn-success"><i class="fas fa-eye"></i> Laporan</a></td>
                                 </tr>
                                 @endforeach

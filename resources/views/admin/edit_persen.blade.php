@@ -69,17 +69,17 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
                     </td>
                     <td class="text-center">
                       <input type="text" name="persentase_tpp[]" class="form-control form-control-sm"
-                        value="{{$item->persentase_tpp == null ? 87.5 : $item->persentase_tpp}}">
+                        value="{{$item->persentase_tpp == null ? 86 : $item->persentase_tpp}}">
                     </td>
                     <td class="text-center">
                       <input type="text" name="tambahan_persen_tpp[]" class="form-control form-control-sm"
                         value="{{$item->tambahan_persen_tpp == null ? 0 : $item->tambahan_persen_tpp}}">
                     </td>
                     <td class="text-center">
-                      <input type="text" name="" class="form-control form-control-sm" value="37.5" readonly>
+                      <input type="text" name="" class="form-control form-control-sm" value="34" readonly>
                     </td>
                     <td class="text-center">
-                      <input type="text" name="" class="form-control form-control-sm" value="50" readonly>
+                      <input type="text" name="" class="form-control form-control-sm" value="52" readonly>
                     </td>
                   </tr>
                   @endforeach

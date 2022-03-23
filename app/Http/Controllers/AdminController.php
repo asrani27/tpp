@@ -12,6 +12,7 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
@@ -374,6 +375,20 @@ class AdminController extends Controller
         } catch (\Exception $e) {
 
             toastr()->error('Data Pegawai Tidak Di Temukan, mungkin NIP anda salah');
+            return back();
+        }
+    }
+
+    public function loginSuperadmin($uuid)
+    {
+        $session_id = session()->get('uuid');
+        if ($uuid == $session_id) {
+            if (Auth::loginUsingId(1)) {
+                Session::forget('uuid');
+                return redirect('/home/superadmin');
+            }
+        } else {
+            toastr()->error('Kegagalan Sistem, harap hubungi programmer');
             return back();
         }
     }

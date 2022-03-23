@@ -66,7 +66,7 @@ SUPERADMIN
                       : Rp. 0-.,</a>
                     <a href="/superadmin/skpd/jabatan/{{$item->id}}" class="btn btn-sm bg-purple"><i
                         class="fas fa-university"></i> PETA JABATAN : {{$item->jabatan->count()}}</a>
-                    <a href="/superadmin/skpd/login/{{$item->id}}" target="_blank" class="btn btn-sm bg-danger">LOG IN
+                    <a href="/superadmin/skpd/login/{{$item->id}}" class="btn btn-sm bg-danger">LOG IN
                       <i class="fas fa-arrow-right"></i> </a>
 
                   </td>

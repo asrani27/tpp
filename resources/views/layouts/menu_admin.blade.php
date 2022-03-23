@@ -128,9 +128,10 @@
             </a>
         </li>
         </li>
-        @if (Auth::user()->login_superadmin == 1)
+
+        @if (session()->get('uuid') != null)
         <li class="nav-item">
-            <a href="/logout/superadmin" class="nav-link">
+            <a href="/admin/superadmin/{{session()->get('uuid')}}" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt"></i>
                 <p>
                     Ke Superadmin

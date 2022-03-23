@@ -17,7 +17,6 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::post('/superadmin/profil', 'ProfilController@changeSuperadmin');
     Route::get('/superadmin/skpd', 'SuperadminController@skpd');
     Route::get('/superadmin/skpd/login/{id}', 'SuperadminController@loginSkpd');
-    Route::post('/superadmin/skpd/login/{id}', 'LoginController@loginSkpd');
     Route::get('/superadmin/skpd/createsuperadmin', 'SuperadminController@createSuperadmin');
 
     Route::get('/superadmin/skpd/pegawai/{skpd_id}/import', 'SuperadminController@addImport');
@@ -211,11 +210,12 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/sekolah/{id}/petajabatan/{idJab}/edit', 'SekolahController@editJabatan');
     Route::post('/admin/sekolah/{id}/petajabatan/{idJab}/edit', 'SekolahController@updateJabatan');
 
-
     Route::get('/admin/cuti', 'CutiController@admin');
     Route::get('/admin/cuti/search', 'CutiController@search');
     Route::get('/admin/cuti/{nip}/detail', 'CutiController@detail');
     Route::get('/admin/cuti/tarik', 'CutiController@tarik');
+
+    Route::get('/admin/superadmin/{uuid}', 'AdminController@loginSuperadmin');
 });
 
 Route::group(['middleware' => ['auth', 'role:pegawai']], function () {

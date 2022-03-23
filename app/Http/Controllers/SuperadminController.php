@@ -14,6 +14,7 @@ use App\Pegawai;
 use App\Aktivitas;
 use App\Parameter;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Imports\PegawaiImport;
 use Illuminate\Cache\NullStore;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -1120,10 +1122,10 @@ class SuperadminController extends Controller
     public function loginSkpd($id)
     {
         $user = Skpd::find($id)->user;
+
+        $uuid = Str::random(40);
         if (Auth::loginUsingId($user->id)) {
-            $user->update([
-                'login_superadmin' => 1,
-            ]);
+            Session::put('uuid', $uuid);
             return redirect('/home/admin');
         }
     }

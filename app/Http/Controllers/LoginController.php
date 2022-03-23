@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Skpd;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -17,6 +18,8 @@ class LoginController extends Controller
     {
 
         if (Auth::attempt(['username' => $req->username, 'password' => $req->password])) {
+
+            Session::forget('superadmin');
             if (Auth::user()->hasRole('superadmin')) {
                 return redirect('/home/superadmin');
             } elseif (Auth::user()->hasRole('admin')) {
@@ -30,17 +33,6 @@ class LoginController extends Controller
             toastr()->error('Username / Password Tidak Ditemukan');
             $req->flash();
             return back();
-        }
-    }
-
-    public function loginSkpd($id)
-    {
-        $user = Skpd::find($id)->user;
-        if (Auth::loginUsingId($user->id)) {
-            $user->update([
-                'login_superadmin' => 1,
-            ]);
-            return redirect('/home/admin');
         }
     }
 

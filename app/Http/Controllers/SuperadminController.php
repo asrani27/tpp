@@ -20,6 +20,7 @@ use Illuminate\Cache\NullStore;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -1114,5 +1115,16 @@ class SuperadminController extends Controller
         $aktivitas_disetujui = Aktivitas::where('pegawai_id', $id)->where('validasi', 1)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
         $aktivitas_ditolak = Aktivitas::where('pegawai_id', $id)->where('validasi', 2)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
         return view('superadmin.pegawai.detail_aktivitas', compact('id', 'aktivitas_disetujui', 'aktivitas_ditolak'));
+    }
+
+    public function loginSkpd($id)
+    {
+        $user = Skpd::find($id)->user;
+        if (Auth::loginUsingId($user->id)) {
+            $user->update([
+                'login_superadmin' => 1,
+            ]);
+            return redirect('/home/admin');
+        }
     }
 }

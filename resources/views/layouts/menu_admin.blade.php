@@ -128,6 +128,16 @@
             </a>
         </li>
         </li>
+        @if (Auth::user()->login_superadmin == 1)
+        <li class="nav-item">
+            <a href="/logout/superadmin" class="nav-link">
+                <i class="nav-icon fas fa-sign-out-alt"></i>
+                <p>
+                    Ke Superadmin
+                </p>
+            </a>
+        </li>
+        @else
         <li class="nav-item">
             <a href="/logout" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt"></i>
@@ -136,5 +146,6 @@
                 </p>
             </a>
         </li>
+        @endif
     </ul>
 </nav>

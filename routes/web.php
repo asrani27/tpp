@@ -16,6 +16,9 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/superadmin/tpp/{bulan}/{tahun}/laporan/{id}', 'TppController@tppSkpd');
     Route::post('/superadmin/profil', 'ProfilController@changeSuperadmin');
     Route::get('/superadmin/skpd', 'SuperadminController@skpd');
+    Route::get('/superadmin/skpd/login/{id}', 'SuperadminController@loginSkpd');
+    Route::post('/superadmin/skpd/login/{id}', 'LoginController@loginSkpd');
+    Route::get('/superadmin/skpd/createsuperadmin', 'SuperadminController@createSuperadmin');
 
     Route::get('/superadmin/skpd/pegawai/{skpd_id}/import', 'SuperadminController@addImport');
     Route::post('/superadmin/skpd/pegawai/{skpd_id}/import', 'SuperadminController@importPegawai');

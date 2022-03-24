@@ -299,6 +299,11 @@ SUPERADMIN
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td>{{currency($data->sum('tpp_diterima'))}}</td>
                         </tr>
                     </tbody>

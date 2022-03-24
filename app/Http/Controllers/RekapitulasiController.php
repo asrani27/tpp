@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cuti;
+use App\Skpd;
 use App\Kelas;
 use App\Jabatan;
 use App\Pangkat;
@@ -565,5 +566,15 @@ class RekapitulasiController extends Controller
         $skpd = Auth::user()->skpd;
 
         return view('admin.rekapitulasi.paguexcel', compact('data', 'skpd', 'bulan', 'tahun'));
+    }
+
+    public function plt($bulan, $tahun, $id)
+    {
+
+        toastr()->success('Dalam Pengembangan, akan selesai pada pukul 21:00');
+        return back();
+        // $skpd = Skpd::get();
+        // $data = RekapTpp::find($id);
+        // return view('admin.rekapitulasi.plt', compact('skpd', 'data', 'bulan', 'tahun'));
     }
 }

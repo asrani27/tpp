@@ -145,7 +145,10 @@ SUPERADMIN
                             <th rowspan=3 style="border:1px solid silver" class='bg-secondary'>
                                 Jumlah Kondisi Kerja <br /> 5.1.01.02.03.0001</th>
                             <th rowspan=3 style="border:1px solid silver" class='bg-success'>
-                                Jumlah Pembayaran</th>
+                                Jumlah Pembayaran <br />
+                                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/excelpagu"><i
+                                        class="icon fas fa-download"></i> Download</a>
+                            </th>
                         </tr>
                         <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center">
                             <th style="border:1px solid silver" class="bg-warning">Disiplin</th>
@@ -300,7 +303,8 @@ SUPERADMIN
                         </tr>
                     </tbody>
                 </table><br />
-                Isi NIP dan Jabatan Lama di bawah ini, Jika Yang bersangkutan sudah pindah/promosi ke skpd lain dan yang
+                1Isi NIP dan Jabatan Lama di bawah ini, Jika Yang bersangkutan sudah pindah/promosi ke skpd lain dan
+                yang
                 membayarkan SKPD lama
                 <form method="post" action="/admin/rekapitulasi/tambahpegawai">
                     @csrf

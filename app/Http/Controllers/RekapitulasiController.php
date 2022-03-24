@@ -558,4 +558,12 @@ class RekapitulasiController extends Controller
         toastr()->success('BPJS Berhasil di upload');
         return redirect('/admin/rekapitulasi/' . $bulan . '/' . $tahun);
     }
+
+    public function paguExcel($bulan, $tahun)
+    {
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->where('puskesmas_id', null)->get();
+        $skpd = Auth::user()->skpd;
+
+        return view('admin.rekapitulasi.paguexcel', compact('data', 'skpd', 'bulan', 'tahun'));
+    }
 }

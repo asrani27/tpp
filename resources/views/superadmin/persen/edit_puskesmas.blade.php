@@ -7,20 +7,20 @@
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 @endpush
 @section('title')
-ADMIN SKPD
+ADMIN PUSKESMAS
 @endsection
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <h4>{{detailSkpd($skpd_id)->nama}}</h4>
-
+        <h4>{{detailPuskesmas($puskesmas_id)->nama}}</h4>
         <div class="card card-info">
             <div class="card-header">
                 <h3 class="card-title">Edit Persen</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form class="form-horizontal" method="POST" action="/superadmin/persentase/skpd/{{$skpd_id}}/edit/{{$id}}">
+            <form class="form-horizontal" method="POST"
+                action="/superadmin/persentase/puskesmas/{{$puskesmas_id}}/edit/{{$id}}">
                 @csrf
                 <div class="card-body">
                     <div class="form-group row">
@@ -78,7 +78,7 @@ ADMIN SKPD
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    <a href="/superadmin/persentase/skpd/{{$skpd_id}}" class="btn btn-secondary">Kembali</a>
+                    <a href="/superadmin/persentase/puskesmas/{{$puskesmas_id}}" class="btn btn-secondary">Kembali</a>
                     <button type="submit" class="btn btn-info">Simpan</button>
                 </div>
                 <!-- /.card-footer -->

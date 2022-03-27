@@ -112,6 +112,8 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/superadmin/persentase/puskesmas/{id}', 'PersenController@detailPuskesmas');
     Route::get('/superadmin/persentase/skpd/{skpd_id}/edit/{id}', 'PersenController@editPersen');
     Route::post('/superadmin/persentase/skpd/{skpd_id}/edit/{id}', 'PersenController@updatePersen');
+    Route::get('/superadmin/persentase/puskesmas/{puskesmas_id}/edit/{id}', 'PersenController@editPersenPuskesmas');
+    Route::post('/superadmin/persentase/puskesmas/{puskesmas_id}/edit/{id}', 'PersenController@updatePersenPuskesmas');
     Route::get('/superadmin/persentase/subkoordinator/ya/{id}', 'PersenController@subK');
     Route::get('/superadmin/persentase/subkoordinator/tidak/{id}', 'PersenController@nonSubK');
 });

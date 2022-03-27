@@ -12,6 +12,7 @@ use App\RekapTpp;
 use App\Aktivitas;
 use App\Parameter;
 use App\BulanTahun;
+use App\Rspuskesmas;
 use Illuminate\Support\Facades\Auth;
 
 function terbilang($angka)
@@ -125,6 +126,10 @@ function detailSkpd($id)
     return Skpd::find($id);
 }
 
+function detailPuskesmas($id)
+{
+    return Rspuskesmas::find($id);
+}
 function jabatan($skpd_id)
 {
     $data = Jabatan::where('skpd_id', $skpd_id)->get();

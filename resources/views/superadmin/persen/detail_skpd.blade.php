@@ -47,12 +47,11 @@ SUPERADMIN
                     }}</td>
                   <td class="text-center">
                     @if ($item->subkoordinator == null)
-                    <a href="/superadmin/persentase/subkoordinator/ya/{{$item->id}}" class="btn btn-xs btn-danger"><i
-                        class="fa fa-times" onclick="return confirm('Ubah Menjadi SubKoordinator?');"></i></a>
+                    <a href="/superadmin/persentase/subkoordinator/ya/{{$item->id}}" class="btn btn-xs btn-danger"
+                      onclick="return confirm('Ubah Menjadi SubKoordinator?');"><i class="fa fa-times"></i></a>
                     @else
-                    <a href="/superadmin/persentase/subkoordinator/tidak/{{$item->id}}"
-                      class="btn btn-xs btn-success"><i class="fa fa-check"
-                        onclick="return confirm('Ubah Menjadi Bukan SubKoordinator?');"></i></a>
+                    <a href="/superadmin/persentase/subkoordinator/tidak/{{$item->id}}" class="btn btn-xs btn-success"
+                      onclick="return confirm('Ubah Menjadi Bukan SubKoordinator?');"><i class="fa fa-check"></i></a>
                     @endif
                   </td>
                   <td class="text-center">{{$item->persen_beban_kerja == null ? 0:$item->persen_beban_kerja}}</td>

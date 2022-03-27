@@ -211,6 +211,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('/admin/rekapitulasi/{bulan}/{tahun}/bpjs', 'RekapitulasiController@uploadBpjs');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/excelpagu', 'RekapitulasiController@paguExcel');
 
+    Route::post('/admin/rekapitulasi/bpjs', 'RekapitulasiController@updatebpjs');
+
     Route::get('/admin/sekolah', 'SekolahController@index');
     Route::get('/admin/sekolah/add', 'SekolahController@create');
     Route::post('/admin/sekolah/add', 'SekolahController@store');

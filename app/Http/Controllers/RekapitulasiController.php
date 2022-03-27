@@ -577,4 +577,19 @@ class RekapitulasiController extends Controller
         // $data = RekapTpp::find($id);
         // return view('admin.rekapitulasi.plt', compact('skpd', 'data', 'bulan', 'tahun'));
     }
+
+    public function updatebpjs(Request $req)
+    {
+        $data = RekapTpp::find($req->id_rekap);
+        if ($data->skpd_id != Auth::user()->skpd->id) {
+            toastr()->error('Bukan Data Milik SKPD Anda');
+            return back();
+        }
+        $data->potongan_bpjs_1persen = $req->satu_persen;
+        $data->potongan_bpjs_4persen = $req->empat_persen;
+        $data->tpp_diterima = $data->pembayaran - $data->potongan_pph21 - $req->satu_persen;
+        $data->save();
+        toastr()->success('Berhasil Di Input');
+        return back();
+    }
 }

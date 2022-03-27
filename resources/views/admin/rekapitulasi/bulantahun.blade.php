@@ -263,7 +263,10 @@ SUPERADMIN
                                 {{$item->potonganPPH21->pph}} %
                             </td>
                             <td class="text-right">
-                                {{currency($item->potongan_bpjs_1persen)}}
+                                {{currency($item->potongan_bpjs_1persen)}}<br />
+                                <button type="button" class=" btn btn-xs editbpjs" data-id="{{$item->id}}"
+                                    data-nama="{{$item->nama}}" data-1persen="{{$item->potongan_bpjs_1persen}}"
+                                    data-4persen="{{$item->potongan_bpjs_4persen}}"><i class="fas fa-edit"></i></button>
                             </td>
                             <td class="text-right">
                                 {{currency($item->potongan_bpjs_4persen)}}
@@ -332,10 +335,10 @@ SUPERADMIN
     </div>
 </div>
 
-<div class="modal fade" id="modal-upload" style="display: none;" aria-hidden="true">
+<div class="modal fade" id="modal-bpjs" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="/admin/karpeg/" enctype="multipart/form-data">
+            <form method="post" action="/admin/rekapitulasi/bpjs/" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header bg-gradient-success" style="padding:10px">
                     <h4 class="modal-title text-sm">BPJS</h4>
@@ -345,8 +348,11 @@ SUPERADMIN
                 </div>
 
                 <div class="modal-body">
-                    BPJS 1% <input type="text" class="form-control" name="1_persen" required><br />
-                    BPJS 4% <input type="text" class="form-control" name="4_persen" required>
+                    Nama<input type="text" id="id_nama" class="form-control" readonly><br />
+                    BPJS 1% <input type="text" id="id_1persen" class="form-control" name="satu_persen"
+                        onkeypress="return hanyaAngka(event)" required><br />
+                    BPJS 4% <input type="text" id="id_4persen" class="form-control" name="empat_persen"
+                        onkeypress="return hanyaAngka(event)" required>
                     <input type="hidden" id="id_rekap" name="id_rekap">
                 </div>
 
@@ -362,6 +368,15 @@ SUPERADMIN
 
 @push('js')
 
+<script>
+    $(document).on('click', '.editbpjs', function() {
+       $('#id_nama').val($(this).data('nama'));
+       $('#id_rekap').val($(this).data('id'));
+       $('#id_1persen').val($(this).data('1persen'));
+       $('#id_4persen').val($(this).data('4persen'));
+       $("#modal-bpjs").modal();
+    });
+</script>
 <script src="/theme/plugins/select2/js/select2.full.min.js"></script>
 <script>
     $(function () {
@@ -373,5 +388,14 @@ SUPERADMIN
         theme: 'bootstrap4'
       })
     })
+</script>
+<script>
+    function hanyaAngka(evt) {
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+ 
+    return false;
+    return true;
+}
 </script>
 @endpush

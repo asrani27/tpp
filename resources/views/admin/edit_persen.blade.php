@@ -84,8 +84,6 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
 
               </table>
             </div>
-            <button type="submit" class="btn btn-block btn-success"><i class="fas fa-save"></i> Simpan</button>
-            <!-- /.card-body -->
           </form>
         </div>
       </div>

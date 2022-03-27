@@ -43,7 +43,7 @@ class PersenController extends Controller
         $data->persen_prestasi_kerja = $req->persen_prestasi_kerja;
         $data->persen_kondisi_kerja = $req->persen_kondisi_kerja;
         $data->persen_kelangkaan_profesi = $req->persen_kelangkaan_profesi;
-        $data->persentase_tpp = $req->persen_beban_kerja + $req->persen_tambahan_beban_kerja + $req->persen_prestasi_kerja;
+        $data->persentase_tpp = $req->persen_beban_kerja + $req->persen_prestasi_kerja;
         $data->save();
         toastr()->success('Berhasil diupdate');
         return redirect('/superadmin/persentase/skpd/' . $skpd_id);
@@ -63,7 +63,7 @@ class PersenController extends Controller
         $data->persen_prestasi_kerja = $req->persen_prestasi_kerja;
         $data->persen_kondisi_kerja = $req->persen_kondisi_kerja;
         $data->persen_kelangkaan_profesi = $req->persen_kelangkaan_profesi;
-        $data->persentase_tpp = $req->persen_beban_kerja + $req->persen_tambahan_beban_kerja + $req->persen_prestasi_kerja;
+        $data->persentase_tpp = $req->persen_beban_kerja + $req->persen_prestasi_kerja;
         $data->save();
         toastr()->success('Berhasil diupdate');
         return redirect('/superadmin/persentase/puskesmas/' . $puskesmas_id);

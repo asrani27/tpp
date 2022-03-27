@@ -61,9 +61,9 @@ SUPERADMIN
                     5. Upload Data Potongan BPJS dengan mengklik tombol <span class="badge badge-info">BPJS</span>
                     akan menghitung di kolom BPJS
                 </div>
-                {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/excel" target="_blank"
-                    class="btn btn-xs btn-danger">Export Excel</a>
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/pdf" target="_blank"
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/excel" target="_blank"
+                    class="btn btn-xs btn-primary">Export Excel</a>
+                {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/pdf" target="_blank"
                     class="btn btn-xs btn-danger">Export PDF</a> --}}
                 <a href="/home/admin/persen" class="btn btn-xs btn-danger">Pengaturan Persen TPP</a>
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/masukkanpegawai" class="btn btn-xs btn-primary"
@@ -112,7 +112,7 @@ SUPERADMIN
                                 <br />Jabatan
                             </th>
                             <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Kelas</th>
-                            <th style="border:1px solid silver" colspan=6 class="bg-warning">Perhitungan</th>
+                            <th style="border:1px solid silver" colspan=8 class="bg-warning">Perhitungan</th>
                             <th colspan=14 style="border:1px solid silver" class="bg-success">Pembayaran</th>
                             <th rowspan=4 style="border:1px solid silver" class="bg-info">PPH 21</th>
                             <th rowspan=4 style="border:1px solid silver" class="bg-info">BPJS 1%</th>
@@ -126,8 +126,13 @@ SUPERADMIN
                             <th rowspan=3 style="border:1px solid silver" class="bg-warning">Pagu Disiplin<br />
                                 Kerja dan<br /> Produktivitas</th>
                             <th colspan=2 style="border:1px solid silver" class="bg-warning">Penilaian TPP</th>
-                            <th rowspan=3 style="border:1px solid silver" class="bg-warning">Kondisi Kerja</th>
-                            <th rowspan=3 style="border:1px solid silver" class="bg-warning">Pagu TPP ASN</th>
+                            <th rowspan=3 style="border:1px solid silver" class="bg-warning">Kondisi <br /> Kerja</th>
+                            <th rowspan=3 style="border:1px solid silver" class="bg-warning">Tambahan Beban <br /> Kerja
+                            </th>
+                            <th rowspan=3 style="border:1px solid silver" class="bg-warning">Kelangkaan <br />Profesi
+                            </th>
+                            <th rowspan=3 style="border:1px solid silver" class="bg-warning">Pagu <br />TPP<br /> ASN
+                            </th>
                             <th class="bg-success" style="border:1px solid silver" colspan=4>Menit Aktivitas + Menit
                                 Cuti</th>
                             <th class="bg-success" style="border:1px solid silver" rowspan=3>Total<br /> Menit</th>

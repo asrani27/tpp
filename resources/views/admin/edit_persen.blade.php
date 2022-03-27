@@ -27,11 +27,14 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
                     class="text-center bg-gradient-primary">
                     <th style="width: 10px">#</th>
                     <th>Nama /NIP/Pangkat/Golongan</th>
-                    <th>Jenis Jabatan</th>
-                    <th>Persentase<br /> TPP<br />%</th>
-                    <th>Kondisi <br />Kerja<br />%</th>
-                    <th>Beban <br />Kerja<br />%</th>
-                    <th>Prestasi <br />Kerja<br />%</th>
+                    <th>Jenis <br />Jabatan</th>
+                    <th>Beban <br />Kerja</th>
+                    <th>Tambahan<br /> Beban Kerja</th>
+                    <th>Prestasi<br /> Kerja</th>
+                    <th>Kondisi<br /> Kerja</th>
+                    <th>Kelangkaan<br /> Profesi</th>
+                    <th>Persentasi TPP<br />(BK+TBK+PK)</th>
+                    <th>Aksi</th>
                   </tr>
                 </thead>
                 @php
@@ -50,36 +53,29 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
                       {{$item->pegawai == null ? '' : $item->pegawai->nip}}
                     </td>
                     <td class="text-center">
-                      <select name="jenis_jabatan[]" class="form-control form-control-sm">
-                        <option value="">-pilih-</option>
-                        <option value="struktural" {{$item->jenis_jabatan == 'struktural' ? 'selected':''}}>Struktural
-                        </option>
-                        <option value="jfu" {{$item->jenis_jabatan == 'jfu' ? 'selected':''}}>JFU</option>
-                        <option value="jft" {{$item->jenis_jabatan == 'jft' ? 'selected':''}}>JFT</option>
-                        <option value="JPT Pratama" {{$item->jenis_jabatan == 'JPT Pratama' ? 'selected':''}}>JPT
-                          Pratama
-                        </option>
-                        <option value="Administrator" {{$item->jenis_jabatan == 'Administrator' ? 'selected':''}}>
-                          Administrator
-                        </option>
-                        <option value="Pengawas" {{$item->jenis_jabatan == 'Pengawas' ? 'selected':''}}>
-                          Pengawas
-                        </option>
-                      </select>
+                      {{$item->jenis_jabatan}}
                     </td>
                     <td class="text-center">
-                      <input type="text" name="persentase_tpp[]" class="form-control form-control-sm"
-                        value="{{$item->persentase_tpp == null ? 86 : $item->persentase_tpp}}">
+                      {{$item->persen_beban_kerja == null ? 0 :$item->persen_beban_kerja}}
                     </td>
                     <td class="text-center">
-                      <input type="text" name="tambahan_persen_tpp[]" class="form-control form-control-sm"
-                        value="{{$item->tambahan_persen_tpp == null ? 0 : $item->tambahan_persen_tpp}}">
+                      {{$item->persen_tambahan_beban_kerja == null ? 0 :$item->persen_tambahan_beban_kerja}}
                     </td>
                     <td class="text-center">
-                      <input type="text" name="" class="form-control form-control-sm" value="34" readonly>
+                      {{$item->persen_prestasi_kerja == null ? 0 :$item->persen_prestasi_kerja}}
                     </td>
                     <td class="text-center">
-                      <input type="text" name="" class="form-control form-control-sm" value="52" readonly>
+                      {{$item->persen_kondisi_kerja == null ? 0 :$item->persen_kondisi_kerja}}
+                    </td>
+                    <td class="text-center">
+                      {{$item->persen_kelangkaan_profesi == null ? 0 :$item->persen_kelangkaan_profesi}}
+                    </td>
+                    <td class="text-center">
+                      {{$item->persentase_tpp == null ? 0 :$item->persentase_tpp}}
+                    </td>
+                    <td class="text-center">
+                      <a href="/home/admin/persen/edit/{{$item->id}}" class="btn btn-xs btn-primary"
+                        class="btn btn-xs btn-primary"><i class="fas fa-edit"></i>edit</a>
                     </td>
                   </tr>
                   @endforeach

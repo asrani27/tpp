@@ -122,6 +122,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/home/admin', 'HomeController@admin');
 
     Route::get('/home/admin/persen', 'AdminController@editPersen');
+    Route::get('/home/admin/persen/edit/{id}', 'AdminController@editPersentase');
+    Route::post('/home/admin/persen/edit/{id}', 'AdminController@updatePersentase');
     Route::post('/home/admin/persen', 'AdminController@updatePersen');
     Route::get('/home/admin/up/{id}/{urutan}', 'HomeController@adminUp');
     Route::get('/home/admin/down/{id}/{urutan}', 'HomeController@adminDown');

@@ -295,6 +295,30 @@ class AdminController extends Controller
         return view('admin.edit_persen', compact('data'));
     }
 
+    public function editPersentase($id)
+    {
+        $data = Jabatan::find($id);
+        if ($data->skpd_id != Auth::user()->skpd->id) {
+            toastr()->error('Jabatan bukan milik SKPD anda');
+            return back();
+        }
+        return view('admin.edit_persentase', compact('data', 'id'));
+    }
+
+    public function updatePersentase(Request $req, $id)
+    {
+        $data = Jabatan::find($id);
+        $data->persen_beban_kerja = $req->persen_beban_kerja;
+        $data->persen_tambahan_beban_kerja = $req->persen_tambahan_beban_kerja;
+        $data->persen_prestasi_kerja = $req->persen_prestasi_kerja;
+        $data->persen_kondisi_kerja = $req->persen_kondisi_kerja;
+        $data->persen_kelangkaan_profesi = $req->persen_kelangkaan_profesi;
+        $data->persentase_tpp = $req->persen_beban_kerja + $req->persen_tambahan_beban_kerja + $req->persen_prestasi_kerja;
+        $data->save();
+        toastr()->success('Berhasil diupdate');
+        return redirect('/home/admin/persen');
+    }
+
     public function updatePersen(Request $req)
     {
         DB::beginTransaction();

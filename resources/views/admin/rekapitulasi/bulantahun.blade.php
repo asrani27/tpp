@@ -224,6 +224,12 @@ SUPERADMIN
                                 {{$item->persenJabatan->tambahan_persen_tpp}} %
                             </td>
                             <td class="text-right">
+                                {{$item->persenjabatan->persen_tambahan_beban_kerja}} %
+                            </td>
+                            <td class="text-right">
+                                {{$item->persenjabatan->persen_kelangkaan_profesi}} %
+                            </td>
+                            <td class="text-right">
                                 {{currency($item->perhitungan_pagu_tpp_asn)}}
                             </td>
                             <td class="text-right">

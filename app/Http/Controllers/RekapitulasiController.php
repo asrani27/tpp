@@ -475,18 +475,13 @@ class RekapitulasiController extends Controller
             } else {
                 $absensi = $presensi->persen_kehadiran;
             }
-            $bk_disiplin = (($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * ((40 / 100) * $absensi / 100));
-            $bk_produktivitas = $menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * 0.6 : 0;
+            $bk_disiplin = round((($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * ((40 / 100) * $absensi / 100)));
+            $bk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * 0.6 : 0);
 
-            $pk_disiplin = (($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * ((40 / 100) * $absensi / 100));
-            $pk_produktivitas = $menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * 0.6 : 0;
+            $pk_disiplin = round((($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * ((40 / 100) * $absensi / 100)));
+            $pk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * 0.6 : 0);
 
-            $kondisi_kerja = $item->perhitungan_basic_tpp * $jabatan->tambahan_persen_tpp / 100;
-
-            $jumlah_pembayaran =  $bk_disiplin + $bk_produktivitas + $pk_disiplin + $pk_produktivitas + $kondisi_kerja;
-
-            $pph21 = Pangkat::find($item->pangkat_id)->pph;
-            $potongan_pph21 = $jumlah_pembayaran * ($pph21 / 100);
+            $kondisi_kerja = round($item->perhitungan_basic_tpp * $jabatan->tambahan_persen_tpp / 100);
 
             $item->update([
                 'pembayaran_absensi' => $presensi == null ? null : $presensi->persen_kehadiran,
@@ -502,9 +497,18 @@ class RekapitulasiController extends Controller
                 'pembayaran_tugasluar' => $pembayaran_tl,
                 'pembayaran_covid' => $pembayaran_co,
                 'pembayaran_at' => $aktivitas->sum('menit'),
-                'pembayaran' => $jumlah_pembayaran,
+                // 'pembayaran' => $jumlah_pembayaran,
+                // 'potongan_pph21' => $potongan_pph21,
+                // 'tpp_diterima' => $jumlah_pembayaran - $potongan_pph21 - $item->potongan_bpjs_1persen,
+            ]);
+
+            $pph21 = Pangkat::find($item->pangkat_id)->pph;
+            $potongan_pph21 = round($item->pembayaran * ($pph21 / 100));
+
+            $item->update([
+                'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja,
                 'potongan_pph21' => $potongan_pph21,
-                'tpp_diterima' => $jumlah_pembayaran - $potongan_pph21 - $item->potongan_bpjs_1persen,
+                'tpp_diterima' => $item->pembayaran - $potongan_pph21 - $item->potongan_bpjs_1persen,
             ]);
         }
         toastr()->success('Berhasil di hitung');

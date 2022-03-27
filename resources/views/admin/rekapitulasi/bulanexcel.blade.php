@@ -28,27 +28,42 @@ header("Content-Disposition: attachment; filename=tpp.xls");
         <table cellpadding="5" cellspacing="0" border="1">
             <thead>
                 <tr>
-                    <th rowspan="2">No</th>
-                    <th rowspan="2">Nama<br />NIP<br />Pangkat/Golongan</th>
-                    <th rowspan="2">Jabatan</th>
-                    <th rowspan="2">Kelas</th>
-                    <th rowspan="2">Basic TPP</th>
-                    <th colspan="4">Beban Kerja</th>
-                    <th colspan="2">Disiplin 40%</th>
-                    <th colspan="2">Produktivitas 60%</th>
-                    <th rowspan="2">TPP ASN</th>
-                    <th rowspan="2">PPH21</th>
-                    <th rowspan="2">TPP Diterima</th>
+                    <th rowspan="4">NO</th>
+                    <th rowspan="4">NAMA</th>
+                    <th rowspan="4">NIP</th>
+                    <th rowspan="4">PANGKAT/GOLONGAN</th>
+                    <th rowspan="4">JABATAN</th>
+                    <th rowspan="4">JENIS JABATAN</th>
+                    <th rowspan="4">KELAS</th>
+                    <th>Perhitungan</th>
+                    <th colspan=9>Pembayaran</th>
+                    <th rowspan=4>PPH 21</th>
+                    <th rowspan=4>BPJS 1%</th>
+                    <th rowspan=4>BPJS 4%</th>
+                    <th rowspan=4>TPP Diterima<br />Transfer</th>
+                    <th rowspan=4>Tanda Tangan</th>
                 </tr>
                 <tr>
-                    <th>Persentase <br />TPP</th>
-                    <th>Tambahan<br />Persentase<br />TPP</th>
-                    <th>Jumlah<br />Persentase</th>
-                    <th>Total<br />Pagu</th>
-                    <th>%</th>
-                    <th>Rp.</th>
-                    <th>Menit</th>
-                    <th>Rp.</th>
+                    <th rowspan="3">Basic TPP</th>
+                    <th colspan="2">Beban Kerja</th>
+                    <th rowspan="3">Jumlah <br />Beban Kerja<br />5.1.01.02.01.0001</th>
+                    <th colspan="2">Prestasi Kerja</th>
+                    <th rowspan="3">Jumlah <br />Prestasi Kerja <br />5.1.01.02.05.0001</th>
+                    <th rowspan="3">Kondisi Kerja</th>
+                    <th rowspan="3">Jumlah <br />Kondisi Kerja <br />5.1.01.02.03.0001</th>
+                    <th rowspan="3">Jumlah <br /> Pembayaran</th>
+                </tr>
+                <tr>
+                    <th>Disiplin Kerja</th>
+                    <th>Produktivitas</th>
+                    <th>Disiplin Kerja</th>
+                    <th>Produktivitas</th>
+                </tr>
+                <tr>
+                    <th>40%</th>
+                    <th>60%</th>
+                    <th>40%</th>
+                    <th>60%</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,35 +73,45 @@ header("Content-Disposition: attachment; filename=tpp.xls");
                 @foreach ($data as $item)
                 <tr>
                     <td valign="top">{{$no++}}</td>
+                    <td valign="top">{{strtoupper($item->nama)}}</td>
+                    <td valign="top">NIP.{{$item->nip}}</td>
+                    <td align="center" valign="top">{{$item->pangkat}} ({{$item->golongan}})</td>
+                    <td align="center" valign="top">{{$item->jabatan}}</td>
+                    <td align="center" valign="top">{{$item->jenis_jabatan}}</td>
+                    <td align="center" valign="top">{{$item->kelas}}</td>
+                    <td align="right" valign="top">{{currency($item->perhitungan_basic_tpp)}}</td>
+                    <td align="right" valign="top">{{currency($item->pembayaran_bk_disiplin)}}</td>
+                    <td align="right" valign="top">{{currency($item->pembayaran_bk_produktivitas)}}</td>
+                    <td align="right" valign="top">{{currency($item->pembayaran_beban_kerja)}}</td>
+                    <td align="right" valign="top">{{currency($item->pembayaran_pk_disiplin)}}</td>
+                    <td align="right" valign="top">{{currency($item->pembayaran_pk_produktivitas)}}</td>
+                    <td align="right" valign="top">{{currency($item->pembayaran_prestasi_kerja)}}</td>
+                    <td align="right" valign="top">{{currency($item->pembayaran_kondisi_kerja)}}</td>
+                    <td align="right" valign="top">{{currency($item->pembayaran_kondisi_kerja)}}</td>
+                    <td align="right" valign="top">{{currency($item->pembayaran)}}</td>
+                    <td align="right" valign="top">{{currency($item->potongan_pph21)}}</td>
+                    <td align="right" valign="top">{{currency($item->potongan_bpjs_1persen)}}</td>
+                    <td align="right" valign="top">{{currency($item->potongan_bpjs_4persen)}}</td>
+                    <td align="right" valign="top">{{currency($item->tpp_diterima)}}</td>
                     <td>
-                        {{$item->nama}} <br />
-                        {{$item->pangkat}} ({{$item->golongan}})<br />
-                        NIP.{{$item->nip}}
-                    </td>
-                    <td valign="top">{{$item->jabatan}}</td>
-                    <td valign="top" style="text-align: center">{{$item->kelas}}</td>
-                    <td valign="top">{{currency($item->basic_tpp)}}</td>
-                    <td valign="top" style="text-align: center">{{$item->persen}}</td>
-                    <td valign="top" style="text-align: center">{{$item->tambahan_persen}}</td>
-                    <td valign="top" style="text-align: center">{{$item->jumlah_persen}}</td>
-                    <td valign="top">{{currency($item->total_pagu)}}</td>
-                    <td valign="top">{{$item->absensi}}</td>
-                    <td valign="top">{{currency($item->total_absensi)}}</td>
-                    <td valign="top">{{$item->aktivitas}}</td>
-                    <td valign="top">{{currency($item->total_aktivitas)}}</td>
-                    <td valign="top">{{currency($item->total_absensi + $item->total_aktivitas)}}</td>
-                    <td valign="top" style="text-align: right">{{$item->pph21}}<br />{{currency($item->total_pph21)}}
-                    </td>
-                    <td valign="top">{{currency($item->total_absensi + $item->total_aktivitas - $item->total_pph21)}}
+                        <br />
+                        <br />
                     </td>
                 </tr>
                 @endforeach
                 <tr>
-                    <td colspan=13>Total </td>
-                    <td>{{currency($data->sum('total_absensi') + $data->sum('total_aktivitas'))}}</td>
-                    <td>{{currency($data->sum('total_pph21'))}}</td>
-                    <td>{{currency($data->sum('total_absensi') + $data->sum('total_aktivitas') -
-                        $data->sum('total_pph21'))}}</td>
+                    <td colspan=10 align="right">Total</td>
+                    <td align="right">{{currency($data->sum('pembayaran_beban_kerja'))}}</td>
+                    <td></td>
+                    <td></td>
+                    <td align="right">{{currency($data->sum('pembayaran_prestasi_kerja'))}}</td>
+                    <td></td>
+                    <td align="right">{{currency($data->sum('pembayaran_kondisi_kerja'))}}</td>
+                    <td align="right">{{currency($data->sum('pembayaran'))}}</td>
+                    <td align="right">{{currency($data->sum('potongan_pph21'))}}</td>
+                    <td align="right">{{currency($data->sum('potongan_bpjs_1persen'))}}</td>
+                    <td align="right">{{currency($data->sum('potongan_bpjs_4persen'))}}</td>
+                    <td align="right">{{currency($data->sum('tpp_diterima'))}}</td>
                 </tr>
             </tbody>
         </table>

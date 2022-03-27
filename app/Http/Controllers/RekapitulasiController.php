@@ -382,7 +382,7 @@ class RekapitulasiController extends Controller
 
     public function excel($bulan, $tahun)
     {
-        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('pangkat_id', 'DESC')->get();
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         $skpd = Auth::user()->skpd;
         return view('admin.rekapitulasi.bulanexcel', compact('data', 'skpd', 'bulan', 'tahun'));
         //        return Excel::download(new TppExport, 'tppexport.xlsx');
@@ -438,8 +438,10 @@ class RekapitulasiController extends Controller
             $pagu      = $basic_tpp * Jabatan::find($item->jabatan_id)->persentase_tpp / 100;
             $disiplin  = $pagu * 40 / 100;
             $produktivitas  = $pagu * 60 / 100;
-            $kondisi_kerja  = $basic_tpp * Jabatan::find($item->jabatan_id)->tambahan_persen_tpp / 100;
-            $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja;
+            $kondisi_kerja  = $basic_tpp * Jabatan::find($item->jabatan_id)->persen_kondisi_kerja / 100;
+            $tambahan_beban_kerja  = $basic_tpp * Jabatan::find($item->jabatan_id)->persen_tambahan_beban_kerja / 100;
+            $kelangkaan_profesi  = $basic_tpp * Jabatan::find($item->jabatan_id)->persen_kelangkaan_profesi / 100;
+            $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $tambahan_beban_kerja + $kelangkaan_profesi;
 
             $item->update([
                 'perhitungan_basic_tpp' => $basic_tpp,
@@ -447,6 +449,8 @@ class RekapitulasiController extends Controller
                 'perhitungan_disiplin' => $disiplin,
                 'perhitungan_produktivitas' => $produktivitas,
                 'perhitungan_kondisi_kerja' => $kondisi_kerja,
+                'perhitungan_tambahan_beban_kerja' => $tambahan_beban_kerja,
+                'perhitungan_kelangkaan_profesi' => $kelangkaan_profesi,
                 'perhitungan_pagu_tpp_asn' => $pagu_asn,
             ]);
         }

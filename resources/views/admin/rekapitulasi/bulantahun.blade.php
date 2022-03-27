@@ -127,7 +127,8 @@ SUPERADMIN
                                 Kerja dan<br /> Produktivitas</th>
                             <th colspan=2 style="border:1px solid silver" class="bg-warning">Penilaian TPP</th>
                             <th rowspan=3 style="border:1px solid silver" class="bg-warning">Kondisi <br /> Kerja</th>
-                            <th rowspan=3 style="border:1px solid silver" class="bg-warning">Tambahan Beban <br /> Kerja
+                            <th rowspan=3 style="border:1px solid silver" class="bg-warning">Tambahan <br /> Beban
+                                <br /> Kerja
                             </th>
                             <th rowspan=3 style="border:1px solid silver" class="bg-warning">Kelangkaan <br />Profesi
                             </th>
@@ -221,16 +222,22 @@ SUPERADMIN
                             </td>
                             <td class="text-center">
                                 {{currency($item->perhitungan_kondisi_kerja)}} <br />
-                                {{$item->persenJabatan->tambahan_persen_tpp}} %
+                                {{$item->persenJabatan->persen_kondisi_kerja}} %
                             </td>
                             <td class="text-right">
+                                {{currency($item->perhitungan_tambahan_beban_kerja)}} <br />
                                 {{$item->persenjabatan->persen_tambahan_beban_kerja}} %
                             </td>
                             <td class="text-right">
+                                {{currency($item->perhitungan_kelangkaan_profesi)}} <br />
                                 {{$item->persenjabatan->persen_kelangkaan_profesi}} %
                             </td>
                             <td class="text-right">
-                                {{currency($item->perhitungan_pagu_tpp_asn)}}
+                                {{currency($item->perhitungan_pagu_tpp_asn)}} <br />
+                                {{$item->persenjabatan->persentase_tpp
+                                +$item->persenjabatan->persen_kondisi_kerja
+                                +$item->persenjabatan->persen_tambahan_beban_kerja
+                                +$item->persenjabatan->persen_kelangkaan_profesi}} %
                             </td>
                             <td class="text-right">
                                 {{$item->pembayaran_at}}

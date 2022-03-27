@@ -496,10 +496,7 @@ class RekapitulasiController extends Controller
                 'pembayaran_cutitahunan' => $pembayaran_ct,
                 'pembayaran_tugasluar' => $pembayaran_tl,
                 'pembayaran_covid' => $pembayaran_co,
-                'pembayaran_at' => $aktivitas->sum('menit'),
-                // 'pembayaran' => $jumlah_pembayaran,
-                // 'potongan_pph21' => $potongan_pph21,
-                // 'tpp_diterima' => $jumlah_pembayaran - $potongan_pph21 - $item->potongan_bpjs_1persen,
+                'pembayaran_at' => $aktivitas->sum('menit')
             ]);
 
             $pph21 = Pangkat::find($item->pangkat_id)->pph;

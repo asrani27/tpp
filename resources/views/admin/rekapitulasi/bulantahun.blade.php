@@ -332,6 +332,32 @@ SUPERADMIN
     </div>
 </div>
 
+<div class="modal fade" id="modal-upload" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="/admin/karpeg/" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header bg-gradient-success" style="padding:10px">
+                    <h4 class="modal-title text-sm">BPJS</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    BPJS 1% <input type="text" class="form-control" name="1_persen" required><br />
+                    BPJS 4% <input type="text" class="form-control" name="4_persen" required>
+                    <input type="hidden" id="id_rekap" name="id_rekap">
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="submit" class="btn btn-block btn-success"><i class="fas fa-paper-plane"></i>
+                        Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('js')

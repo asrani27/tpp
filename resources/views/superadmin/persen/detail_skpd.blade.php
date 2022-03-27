@@ -23,6 +23,7 @@ SUPERADMIN
                 <tr>
                   <th>#</th>
                   <th>Jabatan</th>
+                  <th>Kelas</th>
                   <th>Subkoordinator</th>
                   <th>Beban <br /> Kerja</th>
                   <th>Tambahan <br /> Beban <br /> Kerja</th>
@@ -45,6 +46,7 @@ SUPERADMIN
                     {{$item->pegawai == null ? $item->pegawaiplt == null ? '-':'(PLT) ' . $item->pegawaiplt->nama
                     :$item->pegawai->nama
                     }}</td>
+                  <td>{{$item->kelas->nama}}</td>
                   <td class="text-center">
                     @if ($item->subkoordinator == null)
                     <a href="/superadmin/persentase/subkoordinator/ya/{{$item->id}}" class="btn btn-xs btn-danger"

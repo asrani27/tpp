@@ -18,13 +18,13 @@ class PersenController extends Controller
 
     public function detailSkpd($id)
     {
-        $data = Skpd::find($id)->jabatan->where('rs_puskesmas_id', null);
+        $data = Skpd::find($id)->jabatan->where('rs_puskesmas_id', null)->sortByDesc('kelas_id');
         return view('superadmin.persen.detail_skpd', compact('data', 'id'));
     }
 
     public function detailPuskesmas($id)
     {
-        $data = Rspuskesmas::find($id)->jabatan;
+        $data = Rspuskesmas::find($id)->jabatan->sortByDesc('kelas_id');
 
         return view('superadmin.persen.detail_puskesmas', compact('data', 'id'));
     }

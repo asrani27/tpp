@@ -129,7 +129,7 @@ class RekapitulasiController extends Controller
     }
     public function masukkanPegawai($bulan, $tahun)
     {
-        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('jabatan_id', '!=', null)->wherehas('jabatan', function ($query) {
+        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
             return $query->where('rs_puskesmas_id', null)->where('sekolah_id', null);
         })->get();
 
@@ -150,6 +150,7 @@ class RekapitulasiController extends Controller
                 $n->skpd_id     = Auth::user()->skpd->id;
                 $n->bulan     = $bulan;
                 $n->tahun     = $tahun;
+                $n->sekolah_id  = $item->jabatan == null ? null : $item->jabatan->sekolah_id;
                 $n->save();
             } else {
                 if ($check->skpd_id == Auth::user()->skpd->id || $check->skpd_id == null) {
@@ -164,6 +165,7 @@ class RekapitulasiController extends Controller
                         'jabatan'       => $item->jabatan == null ? null : $item->jabatan->nama,
                         'jenis_jabatan' => $item->jabatan == null ? null : $item->jabatan->jenis_jabatan,
                         'kelas'         => $item->jabatan == null ? null : $item->jabatan->kelas->nama,
+                        'sekolah_id'    => $item->jabatan == null ? null : $item->jabatan->sekolah_id,
                         'skpd_id' => Auth::user()->skpd->id,
                         'bulan' => $bulan,
                         'tahun' => $tahun,
@@ -179,7 +181,7 @@ class RekapitulasiController extends Controller
 
     public function masukkanPegawaiTU($bulan, $tahun)
     {
-        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('jabatan_id', '!=', null)->wherehas('jabatan', function ($query) {
+        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
             return $query->where('rs_puskesmas_id', null)->where('sekolah_id', '!=', null);
         })->get();
 
@@ -200,6 +202,7 @@ class RekapitulasiController extends Controller
                 $n->skpd_id     = Auth::user()->skpd->id;
                 $n->bulan     = $bulan;
                 $n->tahun     = $tahun;
+                $n->sekolah_id  = $item->jabatan == null ? null : $item->jabatan->sekolah_id;
                 $n->save();
             } else {
                 if ($check->skpd_id == Auth::user()->skpd->id || $check->skpd_id == null) {
@@ -214,6 +217,7 @@ class RekapitulasiController extends Controller
                         'jabatan'       => $item->jabatan == null ? null : $item->jabatan->nama,
                         'jenis_jabatan' => $item->jabatan == null ? null : $item->jabatan->jenis_jabatan,
                         'kelas'         => $item->jabatan == null ? null : $item->jabatan->kelas->nama,
+                        'sekolah_id'    => $item->jabatan == null ? null : $item->jabatan->sekolah_id,
                         'skpd_id' => Auth::user()->skpd->id,
                         'bulan' => $bulan,
                         'tahun' => $tahun,

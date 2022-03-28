@@ -579,6 +579,89 @@ class RekapitulasiController extends Controller
         toastr()->success('Berhasil di hitung');
         return back();
     }
+
+    public function perhitungantu($bulan, $tahun)
+    {
+        // menghitung kolom berwarna orange
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->where('sekolah_id', '!=', null)->orderBy('kelas', 'DESC')->get();
+        foreach ($data as $item) {
+            $basic_tpp = Kelas::where('nama', $item->kelas)->first()->nilai;
+            $pagu      = $basic_tpp * Jabatan::find($item->jabatan_id)->persentase_tpp / 100;
+            $disiplin  = $pagu * 40 / 100;
+            $produktivitas  = $pagu * 60 / 100;
+            $kondisi_kerja  = $basic_tpp * Jabatan::find($item->jabatan_id)->persen_kondisi_kerja / 100;
+            $tambahan_beban_kerja  = $basic_tpp * Jabatan::find($item->jabatan_id)->persen_tambahan_beban_kerja / 100;
+            $kelangkaan_profesi  = $basic_tpp * Jabatan::find($item->jabatan_id)->persen_kelangkaan_profesi / 100;
+            $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $tambahan_beban_kerja + $kelangkaan_profesi;
+
+            $item->update([
+                'perhitungan_basic_tpp' => $basic_tpp,
+                'perhitungan_pagu' => $pagu,
+                'perhitungan_disiplin' => $disiplin,
+                'perhitungan_produktivitas' => $produktivitas,
+                'perhitungan_kondisi_kerja' => $kondisi_kerja,
+                'perhitungan_tambahan_beban_kerja' => $tambahan_beban_kerja,
+                'perhitungan_kelangkaan_profesi' => $kelangkaan_profesi,
+                'perhitungan_pagu_tpp_asn' => $pagu_asn,
+            ]);
+        }
+        toastr()->success('Berhasil di hitung');
+        return back();
+    }
+
+    public function pembayarantu($bulan, $tahun)
+    {
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->where('sekolah_id', '!=', null)->orderBy('kelas', 'DESC')->get();
+        foreach ($data as $item) {
+            $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+            $pembayaran_ct = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 7)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+            $pembayaran_tl = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 5)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+            $pembayaran_co = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 9)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 360;
+
+            $aktivitas = Aktivitas::where('pegawai_id', $item->pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('validasi', 1)->get();
+            $menit_aktivitas = $aktivitas->sum('menit') + $pembayaran_ct + $pembayaran_tl + $pembayaran_co;
+            $jabatan = Jabatan::find($item->jabatan_id);
+            if ($presensi == null) {
+                $absensi = 0;
+            } else {
+                $absensi = $presensi->persen_kehadiran;
+            }
+            $bk_disiplin = round((($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * ((40 / 100) * $absensi / 100)));
+            $bk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * 0.6 : 0);
+
+            $pk_disiplin = round((($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * ((40 / 100) * $absensi / 100)));
+            $pk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * 0.6 : 0);
+
+            $kondisi_kerja = round($item->perhitungan_basic_tpp * $jabatan->tambahan_persen_tpp / 100);
+
+            $item->update([
+                'pembayaran_absensi' => $presensi == null ? null : $presensi->persen_kehadiran,
+                'pembayaran_aktivitas' => $menit_aktivitas,
+                'pembayaran_bk_disiplin' => $bk_disiplin,
+                'pembayaran_bk_produktivitas' => $bk_produktivitas,
+                'pembayaran_beban_kerja' => $bk_disiplin + $bk_produktivitas,
+                'pembayaran_pk_disiplin' => $pk_disiplin,
+                'pembayaran_pk_produktivitas' => $pk_produktivitas,
+                'pembayaran_prestasi_kerja' => $pk_disiplin + $pk_produktivitas,
+                'pembayaran_kondisi_kerja' => $absensi == 0 ? 0 : $kondisi_kerja,
+                'pembayaran_cutitahunan' => $pembayaran_ct,
+                'pembayaran_tugasluar' => $pembayaran_tl,
+                'pembayaran_covid' => $pembayaran_co,
+                'pembayaran_at' => $aktivitas->sum('menit')
+            ]);
+
+            $pph21 = Pangkat::find($item->pangkat_id)->pph;
+            $potongan_pph21 = round($item->pembayaran * ($pph21 / 100));
+
+            $item->update([
+                'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja,
+                'potongan_pph21' => $potongan_pph21,
+                'tpp_diterima' => $item->pembayaran - $potongan_pph21 - $item->potongan_bpjs_1persen,
+            ]);
+        }
+        toastr()->success('Berhasil di hitung');
+        return back();
+    }
     public function bpjs($bulan, $tahun)
     {
         return view('admin.rekapitulasi.bpjs', compact('bulan', 'tahun'));

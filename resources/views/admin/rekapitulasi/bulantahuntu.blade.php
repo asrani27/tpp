@@ -70,12 +70,12 @@ SUPERADMIN
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
                     Semua Pegawai</a>
 
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/perhitungan" class="btn btn-xs btn-warning"
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/perhitungantu" class="btn btn-xs btn-warning"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/pembayaran" class="btn btn-xs btn-success"
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/pembayarantu" class="btn btn-xs btn-success"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Pembayaran</a>
 
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/bpjs" class="btn btn-xs btn-info">BPJS</a>
+                {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/bpjs" class="btn btn-xs btn-info">BPJS</a> --}}
                 {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/updatejabatan" class="btn btn-xs btn-primary"
                     onclick="return confirm('Update Jabatan Pegawai?');">Update Jabatan</a>
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/hitungpersen" class="btn btn-xs btn-primary"

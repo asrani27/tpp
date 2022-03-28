@@ -492,7 +492,7 @@ class RekapitulasiController extends Controller
                 'pembayaran_pk_disiplin' => $pk_disiplin,
                 'pembayaran_pk_produktivitas' => $pk_produktivitas,
                 'pembayaran_prestasi_kerja' => $pk_disiplin + $pk_produktivitas,
-                'pembayaran_kondisi_kerja' => $kondisi_kerja,
+                'pembayaran_kondisi_kerja' => $absensi == 0 ? 0 : $kondisi_kerja,
                 'pembayaran_cutitahunan' => $pembayaran_ct,
                 'pembayaran_tugasluar' => $pembayaran_tl,
                 'pembayaran_covid' => $pembayaran_co,

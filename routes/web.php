@@ -189,12 +189,14 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/rekapitulasi', 'RekapitulasiController@index');
     Route::get('/admin/rekapitulasi/cetaktpp', 'RekapitulasiController@cetaktpp');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}', 'RekapitulasiController@bulanTahun');
+    Route::get('/admin/rekapitulasi/tu/{bulan}/{tahun}', 'RekapitulasiController@bulanTahunTU');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/pdf', 'RekapitulasiController@pdf');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/excel', 'RekapitulasiController@excel');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/plt/{id}', 'RekapitulasiController@plt');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/editjabatan/{id}', 'RekapitulasiController@editJabatan');
     Route::post('/admin/rekapitulasi/{bulan}/{tahun}/editjabatan/{id}', 'RekapitulasiController@editJabatanLaporan');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/masukkanpegawai', 'RekapitulasiController@masukkanPegawai');
+    Route::get('/admin/rekapitulasi/{bulan}/{tahun}/masukkanpegawaitu', 'RekapitulasiController@masukkanPegawaiTU');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/updatejabatan', 'RekapitulasiController@updateJabatan');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/hitungpersen', 'RekapitulasiController@hitungPersen');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/totalpagu', 'RekapitulasiController@totalPagu');

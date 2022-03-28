@@ -61,6 +61,40 @@ SUPERADMIN
       </div>
     </div>
 
+    @if (Auth::user()->username == '1.01.01.')
+    <div class="card card-info">
+      <div class="card-header">
+        <h3 class="card-title">Pilih Tahun Dan Bulan (TU)</h3>
+      </div>
+      <div class="card-body">
+        <table class="table table-hover table-striped text-nowrap table-sm">
+          <thead>
+            <tr style="font-size:12px; font-family:Arial, Helvetica, sans-serif" class="bg-gradient-info">
+              <th>#</th>
+              <th>Bulan</th>
+              <th>Tahun</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          @php
+          $no =1;
+          @endphp
+          <tbody>
+
+            @foreach (bulanTahun() as $key => $item)
+            <tr style="font-size:12px; font-family:Arial, Helvetica, sans-serif">
+              <td>{{$no++}}</td>
+              <td>{{\Carbon\Carbon::createFromFormat('m',$item->bulan)->translatedFormat('F')}}</td>
+              <td>{{$item->tahun}}</td>
+              <td><a href="/admin/rekapitulasi/tu/{{$item->bulan}}/{{$item->tahun}}" class="btn btn-xs btn-primary"><i
+                    class="fas fa-eye"></i> Detail</a></td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+    @endif
     {{-- @if ($tampil == true)
 
     <div class="row">

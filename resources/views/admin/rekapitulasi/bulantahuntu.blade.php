@@ -61,7 +61,7 @@ SUPERADMIN
                     5. Upload Data Potongan BPJS dengan mengklik tombol <span class="badge badge-info">BPJS</span>
                     akan menghitung di kolom BPJS
                 </div>
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/excel" target="_blank"
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/exceltu" target="_blank"
                     class="btn btn-xs btn-primary">Export Excel</a>
                 {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/pdf" target="_blank"
                     class="btn btn-xs btn-danger">Export PDF</a> --}}

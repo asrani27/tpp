@@ -192,6 +192,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/rekapitulasi/tu/{bulan}/{tahun}', 'RekapitulasiController@bulanTahunTU');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/pdf', 'RekapitulasiController@pdf');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/excel', 'RekapitulasiController@excel');
+    Route::get('/admin/rekapitulasi/{bulan}/{tahun}/exceltu', 'RekapitulasiController@exceltu');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/plt/{id}', 'RekapitulasiController@plt');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/editjabatan/{id}', 'RekapitulasiController@editJabatan');
     Route::post('/admin/rekapitulasi/{bulan}/{tahun}/editjabatan/{id}', 'RekapitulasiController@editJabatanLaporan');

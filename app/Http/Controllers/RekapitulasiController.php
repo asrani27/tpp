@@ -448,6 +448,14 @@ class RekapitulasiController extends Controller
         //        return Excel::download(new TppExport, 'tppexport.xlsx');
     }
 
+    public function exceltu($bulan, $tahun)
+    {
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', '!=', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $skpd = Auth::user()->skpd;
+        return view('admin.rekapitulasi.bulanexcel', compact('data', 'skpd', 'bulan', 'tahun'));
+        //        return Excel::download(new TppExport, 'tppexport.xlsx');
+    }
+
     public function editJabatan($bulan, $tahun, $id)
     {
         $data = RekapTpp::find($id);

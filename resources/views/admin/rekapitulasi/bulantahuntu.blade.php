@@ -32,7 +32,7 @@ SUPERADMIN
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Daftar TPP Bulan
-                    {{\Carbon\Carbon::createFromFormat('m',$bulan)->translatedFormat('F')}} {{$tahun}}</h3>
+                    {{convertBulan($bulan)}} {{$tahun}}</h3>
             </div>
             <div class="card-body p-2">
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Skpd;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -11,6 +12,10 @@ class LoginController extends Controller
 {
     public function index()
     {
+        // $bulan = '02';
+        // $tahun = '2022';
+        // $bulanTahun = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->translatedFormat('F');
+        // dd($bulanTahun);
         return view('login');
     }
 

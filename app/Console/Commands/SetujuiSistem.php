@@ -43,7 +43,7 @@ class SetujuiSistem extends Command
     public function handle()
     {
         $tanggal   = Carbon::today()->subDays(6)->format('Y-m-d');
-        $aktivitas = Aktivitas::where('validasi', 0)->where('tanggal', '<=', $tanggal)->get()->take(200);
+        $aktivitas = Aktivitas::where('validasi', 0)->where('tanggal', '<=', $tanggal)->get();
 
         $aktivitas->map(function ($item) {
             if ($item->pegawai->jabatan == null) {
@@ -106,16 +106,9 @@ class SetujuiSistem extends Command
                 $s->skpd            = $item->skpd;
                 $s->save();
             }
-
             DB::commit();
-            toastr()->success('Berhasil Di Proses');
-            return back();
         } catch (\Exception $e) {
-
             DB::rollback();
-            dd($e);
-            toastr()->error(' Gagal Diproses');
-            return back();
         }
     }
 }

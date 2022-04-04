@@ -15,7 +15,9 @@
           <!-- Add the bg color to the header using any of the bg-* classes -->
           <div class="widget-user-header bg-info">
             <h3 class="widget-user-username">{{$data->nama}}</h3>
-            <h5 class="widget-user-desc">Rp. {{currency(($data->total_tpp - $data->pph_angka))}},-</h5>
+            <h5 class="widget-user-desc">{{$data->nip}}
+              {{-- Rp. {{currency(($data->total_tpp - $data->pph_angka))}},- --}}
+            </h5>
           </div>
           <div class="widget-user-image">
             <img class="img-circle elevation-2"
@@ -56,7 +58,7 @@
     </div>
     <div class="row">
 
-      <div class="col-lg-6 col-12">
+      <div class="col-lg-12 col-12">
 
         <div class="row">
           <div class="col-lg-6 col-12">
@@ -90,7 +92,7 @@
         <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
 
       </div>
-      <div class="col-lg-6 col-12">
+      {{-- <div class="col-lg-6 col-12">
         <div class="card">
           <div class="card-header border-transparent bg-gradient-primary">
             <h3 class="card-title">Detail Perhitungan TPP Bulan </h3>
@@ -164,7 +166,7 @@
           </div>
           <!-- /.card-footer -->
         </div>
-      </div>
+      </div> --}}
     </div>
   </div>
 </div>

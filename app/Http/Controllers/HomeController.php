@@ -62,6 +62,11 @@ class HomeController extends Controller
         return view('superadmin.home', compact('tpp_pemko', 'asn', 'skpd'));
     }
 
+    public function puskesmas()
+    {
+        return view('puskesmas.home');
+    }
+
     public function skpd_id()
     {
         return Auth::user()->skpd->id;

@@ -21,9 +21,7 @@ class LoginController extends Controller
 
     public function login(Request $req)
     {
-
         if (Auth::attempt(['username' => $req->username, 'password' => $req->password])) {
-
             Session::forget('superadmin');
             if (Auth::user()->hasRole('superadmin')) {
                 return redirect('/home/superadmin');
@@ -31,6 +29,8 @@ class LoginController extends Controller
                 return redirect('/home/admin');
             } elseif (Auth::user()->hasRole('pegawai')) {
                 return redirect('/home/pegawai');
+            } elseif (Auth::user()->hasRole('puskesmas')) {
+                return redirect('/home/puskesmas');
             } elseif (Auth::user()->hasRole('walikota')) {
                 return redirect('/home/walikota');
             }

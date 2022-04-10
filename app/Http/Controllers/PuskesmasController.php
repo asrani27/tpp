@@ -62,7 +62,7 @@ class PuskesmasController extends Controller
                 $n->sekolah_id  = $item->jabatan == null ? null : $item->jabatan->sekolah_id;
                 $n->save();
             } else {
-                if ($check->skpd_id == Auth::user()->skpd->id || $check->skpd_id == null) {
+                if ($check->puskesmas_id == Auth::user()->puskesmas->id || $check->puskesmas_id == null) {
                     $check->update([
                         'nip'           => $item->nip,
                         'nama'          => $item->nama,

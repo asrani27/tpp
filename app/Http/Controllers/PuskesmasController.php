@@ -174,4 +174,94 @@ class PuskesmasController extends Controller
         toastr()->success('Berhasil di hitung');
         return back();
     }
+    public function excel($bulan, $tahun)
+    {
+        $data = RekapTpp::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        return view('puskesmas.rekapitulasi.bulanexcel', compact('data', 'bulan', 'tahun'));
+    }
+
+    public function tambahPegawai(Request $req)
+    {
+        $checkDataPegawai = Pegawai::where('nip', $req->nip)->first();
+
+        if ($checkDataPegawai == null) {
+            toastr()->error('Tidak Ada data Di TPP');
+            return back();
+        } else {
+            $check = RekapTpp::where('nip', $req->nip)->where('bulan', $req->bulan)->where('tahun', $req->tahun)->first();
+            //dd($check);
+            if ($check == null) {
+
+                $jabatan = Jabatan::find($req->jabatan);
+                $n = new RekapTpp;
+
+                $n->nip         = $req->nip;
+                $n->nama        = $checkDataPegawai->nama;
+                $n->pegawai_id  = $checkDataPegawai->id;
+                $n->pangkat_id  = $checkDataPegawai->pangkat == null ? null : $checkDataPegawai->pangkat->id;
+                $n->pangkat     = $checkDataPegawai->pangkat == null ? null : $checkDataPegawai->pangkat->nama;
+                $n->golongan    = $checkDataPegawai->pangkat == null ? null : $checkDataPegawai->pangkat->golongan;
+                $n->jabatan_id  = $jabatan->id;
+                $n->jabatan     = $jabatan->nama;
+                $n->jenis_jabatan     = $jabatan->jenis_jabatan;
+                $n->kelas       = $jabatan->kelas->nama;
+
+                $n->skpd_id = 34;
+                $n->puskesmas_id = Auth::user()->puskesmas->id;
+                $n->bulan = $req->bulan;
+                $n->tahun = $req->tahun;
+                $n->save();
+                toastr()->success('Berhasil Di Tambahkan');
+                return back();
+            } else {
+                if (Auth::user()->puskesmas->id == $check->puskesmas_id) {
+                    toastr()->error('NIP Sudah Ada Di Laporan');
+                    return back();
+                } else {
+                    if ($check->puskesmas_id == null) {
+                        $jabatan = Jabatan::find($req->jabatan);
+
+                        $check->update([
+                            'skpd_id' => 34,
+                            'puskesmas_id' => Auth::user()->puskesmas->id,
+                            'jabatan' => $jabatan->nama,
+                            'jenis_jabatan' => $jabatan->jenis_jabatan,
+                            'kelas' => $jabatan->kelas->nama,
+
+                            'perhitungan_basic_tpp' => 0,
+                            'perhitungan_pagu' => 0,
+                            'perhitungan_disiplin' => 0,
+                            'perhitungan_produktivitas' => 0,
+                            'perhitungan_kondisi_kerja' => 0,
+                            'perhitungan_pagu_tpp_asn' => 0,
+                            'pembayaran_absensi' => 0,
+                            'pembayaran_aktivitas' => 0,
+                            'pembayaran_bk_disiplin' => 0,
+                            'pembayaran_bk_produktivitas' => 0,
+                            'pembayaran_beban_kerja' => 0,
+                            'pembayaran_pk_disiplin' => 0,
+                            'pembayaran_pk_produktivitas' => 0,
+                            'pembayaran_prestasi_kerja' => 0,
+                            'pembayaran_kondisi_kerja' => 0,
+                            'pembayaran' => 0,
+                            'potongan_pph21' => 0,
+                            'tpp_diterima' => 0,
+                        ]);
+                        toastr()->success('Berhasil Di Tambahkan');
+                        return back();
+                    } else {
+                        $puskesmas = $check->puskesmas->nama;
+                        toastr()->error('Tidak Bisa Di tambahkan, TPP an.' . $check->nama . ' telah di rekap di ' . $puskesmas . ', Hubungi RS/Puskesmas tersebut agar menghapus di laporan rekap');
+                        return back();
+                    }
+                }
+            }
+        }
+    }
+    public function delete($bulan, $tahun, $id)
+    {
+        RekapTpp::find($id)->delete();
+        toastr()->success('Berhasil Di Hapus');
+        return back();
+    }
 }

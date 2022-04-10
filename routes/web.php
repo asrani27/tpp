@@ -340,4 +340,7 @@ Route::group(['middleware' => ['auth', 'role:puskesmas']], function () {
     Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/masukkanpegawai', 'PuskesmasController@masukkanPegawai');
     Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/perhitungan', 'PuskesmasController@perhitungan');
     Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/pembayaran', 'PuskesmasController@pembayaran');
+    Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/excel', 'PuskesmasController@excel');
+    Route::post('/puskesmas/rekapitulasi/tambahpegawai', 'PuskesmasController@tambahPegawai');
+    Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/{id}/delete', 'PuskesmasController@delete');
 });

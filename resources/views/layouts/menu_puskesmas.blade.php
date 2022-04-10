@@ -8,14 +8,14 @@
                 </p>
             </a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a href="/puskesmas/profil" class="nav-link {{Request::is('admin/profil') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-user"></i>
                 <p>
                     Profil
                 </p>
             </a>
-        </li>
+        </li> --}}
 
         @if (session()->get('uuid') != null)
         <li class="nav-item">

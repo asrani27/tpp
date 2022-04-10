@@ -13,6 +13,7 @@ use App\Aktivitas;
 use App\Parameter;
 use App\BulanTahun;
 use App\Rspuskesmas;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 function terbilang($angka)
@@ -134,6 +135,12 @@ function jabatan($skpd_id)
 {
     $data = Jabatan::where('skpd_id', $skpd_id)->get();
     return $data;
+}
+function jabatanPuskesmas($puskesmas_id)
+{
+    $data = Jabatan::where('rs_puskesmas_id', $puskesmas_id)->select(DB::raw('max(id) as jabatan_id'))->groupBy('nama')->pluck('jabatan_id');
+    $jabatan_puskesmas = Jabatan::whereIn('id', $data)->get();
+    return $jabatan_puskesmas;
 }
 
 function pegawaiSkpd($id)

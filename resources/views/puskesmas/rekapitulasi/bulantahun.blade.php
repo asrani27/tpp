@@ -260,7 +260,7 @@ ADMIN PUSKESMAS
                                 {{currency($item->tpp_diterima)}}
                             </td>
                             <td>
-                                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/{{$item->id}}/delete"
+                                <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/{{$item->id}}/delete"
                                     onclick="return confirm('Yakin Ingin Dihapus?');"><span
                                         class="badge badge-danger">Hapus</span></a>
                             </td>
@@ -302,19 +302,19 @@ ADMIN PUSKESMAS
                 Isi NIP dan Jabatan Lama di bawah ini, Jika Yang bersangkutan sudah pindah/promosi ke skpd lain dan
                 yang
                 membayarkan SKPD lama
-                {{-- <form method="post" action="/admin/rekapitulasi/tambahpegawai">
+                <form method="post" action="/puskesmas/rekapitulasi/tambahpegawai">
                     @csrf
                     <input type="text" name="nip" class="form-control-sm" placeholder="nip" required>
                     <select name="jabatan" class="form-control-sm select2" required>
                         <option value="">-Pilih Kelas | jabatan (Sebelum Pindah)-</option>
-                        @foreach (jabatan(Auth::user()->skpd->id) as $item)
+                        @foreach (jabatanPuskesmas(Auth::user()->puskesmas->id) as $item)
                         <option value="{{$item->id}}">{{$item->kelas->nama}} | {{$item->nama}}</option>
                         @endforeach
                     </select>
                     <input type="hidden" name="bulan" value="{{$bulan}}" class="form-control-sm" placeholder="bulan">
                     <input type="hidden" name="tahun" value="{{$tahun}}" class="form-control-sm" placeholder="tahun">
                     <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
-                </form> --}}
+                </form>
             </div>
         </div>
     </div>

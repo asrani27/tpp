@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\User;
 use App\Jabatan;
 use App\Rspuskesmas;
@@ -149,6 +150,7 @@ class RsController extends Controller
     public function createuserpuskesmas()
     {
         $data = Rspuskesmas::get();
+        $roles = Role::where('name', 'puskesmas')->first();
         foreach ($data as $d) {
             $dinkes = Auth::user()->username;
             $kode = $dinkes . $d->id;

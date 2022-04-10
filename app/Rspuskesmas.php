@@ -14,4 +14,9 @@ class Rspuskesmas extends Model
     {
         return $this->hasMany(Jabatan::class, 'rs_puskesmas_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -239,6 +239,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/cuti/tarik', 'CutiController@tarik');
 
     Route::get('/admin/superadmin/{uuid}', 'AdminController@loginSuperadmin');
+
+    Route::get('/admin/rspuskesmas/{id}/login', 'AdminController@loginPuskesmas');
 });
 
 Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
@@ -333,4 +335,9 @@ Route::group(['middleware' => ['auth', 'role:walikota']], function () {
 
 Route::group(['middleware' => ['auth', 'role:puskesmas']], function () {
     Route::get('/home/puskesmas', 'HomeController@puskesmas');
+    Route::get('/puskesmas/dinkes/{uuid}', 'PuskesmasController@loginDinkes');
+    Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}', 'PuskesmasController@bulanTahun');
+    Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/masukkanpegawai', 'PuskesmasController@masukkanPegawai');
+    Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/perhitungan', 'PuskesmasController@perhitungan');
+    Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/pembayaran', 'PuskesmasController@pembayaran');
 });

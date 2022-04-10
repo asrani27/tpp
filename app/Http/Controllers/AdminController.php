@@ -8,7 +8,9 @@ use App\User;
 use App\Jabatan;
 use App\Pegawai;
 use Carbon\Carbon;
+use App\Rspuskesmas;
 use GuzzleHttp\Client;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -414,6 +416,17 @@ class AdminController extends Controller
         } else {
             toastr()->error('Kegagalan Sistem, harap hubungi programmer');
             return back();
+        }
+    }
+
+    public function loginPuskesmas($id)
+    {
+        $user = Rspuskesmas::find($id)->user;
+
+        $uuid = Str::random(40);
+        if (Auth::loginUsingId($user->id)) {
+            Session::put('uuid', $uuid);
+            return redirect('/home/puskesmas');
         }
     }
 }

@@ -56,6 +56,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         @include('layouts.menu_pegawai')
         @elseif (Auth::user()->hasRole('walikota'))
         @include('layouts.menu_walikota')
+        @elseif (Auth::user()->hasRole('puskesmas'))
+        @include('layouts.menu_puskesmas')
         @endif
 
 

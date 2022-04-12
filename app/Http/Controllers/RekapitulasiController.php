@@ -550,7 +550,7 @@ class RekapitulasiController extends Controller
             $pk_disiplin = round((($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * ((40 / 100) * $absensi / 100)));
             $pk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * 0.6 : 0);
 
-            $kondisi_kerja = round($item->perhitungan_basic_tpp * $jabatan->tambahan_persen_tpp / 100);
+            $kondisi_kerja = round($item->perhitungan_basic_tpp * $jabatan->persen_kondisi_kerja / 100);
 
             $item->update([
                 'pembayaran_absensi' => $presensi == null ? null : $presensi->persen_kehadiran,

@@ -571,7 +571,7 @@ class RekapitulasiController extends Controller
 
             $pph21 = Pangkat::find($item->pangkat_id)->pph;
             $item->update([
-                'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->perhitungan_kelangkaan_profesi,
+                'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->perhitungan_tambahan_beban_kerja + $item->perhitungan_kelangkaan_profesi,
             ]);
 
             $potongan_pph21 = round($item->pembayaran * ($pph21 / 100));

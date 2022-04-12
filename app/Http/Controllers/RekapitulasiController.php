@@ -509,7 +509,7 @@ class RekapitulasiController extends Controller
             $kondisi_kerja  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_kondisi_kerja / 100);
             $tambahan_beban_kerja  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_tambahan_beban_kerja / 100);
             $kelangkaan_profesi  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_kelangkaan_profesi / 100);
-            $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $kelangkaan_profesi;
+            $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $kelangkaan_profesi + $tambahan_beban_kerja;
 
             $item->update([
                 'perhitungan_basic_tpp' => $basic_tpp,

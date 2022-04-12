@@ -503,7 +503,7 @@ class RekapitulasiController extends Controller
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
             $basic_tpp = Kelas::where('nama', $item->kelas)->first()->nilai;
-            $pagu      = round($basic_tpp * Jabatan::find($item->jabatan_id)->persentase_tpp / 100);
+            $pagu      = round($basic_tpp * (Jabatan::find($item->jabatan_id)->persen_beban_kerja + Jabatan::find($item->jabatan_id)->persen_prestasi_kerja) / 100);
             $disiplin  = $pagu * 40 / 100;
             $produktivitas  = $pagu * 60 / 100;
             $kondisi_kerja  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_kondisi_kerja / 100);

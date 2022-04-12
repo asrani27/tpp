@@ -591,13 +591,13 @@ class RekapitulasiController extends Controller
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->where('sekolah_id', '!=', null)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
             $basic_tpp = Kelas::where('nama', $item->kelas)->first()->nilai;
-            $pagu      = $basic_tpp * Jabatan::find($item->jabatan_id)->persentase_tpp / 100;
+            $pagu      = round($basic_tpp * (Jabatan::find($item->jabatan_id)->persen_beban_kerja + Jabatan::find($item->jabatan_id)->persen_prestasi_kerja) / 100);
             $disiplin  = $pagu * 40 / 100;
             $produktivitas  = $pagu * 60 / 100;
-            $kondisi_kerja  = $basic_tpp * Jabatan::find($item->jabatan_id)->persen_kondisi_kerja / 100;
-            $tambahan_beban_kerja  = $basic_tpp * Jabatan::find($item->jabatan_id)->persen_tambahan_beban_kerja / 100;
-            $kelangkaan_profesi  = $basic_tpp * Jabatan::find($item->jabatan_id)->persen_kelangkaan_profesi / 100;
-            $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $kelangkaan_profesi;
+            $kondisi_kerja  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_kondisi_kerja / 100);
+            $tambahan_beban_kerja  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_tambahan_beban_kerja / 100);
+            $kelangkaan_profesi  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_kelangkaan_profesi / 100);
+            $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $kelangkaan_profesi + $tambahan_beban_kerja;
 
             $item->update([
                 'perhitungan_basic_tpp' => $basic_tpp,

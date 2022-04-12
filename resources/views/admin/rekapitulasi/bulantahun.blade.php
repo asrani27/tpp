@@ -221,10 +221,6 @@ SUPERADMIN
                                 {{$item->persenJabatan->persen_kondisi_kerja}} %
                             </td>
                             <td class="text-right">
-                                {{currency($item->perhitungan_tambahan_beban_kerja)}} <br />
-                                {{$item->persenjabatan->persen_tambahan_beban_kerja}} %
-                            </td>
-                            <td class="text-right">
                                 {{currency($item->perhitungan_kelangkaan_profesi)}} <br />
                                 {{$item->persenjabatan->persen_kelangkaan_profesi}} %
                             </td>

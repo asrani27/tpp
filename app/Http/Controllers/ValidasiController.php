@@ -35,8 +35,8 @@ class ValidasiController extends Controller
                 $item->aktivitas_baru = $item->pegawai->aktivitas->where('validasi', 0)->count();
             }
             return $item;
-        });
-        //dd($data1, $this->user()->pegawai->jabatan->bawahan);
+        })->where('nama_pegawai', '!=', null);
+
         if ($this->user()->pegawai->jabatan->sekda == 1) {
             $data2 = Jabatan::where('jabatan_id', null)->where('sekda', null)->where('sekolah_id', null)->get()->map(function ($item) {
                 $item->nama = $item->skpd->nama;
@@ -143,6 +143,14 @@ class ValidasiController extends Controller
 
     public function accAktivitas($id)
     {
+        //check apakah aktivitas bawahan ini adalah bawahan ku
+        // $jabatan_id = Aktivitas::find($id)->pegawai->jabatan->id;
+        // $bawahan_ku = Auth::user()->pegawai->jabatan->bawahan;
+        // $check = $bawahan_ku->where('id', $jabatan_id)->first();
+        // if ($check == null) {
+        //     toastr()->error('Pegawai Ini Bukan Bawahan Anda');
+        //     return back();
+        // }
         Aktivitas::findOrFail($id)->update([
             'validasi' => 1,
             'validator' => Auth::user()->pegawai->id,

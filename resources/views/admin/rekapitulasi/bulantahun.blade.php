@@ -226,9 +226,10 @@ SUPERADMIN
                             </td>
                             <td class="text-right">
                                 {{currency($item->perhitungan_pagu_tpp_asn)}} <br />
-                                {{$item->persenjabatan == null ? 0 : $item->persenJabatan->persentase_tpp
-                                +$item->persenjabatan == null ? 0 : $item->persenJabatan->persen_kondisi_kerja
-                                +$item->persenjabatan == null ? 0 : $item->persenJabatan->persen_kelangkaan_profesi}} %
+                                {{($item->persenjabatan == null ? 0 : $item->persenJabatan->persentase_tpp)
+                                +($item->persenjabatan == null ? 0 : $item->persenJabatan->persen_kondisi_kerja)
+                                +($item->persenjabatan == null ? 0 : $item->persenJabatan->persen_kelangkaan_profesi)}}
+                                %
                             </td>
                             <td class="text-right">
                                 {{$item->pembayaran_at}}

@@ -208,7 +208,7 @@ SUPERADMIN
                             </td>
                             <td class="text-right">
                                 {{currency($item->perhitungan_pagu)}}<br />
-                                {{$item->persenJabatan->persentase_tpp}} %
+                                {{$item->persenJabatan == null ? 0 : $item->persenJabatan->persentase_tpp}} %
                             </td>
                             <td class="text-right">
                                 {{currency($item->perhitungan_disiplin)}}
@@ -218,17 +218,17 @@ SUPERADMIN
                             </td>
                             <td class="text-center">
                                 {{currency($item->perhitungan_kondisi_kerja)}} <br />
-                                {{$item->persenJabatan->persen_kondisi_kerja}} %
+                                {{$item->persenJabatan == null ? 0 : $item->persenJabatan->persen_kondisi_kerja}} %
                             </td>
                             <td class="text-right">
                                 {{currency($item->perhitungan_kelangkaan_profesi)}} <br />
-                                {{$item->persenjabatan->persen_kelangkaan_profesi}} %
+                                {{$item->persenjabatan == null ? 0 : $item->persenJabatan->persen_kelangkaan_profesi}} %
                             </td>
                             <td class="text-right">
                                 {{currency($item->perhitungan_pagu_tpp_asn)}} <br />
-                                {{$item->persenjabatan->persentase_tpp
-                                +$item->persenjabatan->persen_kondisi_kerja
-                                +$item->persenjabatan->persen_kelangkaan_profesi}} %
+                                {{$item->persenjabatan == null ? 0 : $item->persenJabatan->persentase_tpp
+                                +$item->persenjabatan == null ? 0 : $item->persenJabatan->persen_kondisi_kerja
+                                +$item->persenjabatan == null ? 0 : $item->persenJabatan->persen_kelangkaan_profesi}} %
                             </td>
                             <td class="text-right">
                                 {{$item->pembayaran_at}}

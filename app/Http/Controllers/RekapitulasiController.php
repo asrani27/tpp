@@ -545,7 +545,7 @@ class RekapitulasiController extends Controller
             } else {
                 $absensi = $presensi->persen_kehadiran;
             }
-            $bk_disiplin = round((($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * ((40 / 100) * $absensi / 100)));
+            $bk_disiplin = round((($item->perhitungan_basic_tpp * ($jabatan->persen_beban_kerja + $jabatan->persen_tambahan_beban_kerja) / 100) * ((40 / 100) * $absensi / 100)));
             $bk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * ($jabatan->persen_beban_kerja + $jabatan->persen_tambahan_beban_kerja) / 100) * 0.6 : 0);
 
             $pk_disiplin = round((($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * ((40 / 100) * $absensi / 100)));

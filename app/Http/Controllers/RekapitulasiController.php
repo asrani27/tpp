@@ -114,7 +114,7 @@ class RekapitulasiController extends Controller
     }
     public function bulanTahun($bulan, $tahun)
     {
-        // toastr()->error('Mohon maaf, ada perubahan format Rekap TPP, akan kembali dalam 24 jam');
+        // toastr()->error('Mohon maaf, sedang dalam pembaharuan fitur, akan kembali dalam  jam');
         // return back();
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         return view('admin.rekapitulasi.bulantahun', compact('data', 'bulan', 'tahun'));
@@ -502,14 +502,15 @@ class RekapitulasiController extends Controller
         // menghitung kolom berwarna orange
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
+            $persen = Jabatan::find($item->jabatan_id);
             $basic_tpp = Kelas::where('nama', $item->kelas)->first()->nilai;
-            $pagu      = round($basic_tpp * (Jabatan::find($item->jabatan_id)->persen_beban_kerja + Jabatan::find($item->jabatan_id)->persen_prestasi_kerja) / 100);
-            $disiplin  = $pagu * 40 / 100;
-            $produktivitas  = $pagu * 60 / 100;
+            $pagu      = round($basic_tpp * ($persen->persen_beban_kerja + $persen->persen_prestasi_kerja + $persen->persen_tambahan_beban_kerja) / 100);
+            $disiplin  = $pagu * (40 / 100);
+            $produktivitas  = round($pagu * 60 / 100);
             $kondisi_kerja  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_kondisi_kerja / 100);
             $tambahan_beban_kerja  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_tambahan_beban_kerja / 100);
             $kelangkaan_profesi  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_kelangkaan_profesi / 100);
-            $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $kelangkaan_profesi + $tambahan_beban_kerja;
+            $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $kelangkaan_profesi;
 
             $item->update([
                 'perhitungan_basic_tpp' => $basic_tpp,
@@ -545,7 +546,7 @@ class RekapitulasiController extends Controller
                 $absensi = $presensi->persen_kehadiran;
             }
             $bk_disiplin = round((($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * ((40 / 100) * $absensi / 100)));
-            $bk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * 0.6 : 0);
+            $bk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * ($jabatan->persen_beban_kerja + $jabatan->persen_tambahan_beban_kerja) / 100) * 0.6 : 0);
 
             $pk_disiplin = round((($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * ((40 / 100) * $absensi / 100)));
             $pk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * 0.6 : 0);
@@ -555,8 +556,10 @@ class RekapitulasiController extends Controller
             $item->update([
                 'pembayaran_absensi' => $presensi == null ? null : $presensi->persen_kehadiran,
                 'pembayaran_aktivitas' => $menit_aktivitas,
+
                 'pembayaran_bk_disiplin' => $bk_disiplin,
                 'pembayaran_bk_produktivitas' => $bk_produktivitas,
+
                 'pembayaran_beban_kerja' => $bk_disiplin + $bk_produktivitas,
                 'pembayaran_pk_disiplin' => $pk_disiplin,
                 'pembayaran_pk_produktivitas' => $pk_produktivitas,

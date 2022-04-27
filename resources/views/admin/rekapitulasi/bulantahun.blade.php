@@ -208,7 +208,9 @@ SUPERADMIN
                             </td>
                             <td class="text-right">
                                 {{currency($item->perhitungan_pagu)}}<br />
-                                {{$item->persenJabatan == null ? 0 : $item->persenJabatan->persentase_tpp}} %
+                                {{$item->persenJabatan == null ? 0 : $item->persenJabatan->persen_prestasi_kerja +
+                                $item->persenJabatan->persen_beban_kerja +
+                                $item->persenJabatan->persen_tambahan_beban_kerja }} %
                             </td>
                             <td class="text-right">
                                 {{currency($item->perhitungan_disiplin)}}

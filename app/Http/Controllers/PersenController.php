@@ -38,12 +38,13 @@ class PersenController extends Controller
     public function updatePersen(Request $req, $skpd_id, $id)
     {
         $data = Jabatan::find($id);
+        $data->jenis_jabatan = $req->jenis_jabatan;
         $data->persen_beban_kerja = $req->persen_beban_kerja;
         $data->persen_tambahan_beban_kerja = $req->persen_tambahan_beban_kerja;
         $data->persen_prestasi_kerja = $req->persen_prestasi_kerja;
         $data->persen_kondisi_kerja = $req->persen_kondisi_kerja;
         $data->persen_kelangkaan_profesi = $req->persen_kelangkaan_profesi;
-        $data->persentase_tpp = $req->persen_beban_kerja + $req->persen_prestasi_kerja;
+        $data->persentase_tpp = $req->persen_beban_kerja + $req->persen_prestasi_kerja + $req->persen_tambahan_beban_kerja;
         $data->save();
         toastr()->success('Berhasil diupdate');
         return redirect('/superadmin/persentase/skpd/' . $skpd_id);

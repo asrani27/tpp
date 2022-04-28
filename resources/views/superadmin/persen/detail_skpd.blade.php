@@ -23,6 +23,7 @@ SUPERADMIN
                 <tr>
                   <th>#</th>
                   <th>Jabatan</th>
+                  <th>Jenis</th>
                   <th>Kelas</th>
                   <th>Subkoordinator</th>
                   <th>Beban <br /> Kerja</th>
@@ -46,6 +47,7 @@ SUPERADMIN
                     {{$item->pegawai == null ? $item->pegawaiplt == null ? '-':'(PLT) ' . $item->pegawaiplt->nama
                     :$item->pegawai->nama
                     }}</td>
+                  <td>{{$item->jenis_jabatan}}</td>
                   <td>{{$item->kelas->nama}}</td>
                   <td class="text-center">
                     @if ($item->subkoordinator == null)

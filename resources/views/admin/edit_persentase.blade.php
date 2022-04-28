@@ -32,7 +32,7 @@ ADMIN SKPD
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Jenis Jabatan</label>
                         <div class="col-sm-10">
-                            <select name="jenis_jabatan" required>
+                            <select name="jenis_jabatan" class="form-control" required>
                                 <option value="">-pilih-</option>
                                 <option value="JPT Pratama" {{$data->jenis_jabatan == "JPT Pratama" ?
                                     'selected':''}}>JPT Pratama</option>

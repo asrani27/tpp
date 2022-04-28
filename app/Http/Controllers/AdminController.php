@@ -310,6 +310,7 @@ class AdminController extends Controller
     public function updatePersentase(Request $req, $id)
     {
         $data = Jabatan::find($id);
+        $data->jenis_jabatan = $req->jenis_jabatan;
         $data->persen_beban_kerja = $req->persen_beban_kerja;
         $data->persen_tambahan_beban_kerja = $req->persen_tambahan_beban_kerja;
         $data->persen_prestasi_kerja = $req->persen_prestasi_kerja;

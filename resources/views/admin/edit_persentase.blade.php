@@ -30,6 +30,24 @@ ADMIN SKPD
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">Jenis Jabatan</label>
+                        <div class="col-sm-10">
+                            <select name="jenis_jabatan" required>
+                                <option value="">-pilih-</option>
+                                <option value="JPT Pratama" {{$data->jenis_jabatan == "JPT Pratama" ?
+                                    'selected':''}}>JPT Pratama</option>
+                                <option value="Administrator" {{$data->jenis_jabatan == "Administrator" ?
+                                    'selected':''}}>Administrator</option>
+                                <option value="Pengawas" {{$data->jenis_jabatan == "Pengawas" ? 'selected':''}}>Pengawas
+                                </option>
+                                <option value="jfu" {{$data->jenis_jabatan == "jfu" ? 'selected':''}}>JFU</option>
+                                <option value="jft" {{$data->jenis_jabatan == "jft" ? 'selected':''}}>JFT</option>
+                                <option value="struktural" {{$data->jenis_jabatan == "struktural" ?
+                                    'selected':''}}>Struktural</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label for="inputPassword3" class="col-sm-2 col-form-label">Beban Kerja</label>
                         <div class="col-sm-10">
                             <input type="persen_beban_kerja" class="form-control" name="persen_beban_kerja"

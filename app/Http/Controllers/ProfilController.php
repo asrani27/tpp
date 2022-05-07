@@ -8,6 +8,8 @@ use App\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class ProfilController extends Controller
 {
@@ -128,6 +130,42 @@ class ProfilController extends Controller
             ]);
             toastr()->success('Password Berhasil DiUbah');
             return back();
+        }
+    }
+
+    public function gantiPassPegawaiView()
+    {
+        return view('gantipass');
+    }
+
+    public function updatePassPegawai(Request $req)
+    {
+        if (!Hash::check($req->old_password, Auth::user()->password)) {
+            toastr()->error('Password Lama Tidak Sama');
+            return back();
+        }
+        if ($req->password != $req->password_confirmation) {
+            toastr()->error('Password Baru Tidak Sesuai');
+            return back();
+        } else {
+
+            $validator = Validator::make($req->all(), [
+                'password' => 'required|min:8|regex:/[0-9]/',
+            ]);
+
+            if ($validator->fails()) {
+                toastr()->error('Password min 8 karakter serta kombinasi angka dan huruf');
+                return back();
+            }
+
+            Auth::user()->update([
+                'password' => bcrypt($req->password),
+                'change_password' => 1,
+            ]);
+
+            Auth::logout();
+            toastr()->success('Berhasil Di Update, Login Dengan Password Baru');
+            return redirect('/');
         }
     }
 }

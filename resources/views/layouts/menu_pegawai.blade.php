@@ -143,13 +143,21 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="/pegawai/gantipass" class="nav-link {{ Request::is('pegawai/gantipass') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-key"></i>
+                <p>
+                    Ganti Password
+                </p>
+            </a>
+        </li>
+        {{-- <li class="nav-item">
             <a href="/pegawai/gaji" class="nav-link {{ Request::is('pegawai/gaji') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-money-bill"></i>
                 <p>
                     Gaji
                 </p>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item has-treeview {{Request::is('pegawai/laporan*') ? 'menu-open' : ''}}">
             <a href="#" class="nav-link {{Request::is('pegawai/laporan*') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-file"></i>

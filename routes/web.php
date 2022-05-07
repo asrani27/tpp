@@ -245,7 +245,11 @@ Route::group(['middleware' => ['auth', 'checksinglesession', 'role:pegawai']], f
 
     Route::get('/home/pegawai', 'HomeController@pegawai');
     Route::get('/home/pegawai/submonth', 'HomeController@pegawaiSubMonth');
+
     Route::post('/pegawai/profil/gantipass', 'ProfilController@gantiPassPegawai');
+
+    Route::get('/pegawai/gantipass', 'ProfilController@gantiPassPegawaiView');
+    Route::post('/pegawai/gantipass', 'ProfilController@updatePassPegawai');
 
     Route::get('/pegawai/skp/rencana-kegiatan', 'SkpController@index');
     Route::get('/pegawai/skp/validasi', 'SkpController@validasiSkp');

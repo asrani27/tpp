@@ -3,6 +3,18 @@
         Options -MultiViews -Indexes
     </IfModule>
 
+    <IfModule mod_headers.c>
+	Header always set Content-Security-Policy "default-src https: data: 'unsafe-inline' 'unsafe-eval'"
+	Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+	Header always set Public-Key-Pins "pin-sha256='X3pGTSOuJeEVw989IJ/cEtXUEmy52zs1TZQrU06KUKg='; pin-sha256='MHJYVThihUrJcxW6wcqyOISTXIsInsdj3xK8QrZbHec='; pin-sha256='isi41AizREkLvvft0IRW4u3XMFR2Yg7bvrF7padyCJg='; includeSubdomains; max-age=2592000"
+	Header always set X-Frame-Options "SAMEORIGIN"
+	Header always set X-Xss-Protection "1; mode=block"
+	Header always set X-Content-Type-Options "nosniff"
+	Header always set Permissions-Policy "geolocation=(); midi=();notifications=();push=();sync-xhr=();accelerometer=(); gyroscope=(); magnetometer=(); payment=(); camera=(); microphone=();usb=(); xr=();speaker=(self);vibrate=();fullscreen=(self);"
+	Header set Referrer-Policy "same-origin"
+	Header set Feature-Policy "geolocation 'self'; vibrate 'none'"
+    </IfModule>
+    
     RewriteEngine On
 
     # Handle Authorization Header
@@ -18,16 +30,4 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
-</IfModule>
-
-<IfModule mod_headers.c>
-	Header always set Content-Security-Policy "default-src https: data: 'unsafe-inline' 'unsafe-eval'"
-	Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
-	Header always set Public-Key-Pins "pin-sha256='X3pGTSOuJeEVw989IJ/cEtXUEmy52zs1TZQrU06KUKg='; pin-sha256='MHJYVThihUrJcxW6wcqyOISTXIsInsdj3xK8QrZbHec='; pin-sha256='isi41AizREkLvvft0IRW4u3XMFR2Yg7bvrF7padyCJg='; includeSubdomains; max-age=2592000"
-	Header always set X-Frame-Options "SAMEORIGIN"
-	Header always set X-Xss-Protection "1; mode=block"
-	Header always set X-Content-Type-Options "nosniff"
-	Header always set Permissions-Policy "geolocation=(); midi=();notifications=();push=();sync-xhr=();accelerometer=(); gyroscope=(); magnetometer=(); payment=(); camera=(); microphone=();usb=(); xr=();speaker=(self);vibrate=();fullscreen=(self);"
-	Header set Referrer-Policy "same-origin"
-	Header set Feature-Policy "geolocation 'self'; vibrate 'none'"
 </IfModule>

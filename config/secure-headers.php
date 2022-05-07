@@ -444,10 +444,10 @@ return [
      */
 
     'csp' => [
-        'enable' => false,
+        'enable' => true,
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only
-        'report-only' => false,
+        'report-only' => true,
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to
         'report-to' => '',
@@ -458,10 +458,10 @@ return [
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/block-all-mixed-content
-        'block-all-mixed-content' => false,
+        'block-all-mixed-content' => true,
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests
-        'upgrade-insecure-requests' => false,
+        'upgrade-insecure-requests' => true,
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/base-uri
         'base-uri' => [

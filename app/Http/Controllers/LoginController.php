@@ -19,9 +19,19 @@ class LoginController extends Controller
         return view('login');
     }
 
+    protected function authenticated()
+    {
+        Auth::logoutOtherDevices(request('password'));
+    }
+
     public function login(Request $req)
     {
         if (Auth::attempt(['username' => $req->username, 'password' => $req->password])) {
+
+            Auth::user()->update([
+                'last_session' => session()->getId(),
+            ]);
+
             Session::forget('superadmin');
             if (Auth::user()->hasRole('superadmin')) {
                 return redirect('/home/superadmin');
@@ -44,6 +54,11 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
+        return redirect('/');
+    }
+
+    public function redirectLogin()
+    {
         return redirect('/');
     }
 }

@@ -20,6 +20,7 @@ class SkpController extends Controller
 
     public function editPeriode($id)
     {
+        $this->authorize('periodeIsMine', Skp_periode::find($id));
         $data = Skp_periode::find($id);
         return view('pegawai.skp.edit_periode', compact('data'));
     }
@@ -55,6 +56,9 @@ class SkpController extends Controller
 
     public function viewPeriode($id)
     {
+
+        $this->authorize('periodeIsMine', Skp_periode::find($id));
+
         $pegawai_id = Auth::user()->pegawai->id;
         $u = Skp_periode::findOrFail($id);
         if ($pegawai_id != $u->pegawai_id) {
@@ -68,6 +72,8 @@ class SkpController extends Controller
 
     public function deletePeriode($id)
     {
+
+        $this->authorize('periodeIsMine', Skp_periode::find($id));
         try {
             Skp_periode::findOrFail($id)->delete();
             toastr()->success('Periode Berhasil Di Hapus');
@@ -111,6 +117,7 @@ class SkpController extends Controller
 
     public function edit($id, $periode_id)
     {
+        $this->authorize('skpIsMine', Skp::find($id));
         $data = Skp::find($id);
         return view('pegawai.skp.edit', compact('data', 'periode_id'));
     }
@@ -127,6 +134,7 @@ class SkpController extends Controller
 
     public function delete($id_kegiatan, $id_skp)
     {
+        $this->authorize('skpIsMine', Skp::find($id_kegiatan));
         try {
             $del = Skp::find($id_kegiatan)->delete();
             toastr()->success('SKP Berhasil Di Hapus');
@@ -139,6 +147,8 @@ class SkpController extends Controller
 
     public function aktifkan($id)
     {
+
+        $this->authorize('periodeIsMine', Skp_periode::find($id));
         $pegawai_id = Auth::user()->pegawai->id;
         $u = Skp_periode::findOrFail($id);
         if ($pegawai_id != $u->pegawai_id) {
@@ -209,6 +219,7 @@ class SkpController extends Controller
     }
     public function viewSkp($id)
     {
+        $this->authorize('isBawahanSaya', Pegawai::find($id));
         $id_periode = Pegawai::find($id)->skp_periode->pluck('id')->toArray();
         $data = Skp::whereIn('skp_periode_id', $id_periode)->orderBy('validasi', 'ASC')->paginate(10);
         $pegawai = Pegawai::find($id);
@@ -237,6 +248,8 @@ class SkpController extends Controller
 
     public function accSemuaSkp($id)
     {
+        $this->authorize('isBawahanSaya', Pegawai::find($id));
+
         $id_periode = Pegawai::find($id)->skp_periode->pluck('id')->toArray();
         $data = Skp::whereIn('skp_periode_id', $id_periode)->where('validasi', null)->get();
         if (count($data) == 0) {

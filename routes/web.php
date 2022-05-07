@@ -4,14 +4,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'LoginController@index');
 Route::post('/login', 'LoginController@login');
-Route::get('/login', function () {
-    return redirect('/');
-})->name('login');
+Route::get('/login', 'LoginController@redirectLogin')->name('login');
+
 Route::get('/logout', 'LoginController@logout');
 
 Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/home/superadmin', 'HomeController@superadmin');
-    Route::get('/superadmin/profil', 'ProfilController@superadmin');
     Route::get('/superadmin/tpp/{bulan}/{tahun}', 'TppController@tppBulanTahun');
     Route::get('/superadmin/tpp/{bulan}/{tahun}/laporan/{id}', 'TppController@tppSkpd');
     Route::post('/superadmin/profil', 'ProfilController@changeSuperadmin');

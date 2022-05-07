@@ -63,7 +63,9 @@
 							<i class="fa fa-lock"></i>
 						</span>
 					</div>
-					{!! app('captcha')->display() !!}
+					<div class="container-login100-form-btn p-t-10">
+						{!! app('captcha')->display() !!}
+					</div>
 					<div class="container-login100-form-btn p-t-10">
 						<button type="submit" class="login100-form-btn">
 							Login

@@ -447,7 +447,7 @@ return [
         'enable' => true,
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only
-        'report-only' => true,
+        'report-only' => false,
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to
         'report-to' => '',
@@ -458,10 +458,10 @@ return [
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/block-all-mixed-content
-        'block-all-mixed-content' => true,
+        'block-all-mixed-content' => false,
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests
-        'upgrade-insecure-requests' => true,
+        'upgrade-insecure-requests' => false,
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/base-uri
         'base-uri' => [
@@ -520,7 +520,7 @@ return [
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/navigate-to
         'navigate-to' => [
-            'unsafe-allow-redirects' => true,
+            'unsafe-allow-redirects' => false,
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/object-src
@@ -540,47 +540,47 @@ return [
 
         // https://w3c.github.io/webappsec-trusted-types/dist/spec/#integration-with-content-security-policy
         'require-trusted-types-for' => [
-            'script' => true,
+            'script' => false,
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/sandbox
         'sandbox' => [
-            'enable' => true,
+            'enable' => false,
 
-            'allow-downloads-without-user-activation' => true,
+            'allow-downloads-without-user-activation' => false,
 
-            'allow-forms' => true,
+            'allow-forms' => false,
 
-            'allow-modals' => true,
+            'allow-modals' => false,
 
-            'allow-orientation-lock' => true,
+            'allow-orientation-lock' => false,
 
-            'allow-pointer-lock' => true,
+            'allow-pointer-lock' => false,
 
-            'allow-popups' => true,
+            'allow-popups' => false,
 
-            'allow-popups-to-escape-sandbox' => true,
+            'allow-popups-to-escape-sandbox' => false,
 
-            'allow-presentation' => true,
+            'allow-presentation' => false,
 
-            'allow-same-origin' => true,
+            'allow-same-origin' => false,
 
-            'allow-scripts' => true,
+            'allow-scripts' => false,
 
-            'allow-storage-access-by-user-activation' => true,
+            'allow-storage-access-by-user-activation' => false,
 
-            'allow-top-navigation' => true,
+            'allow-top-navigation' => false,
 
-            'allow-top-navigation-by-user-activation' => true,
+            'allow-top-navigation-by-user-activation' => false,
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src
         'script-src' => [
-            'none' => true,
+            'none' => false,
 
-            'self' => true,
+            'self' => false,
 
-            'report-sample' => true,
+            'report-sample' => false,
 
             'allow' => [
                 // 'url',
@@ -593,17 +593,17 @@ return [
 
             /* followings are only work for `script` and `style` related directives */
 
-            'unsafe-inline' => true,
+            'unsafe-inline' => false,
 
-            'unsafe-eval' => true,
+            'unsafe-eval' => false,
 
             // https://www.w3.org/TR/CSP3/#unsafe-hashes-usage
-            'unsafe-hashes' => true,
+            'unsafe-hashes' => false,
 
             // Enable `strict-dynamic` will *ignore* `self`, `unsafe-inline`,
             // `allow` and `schemes`. You can find more information from:
             // https://www.w3.org/TR/CSP3/#strict-dynamic-usage
-            'strict-dynamic' => true,
+            'strict-dynamic' => false,
 
             'hashes' => [
                 'sha256' => [
@@ -647,11 +647,11 @@ return [
 
         // https://w3c.github.io/webappsec-trusted-types/dist/spec/#trusted-types-csp-directive
         'trusted-types' => [
-            'enable' => true,
+            'enable' => false,
 
-            'allow-duplicates' => true,
+            'allow-duplicates' => false,
 
-            'default' => true,
+            'default' => false,
 
             'policies' => [
                 //

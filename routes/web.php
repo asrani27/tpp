@@ -241,7 +241,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/rspuskesmas/{id}/login', 'AdminController@loginPuskesmas');
 });
 
-Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
+Route::group(['middleware' => ['auth', 'checksinglesession', 'role:pegawai']], function () {
 
     Route::get('/home/pegawai', 'HomeController@pegawai');
     Route::get('/home/pegawai/submonth', 'HomeController@pegawaiSubMonth');

@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -19,19 +20,18 @@ class LoginController extends Controller
         return view('login');
     }
 
-    protected function authenticated()
-    {
-        Auth::logoutOtherDevices(request('password'));
-    }
-
     public function login(Request $req)
     {
+        $validator = Validator::make($req->all(), [
+            'g-recaptcha-response' => 'required|captcha',
+        ]);
+
+        if ($validator->fails()) {
+            toastr()->error('Checklist Capcha');
+            return back();
+        }
+
         if (Auth::attempt(['username' => $req->username, 'password' => $req->password])) {
-
-            Auth::user()->update([
-                'last_session' => session()->getId(),
-            ]);
-
             Session::forget('superadmin');
             if (Auth::user()->hasRole('superadmin')) {
                 return redirect('/home/superadmin');

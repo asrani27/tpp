@@ -1,7 +1,3 @@
-<IfModule mod_rewrite.c>
-    <IfModule mod_negotiation.c>
-        Options -MultiViews -Indexes
-    </IfModule>
 
     <IfModule mod_headers.c>
 	Header always set Content-Security-Policy "default-src https: data: 'unsafe-inline' 'unsafe-eval'"
@@ -14,6 +10,12 @@
 	Header set Referrer-Policy "same-origin"
 	Header set Feature-Policy "geolocation 'self'; vibrate 'none'"
     </IfModule>
+    
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
     
     RewriteEngine On
 

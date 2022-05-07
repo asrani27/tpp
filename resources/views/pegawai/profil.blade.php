@@ -31,7 +31,7 @@
     <!-- /.card -->
 
     <!-- About Me Box -->
-    <div class="card card-info">
+    {{-- <div class="card card-info">
       <div class="card-header">
         <h3 class="card-title">Ganti Password</h3>
       </div>
@@ -47,7 +47,7 @@
 
       </div>
       <!-- /.card-body -->
-    </div>
+    </div> --}}
     <!-- /.card -->
   </div>
   <!-- /.col -->

@@ -43,7 +43,7 @@ class RekapitulasiPltController extends Controller
             return back();
         } else {
             if (RekapTpp::where('nip', $req->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first() != null) {
-                toastr()->error('Harap Hapus Data NIP ini di TPP reguler(Non PLT) terlebih dahulu, menghindari data double');
+                toastr()->error('Harap Hapus Data NIP ini di menu Rekap TPP reguler(Non PLT) terlebih dahulu, menghindari data double');
                 return back();
             }
             if (RekapTppPlt::where('nip', $req->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first() == null) {

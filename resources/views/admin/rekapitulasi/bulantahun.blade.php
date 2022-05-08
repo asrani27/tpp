@@ -75,28 +75,8 @@ SUPERADMIN
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/pembayaran" class="btn btn-xs btn-success"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Pembayaran</a>
 
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/bpjs" class="btn btn-xs btn-info">BPJS</a>
-                {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/updatejabatan" class="btn btn-xs btn-primary"
-                    onclick="return confirm('Update Jabatan Pegawai?');">Update Jabatan</a>
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/hitungpersen" class="btn btn-xs btn-primary"
-                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">
-                    Hitung Persen</a>
-
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/totalpagu" class="btn btn-xs btn-primary"
-                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung Total
-                    Pagu</a>
-
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/presensi" class="btn btn-xs btn-primary"
-                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Tarik & Hitung
-                    Presensi</a>
-
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/aktivitas" class="btn btn-xs btn-primary"
-                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung Cuti &
-                    Aktivitas</a>
-
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/pph21" class="btn btn-xs btn-primary"
-                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung
-                    PPH 21</a> --}}
+                {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/bpjs" class="btn btn-xs btn-info">BPJS</a>
+                --}}
                 <br /><br />
 
                 <table class="table table-hover table-striped text-nowrap table-sm table-responsive ">
@@ -113,7 +93,7 @@ SUPERADMIN
                             </th>
                             <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Kelas</th>
                             <th style="border:1px solid silver" colspan=7 class="bg-warning">Perhitungan</th>
-                            <th colspan=15 style="border:1px solid silver" class="bg-success">Pembayaran</th>
+                            <th colspan=16 style="border:1px solid silver" class="bg-success">Pembayaran</th>
                             <th rowspan=4 style="border:1px solid silver" class="bg-info">PPH 21</th>
                             <th rowspan=4 style="border:1px solid silver" class="bg-info">BPJS 1%</th>
                             <th rowspan=4 style="border:1px solid silver" class="bg-info">BPJS 4%</th>
@@ -131,7 +111,7 @@ SUPERADMIN
                             </th>
                             <th rowspan=3 style="border:1px solid silver" class="bg-warning">Pagu <br />TPP<br /> ASN
                             </th>
-                            <th class="bg-success" style="border:1px solid silver" colspan=5>Menit Aktivitas + Menit
+                            <th class="bg-success" style="border:1px solid silver" colspan=6>Menit Aktivitas + Menit
                                 Cuti</th>
                             <th class="bg-success" style="border:1px solid silver" rowspan=3>Total<br /> Menit</th>
                             <th class="bg-info" style="border:1px solid silver" colspan=2>Beban Kerja</th>
@@ -161,6 +141,7 @@ SUPERADMIN
                             <th style="border:1px solid silver" class="bg-success">Tugas Luar</th>
                             <th style="border:1px solid silver" class="bg-success">Covid</th>
                             <th style="border:1px solid silver" class="bg-success">Diklat</th>
+                            <th style="border:1px solid silver" class="bg-success">Cuti Bersama</th>
                             <th style="border:1px solid silver" class="bg-info">Disiplin</th>
                             <th style="border:1px solid silver" class="bg-info">Produktivitas</th>
                             <th style="background-color:bisque; border:1px solid silver">Disiplin</th>
@@ -173,6 +154,7 @@ SUPERADMIN
                             <th style="border:1px solid silver" class="bg-success">@420</th>
                             <th style="border:1px solid silver" class="bg-success">@420</th>
                             <th style="border:1px solid silver" class="bg-success">@360</th>
+                            <th style="border:1px solid silver" class="bg-success">@420</th>
                             <th style="border:1px solid silver" class="bg-success">@420</th>
                             <th style="border:1px solid silver" class="bg-info">40 %</th>
                             <th style="border:1px solid silver" class="bg-info">60 %</th>
@@ -247,6 +229,9 @@ SUPERADMIN
                             </td>
                             <td class="text-right">
                                 {{$item->pembayaran_diklat}}
+                            </td>
+                            <td class="text-right">
+                                {{$item->pembayaran_cuti_bersama}}
                             </td>
                             <td class="text-right">
                                 {{$item->pembayaran_aktivitas}}

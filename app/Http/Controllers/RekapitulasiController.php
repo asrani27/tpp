@@ -529,6 +529,15 @@ class RekapitulasiController extends Controller
 
     public function pembayaran($bulan, $tahun)
     {
+        //cuti bersama
+        if ($bulan == '04' && $tahun == '2022') {
+            $cuti_bersama = 420;
+        } elseif ($bulan == '05' && $tahun == '2022') {
+            $cuti_bersama = 420 * 3;
+        } else {
+            $cuti_bersama = 0;
+        }
+
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
@@ -538,7 +547,7 @@ class RekapitulasiController extends Controller
             $pembayaran_di = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 4)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
 
             $aktivitas = Aktivitas::where('pegawai_id', $item->pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('validasi', 1)->get();
-            $menit_aktivitas = $aktivitas->sum('menit') + $pembayaran_ct + $pembayaran_tl + $pembayaran_co + $pembayaran_di;
+            $menit_aktivitas = $aktivitas->sum('menit') + $pembayaran_ct + $pembayaran_tl + $pembayaran_co + $pembayaran_di + $cuti_bersama;
             $jabatan = Jabatan::find($item->jabatan_id);
             if ($presensi == null) {
                 $absensi = 0;
@@ -566,6 +575,7 @@ class RekapitulasiController extends Controller
                 'pembayaran_prestasi_kerja' => $pk_disiplin + $pk_produktivitas,
                 'pembayaran_kondisi_kerja' => $absensi == 0 ? 0 : $kondisi_kerja,
                 'pembayaran_cutitahunan' => $pembayaran_ct,
+                'pembayaran_cuti_bersama' => $cuti_bersama,
                 'pembayaran_tugasluar' => $pembayaran_tl,
                 'pembayaran_covid' => $pembayaran_co,
                 'pembayaran_diklat' => $pembayaran_di,

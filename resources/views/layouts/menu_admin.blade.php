@@ -128,6 +128,16 @@
             </a>
         </li>
         </li>
+        <li class="nav-item">
+            <a href="/admin/rekapitulasi/plt"
+                class="nav-link {{Request::is('admin/rekapitulasi/plt') ? 'active' : ''}}">
+                <i class="nav-icon fas fa-file"></i>
+                <p>
+                    Rekap TPP PLT
+                </p>
+            </a>
+        </li>
+        </li>
 
         {{-- <li class="nav-item">
             <a href="/admin/rekapitulasi/plt"

@@ -185,6 +185,14 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('/admin/jabatan/edit/{id}', 'AdminController@updateJabatan');
     Route::get('/admin/jabatan/delete/{id}', 'AdminController@deleteJabatan');
 
+    Route::get('/admin/rekapitulasi/plt', 'RekapitulasiPltController@index');
+    Route::get('/admin/rekapitulasi/plt/{bulan}/{tahun}', 'RekapitulasiPltController@bulanTahun');
+    Route::get('/admin/rekapitulasi/plt/{bulan}/{tahun}/create', 'RekapitulasiPltController@create');
+    Route::post('/admin/rekapitulasi/plt/{bulan}/{tahun}/create', 'RekapitulasiPltController@store');
+    Route::get('/admin/rekapitulasi/plt/{bulan}/{tahun}/perhitungan', 'RekapitulasiPltController@perhitungan');
+    Route::get('/admin/rekapitulasi/plt/{bulan}/{tahun}/pembayaran', 'RekapitulasiPltController@pembayaran');
+    Route::get('/admin/rekapitulasi/plt/{bulan}/{tahun}/{id}/delete', 'RekapitulasiPltController@delete');
+
     Route::get('/admin/rekapitulasi', 'RekapitulasiController@index');
     Route::get('/admin/rekapitulasi/cetaktpp', 'RekapitulasiController@cetaktpp');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}', 'RekapitulasiController@bulanTahun');

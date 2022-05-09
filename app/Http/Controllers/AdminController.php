@@ -204,6 +204,7 @@ class AdminController extends Controller
 
         $u = $data;
         $u->password = bcrypt(Carbon::parse($tgl_lahir)->format('dmY'));
+        $u->change_password = 0;
         $u->save();
 
         toastr()->success('Password : ' . Carbon::parse($tgl_lahir)->format('dmY'));

@@ -20,27 +20,23 @@ LAPORAN AKTIVITAS
             <h3 class="card-title"> Aktivitas</h3>
 
             <div class="card-tools">
-              {{-- <form method="get" action="/pegawai/skp/rencana-kegiatan/search">
-                <div class="input-group input-group-sm" style="width: 300px;">
-                  <input type="text" name="search" class="form-control input-sm float-right" value="{{old('search')}}"
-                    placeholder="Cari">
-
-                  <div class="input-group-append">
-                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                  </div>
-                </div>
-              </form> --}}
             </div>
           </div>
           <!-- /.card-header -->
-          <div class="card-body">
+          <div class="card-body table-responsive">
             <table class="table table-hover table-striped text-nowrap table-sm">
               <thead>
                 <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif" class="bg-gradient-primary">
                   <th>#</th>
                   <th>Bulan & Tahun</th>
+                  <th>Menit Aktivitas</th>
+                  <th>Cuti Tahunan</th>
+                  <th>Cuti Bersama</th>
+                  <th>Diklat/Pelatihan</th>
+                  <th>Tugas Luar</th>
+                  <th>Covid</th>
                   <th>Total Menit</th>
-                  <th>Total Kehadiran</th>
+                  <th>Kehadiran</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -50,11 +46,30 @@ LAPORAN AKTIVITAS
               <tbody>
 
                 @foreach (bulanTahun() as $key => $item)
+                @php
+
+                $hasil = \App\RekapTpp::where('nip', Auth::user()->username)->where('bulan',
+                $item->bulan)->where('tahun',
+                $item->tahun)->first();
+                @endphp
                 <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
                   <td>{{$no++}}</td>
                   <td>{{\Carbon\Carbon::createFromFormat('m',$item->bulan)->translatedFormat('F')}} {{$item->tahun}}
                   </td>
-                  <td>{{totalMenit($item->bulan, $item->tahun)}} Menit</td>
+                  <td>{{totalMenit($item->bulan, $item->tahun)}} </td>
+                  <td>{{($hasil == null ? 0: $hasil->pembayaran_cutitahunan) == null ? 0
+                    :$hasil->pembayaran_cutitahunan}}
+                  </td>
+                  <td>{{($hasil == null ? 0: $hasil->pembayaran_cuti_bersama) == null ? 0
+                    :$hasil->pembayaran_cuti_bersama}}</td>
+                  <td>{{($hasil == null ? 0: $hasil->pembayaran_diklat) == null ? 0
+                    :$hasil->pembayaran_diklat}}</td>
+                  <td>{{($hasil == null ? 0: $hasil->pembayaran_tugasluar) == null ? 0
+                    :$hasil->pembayaran_tugasluar}}</td>
+                  <td>{{($hasil == null ? 0: $hasil->pembayaran_covid) == null ? 0
+                    :$hasil->pembayaran_covid}}</td>
+                  <td> {{($hasil == null ? 0: $hasil->pembayaran_aktivitas) == null ? 0
+                    :$hasil->pembayaran_aktivitas}}</td>
                   <td>{{totalAbsensi($item->bulan, $item->tahun)}} %</td>
                   <td>
                     <a href="/pegawai/laporan/aktivitas/{{$item->bulan}}/{{$item->tahun}}"

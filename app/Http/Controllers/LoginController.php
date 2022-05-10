@@ -13,10 +13,19 @@ class LoginController extends Controller
 {
     public function index()
     {
-        // $bulan = '02';
-        // $tahun = '2022';
-        // $bulanTahun = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->translatedFormat('F');
-        // dd($bulanTahun);
+        if (Auth::check()) {
+            if (Auth::user()->hasRole('superadmin')) {
+                return redirect('/home/superadmin');
+            } elseif (Auth::user()->hasRole('admin')) {
+                return redirect('/home/admin');
+            } elseif (Auth::user()->hasRole('pegawai')) {
+                return redirect('/home/pegawai');
+            } elseif (Auth::user()->hasRole('puskesmas')) {
+                return redirect('/home/puskesmas');
+            } elseif (Auth::user()->hasRole('walikota')) {
+                return redirect('/home/walikota');
+            }
+        }
         return view('login');
     }
 

@@ -144,7 +144,7 @@ class PuskesmasController extends Controller
 
             $kondisi_kerja = round($item->perhitungan_basic_tpp * $jabatan->tambahan_persen_tpp / 100);
 
-            dd($kondisi_kerja * 87 / 100);
+            dd($kondisi_kerja * 87 / 100, $kondisi_kerja);
             $item->update([
                 'pembayaran_absensi' => $presensi == null ? null : $presensi->persen_kehadiran,
                 'pembayaran_aktivitas' => $menit_aktivitas,

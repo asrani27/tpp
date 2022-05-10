@@ -136,7 +136,6 @@ class PuskesmasController extends Controller
             } else {
                 $absensi = $presensi->persen_kehadiran;
             }
-            dd($absensi);
             $bk_disiplin = round((($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * ((40 / 100) * $absensi / 100)));
             $bk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * 0.6 : 0);
 
@@ -145,6 +144,7 @@ class PuskesmasController extends Controller
 
             $kondisi_kerja = round($item->perhitungan_basic_tpp * $jabatan->tambahan_persen_tpp / 100);
 
+            dd($kondisi_kerja * 87 / 100);
             $item->update([
                 'pembayaran_absensi' => $presensi == null ? null : $presensi->persen_kehadiran,
                 'pembayaran_aktivitas' => $menit_aktivitas,

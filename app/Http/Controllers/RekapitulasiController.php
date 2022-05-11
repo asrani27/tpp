@@ -502,25 +502,39 @@ class RekapitulasiController extends Controller
         // menghitung kolom berwarna orange
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
 
-        $checkPersen = $data->map(function ($item) {
-            $item->persen = Jabatan::find($item->jabatan_id);
-            return $item;
-        });
-        $cp = $checkPersen->where('persen', null)->first();
-        if ($cp != null) {
-            toastr()->error('Persen jabatan AN. ' . $cp->nama . ', NIP:' . $cp->nip . ' Tidak ditemukan, harap di hapus dulu, kemudian di masukkan/input kembali, Jika ASN ini pensiun, masukkan ke menu pensiun, agar tidak masuk dalam rekap lagi');
-            return back();
-        }
+        // $data->map(function ($item) {
+
+        //     return $item;
+        // });
+        // dd($data);
+        // $cp = $checkPersen->where('persen', null)->first();
+        // if ($cp != null) {
+        //     toastr()->error('Persen jabatan AN. ' . $cp->nama . ', NIP:' . $cp->nip . ' Tidak ditemukan, harap di hapus dulu, kemudian di masukkan/input kembali, Jika ASN ini pensiun, masukkan ke menu pensiun, agar tidak masuk dalam rekap lagi');
+        //     return back();
+        // }
+
         foreach ($data as $item) {
+
             $persen = Jabatan::find($item->jabatan_id);
-            $basic_tpp = Kelas::where('nama', $item->kelas)->first()->nilai;
-            $pagu      = round($basic_tpp * ($persen->persen_beban_kerja + $persen->persen_prestasi_kerja + $persen->persen_tambahan_beban_kerja) / 100);
-            $disiplin  = $pagu * (40 / 100);
-            $produktivitas  = round($pagu * 60 / 100);
-            $kondisi_kerja  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_kondisi_kerja / 100);
-            $tambahan_beban_kerja  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_tambahan_beban_kerja / 100);
-            $kelangkaan_profesi  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_kelangkaan_profesi / 100);
-            $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $kelangkaan_profesi;
+            if ($persen == null) {
+                $basic_tpp = 0;
+                $pagu = 0;
+                $disiplin = 0;
+                $produktivitas = 0;
+                $kondisi_kerja = 0;
+                $tambahan_beban_kerja = 0;
+                $kelangkaan_profesi = 0;
+                $pagu_asn = 0;
+            } else {
+                $basic_tpp = Kelas::where('nama', $item->kelas)->first()->nilai;
+                $pagu      = round($basic_tpp * ($persen->persen_beban_kerja + $persen->persen_prestasi_kerja + $persen->persen_tambahan_beban_kerja) / 100);
+                $disiplin  = $pagu * (40 / 100);
+                $produktivitas  = round($pagu * 60 / 100);
+                $kondisi_kerja  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_kondisi_kerja / 100);
+                $tambahan_beban_kerja  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_tambahan_beban_kerja / 100);
+                $kelangkaan_profesi  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_kelangkaan_profesi / 100);
+                $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $kelangkaan_profesi;
+            }
 
             $item->update([
                 'perhitungan_basic_tpp' => $basic_tpp,

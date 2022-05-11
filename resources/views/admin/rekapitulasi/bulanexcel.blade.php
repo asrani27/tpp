@@ -71,7 +71,10 @@ header("Content-Disposition: attachment; filename=tpp.xls");
                 $no = 1;
                 @endphp
                 @foreach ($data as $item)
-                <tr>
+                <tr @if($item->perhitungan_basic_tpp == 0)
+                    background-color:#f2dede
+                    @endif
+                    >
                     <td valign="top">{{$no++}}</td>
                     <td valign="top">{{strtoupper($item->nama)}}</td>
                     <td valign="top">NIP.{{$item->nip}}</td>

@@ -701,17 +701,26 @@ class RekapitulasiController extends Controller
                 'pembayaran_at' => $aktivitas->sum('menit')
             ]);
 
-            $pph21 = Pangkat::find($item->pangkat_id)->pph;
-            $item->update([
-                'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->perhitungan_tambahan_beban_kerja + $item->perhitungan_kelangkaan_profesi,
-            ]);
 
-            $potongan_pph21 = round($item->pembayaran * ($pph21 / 100));
+            if ($jabatan == null) {
+                $item->update([
+                    'pembayaran' => 0,
+                    'potongan_pph21' => 0,
+                    'tpp_diterima' => 0,
+                ]);
+            } else {
+                $pph21 = Pangkat::find($item->pangkat_id)->pph;
+                $item->update([
+                    'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->perhitungan_tambahan_beban_kerja + $item->perhitungan_kelangkaan_profesi,
+                ]);
 
-            $item->update([
-                'potongan_pph21' => $potongan_pph21,
-                'tpp_diterima' => $item->pembayaran - $potongan_pph21 - $item->potongan_bpjs_1persen,
-            ]);
+                $potongan_pph21 = round($item->pembayaran * ($pph21 / 100));
+
+                $item->update([
+                    'potongan_pph21' => $potongan_pph21,
+                    'tpp_diterima' => $item->pembayaran - $potongan_pph21 - $item->potongan_bpjs_1persen,
+                ]);
+            }
         }
         toastr()->success('Berhasil di hitung');
         return back();

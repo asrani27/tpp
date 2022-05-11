@@ -167,7 +167,11 @@ SUPERADMIN
                     @endphp
                     <tbody>
                         @foreach ($data as $key => $item)
-                        <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif">
+                        <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif; 
+                            @if($item->perhitungan_basic_tpp == 0)
+                            background-color:#f2dede
+                            @endif
+                            ">
                             <td>{{$no++}}</td>
                             <td>
                                 {{$item->nama}} <br />

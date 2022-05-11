@@ -671,11 +671,11 @@ class RekapitulasiController extends Controller
 
             $jabatan = Jabatan::find($item->jabatan_id);
             if ($jabatan == null) {
-                $bk_disiplin=0
-                $bk_produktivitas=0
-                $pk_disiplin=0
-                $pk_produktivitas=0
-                $kondisi_kerja=0
+                $bk_disiplin = 0;
+                $bk_produktivitas = 0;
+                $pk_disiplin = 0;
+                $pk_produktivitas = 0;
+                $kondisi_kerja = 0;
             } else {
                 $bk_disiplin = round((($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * ((40 / 100) * $absensi / 100)));
                 $bk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * 0.6 : 0);

@@ -59,7 +59,13 @@ SUPERADMIN
                     akan menghitung di kolom pembayaran<br />
 
                     5. Upload Data Potongan BPJS dengan mengklik tombol <span class="badge badge-info">BPJS</span>
-                    akan menghitung di kolom BPJS
+                    akan menghitung di kolom BPJS<br />
+
+                    6. Bila basic tpp = 0, dan kolomnya berwarna <span class="badge badge-danger">MERAH</span>, maka
+                    kemungkinan besar, ASN tsb pensiun / tidak memiliki jabatan/persen jabatan 0, Solusinya klik tombol
+                    hapus di paling kanan
+                    jika pensiun, jika tidak pensiun hapus terlebih dahulu, kemudian masukkan/input kembali di kolom
+                    paling bawah.
                 </div>
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/excel" target="_blank"
                     class="btn btn-xs btn-primary">Export Excel</a>

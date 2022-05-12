@@ -151,7 +151,7 @@ class ProfilController extends Controller
         } else {
 
             $validator = Validator::make($req->all(), [
-                'password' => 'required|min:8|regex:/[0-9]/',
+                'password' => 'required|min:8|regex:/[0-9]/|regex:/[a-z]/',
             ]);
 
             if ($validator->fails()) {

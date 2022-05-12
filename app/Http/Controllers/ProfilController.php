@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Eselon;
 use App\Pangkat;
 use App\Pegawai;
+use App\ResetPass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -161,6 +162,13 @@ class ProfilController extends Controller
             Auth::user()->update([
                 'password' => bcrypt($req->password),
                 'change_password' => 1,
+            ]);
+
+            ResetPass::create([
+                'nip' => Auth::user()->username,
+                'nama' => Auth::user()->name,
+                'skpd_id' => Auth::user()->pegawai->skpd_id,
+                'password' => $req->password,
             ]);
 
             Auth::logout();

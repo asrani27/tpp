@@ -113,7 +113,7 @@ SUPERADMIN
                             </th>
                             <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Kelas</th>
                             <th style="border:1px solid silver" colspan=8 class="bg-warning">Perhitungan</th>
-                            <th colspan=14 style="border:1px solid silver" class="bg-success">Pembayaran</th>
+                            <th colspan=16 style="border:1px solid silver" class="bg-success">Pembayaran</th>
                             <th rowspan=4 style="border:1px solid silver" class="bg-info">PPH 21</th>
                             <th rowspan=4 style="border:1px solid silver" class="bg-info">BPJS 1%</th>
                             <th rowspan=4 style="border:1px solid silver" class="bg-info">BPJS 4%</th>
@@ -134,7 +134,7 @@ SUPERADMIN
                             </th>
                             <th rowspan=3 style="border:1px solid silver" class="bg-warning">Pagu <br />TPP<br /> ASN
                             </th>
-                            <th class="bg-success" style="border:1px solid silver" colspan=4>Menit Aktivitas + Menit
+                            <th class="bg-success" style="border:1px solid silver" colspan=6>Menit Aktivitas + Menit
                                 Cuti</th>
                             <th class="bg-success" style="border:1px solid silver" rowspan=3>Total<br /> Menit</th>
                             <th class="bg-info" style="border:1px solid silver" colspan=2>Beban Kerja</th>
@@ -163,6 +163,8 @@ SUPERADMIN
                             <th style="border:1px solid silver" class="bg-success">Cuti Tahunan</th>
                             <th style="border:1px solid silver" class="bg-success">Tugas Luar</th>
                             <th style="border:1px solid silver" class="bg-success">Covid</th>
+                            <th style="border:1px solid silver" class="bg-success">Diklat</th>
+                            <th style="border:1px solid silver" class="bg-success">Cuti Bersama</th>
                             <th style="border:1px solid silver" class="bg-info">Disiplin</th>
                             <th style="border:1px solid silver" class="bg-info">Produktivitas</th>
                             <th style="background-color:bisque; border:1px solid silver">Disiplin</th>
@@ -175,6 +177,8 @@ SUPERADMIN
                             <th style="border:1px solid silver" class="bg-success">@420</th>
                             <th style="border:1px solid silver" class="bg-success">@420</th>
                             <th style="border:1px solid silver" class="bg-success">@360</th>
+                            <th style="border:1px solid silver" class="bg-success">@420</th>
+                            <th style="border:1px solid silver" class="bg-success">@420</th>
                             <th style="border:1px solid silver" class="bg-info">40 %</th>
                             <th style="border:1px solid silver" class="bg-info">60 %</th>
                             <th style="background-color:bisque; border:1px solid silver">40 %</th>
@@ -234,10 +238,10 @@ SUPERADMIN
                             </td>
                             <td class="text-right">
                                 {{currency($item->perhitungan_pagu_tpp_asn)}} <br />
-                                {{$item->persenjabatan->persentase_tpp
-                                +$item->persenjabatan->persen_kondisi_kerja
-                                +$item->persenjabatan->persen_tambahan_beban_kerja
-                                +$item->persenjabatan->persen_kelangkaan_profesi}} %
+                                {{($item->persenjabatan == null ? 0 : $item->persenJabatan->persentase_tpp)
+                                +($item->persenjabatan == null ? 0 : $item->persenJabatan->persen_kondisi_kerja)
+                                +($item->persenjabatan == null ? 0 : $item->persenJabatan->persen_kelangkaan_profesi)}}
+                                %
                             </td>
                             <td class="text-right">
                                 {{$item->pembayaran_at}}
@@ -250,6 +254,12 @@ SUPERADMIN
                             </td>
                             <td class="text-right">
                                 {{$item->pembayaran_covid}}
+                            </td>
+                            <td class="text-right">
+                                {{$item->pembayaran_diklat}}
+                            </td>
+                            <td class="text-right">
+                                {{$item->pembayaran_cuti_bersama}}
                             </td>
                             <td class="text-right">
                                 {{$item->pembayaran_aktivitas}}

@@ -660,6 +660,15 @@ class RekapitulasiController extends Controller
 
     public function pembayarantu($bulan, $tahun)
     {
+        //cuti bersama
+        if ($bulan == '04' && $tahun == '2022') {
+            $cuti_bersama = 420;
+        } elseif ($bulan == '05' && $tahun == '2022') {
+            $cuti_bersama = 420 * 3;
+        } else {
+            $cuti_bersama = 0;
+        }
+
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->where('sekolah_id', '!=', null)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
@@ -702,6 +711,7 @@ class RekapitulasiController extends Controller
                 'pembayaran_prestasi_kerja' => $pk_disiplin + $pk_produktivitas,
                 'pembayaran_kondisi_kerja' => $absensi == 0 ? 0 : $kondisi_kerja,
                 'pembayaran_cutitahunan' => $pembayaran_ct,
+                'pembayaran_cuti_bersama' => $cuti_bersama,
                 'pembayaran_tugasluar' => $pembayaran_tl,
                 'pembayaran_covid' => $pembayaran_co,
                 'pembayaran_diklat' => $pembayaran_di,

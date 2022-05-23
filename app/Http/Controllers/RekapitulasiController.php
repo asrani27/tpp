@@ -502,19 +502,7 @@ class RekapitulasiController extends Controller
         // menghitung kolom berwarna orange
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
 
-        // $data->map(function ($item) {
-
-        //     return $item;
-        // });
-        // dd($data);
-        // $cp = $checkPersen->where('persen', null)->first();
-        // if ($cp != null) {
-        //     toastr()->error('Persen jabatan AN. ' . $cp->nama . ', NIP:' . $cp->nip . ' Tidak ditemukan, harap di hapus dulu, kemudian di masukkan/input kembali, Jika ASN ini pensiun, masukkan ke menu pensiun, agar tidak masuk dalam rekap lagi');
-        //     return back();
-        // }
-
         foreach ($data as $item) {
-
             $persen = Jabatan::find($item->jabatan_id);
             if ($persen == null) {
                 $basic_tpp = 0;

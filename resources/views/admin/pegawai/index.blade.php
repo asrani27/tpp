@@ -65,6 +65,7 @@ SUPERADMIN
                   @if (Auth::user()->username == '1.02.01.')
                   <th>SKPD/RS/Puskesmas</th>
                   @endif
+                  <th>Status</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -101,6 +102,8 @@ SUPERADMIN
                   <td>{{$item->jabatan->rs_puskesmas_id == null ? 'Dinas Kesehatan' : $item->jabatan->rs->nama}}</td>
                   @endif
                   @endif
+
+                  <td>{{$item->status_pns}}</td>
                   <td>
                     @if ($item->user_id == null)
                     <a href="/admin/pegawai/createuser/{{$item->id}}" class="btn btn-xs btn-success"><i

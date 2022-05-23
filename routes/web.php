@@ -219,6 +219,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/rekapitulasi/cpns/{bulan}/{tahun}/masukkanpegawai', 'RekapitulasiCpnsController@masukkanPegawai');
     Route::get('/admin/rekapitulasi/cpns/{bulan}/{tahun}/perhitungan', 'RekapitulasiCpnsController@perhitungan');
     Route::get('/admin/rekapitulasi/cpns/{bulan}/{tahun}/pembayaran', 'RekapitulasiCpnsController@pembayaran');
+    Route::get('/admin/rekapitulasi/cpns/{bulan}/{tahun}/excel', 'RekapitulasiCpnsController@excel');
 
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/perhitungan', 'RekapitulasiController@perhitungan');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/pembayaran', 'RekapitulasiController@pembayaran');

@@ -199,4 +199,12 @@ class RekapitulasiCpnsController extends Controller
         toastr()->success('Berhasil di hitung');
         return back();
     }
+
+    public function excel($bulan, $tahun)
+    {
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $skpd = Auth::user()->skpd;
+        return view('admin.rekapitulasi.bulanexcel', compact('data', 'skpd', 'bulan', 'tahun'));
+        //        return Excel::download(new TppExport, 'tppexport.xlsx');
+    }
 }

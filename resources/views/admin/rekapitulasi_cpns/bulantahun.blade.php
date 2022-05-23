@@ -248,7 +248,7 @@ SUPERADMIN
                                 {{currency($item->pembayaran_bk_produktivitas)}}<br />
                                 {{$item->pembayaran_aktivitas}} Menit
                             </td>
-                            <td>{{currency($item->pembayaran_beban_kerja * (80 / 100))}}</td>
+                            <td>{{currency($item->pembayaran_beban_kerja)}}</td>
                             <td class="text-right">
                                 {{currency($item->pembayaran_pk_disiplin)}}<br />
                                 {{$item->pembayaran_absensi}} %

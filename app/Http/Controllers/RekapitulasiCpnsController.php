@@ -169,12 +169,13 @@ class RekapitulasiCpnsController extends Controller
 
                 'pembayaran_bk_disiplin' => $bk_disiplin,
                 'pembayaran_bk_produktivitas' => $bk_produktivitas,
+                'pembayaran_beban_kerja' => ($bk_disiplin + $bk_produktivitas) * (80 / 100),
 
-                'pembayaran_beban_kerja' => $bk_disiplin + $bk_produktivitas,
                 'pembayaran_pk_disiplin' => $pk_disiplin,
                 'pembayaran_pk_produktivitas' => $pk_produktivitas,
-                'pembayaran_prestasi_kerja' => $pk_disiplin + $pk_produktivitas,
-                'pembayaran_kondisi_kerja' => $absensi == 0 ? 0 : $kondisi_kerja,
+                'pembayaran_prestasi_kerja' => ($pk_disiplin + $pk_produktivitas) * (80 / 100),
+
+                'pembayaran_kondisi_kerja' => $absensi == 0 ? 0 : $kondisi_kerja * (80 / 100),
                 'pembayaran_cutitahunan' => $pembayaran_ct,
                 'pembayaran_cuti_bersama' => $cuti_bersama,
                 'pembayaran_tugasluar' => $pembayaran_tl,

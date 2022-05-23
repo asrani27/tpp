@@ -116,7 +116,7 @@ class RekapitulasiController extends Controller
     {
         // toastr()->error('Mohon maaf, sedang dalam pembaharuan fitur, akan kembali dalam  jam');
         // return back();
-        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->where('status_pns', 'pns')->orderBy('kelas', 'DESC')->get();
         return view('admin.rekapitulasi.bulantahun', compact('data', 'bulan', 'tahun'));
     }
 
@@ -124,7 +124,7 @@ class RekapitulasiController extends Controller
     {
         // toastr()->error('Mohon maaf, ada perubahan format Rekap TPP, akan kembali dalam 24 jam');
         // return back();
-        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', '!=', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', '!=', null)->where('bulan', $bulan)->where('tahun', $tahun)->where('status_pns', 'pns')->orderBy('kelas', 'DESC')->get();
         return view('admin.rekapitulasi.bulantahuntu', compact('data', 'bulan', 'tahun'));
     }
     public function masukkanPegawai($bulan, $tahun)
@@ -150,6 +150,7 @@ class RekapitulasiController extends Controller
                 $n->skpd_id     = Auth::user()->skpd->id;
                 $n->bulan     = $bulan;
                 $n->tahun     = $tahun;
+                $n->status_pns        = $item->status_pns;
                 $n->sekolah_id  = $item->jabatan == null ? null : $item->jabatan->sekolah_id;
                 $n->save();
             } else {
@@ -169,6 +170,7 @@ class RekapitulasiController extends Controller
                         'skpd_id' => Auth::user()->skpd->id,
                         'bulan' => $bulan,
                         'tahun' => $tahun,
+                        'status_pns' => $item->status_pns,
                     ]);
                 } else {
                 }
@@ -202,6 +204,7 @@ class RekapitulasiController extends Controller
                 $n->skpd_id     = Auth::user()->skpd->id;
                 $n->bulan     = $bulan;
                 $n->tahun     = $tahun;
+                $n->status_pns        = $item->status_pns;
                 $n->sekolah_id  = $item->jabatan == null ? null : $item->jabatan->sekolah_id;
                 $n->save();
             } else {
@@ -221,6 +224,7 @@ class RekapitulasiController extends Controller
                         'skpd_id' => Auth::user()->skpd->id,
                         'bulan' => $bulan,
                         'tahun' => $tahun,
+                        'status_pns' => $item->status_pns,
                     ]);
                 } else {
                 }

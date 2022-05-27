@@ -96,15 +96,26 @@ class PuskesmasController extends Controller
         foreach ($data as $item) {
 
             $persen = Jabatan::find($item->jabatan_id);
-            $basic_tpp = Kelas::where('nama', $item->kelas)->first()->nilai;
-            $pagu      = round($basic_tpp * ($persen->persen_beban_kerja + $persen->persen_prestasi_kerja + $persen->persen_tambahan_beban_kerja) / 100);
-            $disiplin  = $pagu * 40 / 100;
-            $produktivitas  = $pagu * 60 / 100;
-            $kondisi_kerja  = $basic_tpp * Jabatan::find($item->jabatan_id)->persen_kondisi_kerja / 100;
-            $tambahan_beban_kerja  = $basic_tpp * Jabatan::find($item->jabatan_id)->persen_tambahan_beban_kerja / 100;
-            $kelangkaan_profesi  = $basic_tpp * Jabatan::find($item->jabatan_id)->persen_kelangkaan_profesi / 100;
-            $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $tambahan_beban_kerja + $kelangkaan_profesi;
 
+            if ($persen == null) {
+                $basic_tpp = 0;
+                $pagu = 0;
+                $disiplin = 0;
+                $produktivitas = 0;
+                $kondisi_kerja = 0;
+                $tambahan_beban_kerja = 0;
+                $kelangkaan_profesi = 0;
+                $pagu_asn = 0;
+            } else {
+                $basic_tpp = Kelas::where('nama', $item->kelas)->first()->nilai;
+                $pagu      = round($basic_tpp * ($persen->persen_beban_kerja + $persen->persen_prestasi_kerja + $persen->persen_tambahan_beban_kerja) / 100);
+                $disiplin  = $pagu * 40 / 100;
+                $produktivitas  = $pagu * 60 / 100;
+                $kondisi_kerja  = $basic_tpp * Jabatan::find($item->jabatan_id)->persen_kondisi_kerja / 100;
+                $tambahan_beban_kerja  = $basic_tpp * Jabatan::find($item->jabatan_id)->persen_tambahan_beban_kerja / 100;
+                $kelangkaan_profesi  = $basic_tpp * Jabatan::find($item->jabatan_id)->persen_kelangkaan_profesi / 100;
+                $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $tambahan_beban_kerja + $kelangkaan_profesi;
+            }
             $item->update([
                 'perhitungan_basic_tpp' => $basic_tpp,
                 'perhitungan_pagu' => $pagu,

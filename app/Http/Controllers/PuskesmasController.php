@@ -147,7 +147,11 @@ class PuskesmasController extends Controller
             if ($presensi == null) {
                 $absensi = 0;
             } else {
-                $absensi = $presensi->persen_kehadiran;
+                if ($presensi->persen_kehadiran < 0) {
+                    $absensi = 0;
+                } else {
+                    $absensi = $presensi->persen_kehadiran;
+                }
             }
 
             if ($jabatan == null) {

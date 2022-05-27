@@ -82,7 +82,7 @@ ADMIN PUSKESMAS
                                 <br />Jabatan
                             </th>
                             <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Kelas</th>
-                            <th style="border:1px solid silver" colspan=8 class="bg-warning">Perhitungan</th>
+                            <th style="border:1px solid silver" colspan=7 class="bg-warning">Perhitungan</th>
                             <th colspan=14 style="border:1px solid silver" class="bg-success">Pembayaran</th>
                             <th rowspan=4 style="border:1px solid silver" class="bg-info">PPH 21</th>
                             <th rowspan=4 style="border:1px solid silver" class="bg-info">BPJS 1%</th>
@@ -97,9 +97,6 @@ ADMIN PUSKESMAS
                                 Kerja dan<br /> Produktivitas</th>
                             <th colspan=2 style="border:1px solid silver" class="bg-warning">Penilaian TPP</th>
                             <th rowspan=3 style="border:1px solid silver" class="bg-warning">Kondisi <br /> Kerja</th>
-                            <th rowspan=3 style="border:1px solid silver" class="bg-warning">Tambahan <br /> Beban
-                                <br /> Kerja
-                            </th>
                             <th rowspan=3 style="border:1px solid silver" class="bg-warning">Kelangkaan <br />Profesi
                             </th>
                             <th rowspan=3 style="border:1px solid silver" class="bg-warning">Pagu <br />TPP<br /> ASN

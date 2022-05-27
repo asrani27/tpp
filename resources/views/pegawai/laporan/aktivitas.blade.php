@@ -35,7 +35,6 @@ LAPORAN AKTIVITAS
                   <th>Diklat/Pelatihan</th>
                   <th>Tugas Luar</th>
                   <th>Covid</th>
-                  <th>Total Menit</th>
                   <th>Kehadiran</th>
                   <th>Aksi</th>
                 </tr>
@@ -68,8 +67,14 @@ LAPORAN AKTIVITAS
                     :$hasil->pembayaran_tugasluar}}</td>
                   <td>{{($hasil == null ? 0: $hasil->pembayaran_covid) == null ? 0
                     :$hasil->pembayaran_covid}}</td>
-                  <td> {{($hasil == null ? 0: $hasil->pembayaran_aktivitas) == null ? 0
-                    :$hasil->pembayaran_aktivitas}}</td>
+                  <td>
+                    {{-- @if ($hasil == null)
+                    0
+                    @else
+                    {{totalMenit($item->bulan, $item->tahun) + $hasil->pembayaran_cutitahunan +
+                    $hasil->pembayaran_cuti_bersama + $hasil->pembayaran_diklat + $hasil->pembayaran_tugasluar +
+                    $hasil->pembayaran_covid}}
+                    @endif</td> --}}
                   <td>{{totalAbsensi($item->bulan, $item->tahun)}} %</td>
                   <td>
                     <a href="/pegawai/laporan/aktivitas/{{$item->bulan}}/{{$item->tahun}}"

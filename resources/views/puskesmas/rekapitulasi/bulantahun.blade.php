@@ -179,7 +179,9 @@ ADMIN PUSKESMAS
                             </td>
                             <td class="text-right">
                                 {{currency($item->perhitungan_pagu)}}<br />
-                                {{$item->persenJabatan->persentase_tpp}} %
+                                {{$item->persenJabatan == null ? 0 : $item->persenJabatan->persen_prestasi_kerja +
+                                $item->persenJabatan->persen_beban_kerja +
+                                $item->persenJabatan->persen_tambahan_beban_kerja }} %
                             </td>
                             <td class="text-right">
                                 {{currency($item->perhitungan_disiplin)}}
@@ -189,15 +191,15 @@ ADMIN PUSKESMAS
                             </td>
                             <td class="text-center">
                                 {{currency($item->perhitungan_kondisi_kerja)}} <br />
-                                {{$item->persenJabatan->persen_kondisi_kerja}} %
+                                {{$item->persenJabatan == null ? 0 : $item->persenJabatan->persen_kondisi_kerja}} %
                             </td>
-                            <td class="text-right">
+                            {{-- <td class="text-right">
                                 {{currency($item->perhitungan_tambahan_beban_kerja)}} <br />
                                 {{$item->persenjabatan->persen_tambahan_beban_kerja}} %
-                            </td>
+                            </td> --}}
                             <td class="text-right">
                                 {{currency($item->perhitungan_kelangkaan_profesi)}} <br />
-                                {{$item->persenjabatan->persen_kelangkaan_profesi}} %
+                                {{$item->persenjabatan == null ? 0 : $item->persenJabatan->persen_kelangkaan_profesi}} %
                             </td>
                             <td class="text-right">
                                 {{currency($item->perhitungan_pagu_tpp_asn * 87/100)}} <br />

@@ -95,7 +95,7 @@ class PuskesmasController extends Controller
         $data = RekapTpp::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
             $basic_tpp = Kelas::where('nama', $item->kelas)->first()->nilai;
-            $pagu      = $basic_tpp * Jabatan::find($item->jabatan_id)->persentase_tpp / 100;
+            $pagu      = round($basic_tpp * ($persen->persen_beban_kerja + $persen->persen_prestasi_kerja + $persen->persen_tambahan_beban_kerja) / 100);
             $disiplin  = $pagu * 40 / 100;
             $produktivitas  = $pagu * 60 / 100;
             $kondisi_kerja  = $basic_tpp * Jabatan::find($item->jabatan_id)->persen_kondisi_kerja / 100;

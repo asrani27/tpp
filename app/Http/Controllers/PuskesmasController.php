@@ -157,10 +157,11 @@ class PuskesmasController extends Controller
                 $pk_produktivitas = 0;
                 $kondisi_kerja = 0;
             } else {
-                $disiplin = round((($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * ((40 / 100) * $absensi / 100)));
-                $bk_disiplin = $disiplin < 0 ? 0 : $disiplin;
+                $disiplin_bk = round((($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * ((40 / 100) * $absensi / 100)));
+                $bk_disiplin = $disiplin_bk < 0 ? 0 : $disiplin_bk;
                 $bk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_beban_kerja / 100) * 0.6 : 0);
-                $pk_disiplin = round((($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * ((40 / 100) * $absensi / 100)));
+                $disiplin_pk = round((($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * ((40 / 100) * $absensi / 100)));
+                $pk_disiplin = $disiplin_pk < 0 ? 0 : $disiplin_pk;
                 $pk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * 0.6 : 0);
                 $kondisi_kerja = round($item->perhitungan_basic_tpp * $jabatan->persen_kondisi_kerja / 100);
             }

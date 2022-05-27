@@ -94,6 +94,8 @@ class PuskesmasController extends Controller
         // menghitung kolom berwarna orange
         $data = RekapTpp::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
+
+            $persen = Jabatan::find($item->jabatan_id);
             $basic_tpp = Kelas::where('nama', $item->kelas)->first()->nilai;
             $pagu      = round($basic_tpp * ($persen->persen_beban_kerja + $persen->persen_prestasi_kerja + $persen->persen_tambahan_beban_kerja) / 100);
             $disiplin  = $pagu * 40 / 100;

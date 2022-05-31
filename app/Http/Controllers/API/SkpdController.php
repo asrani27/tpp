@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 
 class SkpdController extends Controller
 {
-    public function allpegawai()
+    public function all()
     {
         $skpd = Skpd::get();
         $data['message_error'] = 200;

@@ -14,7 +14,7 @@ class SkpdController extends Controller
         $data['message_error'] = 200;
         $data['message']       = 'data ditemukan';
         $data['data']          = $skpd;
-        $data['jumlah']        = count($pegawai);
+        $data['jumlah']        = count($skpd);
         return response()->json($data);
     }
 }

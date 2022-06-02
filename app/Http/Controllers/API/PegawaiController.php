@@ -53,7 +53,7 @@ class PegawaiController extends Controller
             $data['message']       = 'data ditemukan';
             $data['ja']          = $aktivitas->count();
             $data['ma']          = $aktivitas->sum('menit');
-            $data['k']           = $kehadiran;
+            $data['k']           = $kehadiran->pembayaran_absensi;
             return response()->json($data);
         }
     }

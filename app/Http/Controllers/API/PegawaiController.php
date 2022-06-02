@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Skpd;
 use App\Pegawai;
+use App\Aktivitas;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

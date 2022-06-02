@@ -7,6 +7,7 @@ use App\Pegawai;
 use App\Aktivitas;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\RekapTpp;
 
 class PegawaiController extends Controller
 {
@@ -47,10 +48,12 @@ class PegawaiController extends Controller
             return response()->json($data);
         } else {
             $aktivitas = Aktivitas::where('pegawai_id', $pegawai->id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+            $kehadiran = RekapTpp::where('nip', $pegawai->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
             $data['message_error'] = 200;
             $data['message']       = 'data ditemukan';
             $data['ja']          = $aktivitas->count();
             $data['ma']          = $aktivitas->sum('menit');
+            $data['k']           = $kehadiran;
             return response()->json($data);
         }
     }

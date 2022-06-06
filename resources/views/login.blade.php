@@ -63,9 +63,20 @@
 							<i class="fa fa-lock"></i>
 						</span>
 					</div>
-					{{-- <div class="container-login100-form-btn p-t-10">
-						{!! app('captcha')->display() !!}
-					</div> --}}
+
+					<div class="container-login100-form-btn p-t-10">
+						<h3 class="text-white"><strong>{{$a1}} + {{$a2}} =</strong></h3>
+						<input type="hidden" name="a1" value="{{$a1}}">
+						<input type="hidden" name="a2" value="{{$a2}}">
+					</div>
+					<div class="container-login100-form-btn p-t-10">
+						<input class="input100" type="text" name="captcha_result" placeholder="Masukkan Captcha"
+							autocomplete="off" required>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock"></i>
+						</span>
+					</div>
 					<div class="container-login100-form-btn p-t-10">
 						<button type="submit" class="login100-form-btn">
 							Login

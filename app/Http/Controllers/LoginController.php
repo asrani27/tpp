@@ -26,7 +26,10 @@ class LoginController extends Controller
                 return redirect('/home/walikota');
             }
         }
-        return view('login');
+
+        $a1 = rand(10, 50);
+        $a2 = rand(10, 50);
+        return view('login', compact('a1', 'a2'));
     }
 
     public function login(Request $req)

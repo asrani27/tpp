@@ -34,6 +34,11 @@ class LoginController extends Controller
 
     public function login(Request $req)
     {
+        $hasil = $req->a1 + $req->a2;
+        if ($hasil != $req->captcha_result) {
+            toastr()->error('Captcha Salah');
+            return back();
+        }
         // $validator = Validator::make($req->all(), [
         //     'g-recaptcha-response' => 'required|captcha',
         // ]);

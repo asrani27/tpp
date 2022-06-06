@@ -31,14 +31,14 @@ class LoginController extends Controller
 
     public function login(Request $req)
     {
-        $validator = Validator::make($req->all(), [
-            'g-recaptcha-response' => 'required|captcha',
-        ]);
+        // $validator = Validator::make($req->all(), [
+        //     'g-recaptcha-response' => 'required|captcha',
+        // ]);
 
-        if ($validator->fails()) {
-            toastr()->error('Checklist Capcha');
-            return back();
-        }
+        // if ($validator->fails()) {
+        //     toastr()->error('Checklist Capcha');
+        //     return back();
+        // }
 
         if (Auth::attempt(['username' => $req->username, 'password' => $req->password])) {
             Session::forget('superadmin');

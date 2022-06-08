@@ -192,6 +192,8 @@ SUPERADMIN
                             </td>
                             <td class="text-center">
                                 {{$item->kelas}}
+                                <a href="#"><i class="fas fa-edit edit-kelas" data-id="{{$item->id}}"
+                                        data-kelas="{{$item->kelas}}"></i></a>
                             </td>
                             <td class="text-right">
                                 {{currency($item->perhitungan_basic_tpp)}}
@@ -378,6 +380,34 @@ SUPERADMIN
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="modal-kelas" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="/admin/rekapitulasi/cpns/editkelas" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header bg-gradient-success" style="padding:10px">
+                    <h4 class="modal-title text-sm">EDIT KELAS JABATAN</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    Kelas<input type="text" id="kelas" name="kelas" class="form-control"
+                        onkeypress="return hanyaAngka(event)"><br />
+                    <input type="hidden" id="rekap_id" name="rekap_id">
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="submit" class="btn btn-block btn-success"><i class="fas fa-paper-plane"></i>
+                        Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('js')
@@ -389,6 +419,14 @@ SUPERADMIN
        $('#id_1persen').val($(this).data('1persen'));
        $('#id_4persen').val($(this).data('4persen'));
        $("#modal-bpjs").modal();
+    });
+</script>
+
+<script>
+    $(document).on('click', '.edit-kelas', function() {
+       $('#kelas').val($(this).data('kelas'));
+       $('#rekap_id').val($(this).data('id'));
+       $("#modal-kelas").modal();
     });
 </script>
 <script src="/theme/plugins/select2/js/select2.full.min.js"></script>

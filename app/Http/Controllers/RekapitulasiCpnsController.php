@@ -19,6 +19,14 @@ class RekapitulasiCpnsController extends Controller
         return view('admin.rekapitulasi_cpns.index');
     }
 
+    public function editkelas(Request $req)
+    {
+        RekapTpp::find($req->rekap_id)->update([
+            'kelas' => $req->kelas,
+        ]);
+        toastr()->success('Berhasil Diubah');
+        return back();
+    }
     public function bulanTahun($bulan, $tahun)
     {
         $groupJab = Jabatan::where('skpd_id', Auth::user()->skpd->id)->get()->groupBy('nama');

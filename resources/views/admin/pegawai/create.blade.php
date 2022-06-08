@@ -32,45 +32,6 @@ ADMIN SKPD
         </div>
         <a href="/admin/pegawai" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i>
             Kembali</a><br /><br />
-        {{-- <div class="row">
-            <div class="col-12">
-                <div class="card">
-
-                    <div class="card-body table-responsive p-0">
-                        <form class="form-horizontal" method="GET" action="/admin/pegawai/checktobkd">
-                            @csrf
-                            <div class="card-body">
-
-                                <div class="form-group row">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
-                                    <div class="col-sm-10">
-                                        <span class="badge badge-warning">Informasi : Masukkan NIP, klik check to server
-                                            BKD, jika data di temukan akan tampil di bawah, kemudian simpan data
-                                            tersebut</span>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">MASUKKAN NIP</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="nip" value="{{ old('nip') }}"
-                                            placeholder="NIP" required minlength="18" maxlength="18">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
-                                    <div class="col-sm-10">
-                                        <button type="submit" class="btn btn-info btn-block">Check To Server
-                                            BKD</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.card-footer -->
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -152,6 +113,41 @@ ADMIN SKPD
                                         </select>
                                     </div>
                                 </div>
+                                {{--
+                                @if (Auth::user()->skpd->id == 34)
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">256 Jabatan
+                                        Tersedia</label>
+                                    <div class="col-sm-10">
+                                        <table class="table table-sm table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Kelas</th>
+                                                    <th>Nama</th>
+                                                    <th>Atasan</th>
+                                                    <th>Check</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($jabatan as $item)
+                                                <tr>
+                                                    <td>{{$item->kelas->nama}}</td>
+                                                    <td>{{$item->nama}}</td>
+                                                    <td>{{$item->atasan == null ?
+                                                        '-':'Atasan
+                                                        : '.$item->atasan->nama}}</td>
+                                                    <td>
+                                                        <input type="radio" name="jabatan_id">
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        {{$jabatan->links()}}
+                                    </div>
+                                </div>
+
+                                @else --}}
 
                                 <div class="form-group row">
                                     <label for="inputPassword3" class="col-sm-2 col-form-label">Jabatan Tersedia</label>
@@ -159,9 +155,6 @@ ADMIN SKPD
                                         <select class="form-control select2" name="jabatan_id">
                                             <option value="">-pilih-</option>
                                             @foreach ($jabatan as $item)
-                                            {{-- <option value="{{$item->id}}">{{$item->nama}} ({{$item->rs == null ?
-                                                $item->skpd->nama:$item->rs->nama}}) - {{$item->atasan == null ?
-                                                '-':'Atasan : '.$item->atasan->nama}}</option> --}}
                                             @if ($item->sekolah_id == null)
                                             <option value="{{$item->id}}">{{$item->nama}} ({{$item->rs == null ?
                                                 $item->skpd->nama:$item->rs->nama}}) - {{$item->atasan == null ?
@@ -177,6 +170,7 @@ ADMIN SKPD
                                         </select>
                                     </div>
                                 </div>
+                                {{-- @endif --}}
 
                             </div>
                             <!-- /.card-body -->
@@ -196,7 +190,6 @@ ADMIN SKPD
 @endsection
 
 @push('js')
-
 
 <script src="/theme/plugins/select2/js/select2.full.min.js"></script>
 <script>

@@ -21,12 +21,24 @@ class RekapitulasiCpnsController extends Controller
 
     public function bulanTahun($bulan, $tahun)
     {
+        $groupJab = Jabatan::where('skpd_id', Auth::user()->skpd->id)->get()->groupBy('nama');
+
+        $jabatan = [];
+
+        foreach ($groupJab as $item) {
+            $data['id'] = $item->first()->id;
+            $data['nama'] = $item->first()->nama;
+            $data['kelas'] = $item->first()->kelas->nama;
+            array_push($jabatan, $data);
+        }
+
+
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-        return view('admin.rekapitulasi_cpns.bulantahun', compact('data', 'bulan', 'tahun'));
+        return view('admin.rekapitulasi_cpns.bulantahun', compact('data', 'bulan', 'tahun', 'jabatan'));
     }
     public function masukkanPegawai($bulan, $tahun)
     {
-        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
+        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('jabatan_id', '!=', null)->where('status_pns', 'cpns')->whereHas('jabatan', function ($query) {
             return $query->where('rs_puskesmas_id', null)->where('sekolah_id', null);
         })->get();
 

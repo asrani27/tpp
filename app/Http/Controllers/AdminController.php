@@ -50,12 +50,19 @@ class AdminController extends Controller
 
     public function addPegawai()
     {
+
+        // if (Auth::user()->skpd->id == 34) {
+        //     $jabatan = Jabatan::where('skpd_id', Auth::user()->skpd->id)->paginate(20);
+        //     $data['nip'] = '';
+        //     $data['nm_lengkap'] = '';
+        // } else {
         $jabatan = Jabatan::where('skpd_id', Auth::user()->skpd->id)->get()->map(function ($item) {
             $item->pegawai = $item->pegawai;
             return $item;
         })->where('pegawai', null);
         $data['nip'] = '';
         $data['nm_lengkap'] = '';
+        // }
 
         return view('admin.pegawai.create', compact('jabatan', 'data'));
     }

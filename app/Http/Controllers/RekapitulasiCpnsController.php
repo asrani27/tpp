@@ -39,7 +39,7 @@ class RekapitulasiCpnsController extends Controller
     public function masukkanPegawai($bulan, $tahun)
     {
         $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('jabatan_id', '!=', null)->where('status_pns', 'cpns')->whereHas('jabatan', function ($query) {
-            return $query->where('rs_puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('sekolah_id', null);
+            return $query->where('rs_puskesmas_id', '!=', null)->where('rs_puskesmas_id', '!=', 8)->where('sekolah_id', null);
         })->get();
 
         foreach ($pegawai as $item) {
@@ -95,7 +95,7 @@ class RekapitulasiCpnsController extends Controller
     public function perhitungan($bulan, $tahun)
     {
         // menghitung kolom berwarna orange
-        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
 
         foreach ($data as $item) {
             $persen = Jabatan::find($item->jabatan_id);
@@ -120,6 +120,7 @@ class RekapitulasiCpnsController extends Controller
                 $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $kelangkaan_profesi;
             }
 
+            dd($item);
             $item->update([
                 'perhitungan_basic_tpp' => $basic_tpp,
                 'perhitungan_pagu' => $pagu,

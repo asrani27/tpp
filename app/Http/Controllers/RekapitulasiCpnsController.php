@@ -77,7 +77,7 @@ class RekapitulasiCpnsController extends Controller
                         'jenis_jabatan' => $item->jabatan == null ? null : $item->jabatan->jenis_jabatan,
                         'kelas'         => $item->jabatan == null ? null : $item->jabatan->kelas->nama,
                         'sekolah_id'    => $item->jabatan == null ? null : $item->jabatan->sekolah_id,
-                        'puskesmas_id'  = $item->jabatan == null ? null : $item->jabatan->rs_puskesmas_id,
+                        'puskesmas_id'  => $item->jabatan == null ? null : $item->jabatan->rs_puskesmas_id,
                         'skpd_id' => Auth::user()->skpd->id,
                         'bulan' => $bulan,
                         'tahun' => $tahun,

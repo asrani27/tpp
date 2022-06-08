@@ -39,7 +39,7 @@ class RekapitulasiCpnsController extends Controller
     public function masukkanPegawai($bulan, $tahun)
     {
         $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('jabatan_id', '!=', null)->where('status_pns', 'cpns')->whereHas('jabatan', function ($query) {
-            return $query->where('rs_puskesmas_id', null)->where('sekolah_id', null);
+            return $query->where('rs_puskesmas_id', '!=', null)->where('sekolah_id', null);
         })->get();
 
         foreach ($pegawai as $item) {

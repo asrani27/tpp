@@ -113,7 +113,8 @@ class RekapitulasiCpnsController extends Controller
                 $basic_tpp = Kelas::where('nama', $item->kelas)->first()->nilai;
 
                 $persentase = (($persen->persen_beban_kerja + $persen->persen_prestasi_kerja) + ($persen->persen_tambahan_beban_kerja == null ? 0 : $persen->persen_tambahan_beban_kerja)) / 100;
-                $pagu      = round($basic_tpp * (($persen->persen_beban_kerja + $persen->persen_prestasi_kerja) + ($persen->persen_tambahan_beban_kerja == null ? 0 : $persen->persen_tambahan_beban_kerja) / 100));
+
+                $pagu      = round($basic_tpp * $persentase);
                 $disiplin  = $pagu * (40 / 100);
                 $produktivitas  = round($pagu * 60 / 100);
                 $kondisi_kerja  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_kondisi_kerja / 100);

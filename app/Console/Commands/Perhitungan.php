@@ -147,6 +147,7 @@ class Perhitungan extends Command
                     'tpp_diterima' => $item->pembayaran - $potongan_pph21 - $item->potongan_bpjs_1persen,
                 ]);
             }
+            return 'sukses';
         } else {
             return 'selain puskesmas';
         }

@@ -134,6 +134,7 @@ function detailPuskesmas($id)
 function jabatan($skpd_id)
 {
     $data = Jabatan::where('skpd_id', $skpd_id)->get();
+
     return $data;
 }
 function jabatanPuskesmas($puskesmas_id)

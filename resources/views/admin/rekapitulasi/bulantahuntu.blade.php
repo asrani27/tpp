@@ -342,7 +342,7 @@ SUPERADMIN
                         </tr>
                     </tbody>
                 </table><br />
-                1Isi NIP dan Jabatan Lama di bawah ini, Jika Yang bersangkutan sudah pindah/promosi ke skpd lain dan
+                Isi NIP dan Jabatan Lama di bawah ini, Jika Yang bersangkutan sudah pindah/promosi ke skpd lain dan
                 yang
                 membayarkan SKPD lama
                 <form method="post" action="/admin/rekapitulasi/tambahpegawai">

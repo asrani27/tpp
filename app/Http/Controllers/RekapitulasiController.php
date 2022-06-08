@@ -116,8 +116,19 @@ class RekapitulasiController extends Controller
     {
         // toastr()->error('Mohon maaf, sedang dalam pembaharuan fitur, akan kembali dalam  jam');
         // return back();
+        $groupJab = Jabatan::where('skpd_id', Auth::user()->skpd->id)->get()->groupBy('nama');
+
+        $jabatan = [];
+
+        foreach ($groupJab as $item) {
+            $data['id'] = $item->first()->id;
+            $data['nama'] = $item->first()->nama;
+            $data['kelas'] = $item->first()->kelas->nama;
+            array_push($jabatan, $data);
+        }
+
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->where('status_pns', 'pns')->orderBy('kelas', 'DESC')->get();
-        return view('admin.rekapitulasi.bulantahun', compact('data', 'bulan', 'tahun'));
+        return view('admin.rekapitulasi.bulantahun', compact('data', 'bulan', 'tahun', 'jabatan'));
     }
 
     public function bulanTahunTU($bulan, $tahun)

@@ -321,6 +321,19 @@ SUPERADMIN
                         </tr>
                     </tbody>
                 </table><br />
+                <form method="post" action="/admin/rekapitulasi/tambahpegawaicpns">
+                    @csrf
+                    <input type="text" name="nip" class="form-control-sm" placeholder="nip" required>
+                    <select name="jabatan" class="form-control-sm select2" required>
+                        <option value="">-Pilih Kelas | jabatan </option>
+                        @foreach (jabatan(Auth::user()->skpd->id) as $item)
+                        <option value="{{$item->id}}">{{$item->kelas->nama}} | {{$item->nama}}</option>
+                        @endforeach
+                    </select>
+                    <input type="hidden" name="bulan" value="{{$bulan}}" class="form-control-sm" placeholder="bulan">
+                    <input type="hidden" name="tahun" value="{{$tahun}}" class="form-control-sm" placeholder="tahun">
+                    <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                </form>
             </div>
         </div>
     </div>

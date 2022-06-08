@@ -54,7 +54,6 @@ class AdminController extends Controller
             $item->pegawai = $item->pegawai;
             return $item;
         })->where('pegawai', null);
-
         $data['nip'] = '';
         $data['nm_lengkap'] = '';
 

@@ -120,7 +120,7 @@ class RekapitulasiCpnsController extends Controller
                 $kelangkaan_profesi  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_kelangkaan_profesi / 100);
                 $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $kelangkaan_profesi;
             }
-            dd($item, $pagu, $persen);
+            dd($item, $pagu, ($persen->persen_beban_kerja + $persen->persen_prestasi_kerja + $persen->persen_tambahan_beban_kerja == null ? 0 : $persen->persen_tambahan_beban_kerja), $persen);
             //dd($item, $pagu, $persen->persen_beban_kerja + $persen->persen_prestasi_kerja + $persen->persen_tambahan_beban_kerja - 10);
             $item->update([
                 'perhitungan_basic_tpp' => $basic_tpp,

@@ -184,8 +184,8 @@ SUPERADMIN
                             </td>
                             <td class="text-center">
                                 {!!wordwrap($item->jabatan,50,"<br>")!!}
-                                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/editjabatan/{{$item->id}}"><i
-                                        class="fas fa-edit"></i></a>
+                                {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/editjabatan/{{$item->id}}"><i
+                                        class="fas fa-edit"></i></a> --}}
                             </td>
                             <td class="text-center">
                                 {{$item->jenis_jabatan}}

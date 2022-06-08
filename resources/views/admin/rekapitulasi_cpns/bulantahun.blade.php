@@ -179,7 +179,8 @@ SUPERADMIN
                             <td>
                                 {{$item->nama}} <br />
                                 {{$item->pangkat}} {{$item->golongan}} <br />
-                                NIP.{{$item->nip}}
+                                NIP.{{$item->nip}}<br />
+                                {{$item->puskesmas->nama}}
                             </td>
                             <td class="text-center">
                                 {!!wordwrap($item->jabatan,50,"<br>")!!}

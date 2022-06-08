@@ -120,7 +120,6 @@ class RekapitulasiCpnsController extends Controller
                 $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $kelangkaan_profesi;
             }
 
-            dd($item);
             $item->update([
                 'perhitungan_basic_tpp' => $basic_tpp,
                 'perhitungan_pagu' => $pagu,

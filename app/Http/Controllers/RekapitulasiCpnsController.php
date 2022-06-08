@@ -138,84 +138,84 @@ class RekapitulasiCpnsController extends Controller
         return back();
     }
 
-    public function pembayaran($bulan, $tahun)
-    {
-        //cuti bersama
-        if ($bulan == '04' && $tahun == '2022') {
-            $cuti_bersama = 420;
-        } elseif ($bulan == '05' && $tahun == '2022') {
-            $cuti_bersama = 420 * 3;
-        } else {
-            $cuti_bersama = 0;
-        }
+    // public function pembayaran($bulan, $tahun)
+    // {
+    //     //cuti bersama
+    //     if ($bulan == '04' && $tahun == '2022') {
+    //         $cuti_bersama = 420;
+    //     } elseif ($bulan == '05' && $tahun == '2022') {
+    //         $cuti_bersama = 420 * 3;
+    //     } else {
+    //         $cuti_bersama = 0;
+    //     }
 
-        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-        foreach ($data as $item) {
-            $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
-            $pembayaran_ct = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 7)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
-            $pembayaran_tl = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 5)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
-            $pembayaran_co = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 9)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 360;
-            $pembayaran_di = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 4)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+    //     $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+    //     foreach ($data as $item) {
+    //         $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+    //         $pembayaran_ct = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 7)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+    //         $pembayaran_tl = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 5)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+    //         $pembayaran_co = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 9)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 360;
+    //         $pembayaran_di = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 4)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
 
-            $aktivitas = Aktivitas::where('pegawai_id', $item->pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('validasi', 1)->get();
-            $menit_aktivitas = $aktivitas->sum('menit') + $pembayaran_ct + $pembayaran_tl + $pembayaran_co + $pembayaran_di + $cuti_bersama;
-            $jabatan = Jabatan::find($item->jabatan_id);
-            if ($presensi == null) {
-                $absensi = 0;
-            } else {
-                $absensi = $presensi->persen_kehadiran;
-            }
+    //         $aktivitas = Aktivitas::where('pegawai_id', $item->pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('validasi', 1)->get();
+    //         $menit_aktivitas = $aktivitas->sum('menit') + $pembayaran_ct + $pembayaran_tl + $pembayaran_co + $pembayaran_di + $cuti_bersama;
+    //         $jabatan = Jabatan::find($item->jabatan_id);
+    //         if ($presensi == null) {
+    //             $absensi = 0;
+    //         } else {
+    //             $absensi = $presensi->persen_kehadiran;
+    //         }
 
-            if ($jabatan == null) {
-                $bk_disiplin = 0;
-                $bk_produktivitas = 0;
-                $pk_disiplin = 0;
-                $pk_produktivitas = 0;
-                $kondisi_kerja = 0;
-            } else {
-                $bk_disiplin = round((($item->perhitungan_basic_tpp * ($jabatan->persen_beban_kerja + $jabatan->persen_tambahan_beban_kerja) / 100) * ((40 / 100) * $absensi / 100)));
-                $bk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * ($jabatan->persen_beban_kerja + $jabatan->persen_tambahan_beban_kerja) / 100) * 0.6 : 0);
-                $pk_disiplin = round((($item->perhitungan_basic_tpp * ($jabatan->persen_prestasi_kerja - 10) / 100) * ((40 / 100) * $absensi / 100)));
-                $pk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * ($jabatan->persen_prestasi_kerja - 10) / 100) * 0.6 : 0);
-                $kondisi_kerja = round($item->perhitungan_basic_tpp * $jabatan->persen_kondisi_kerja / 100);
-            }
+    //         if ($jabatan == null) {
+    //             $bk_disiplin = 0;
+    //             $bk_produktivitas = 0;
+    //             $pk_disiplin = 0;
+    //             $pk_produktivitas = 0;
+    //             $kondisi_kerja = 0;
+    //         } else {
+    //             $bk_disiplin = round((($item->perhitungan_basic_tpp * ($jabatan->persen_beban_kerja + $jabatan->persen_tambahan_beban_kerja) / 100) * ((40 / 100) * $absensi / 100)));
+    //             $bk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * ($jabatan->persen_beban_kerja + $jabatan->persen_tambahan_beban_kerja) / 100) * 0.6 : 0);
+    //             $pk_disiplin = round((($item->perhitungan_basic_tpp * ($jabatan->persen_prestasi_kerja - 10) / 100) * ((40 / 100) * $absensi / 100)));
+    //             $pk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * ($jabatan->persen_prestasi_kerja - 10) / 100) * 0.6 : 0);
+    //             $kondisi_kerja = round($item->perhitungan_basic_tpp * $jabatan->persen_kondisi_kerja / 100);
+    //         }
 
-            $item->update([
-                'pembayaran_absensi' => $presensi == null ? null : $presensi->persen_kehadiran,
-                'pembayaran_aktivitas' => $menit_aktivitas,
+    //         $item->update([
+    //             'pembayaran_absensi' => $presensi == null ? null : $presensi->persen_kehadiran,
+    //             'pembayaran_aktivitas' => $menit_aktivitas,
 
-                'pembayaran_bk_disiplin' => $bk_disiplin,
-                'pembayaran_bk_produktivitas' => $bk_produktivitas,
-                'pembayaran_beban_kerja' => ($bk_disiplin + $bk_produktivitas) * (80 / 100),
+    //             'pembayaran_bk_disiplin' => $bk_disiplin,
+    //             'pembayaran_bk_produktivitas' => $bk_produktivitas,
+    //             'pembayaran_beban_kerja' => ($bk_disiplin + $bk_produktivitas) * (80 / 100),
 
-                'pembayaran_pk_disiplin' => $pk_disiplin,
-                'pembayaran_pk_produktivitas' => $pk_produktivitas,
-                'pembayaran_prestasi_kerja' => ($pk_disiplin + $pk_produktivitas) * (80 / 100),
+    //             'pembayaran_pk_disiplin' => $pk_disiplin,
+    //             'pembayaran_pk_produktivitas' => $pk_produktivitas,
+    //             'pembayaran_prestasi_kerja' => ($pk_disiplin + $pk_produktivitas) * (80 / 100),
 
-                'pembayaran_kondisi_kerja' => $absensi == 0 ? 0 : $kondisi_kerja * (80 / 100),
-                'pembayaran_cutitahunan' => $pembayaran_ct,
-                'pembayaran_cuti_bersama' => $cuti_bersama,
-                'pembayaran_tugasluar' => $pembayaran_tl,
-                'pembayaran_covid' => $pembayaran_co,
-                'pembayaran_diklat' => $pembayaran_di,
-                'pembayaran_at' => $aktivitas->sum('menit')
-            ]);
+    //             'pembayaran_kondisi_kerja' => $absensi == 0 ? 0 : $kondisi_kerja * (80 / 100),
+    //             'pembayaran_cutitahunan' => $pembayaran_ct,
+    //             'pembayaran_cuti_bersama' => $cuti_bersama,
+    //             'pembayaran_tugasluar' => $pembayaran_tl,
+    //             'pembayaran_covid' => $pembayaran_co,
+    //             'pembayaran_diklat' => $pembayaran_di,
+    //             'pembayaran_at' => $aktivitas->sum('menit')
+    //         ]);
 
-            $pph21 = Pangkat::find($item->pangkat_id)->pph;
-            $item->update([
-                'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->perhitungan_kelangkaan_profesi,
-            ]);
+    //         $pph21 = Pangkat::find($item->pangkat_id)->pph;
+    //         $item->update([
+    //             'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->perhitungan_kelangkaan_profesi,
+    //         ]);
 
-            $potongan_pph21 = round($item->pembayaran * ($pph21 / 100));
+    //         $potongan_pph21 = round($item->pembayaran * ($pph21 / 100));
 
-            $item->update([
-                'potongan_pph21' => $potongan_pph21,
-                'tpp_diterima' => $item->pembayaran - $potongan_pph21 - $item->potongan_bpjs_1persen,
-            ]);
-        }
-        toastr()->success('Berhasil di hitung');
-        return back();
-    }
+    //         $item->update([
+    //             'potongan_pph21' => $potongan_pph21,
+    //             'tpp_diterima' => $item->pembayaran - $potongan_pph21 - $item->potongan_bpjs_1persen,
+    //         ]);
+    //     }
+    //     toastr()->success('Berhasil di hitung');
+    //     return back();
+    // }
 
     public function excel($bulan, $tahun)
     {

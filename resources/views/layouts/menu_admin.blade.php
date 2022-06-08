@@ -136,6 +136,7 @@
                 </p>
             </a>
         </li>
+        @if (Auth::user()->skpd->id == 34)
         <li class="nav-item">
             <a href="/admin/rekapitulasi/cpns"
                 class="nav-link {{Request::is('admin/rekapitulasi/cpns') ? 'active' : ''}}">
@@ -145,6 +146,10 @@
                 </p>
             </a>
         </li>
+        @else
+
+        @endif
+
         </li>
 
         {{-- <li class="nav-item">

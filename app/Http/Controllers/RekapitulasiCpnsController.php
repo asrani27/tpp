@@ -33,7 +33,7 @@ class RekapitulasiCpnsController extends Controller
         }
 
 
-        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         return view('admin.rekapitulasi_cpns.bulantahun', compact('data', 'bulan', 'tahun', 'jabatan'));
     }
     public function masukkanPegawai($bulan, $tahun)

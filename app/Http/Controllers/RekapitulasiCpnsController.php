@@ -95,8 +95,9 @@ class RekapitulasiCpnsController extends Controller
     public function perhitungan($bulan, $tahun)
     {
         // menghitung kolom berwarna orange
-        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        //$data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
 
+        $data = RekapTpp::where('id', 15744)->get();
         foreach ($data as $item) {
             $persen = Jabatan::find($item->jabatan_id);
             if ($persen == null) {
@@ -119,7 +120,7 @@ class RekapitulasiCpnsController extends Controller
                 $kelangkaan_profesi  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_kelangkaan_profesi / 100);
                 $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $kelangkaan_profesi;
             }
-
+            dd($item, $pagu);
             $item->update([
                 'perhitungan_basic_tpp' => $basic_tpp,
                 'perhitungan_pagu' => $pagu,

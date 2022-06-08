@@ -61,6 +61,7 @@ class RekapitulasiCpnsController extends Controller
                 $n->tahun     = $tahun;
                 $n->status_pns     = $item->status_pns;
                 $n->sekolah_id  = $item->jabatan == null ? null : $item->jabatan->sekolah_id;
+                $n->puskesmas_id  = $item->jabatan == null ? null : $item->jabatan->rs_puskesmas_id;
                 $n->save();
             } else {
                 if ($check->skpd_id == Auth::user()->skpd->id || $check->skpd_id == null) {
@@ -76,6 +77,7 @@ class RekapitulasiCpnsController extends Controller
                         'jenis_jabatan' => $item->jabatan == null ? null : $item->jabatan->jenis_jabatan,
                         'kelas'         => $item->jabatan == null ? null : $item->jabatan->kelas->nama,
                         'sekolah_id'    => $item->jabatan == null ? null : $item->jabatan->sekolah_id,
+                        'puskesmas_id'  = $item->jabatan == null ? null : $item->jabatan->rs_puskesmas_id,
                         'skpd_id' => Auth::user()->skpd->id,
                         'bulan' => $bulan,
                         'tahun' => $tahun,

@@ -230,6 +230,11 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('/admin/rekapitulasi/{bulan}/{tahun}/bpjs', 'RekapitulasiController@uploadBpjs');
     Route::get('/admin/rekapitulasi/{bulan}/{tahun}/excelpagu', 'RekapitulasiController@paguExcel');
 
+    //TPP PNS PUSKESMAS
+    Route::get('/admin/rekapitulasi/puskesmas', 'RekapitulasiPnsPuskesmas@index');
+    Route::get('/admin/rekapitulasi/puskesmas/{bulan}/{tahun}', 'RekapitulasiPnsPuskesmas@puskesmas');
+    Route::get('/admin/rekapitulasi/puskesmas/{bulan}/{tahun}/{puskesmas_id}/tpp', 'RekapitulasiPnsPuskesmas@bulanTahun');
+
     Route::post('/admin/rekapitulasi/bpjs', 'RekapitulasiController@updatebpjs');
 
     Route::get('/admin/sekolah', 'SekolahController@index');

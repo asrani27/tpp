@@ -138,11 +138,19 @@
         </li>
         @if (Auth::user()->skpd->id == 34)
         <li class="nav-item">
-            <a href="/admin/rekapitulasi/cpns"
-                class="nav-link {{Request::is('admin/rekapitulasi/cpns') ? 'active' : ''}}">
+            <a href="/admin/rekapitulasi/puskesmas"
+                class="nav-link {{Request::is('admin/rekapitulasi/puskesmas') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
-                    Rekap TPP CPNS Puskesmas
+                    Rekap TPP PNS Puskesmas
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link {{Request::is('admin/rekapitulasi/rs') ? 'active' : ''}}">
+                <i class="nav-icon fas fa-file"></i>
+                <p>
+                    Rekap TPP PNS RS
                 </p>
             </a>
         </li>
@@ -151,7 +159,16 @@
             <a href="#" class="nav-link {{Request::is('admin/rekapitulasi/cpns/dinkes') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
-                    Rekap TPP CPNS Dinas Kesehatan
+                    Rekap TPP CPNS Dinas
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/admin/rekapitulasi/cpns/puskesmas"
+                class="nav-link {{Request::is('admin/rekapitulasi/cpns/puskesmas') ? 'active' : ''}}">
+                <i class="nav-icon fas fa-file"></i>
+                <p>
+                    Rekap TPP CPNS Puskesmas
                 </p>
             </a>
         </li>
@@ -160,7 +177,7 @@
             <a href="#" class="nav-link {{Request::is('admin/rekapitulasi/cpns/rs') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
-                    Rekap TPP CPNS Rumah Sakit
+                    Rekap TPP CPNS RS
                 </p>
             </a>
         </li>

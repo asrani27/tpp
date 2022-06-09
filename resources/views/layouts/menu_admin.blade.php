@@ -142,7 +142,25 @@
                 class="nav-link {{Request::is('admin/rekapitulasi/cpns') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
-                    Rekap TPP CPNS
+                    Rekap TPP CPNS Puskesmas
+                </p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="#" class="nav-link {{Request::is('admin/rekapitulasi/cpns/dinkes') ? 'active' : ''}}">
+                <i class="nav-icon fas fa-file"></i>
+                <p>
+                    Rekap TPP CPNS Dinas Kesehatan
+                </p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="#" class="nav-link {{Request::is('admin/rekapitulasi/cpns/rs') ? 'active' : ''}}">
+                <i class="nav-icon fas fa-file"></i>
+                <p>
+                    Rekap TPP CPNS Rumah Sakit
                 </p>
             </a>
         </li>

@@ -103,7 +103,12 @@ class RekapitulasiCpnsController extends Controller
     public function perhitungan($bulan, $tahun)
     {
         // menghitung kolom berwarna orange
-        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        if (Auth::user()->skpd->id == 34) {
+            //CPNS PUSKESMAS
+            $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        } else {
+            $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        }
 
         //$data = RekapTpp::where('id', 15744)->get();
         foreach ($data as $item) {
@@ -157,7 +162,13 @@ class RekapitulasiCpnsController extends Controller
             $cuti_bersama = 0;
         }
 
-        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        if (Auth::user()->skpd->id == 34) {
+            //CPNS PUSKESMAS
+            $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        } else {
+            $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        }
+        //$data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
             $pembayaran_ct = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 7)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
@@ -188,26 +199,53 @@ class RekapitulasiCpnsController extends Controller
                 $kondisi_kerja = round($item->perhitungan_basic_tpp * $jabatan->persen_kondisi_kerja / 100);
             }
 
-            $item->update([
-                'pembayaran_absensi' => $presensi == null ? null : $presensi->persen_kehadiran,
-                'pembayaran_aktivitas' => $menit_aktivitas,
+            if (Auth::user()->skpd->id == 34) {
+                //CPNS PUSKESMAS
+                $item->update([
+                    'pembayaran_absensi' => $presensi == null ? null : $presensi->persen_kehadiran,
+                    'pembayaran_aktivitas' => $menit_aktivitas,
 
-                'pembayaran_bk_disiplin' => $bk_disiplin,
-                'pembayaran_bk_produktivitas' => $bk_produktivitas,
-                'pembayaran_beban_kerja' => ($bk_disiplin + $bk_produktivitas) * (80 / 100),
+                    'pembayaran_bk_disiplin' => $bk_disiplin,
+                    'pembayaran_bk_produktivitas' => $bk_produktivitas,
+                    'pembayaran_beban_kerja' => ($bk_disiplin + $bk_produktivitas) * (80 / 100) * (87 / 100),
 
-                'pembayaran_pk_disiplin' => $pk_disiplin,
-                'pembayaran_pk_produktivitas' => $pk_produktivitas,
-                'pembayaran_prestasi_kerja' => ($pk_disiplin + $pk_produktivitas) * (80 / 100),
+                    'pembayaran_pk_disiplin' => $pk_disiplin,
+                    'pembayaran_pk_produktivitas' => $pk_produktivitas,
+                    'pembayaran_prestasi_kerja' => ($pk_disiplin + $pk_produktivitas) * (80 / 100) * (87 / 100),
 
-                'pembayaran_kondisi_kerja' => $absensi == 0 ? 0 : $kondisi_kerja * (80 / 100),
-                'pembayaran_cutitahunan' => $pembayaran_ct,
-                'pembayaran_cuti_bersama' => $cuti_bersama,
-                'pembayaran_tugasluar' => $pembayaran_tl,
-                'pembayaran_covid' => $pembayaran_co,
-                'pembayaran_diklat' => $pembayaran_di,
-                'pembayaran_at' => $aktivitas->sum('menit')
-            ]);
+                    'pembayaran_kondisi_kerja' => $absensi == 0 ? 0 : $kondisi_kerja * (80 / 100) * (87 / 100),
+
+                    'pembayaran_cutitahunan' => $pembayaran_ct,
+                    'pembayaran_cuti_bersama' => $cuti_bersama,
+                    'pembayaran_tugasluar' => $pembayaran_tl,
+                    'pembayaran_covid' => $pembayaran_co,
+                    'pembayaran_diklat' => $pembayaran_di,
+                    'pembayaran_at' => $aktivitas->sum('menit')
+                ]);
+            } else {
+                //CPNS DINAS
+                $item->update([
+                    'pembayaran_absensi' => $presensi == null ? null : $presensi->persen_kehadiran,
+                    'pembayaran_aktivitas' => $menit_aktivitas,
+
+                    'pembayaran_bk_disiplin' => $bk_disiplin,
+                    'pembayaran_bk_produktivitas' => $bk_produktivitas,
+                    'pembayaran_beban_kerja' => ($bk_disiplin + $bk_produktivitas) * (80 / 100),
+
+                    'pembayaran_pk_disiplin' => $pk_disiplin,
+                    'pembayaran_pk_produktivitas' => $pk_produktivitas,
+                    'pembayaran_prestasi_kerja' => ($pk_disiplin + $pk_produktivitas) * (80 / 100),
+
+                    'pembayaran_kondisi_kerja' => $absensi == 0 ? 0 : $kondisi_kerja * (80 / 100),
+
+                    'pembayaran_cutitahunan' => $pembayaran_ct,
+                    'pembayaran_cuti_bersama' => $cuti_bersama,
+                    'pembayaran_tugasluar' => $pembayaran_tl,
+                    'pembayaran_covid' => $pembayaran_co,
+                    'pembayaran_diklat' => $pembayaran_di,
+                    'pembayaran_at' => $aktivitas->sum('menit')
+                ]);
+            }
 
             $pph21 = Pangkat::find($item->pangkat_id)->pph;
             $item->update([

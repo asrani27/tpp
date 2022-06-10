@@ -133,6 +133,14 @@ class PuskesmasController extends Controller
 
     public function pembayaran($bulan, $tahun)
     {
+        if ($bulan == '04' && $tahun == '2022') {
+            $cuti_bersama = 420;
+        } elseif ($bulan == '05' && $tahun == '2022') {
+            $cuti_bersama = 420 * 3;
+        } else {
+            $cuti_bersama = 0;
+        }
+
         $data = RekapTpp::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
@@ -180,6 +188,7 @@ class PuskesmasController extends Controller
                 'pembayaran_prestasi_kerja' => ($pk_disiplin + $pk_produktivitas) * 87 / 100,
                 'pembayaran_kondisi_kerja' => ($absensi == 0 ? 0 : $kondisi_kerja) * 87 / 100,
                 'pembayaran_cutitahunan' => $pembayaran_ct,
+                'pembayaran_cuti_bersama' => $cuti_bersama,
                 'pembayaran_tugasluar' => $pembayaran_tl,
                 'pembayaran_covid' => $pembayaran_co,
                 'pembayaran_diklat' => $pembayaran_di,

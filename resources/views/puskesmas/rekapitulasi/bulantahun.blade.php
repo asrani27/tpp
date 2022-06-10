@@ -144,6 +144,8 @@ ADMIN PUSKESMAS
                             <th style="border:1px solid silver" class="bg-success">@420</th>
                             <th style="border:1px solid silver" class="bg-success">@420</th>
                             <th style="border:1px solid silver" class="bg-success">@360</th>
+                            <th style="border:1px solid silver" class="bg-success">@420</th>
+                            <th style="border:1px solid silver" class="bg-success">@420</th>
                             <th style="border:1px solid silver" class="bg-info">40 %</th>
                             <th style="border:1px solid silver" class="bg-info">60 %</th>
                             <th style="background-color:bisque; border:1px solid silver">40 %</th>

@@ -83,7 +83,7 @@ ADMIN PUSKESMAS
                             </th>
                             <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Kelas</th>
                             <th style="border:1px solid silver" colspan=7 class="bg-warning">Perhitungan</th>
-                            <th colspan=14 style="border:1px solid silver" class="bg-success">Pembayaran</th>
+                            <th colspan=16 style="border:1px solid silver" class="bg-success">Pembayaran</th>
                             <th rowspan=4 style="border:1px solid silver" class="bg-info">PPH 21</th>
                             <th rowspan=4 style="border:1px solid silver" class="bg-info">BPJS 1%</th>
                             <th rowspan=4 style="border:1px solid silver" class="bg-info">BPJS 4%</th>
@@ -101,7 +101,7 @@ ADMIN PUSKESMAS
                             </th>
                             <th rowspan=3 style="border:1px solid silver" class="bg-warning">Pagu <br />TPP<br /> ASN
                             </th>
-                            <th class="bg-success" style="border:1px solid silver" colspan=4>Menit Aktivitas + Menit
+                            <th class="bg-success" style="border:1px solid silver" colspan=6>Menit Aktivitas + Menit
                                 Cuti</th>
                             <th class="bg-success" style="border:1px solid silver" rowspan=3>Total<br /> Menit</th>
                             <th class="bg-info" style="border:1px solid silver" colspan=2>Beban Kerja</th>
@@ -130,6 +130,8 @@ ADMIN PUSKESMAS
                             <th style="border:1px solid silver" class="bg-success">Cuti Tahunan</th>
                             <th style="border:1px solid silver" class="bg-success">Tugas Luar</th>
                             <th style="border:1px solid silver" class="bg-success">Covid</th>
+                            <th style="border:1px solid silver" class="bg-success">Diklat</th>
+                            <th style="border:1px solid silver" class="bg-success">Cuti Bersama</th>
                             <th style="border:1px solid silver" class="bg-info">Disiplin</th>
                             <th style="border:1px solid silver" class="bg-info">Produktivitas</th>
                             <th style="background-color:bisque; border:1px solid silver">Disiplin</th>
@@ -216,6 +218,12 @@ ADMIN PUSKESMAS
                             </td>
                             <td class="text-right">
                                 {{$item->pembayaran_covid}}
+                            </td>
+                            <td class="text-right">
+                                {{$item->pembayaran_diklat}}
+                            </td>
+                            <td class="text-right">
+                                {{$item->pembayaran_cuti_bersama}}
                             </td>
                             <td class="text-right">
                                 {{$item->pembayaran_aktivitas}}

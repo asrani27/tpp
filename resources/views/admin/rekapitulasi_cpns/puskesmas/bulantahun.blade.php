@@ -385,7 +385,7 @@ SUPERADMIN
 <div class="modal fade" id="modal-kelas" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="/admin/rekapitulasi/cpns/editkelas" enctype="multipart/form-data">
+            <form method="post" action="/admin/rekapitulasi-cpns-puskesmas/editkelas" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header bg-gradient-success" style="padding:10px">
                     <h4 class="modal-title text-sm">EDIT KELAS JABATAN</h4>

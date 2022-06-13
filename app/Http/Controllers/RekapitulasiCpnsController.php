@@ -484,7 +484,7 @@ class RekapitulasiCpnsController extends Controller
         return view('admin.rekapitulasi_cpns.bulanexcel', compact('data', 'skpd', 'bulan', 'tahun'));
     }
 
-    public function editkelasCpnsPuskesmas()
+    public function editkelasCpnsPuskesmas(Request $req)
     {
         RekapTpp::find($req->rekap_id)->update([
             'kelas' => $req->kelas,

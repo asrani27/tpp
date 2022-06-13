@@ -165,7 +165,7 @@
         </li> --}}
         <li class="nav-item">
             <a href="/admin/rekapitulasi/cpns/puskesmas"
-                class="nav-link {{Request::is('admin/rekapitulasi/cpns/puskesmas') ? 'active' : ''}}">
+                class="nav-link {{Request::is('admin/rekapitulasi-cpns-puskesmas') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
                     Rekap TPP CPNS Puskesmas

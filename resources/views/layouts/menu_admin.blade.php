@@ -137,7 +137,7 @@
             </a>
         </li>
         @if (Auth::user()->skpd->id == 34)
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a href="/admin/rekapitulasi/puskesmas"
                 class="nav-link {{Request::is('admin/rekapitulasi/puskesmas') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-file"></i>
@@ -145,8 +145,8 @@
                     Rekap TPP PNS Puskesmas
                 </p>
             </a>
-        </li>
-        <li class="nav-item">
+        </li> --}}
+        {{-- <li class="nav-item">
             <a href="#" class="nav-link {{Request::is('admin/rekapitulasi/rs') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
@@ -162,7 +162,7 @@
                     Rekap TPP CPNS Dinas
                 </p>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a href="/admin/rekapitulasi/cpns/puskesmas"
                 class="nav-link {{Request::is('admin/rekapitulasi/cpns/puskesmas') ? 'active' : ''}}">
@@ -173,14 +173,14 @@
             </a>
         </li>
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a href="#" class="nav-link {{Request::is('admin/rekapitulasi/cpns/rs') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
                     Rekap TPP CPNS RS
                 </p>
             </a>
-        </li>
+        </li> --}}
         @else
 
         @endif

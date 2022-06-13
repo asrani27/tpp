@@ -67,9 +67,10 @@ SUPERADMIN
                     jika pensiun, jika tidak pensiun hapus terlebih dahulu, kemudian masukkan/input kembali di kolom
                     paling bawah.
                 </div>
-                <a href="/admin/rekapitulasi/cpns/{{$bulan}}/{{$tahun}}/excel" target="_blank"
+                <a href="/admin/rekapitulasi-cpns-puskesmas/{{$bulan}}/{{$tahun}}/excel" target="_blank"
                     class="btn btn-xs btn-primary">Export Excel</a>
-                <a href="/admin/rekapitulasi/cpns/{{$bulan}}/{{$tahun}}/masukkanpegawai" class="btn btn-xs btn-primary"
+                <a href="/admin/rekapitulasi-cpns-puskesmas/{{$bulan}}/{{$tahun}}/masukkanpegawai"
+                    class="btn btn-xs btn-primary"
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
                     Pegawai CPNS</a>
 

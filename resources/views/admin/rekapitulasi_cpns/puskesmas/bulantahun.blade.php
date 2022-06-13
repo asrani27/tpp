@@ -73,10 +73,10 @@ SUPERADMIN
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
                     Pegawai CPNS</a>
 
-                <a href="/admin/rekapitulasi-cpns-puskesmas{{$bulan}}/{{$tahun}}/perhitungan"
+                <a href="/admin/rekapitulasi-cpns-puskesmas/{{$bulan}}/{{$tahun}}/perhitungan"
                     class="btn btn-xs btn-warning"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
-                <a href="/admin/rekapitulasi-cpns-puskesmas{{$bulan}}/{{$tahun}}/pembayaran"
+                <a href="/admin/rekapitulasi-cpns-puskesmas/{{$bulan}}/{{$tahun}}/pembayaran"
                     class="btn btn-xs btn-success"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Pembayaran</a>
 

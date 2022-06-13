@@ -19,6 +19,11 @@ class RekapitulasiCpnsController extends Controller
         return view('admin.rekapitulasi_cpns.index');
     }
 
+    public function cpnsPuskesmas()
+    {
+        return view('admin.rekapitulasi_cpns.puskesmas.index');
+    }
+
     public function editkelas(Request $req)
     {
         RekapTpp::find($req->rekap_id)->update([
@@ -27,6 +32,81 @@ class RekapitulasiCpnsController extends Controller
         toastr()->success('Berhasil Diubah');
         return back();
     }
+
+    public function cpnsPuskesmasBulanTahun($bulan, $tahun)
+    {
+
+        $groupJab = Jabatan::where('skpd_id', Auth::user()->skpd->id)->get()->groupBy('nama');
+
+        $jabatan = [];
+
+        foreach ($groupJab as $item) {
+            $data['id'] = $item->first()->id;
+            $data['nama'] = $item->first()->nama;
+            $data['kelas'] = $item->first()->kelas->nama;
+            array_push($jabatan, $data);
+        }
+
+
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        return view('admin.rekapitulasi_cpns.puskesmas.bulantahun', compact('data', 'bulan', 'tahun', 'jabatan'));
+    }
+
+    public function perhitunganCpnsPuskesmas($bulan, $tahun)
+    {
+
+        // menghitung kolom berwarna orange
+        if (Auth::user()->skpd->id == 34) {
+            //CPNS PUSKESMAS
+            $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        } else {
+            $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        }
+
+        //$data = RekapTpp::where('id', 15744)->get();
+        foreach ($data as $item) {
+            $persen = Jabatan::find($item->jabatan_id);
+            if ($persen == null) {
+                $basic_tpp = 0;
+                $pagu = 0;
+                $disiplin = 0;
+                $produktivitas = 0;
+                $kondisi_kerja = 0;
+                $tambahan_beban_kerja = 0;
+                $kelangkaan_profesi = 0;
+                $pagu_asn = 0;
+            } else {
+                $basic_tpp = Kelas::where('nama', $item->kelas)->first()->nilai;
+
+                $persentase = (($persen->persen_beban_kerja + $persen->persen_prestasi_kerja) + ($persen->persen_tambahan_beban_kerja == null ? 0 : $persen->persen_tambahan_beban_kerja)) / 100;
+
+                $pagu      = round($basic_tpp * $persentase);
+                $disiplin  = $pagu * (40 / 100);
+                $produktivitas  = round($pagu * 60 / 100);
+                $kondisi_kerja  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_kondisi_kerja / 100);
+                $tambahan_beban_kerja  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_tambahan_beban_kerja / 100);
+                $kelangkaan_profesi  = round($basic_tpp * Jabatan::find($item->jabatan_id)->persen_kelangkaan_profesi / 100);
+                $pagu_asn  = ($disiplin + $produktivitas + $kondisi_kerja + $kelangkaan_profesi) * (80 / 100) * (87 / 100);
+            }
+
+            $item->update([
+                'perhitungan_basic_tpp' => $basic_tpp,
+                'perhitungan_pagu' => $pagu,
+                'perhitungan_disiplin' => $disiplin,
+                'perhitungan_produktivitas' => $produktivitas,
+                'perhitungan_kondisi_kerja' => $kondisi_kerja,
+                'perhitungan_tambahan_beban_kerja' => $tambahan_beban_kerja,
+                'perhitungan_kelangkaan_profesi' => $kelangkaan_profesi,
+                'perhitungan_pagu_tpp_asn' => $pagu_asn,
+            ]);
+        }
+        toastr()->success('Berhasil di hitung');
+        return back();
+    }
+    public function pembayaranCpnsPuskesmas($bulan, $tahun)
+    {
+    }
+
     public function bulanTahun($bulan, $tahun)
     {
         $groupJab = Jabatan::where('skpd_id', Auth::user()->skpd->id)->get()->groupBy('nama');

@@ -840,7 +840,7 @@ class RekapitulasiController extends Controller
     public function PGbulanTahun($bulan, $tahun)
     {
         $data = RekapTpp::where('skpd_id', 34)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-        return view('admin.rekapitulasi.PGbulanTahun', compact('data', 'bulan', 'tahun'));
+        return view('admin.rekapitulasi.PGbulantahun', compact('data', 'bulan', 'tahun'));
     }
 
     public function PGexcel($bulan, $tahun)

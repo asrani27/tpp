@@ -41,7 +41,7 @@ class pg extends Command
     {
         $data = G_puskesmas::get();
         foreach ($data as $d) {
-            $check = RekapTpp::where('nip', $d->nip)->where('bulan', '05')->where('tahun', 'tahun')->first();
+            $check = RekapTpp::where('nip', $d->nip)->where('bulan', '05')->where('tahun', '2022')->first();
             if ($check == null) {
                 $pembayaran = 0;
             } else {

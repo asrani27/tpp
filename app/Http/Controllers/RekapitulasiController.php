@@ -846,7 +846,7 @@ class RekapitulasiController extends Controller
     public function PGexcel($bulan, $tahun)
     {
         $data = RekapTpp::where('skpd_id', 34)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-        dd($data);
+        //dd($data);
         return view('admin.rekapitulasi.PGexcel', compact('data', 'bulan', 'tahun'));
     }
 }

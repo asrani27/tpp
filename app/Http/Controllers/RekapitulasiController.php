@@ -831,4 +831,21 @@ class RekapitulasiController extends Controller
         toastr()->success('Berhasil Di Input');
         return back();
     }
+
+    public function puskesmasGabungan()
+    {
+        return view('admin.rekapitulasi.puskesmasgabungan');
+    }
+
+    public function PGbulanTahun($bulan, $tahun)
+    {
+        $data = RekapTpp::where('skpd_id', 34)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        return view('admin.rekapitulasi.PGbulanTahun', compact('data', 'bulan', 'tahun'));
+    }
+
+    public function PGexcel($bulan, $tahun)
+    {
+        $data = RekapTpp::where('skpd_id', 34)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        return view('admin.rekapitulasi.PGexcel', compact('data', 'bulan', 'tahun'));
+    }
 }

@@ -137,6 +137,15 @@
             </a>
         </li>
         @if (Auth::user()->skpd->id == 34)
+        <li class="nav-item">
+            <a href="/admin/rekapitulasi-puskesmas-gabungan"
+                class="nav-link {{Request::is('admin/rekapitulasi-puskesmas-gabungan') ? 'active' : ''}}">
+                <i class="nav-icon fas fa-file"></i>
+                <p>
+                    Rekap TPP Puskesmas Gabungan
+                </p>
+            </a>
+        </li>
         {{-- <li class="nav-item">
             <a href="/admin/rekapitulasi/puskesmas"
                 class="nav-link {{Request::is('admin/rekapitulasi/puskesmas') ? 'active' : ''}}">

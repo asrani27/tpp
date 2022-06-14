@@ -81,7 +81,13 @@ class Perhitungan extends Command
                     'perhitungan_pagu_tpp_asn' => $pagu_asn,
                 ]);
             }
-
+            if ($bulan == '04' && $tahun == '2022') {
+                $cuti_bersama = 420;
+            } elseif ($bulan == '05' && $tahun == '2022') {
+                $cuti_bersama = 420 * 3;
+            } else {
+                $cuti_bersama = 0;
+            }
             $data2 = RekapTpp::where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
             foreach ($data2 as $item) {
                 $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
@@ -129,6 +135,7 @@ class Perhitungan extends Command
                     'pembayaran_prestasi_kerja' => ($pk_disiplin + $pk_produktivitas) * (87 / 100),
                     'pembayaran_kondisi_kerja' => ($absensi == 0 ? 0 : $kondisi_kerja) * (87 / 100),
                     'pembayaran_cutitahunan' => $pembayaran_ct,
+                    'pembayaran_cuti_bersama' => $cuti_bersama,
                     'pembayaran_tugasluar' => $pembayaran_tl,
                     'pembayaran_covid' => $pembayaran_co,
                     'pembayaran_diklat' => $pembayaran_di,

@@ -51,5 +51,6 @@ class pg extends Command
                 'pembayaran_rekap' => $pembayaran,
             ]);
         }
+        return 'sukses';
     }
 }

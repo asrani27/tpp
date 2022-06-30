@@ -14,89 +14,93 @@
 @endpush
 
 @section('title')
-    TAMBAH AKTIVITAS HARIAN
+TAMBAH AKTIVITAS HARIAN
 @endsection
 @section('content')
 <div class="row">
-    <div class="col-md-12">
-      <a href="/pegawai/aktivitas/harian" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i> Kembali</a><br/><br/>
-      <div class="card card-info">
-        <div class="card-header">
+  <div class="col-md-12">
+    <a href="/pegawai/aktivitas/harian" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-alt-circle-left"></i>
+      Kembali</a><br /><br />
+    <div class="card card-info">
+      <div class="card-header">
         <h3 class="card-title"><i class="fas fa-graduation-cap"></i> Edit Aktivitas</h3>
-        </div>
-        <!-- form start -->
-        <form id="aktivitas" class="form-horizontal" method="POST" action="/pegawai/aktivitas/harian/edit/{{$data->id}}">
+      </div>
+      <!-- form start -->
+      <form id="aktivitas" class="form-horizontal" method="POST" action="/pegawai/aktivitas/harian/edit/{{$data->id}}">
         @csrf
-          <div class="card-body">
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Tanggal</label>
-                <div class="col-sm-10">
-                  
-                  <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$data->tanggal}}">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Kegiatan</label>
-                <div class="col-sm-10">
-                  <select name="skp_id" class="form-control select2" required>
-                    <option value="">-kegiatan-</option>
-                    @foreach ($skp as $item)
-                    <option value="{{$item->id}}" {{$item->id == $data->skp_id ? 'selected':''}}>{{$item->deskripsi}}</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Nama Aktivitas</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" name="deskripsi" placeholder="Nama Aktivitas" value="{{$data->deskripsi}}">
-                </div>
-              </div>
-              
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Jam Mulai</label>
-
-                <div class="col-sm-2">
-                <div class="input-group date" id="timepicker" data-target-input="nearest">
-                  <input type="text" class="form-control datetimepicker-input" data-target="#timepicker" name="jam_mulai" required value="{{$data->jam_mulai}}">
-                  <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
-                      <div class="input-group-text"><i class="far fa-clock"></i></div>
-                  </div>
-                  </div>
-                </div>
-                <!-- /.input group -->
-              </div>
-              
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Jam Selesai</label>
-
-                <div class="col-sm-2">
-                <div class="input-group date" id="timepicker2" data-target-input="nearest">
-                  <input type="text" class="form-control datetimepicker-input" data-target="#timepicker2" name="jam_selesai" required value="{{$data->jam_selesai}}">
-                  <div class="input-group-append" data-target="#timepicker2" data-toggle="datetimepicker">
-                      <div class="input-group-text"><i class="far fa-clock"></i></div>
-                  </div>
-                  </div>
-                </div>
-                <!-- /.input group -->
-              </div>
-              
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Dokumen Pendukung</label>
-                <div class="col-sm-10 custom-file">
-                    <input type="file" class="custom-file-input" name="file" id="customFile" disabled>
-                    <label class="custom-file-label" for="customFile">Choose file</label>
-                </div>
-              </div>
+        <div class="card-body">
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Tanggal</label>
+            <div class="col-sm-10">
+              <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$data->tanggal}}" readonly>
+            </div>
           </div>
-          
-          <div class="card-footer">
-              <button type="submit" class="btn btn-block btn-info btnSubmit"><i class="fas fa-save"></i> Update</button>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Kegiatan</label>
+            <div class="col-sm-10">
+              <select name="skp_id" class="form-control select2" required>
+                <option value="">-kegiatan-</option>
+                @foreach ($skp as $item)
+                <option value="{{$item->id}}" {{$item->id == $data->skp_id ? 'selected':''}}>{{$item->deskripsi}}
+                </option>
+                @endforeach
+              </select>
+            </div>
           </div>
-        </form>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Nama Aktivitas</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="deskripsi" placeholder="Nama Aktivitas"
+                value="{{$data->deskripsi}}">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Jam Mulai</label>
+
+            <div class="col-sm-2">
+              <div class="input-group date" id="timepicker" data-target-input="nearest">
+                <input type="text" class="form-control datetimepicker-input" data-target="#timepicker" name="jam_mulai"
+                  required value="{{$data->jam_mulai}}">
+                <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
+                  <div class="input-group-text"><i class="far fa-clock"></i></div>
+                </div>
+              </div>
+            </div>
+            <!-- /.input group -->
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Jam Selesai</label>
+
+            <div class="col-sm-2">
+              <div class="input-group date" id="timepicker2" data-target-input="nearest">
+                <input type="text" class="form-control datetimepicker-input" data-target="#timepicker2"
+                  name="jam_selesai" required value="{{$data->jam_selesai}}">
+                <div class="input-group-append" data-target="#timepicker2" data-toggle="datetimepicker">
+                  <div class="input-group-text"><i class="far fa-clock"></i></div>
+                </div>
+              </div>
+            </div>
+            <!-- /.input group -->
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Dokumen Pendukung</label>
+            <div class="col-sm-10 custom-file">
+              <input type="file" class="custom-file-input" name="file" id="customFile" disabled>
+              <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button type="submit" class="btn btn-block btn-info btnSubmit"><i class="fas fa-save"></i> Update</button>
+        </div>
+      </form>
     </div>
-    
-    </div>
+
+  </div>
 </div>
 @endsection
 
@@ -118,7 +122,7 @@
 <!-- Select2 -->
 <script src="/theme/plugins/select2/js/select2.full.min.js"></script>
 <script>
-    $(function () {
+  $(function () {
       //Initialize Select2 Elements
       $('.select2').select2()
   
@@ -142,7 +146,7 @@
 <script src="/theme/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+  $(document).ready(function () {
       bsCustomFileInput.init();
     });
 </script>

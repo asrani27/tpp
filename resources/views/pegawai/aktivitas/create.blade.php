@@ -33,9 +33,9 @@ TAMBAH AKTIVITAS HARIAN
             <label class="col-sm-2 col-form-label">Tanggal</label>
             <div class="col-sm-10">
 
-              <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}">
-              {{-- min="{{\Carbon\Carbon::today()->subdays(31)->format('Y-m-d')}}"
-              max="{{\Carbon\Carbon::today()->format('Y-m-d')}}"> --}}
+              <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"
+                min="{{\Carbon\Carbon::today()->subdays(1)->format('Y-m-d')}}"
+                max="{{\Carbon\Carbon::today()->format('Y-m-d')}}">
             </div>
           </div>
           <div class="form-group row">

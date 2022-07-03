@@ -23,7 +23,7 @@ SUPERADMIN
                         </div>
                         <!-- /.widget-user-image -->
                         <h3 class="widget-user-username">Riwayat TPP {{Auth::user()->skpd->nama}}</h3>
-                        <h5 class="widget-user-desc">Menampilkan data riwayat tpp</h5>
+                        <h5 class="widget-user-desc">Menampilkan data riwayat tpp CPNS</h5>
                     </div>
 
                 </div>

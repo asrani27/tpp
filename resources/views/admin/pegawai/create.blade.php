@@ -113,42 +113,6 @@ ADMIN SKPD
                                         </select>
                                     </div>
                                 </div>
-                                {{--
-                                @if (Auth::user()->skpd->id == 34)
-                                <div class="form-group row">
-                                    <label for="inputPassword3" class="col-sm-2 col-form-label">256 Jabatan
-                                        Tersedia</label>
-                                    <div class="col-sm-10">
-                                        <table class="table table-sm table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>Kelas</th>
-                                                    <th>Nama</th>
-                                                    <th>Atasan</th>
-                                                    <th>Check</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($jabatan as $item)
-                                                <tr>
-                                                    <td>{{$item->kelas->nama}}</td>
-                                                    <td>{{$item->nama}}</td>
-                                                    <td>{{$item->atasan == null ?
-                                                        '-':'Atasan
-                                                        : '.$item->atasan->nama}}</td>
-                                                    <td>
-                                                        <input type="radio" name="jabatan_id">
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        {{$jabatan->links()}}
-                                    </div>
-                                </div>
-
-                                @else --}}
-
                                 <div class="form-group row">
                                     <label for="inputPassword3" class="col-sm-2 col-form-label">Jabatan Tersedia</label>
                                     <div class="col-sm-10">
@@ -170,7 +134,16 @@ ADMIN SKPD
                                         </select>
                                     </div>
                                 </div>
-                                {{-- @endif --}}
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Status Pegawai</label>
+                                    <div class="col-sm-10">
+                                        <select name="status_pns" class="form-control" required>
+                                            <option value="">-pilih-</option>
+                                            <option value="pns">pns</option>
+                                            <option value="cpns">cpns</option>
+                                        </select>
+                                    </div>
+                                </div>
 
                             </div>
                             <!-- /.card-body -->

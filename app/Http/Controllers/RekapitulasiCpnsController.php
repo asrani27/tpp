@@ -255,14 +255,17 @@ class RekapitulasiCpnsController extends Controller
         }
 
 
-        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        //$data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        //dd($data);
         return view('admin.rekapitulasi_cpns.bulantahun', compact('data', 'bulan', 'tahun', 'jabatan'));
     }
     public function masukkanPegawai($bulan, $tahun)
     {
-        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('jabatan_id', '!=', null)->where('status_pns', 'cpns')->whereHas('jabatan', function ($query) {
-            return $query->where('rs_puskesmas_id', '!=', null)->where('rs_puskesmas_id', '!=', 8)->where('sekolah_id', null);
-        })->get();
+        // $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('jabatan_id', '!=', null)->where('status_pns', 'cpns')->whereHas('jabatan', function ($query) {
+        //     return $query->where('rs_puskesmas_id', '!=', null)->where('rs_puskesmas_id', '!=', 8)->where('sekolah_id', null);
+        // })->get();
+        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('jabatan_id', '!=', null)->get();
 
         foreach ($pegawai as $item) {
             $check = RekapTpp::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
@@ -479,7 +482,7 @@ class RekapitulasiCpnsController extends Controller
 
     public function excel($bulan, $tahun)
     {
-        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'cpns')->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         $skpd = Auth::user()->skpd;
         return view('admin.rekapitulasi_cpns.bulanexcel', compact('data', 'skpd', 'bulan', 'tahun'));
     }

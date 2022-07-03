@@ -108,6 +108,18 @@ ADMIN SKPD
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-2 col-form-label">Status Pegawai</label>
+                                <div class="col-sm-10">
+                                    <select name="status_pns" class="form-control" required>
+                                        <option value="">-pilih-</option>
+                                        <option value="pns" {{$data->status_pns == 'pns' ? 'selected':''}}>pns</option>
+                                        <option value="cpns" {{$data->status_pns == 'cpns' ? 'selected':''}}>cpns
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">

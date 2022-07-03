@@ -9,13 +9,14 @@ header("Content-Disposition: attachment; filename=tpp.xls");
 <head>
     <meta content="en-us" http-equiv="Content-Language" />
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <title>Untitled 1</title>
+    <title>TPP CPNS</title>
 
 </head>
 
 <body>
     <header>
-        <p><span class="auto-style1"><strong>LAPORAN DAFTAR TPP ASN</strong></span><strong><br class="auto-style1" />
+        <p><span class="auto-style1"><strong>LAPORAN DAFTAR TPP ASN CPNS</strong></span><strong><br
+                    class="auto-style1" />
             </strong><span class="auto-style1"><strong>{{strtoupper($skpd->nama)}}</strong></span><strong><br
                     class="auto-style1" />
             </strong><span class="auto-style1"><strong>Bulan : {{convertBulan($bulan)}} {{$tahun}}

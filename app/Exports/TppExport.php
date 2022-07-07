@@ -3,27 +3,33 @@
 namespace App\Exports;
 
 use App\RekapTpp;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Events\AfterSheet;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Events\AfterSheet;
 
 class TppExport implements WithHeadings, WithEvents
 {
-    // public function view(): View
-    // {
-    //     return view('admin.rekapitulasi.bulanexcel', [
-    //         'data' => RekapTpp::all()
-    //     ]);
-    // }
+    private $year;
+    private $month;
+
+    public function __construct(string $month, string $year)
+    {
+        $this->month = $month;
+        $this->year = $year;
+    }
 
     public function headings(): array
     {
         return [
-            ['coba'],
-            ['nama, email']
+            ['LAPORAN TPP ASN'],
+            [strtoupper(Auth::user()->skpd->nama)],
+            ['BULAN : ', $this->month . ' ' . $this->year],
+            ['TGL CETAK : ', Carbon::now()->format('d-m-Y H:i:s')],
         ];
     }
 

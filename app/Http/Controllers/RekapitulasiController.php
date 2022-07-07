@@ -21,10 +21,76 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class RekapitulasiController extends Controller
 {
+    public function excelPhpSpreadsheet($bulan, $tahun)
+    {
+        //dd($bulan, $tahun);
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="myfile.xls"');
+        header('Cache-Control: max-age=0');
+
+        $sheet->setCellValue('A1', 'LAPORAN TPP ASN')->mergeCells('A1:V1');
+        $sheet->setCellValue('A2', strtoupper(Auth::user()->skpd->nama))->mergeCells('A2:V2');
+        $sheet->setCellValue('A3', 'BULAN : ' . strtoupper(convertBulan($bulan)) . ' ' . $tahun)->mergeCells('A3:V3');
+        $sheet->setCellValue('A4', 'TANGGAL CETAK : ' . Carbon::now()->format('d-m-Y H:i:s'))->mergeCells('A4:V4');
+
+        $styleJudul = [
+            'font' => [
+                'bold' => true,
+                'size' => 12,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+            ],
+        ];
+
+        $sheet->getStyle('A1:A4')->applyFromArray($styleJudul);
+
+        $sheet->setCellValue('A6', 'NO')->mergeCells('A6:A9');
+        $sheet->setCellValue('B6', 'NAMA')->mergeCells('B6:B9');
+        $sheet->setCellValue('C6', 'NIP')->mergeCells('C6:C9');
+
+        $style1 = [
+            'font' => [
+                'size' => 10,
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => [
+                    'argb' => 'fce4d6',
+                ],
+                'endColor' => [
+                    'argb' => 'fce4d6',
+                ],
+            ],
+            'alignment' => [
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            ],
+            'borders' => [
+                'outline' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+        ];
+
+        $sheet->getStyle('A6:A9')->applyFromArray($style1);
+        $sheet->getStyle('B6:B9')->applyFromArray($style1);
+        $sheet->getStyle('C6:C9')->applyFromArray($style1);
+        $sheet->getStyle('D6:D9')->applyFromArray($style1);
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
+        $writer->save('php://output');
+    }
+
     public function index()
     {
         $tampil = false;

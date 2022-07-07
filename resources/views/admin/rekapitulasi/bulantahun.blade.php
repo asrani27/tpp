@@ -67,6 +67,8 @@ SUPERADMIN
                     jika pensiun, jika tidak pensiun hapus terlebih dahulu, kemudian masukkan/input kembali di kolom
                     paling bawah.
                 </div>
+                {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/excelPhpSpreadsheet" target="_blank"
+                    class="btn btn-xs btn-primary">Export</a> --}}
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/excel" target="_blank"
                     class="btn btn-xs btn-primary">Export Excel</a>
                 {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/pdf" target="_blank"

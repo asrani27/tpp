@@ -59,6 +59,11 @@ class Jabatan extends Model
         return $this->belongsTo(Rspuskesmas::class, 'rs_puskesmas_id');
     }
 
+    public function puskesmas()
+    {
+        return $this->belongsTo(Rspuskesmas::class, 'rs_puskesmas_id');
+    }
+
     public function sekolah()
     {
         return $this->belongsTo(Sekolah::class, 'sekolah_id');

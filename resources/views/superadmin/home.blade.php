@@ -101,6 +101,27 @@ SUPERADMIN
     </div>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        Export Pegawai
+        <form method="post" action="/home/superadmin/exportpegawai">
+
+          @csrf
+          <select name="skpd_id" class="form-control">
+            @foreach ($dataskpd as $item)
+            <option value="{{$item->id}}">{{$item->nama}}</option>
+            @endforeach
+          </select>
+          <button type="submit" class="btn btn-primary btn-sm">Export</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 @push('js')

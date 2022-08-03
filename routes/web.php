@@ -10,6 +10,8 @@ Route::get('/logout', 'LoginController@logout');
 
 Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/home/superadmin', 'HomeController@superadmin');
+    Route::post('/home/superadmin/exportpegawai', 'HomeController@exportPegawai');
+
     Route::get('/superadmin/tpp/{bulan}/{tahun}', 'TppController@tppBulanTahun');
     Route::get('/superadmin/tpp/{bulan}/{tahun}/laporan/{id}', 'TppController@tppSkpd');
     Route::post('/superadmin/profil', 'ProfilController@changeSuperadmin');

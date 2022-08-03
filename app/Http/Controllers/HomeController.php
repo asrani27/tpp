@@ -6,16 +6,18 @@ use App\Skpd;
 use App\Jabatan;
 use App\Pegawai;
 use App\Presensi;
+use App\RekapTpp;
 use App\Aktivitas;
 use App\Parameter;
-use App\RekapTpp;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Exports\PegawaiExport;
 use App\View_aktivitas_pegawai;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -58,13 +60,19 @@ class HomeController extends Controller
         $tpp_pemko = $data->sum('total_tpp');
         $asn = $pegawai->count();
         $skpd = Skpd::get()->count();
-
-        return view('superadmin.home', compact('tpp_pemko', 'asn', 'skpd'));
+        $dataskpd = Skpd::get();
+        return view('superadmin.home', compact('tpp_pemko', 'asn', 'skpd', 'dataskpd'));
     }
 
     public function puskesmas()
     {
         return view('puskesmas.home');
+    }
+
+    public function exportPegawai(Request $req)
+    {
+        $skpd_id = $req->skpd_id;
+        return Excel::download(new PegawaiExport($skpd_id), 'pegawai.xlsx');
     }
 
     public function skpd_id()

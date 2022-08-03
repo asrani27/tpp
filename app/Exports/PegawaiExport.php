@@ -31,7 +31,6 @@ class PegawaiExport implements FromCollection, WithHeadings
             }
             return $item->only(['nomor', 'nip', 'nama', 'nmjabatan', 'unitkerja', 'status_pns', 'is_aktif']);
         })->values();
-        dd($pegawai);
         return $pegawai;
     }
     public function headings(): array

@@ -37,11 +37,11 @@ class PegawaiExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'Nomor'
+            'Nomor',
             'NIP',
             'Nama',
             'Jabatan',
-            'Unit Kerja'
+            'Unit Kerja',
             'Status',
             'Aktif'
         ];

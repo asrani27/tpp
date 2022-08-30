@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+Route::group(['middleware'=>['XSS']], function() {
 Route::get('/', 'LoginController@index');
 Route::post('/login', 'LoginController@login');
 Route::get('/login', 'LoginController@redirectLogin')->name('login');
@@ -380,4 +380,6 @@ Route::group(['middleware' => ['auth', 'role:puskesmas']], function () {
     Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/excel', 'PuskesmasController@excel');
     Route::post('/puskesmas/rekapitulasi/tambahpegawai', 'PuskesmasController@tambahPegawai');
     Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/{id}/delete', 'PuskesmasController@delete');
+});
+
 });

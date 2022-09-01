@@ -911,8 +911,141 @@ class RekapitulasiController extends Controller
 
     public function PGexcel($bulan, $tahun)
     {
-        $data = RekapTpp::where('skpd_id', 34)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-        //dd($data);
-        return view('admin.rekapitulasi.PGexcel', compact('data', 'bulan', 'tahun'));
+        $data = RekapTpp::where('skpd_id', 34)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get()->take(100);
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="myfile.xls"');
+        header('Cache-Control: max-age=0');
+
+        $sheet->setCellValue('A1', 'LAPORAN TPP ASN')->mergeCells('A1:V1');
+        $sheet->setCellValue('A2', strtoupper(Auth::user()->skpd->nama))->mergeCells('A2:V2');
+        $sheet->setCellValue('A3', 'BULAN : ' . strtoupper(convertBulan($bulan)) . ' ' . $tahun)->mergeCells('A3:V3');
+        $sheet->setCellValue('A4', 'TANGGAL CETAK : ' . Carbon::now()->format('d-m-Y H:i:s'))->mergeCells('A4:V4');
+
+        $styleJudul = [
+            'font' => [
+                'bold' => true,
+                'size' => 12,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+            ],
+        ];
+
+        $sheet->getStyle('A1:A4')->applyFromArray($styleJudul);
+
+        $sheet->setCellValue('A6', 'NO')->mergeCells('A6:A9');
+        $sheet->setCellValue('B6', 'NAMA')->mergeCells('B6:B9');
+        $sheet->setCellValue('C6', 'NIP')->mergeCells('C6:C9');
+        $sheet->setCellValue('D6', 'PANGKAT/GOLONGAN')->mergeCells('D6:D9');
+        $sheet->setCellValue('E6', 'JABATAN')->mergeCells('E6:E9');
+        $sheet->setCellValue('F6', 'JENIS JABATAN')->mergeCells('F6:F9');
+        $sheet->setCellValue('G6', 'KELAS')->mergeCells('G6:G9');
+
+        $style1 = [
+            'font' => [
+                'size' => 10,
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => [
+                    'argb' => 'fce4d6',
+                ],
+                'endColor' => [
+                    'argb' => 'fce4d6',
+                ],
+            ],
+            'alignment' => [
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            ],
+            'borders' => [
+                'outline' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+        ];
+
+        $style2 = [
+            'alignment' => [
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            ],
+            'borders' => [
+                'outline' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+        ];
+
+        $style3 = [
+            'borders' => [
+                'outline' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+        ];
+
+        $sheet->getStyle('A6:A9')->applyFromArray($style1);
+        $sheet->getStyle('B6:B9')->applyFromArray($style1);
+        $sheet->getStyle('C6:C9')->applyFromArray($style1);
+        $sheet->getStyle('D6:D9')->applyFromArray($style1);
+        $sheet->getStyle('E6:E9')->applyFromArray($style1);
+        $sheet->getStyle('F6:F9')->applyFromArray($style1);
+        $sheet->getStyle('G6:G9')->applyFromArray($style1);
+
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setAutoSize(true);
+        $sheet->getColumnDimension('C')->setAutoSize(true);
+        $sheet->getColumnDimension('D')->setAutoSize(true);
+        $sheet->getColumnDimension('E')->setAutoSize(true);
+        $sheet->getColumnDimension('F')->setAutoSize(true);
+        $sheet->getColumnDimension('G')->setAutoSize(true);
+
+        $rows = 10;
+        $no = 1;
+        $countData = $rows + $data->count();
+
+        foreach ($data as $item) {
+            $sheet->setCellValue('A' . $rows, $no++);
+            $sheet->setCellValue('B' . $rows, strtoupper($item->nama));
+            $sheet->setCellValue('C' . $rows, 'NIP. ' . $item->nip);
+            $sheet->setCellValue('D' . $rows, $item->pangkat . ' (' . $item->golongan . ')');
+            $sheet->setCellValue('E' . $rows, $item->jabatan);
+            $sheet->setCellValue('F' . $rows, $item->jenis_jabatan);
+            $sheet->setCellValue('G' . $rows, $item->kelas);
+            $rows++;
+        }
+
+        $styleBorder = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+        $styleCenter = [
+            'alignment' => [
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            ],
+        ];
+
+        $sheet->getStyle('A10:A' . $countData)->applyFromArray($styleBorder);
+        $sheet->getStyle('B10:B' . $countData)->applyFromArray($styleBorder);
+        $sheet->getStyle('C10:C' . $countData)->applyFromArray($styleBorder);
+        $sheet->getStyle('D10:D' . $countData)->applyFromArray($styleBorder)->applyFromArray($styleCenter);
+        $sheet->getStyle('E10:E' . $countData)->applyFromArray($styleBorder);
+        $sheet->getStyle('F10:F' . $countData)->applyFromArray($styleBorder);
+        $sheet->getStyle('G10:G' . $countData)->applyFromArray($styleBorder);
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
+        $writer->save('php://output');
     }
 }

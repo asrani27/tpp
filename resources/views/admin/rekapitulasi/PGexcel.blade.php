@@ -66,7 +66,7 @@ header("Content-Disposition: attachment; filename=tpp.xls");
                     <th>60%</th>
                 </tr>
             </thead>
-            <tbody>
+            {{-- <tbody>
                 @php
                 $no = 1;
                 @endphp
@@ -113,7 +113,7 @@ header("Content-Disposition: attachment; filename=tpp.xls");
                     <td align="right">{{currency($data->sum('potongan_bpjs_4persen'))}}</td>
                     <td align="right">{{currency($data->sum('tpp_diterima'))}}</td>
                 </tr>
-            </tbody>
+            </tbody> --}}
         </table>
     </main>
 </body>

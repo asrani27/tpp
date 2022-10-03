@@ -177,16 +177,27 @@ class PuskesmasController extends Controller
                 $pk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * 0.6 : 0);
                 $kondisi_kerja = round($item->perhitungan_basic_tpp * $jabatan->persen_kondisi_kerja / 100);
             }
+            // 70 % untuk RS 
+            if (Auth::user()->puskesmas->id == 8) {
+
+                $pbk = ($bk_disiplin + $bk_produktivitas) * (87 / 100) * (70 / 100);
+                $ppk = ($pk_disiplin + $pk_produktivitas) * (87 / 100) * (70 / 100);
+                $pkk = ($absensi == 0 ? 0 : $kondisi_kerja) * (87 / 100) * (70 / 100);
+            } else {
+                $pbk = ($bk_disiplin + $bk_produktivitas) * (87 / 100);
+                $ppk = ($pk_disiplin + $pk_produktivitas) * (87 / 100);
+                $pkk = ($absensi == 0 ? 0 : $kondisi_kerja) * (87 / 100);
+            }
             $item->update([
                 'pembayaran_absensi' => $absensi,
                 'pembayaran_aktivitas' => $menit_aktivitas,
                 'pembayaran_bk_disiplin' => $bk_disiplin,
                 'pembayaran_bk_produktivitas' => $bk_produktivitas,
-                'pembayaran_beban_kerja' => ($bk_disiplin + $bk_produktivitas) * (87 / 100),
+                'pembayaran_beban_kerja' => $pbk,
                 'pembayaran_pk_disiplin' => $pk_disiplin,
                 'pembayaran_pk_produktivitas' => $pk_produktivitas,
-                'pembayaran_prestasi_kerja' => ($pk_disiplin + $pk_produktivitas) * (87 / 100),
-                'pembayaran_kondisi_kerja' => ($absensi == 0 ? 0 : $kondisi_kerja) * (87 / 100),
+                'pembayaran_prestasi_kerja' => $ppk,
+                'pembayaran_kondisi_kerja' => $pkk,
                 'pembayaran_cutitahunan' => $pembayaran_ct,
                 'pembayaran_cuti_bersama' => $cuti_bersama,
                 'pembayaran_tugasluar' => $pembayaran_tl,

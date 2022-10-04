@@ -203,7 +203,7 @@ ADMIN PUSKESMAS
                                 {{$item->persenjabatan == null ? 0 : $item->persenJabatan->persen_kelangkaan_profesi}} %
                             </td>
                             <td class="text-right">
-                                {{currency($item->perhitungan_pagu_tpp_asn * 87/100)}} <br />
+                                {{currency($item->perhitungan_pagu_tpp_asn)}} <br />
                                 {{-- {{$item->persenjabatan->persentase_tpp
                                 +$item->persenjabatan->persen_kondisi_kerja
                                 +$item->persenjabatan->persen_tambahan_beban_kerja

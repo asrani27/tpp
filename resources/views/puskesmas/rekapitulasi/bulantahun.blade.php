@@ -83,7 +83,7 @@ ADMIN PUSKESMAS
                             </th>
                             <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Kelas</th>
                             <th style="border:1px solid silver" colspan=7 class="bg-warning">Perhitungan</th>
-                            <th colspan=16 style="border:1px solid silver" class="bg-success">Pembayaran</th>
+                            <th colspan=18 style="border:1px solid silver" class="bg-success">Pembayaran</th>
                             <th rowspan=4 style="border:1px solid silver" class="bg-info">PPH 21</th>
                             <th rowspan=4 style="border:1px solid silver" class="bg-info">BPJS 1%</th>
                             <th rowspan=4 style="border:1px solid silver" class="bg-info">BPJS 4%</th>
@@ -117,6 +117,10 @@ ADMIN PUSKESMAS
                                 Kondisi Kerja</th>
                             <th rowspan=3 style="border:1px solid silver" class='bg-secondary'>
                                 Jumlah Kondisi Kerja <br /> 5.1.01.02.03.0001</th>
+                            <th rowspan=3 style="border:1px solid silver" class='bg-warning'>
+                                Kelangkaan Profesi</th>
+                            <th rowspan=3 style="border:1px solid silver" class='bg-warning'>
+                                Jumlah Kelangkaan Profesi <br /> 5.1.01.01.09.0001</th>
                             <th rowspan=3 style="border:1px solid silver" class='bg-success'>
                                 Jumlah Pembayaran <br />
                                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/excelpagu"><i

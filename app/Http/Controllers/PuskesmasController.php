@@ -92,7 +92,7 @@ class PuskesmasController extends Controller
     public function perhitungan($bulan, $tahun)
     {
         // menghitung kolom berwarna orange
-        $data = RekapTpp::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $data = RekapTpp::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->where('nip', '199003142022031003')->get();
         foreach ($data as $item) {
 
             $persen = Jabatan::find($item->jabatan_id);

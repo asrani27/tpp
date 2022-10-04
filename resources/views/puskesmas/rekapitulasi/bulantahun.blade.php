@@ -249,7 +249,7 @@ ADMIN PUSKESMAS
                                 {{$item->pembayaran_aktivitas}} Menit
                             </td>
                             <td class="text-right">{{currency($item->pembayaran_prestasi_kerja)}}</td>
-                            <td class="text-right">{{currency($item->pembayaran_kondisi_kerja)}}</td>
+                            <td class="text-right">{{currency($item->perhitungan_kondisi_kerja)}}</td>
                             <td class="text-right">{{currency($item->pembayaran_kondisi_kerja)}}</td>
                             <td class="text-right">{{currency($item->pembayaran)}}</td>
                             <td class="text-right">

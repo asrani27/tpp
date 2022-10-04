@@ -117,8 +117,8 @@ class PuskesmasController extends Controller
 
                 // 70 % untuk RS 
                 if (Auth::user()->puskesmas->id == 8) {
-                    dd('d');
-                    $pagu_asn  = ($disiplin + $produktivitas + $kondisi_kerja + $tambahan_beban_kerja + $kelangkaan_profesi) * (70 / 100);
+
+                    $pagu_asn  = ($disiplin + $produktivitas + $kondisi_kerja + $tambahan_beban_kerja + $kelangkaan_profesi) * 0.7;
                 } else {
                     $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $tambahan_beban_kerja + $kelangkaan_profesi;
                 }

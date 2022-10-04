@@ -188,13 +188,15 @@ class PuskesmasController extends Controller
             // 70 % untuk RS 
             if (Auth::user()->puskesmas->id == 8) {
 
-                $pbk = ($bk_disiplin + $bk_produktivitas) *(70 / 100);
+                $pbk = ($bk_disiplin + $bk_produktivitas) * (70 / 100);
                 $ppk = ($pk_disiplin + $pk_produktivitas) * (70 / 100);
                 $pkk = ($absensi == 0 ? 0 : $kondisi_kerja) * (70 / 100);
+                $pkp = ($absensi == 0 ? 0 : $item->perhitungan_kelangkaan_profesi) * (70 / 100);
             } else {
                 $pbk = ($bk_disiplin + $bk_produktivitas) * (87 / 100);
                 $ppk = ($pk_disiplin + $pk_produktivitas) * (87 / 100);
                 $pkk = ($absensi == 0 ? 0 : $kondisi_kerja) * (87 / 100);
+                $pkp = ($absensi == 0 ? 0 : $item->perhitungan_kelangkaan_profesi) * (87 / 100);
             }
             $item->update([
                 'pembayaran_absensi' => $absensi,
@@ -206,6 +208,7 @@ class PuskesmasController extends Controller
                 'pembayaran_pk_produktivitas' => $pk_produktivitas,
                 'pembayaran_prestasi_kerja' => $ppk,
                 'pembayaran_kondisi_kerja' => $pkk,
+                'pembayaran_kelangkaan_profesi' => $pkp,
                 'pembayaran_cutitahunan' => $pembayaran_ct,
                 'pembayaran_cuti_bersama' => $cuti_bersama,
                 'pembayaran_tugasluar' => $pembayaran_tl,

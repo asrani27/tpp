@@ -256,7 +256,7 @@ ADMIN PUSKESMAS
                             <td class="text-right">{{currency($item->perhitungan_kondisi_kerja)}}</td>
                             <td class="text-right">{{currency($item->pembayaran_kondisi_kerja)}}</td>
                             <td class="text-right">{{currency($item->perhitungan_kelangkaan_profesi)}} </td>
-                            <td class="text-right">{{currency($item->perhitungan_kelangkaan_profesi)}}</td>
+                            <td class="text-right">{{currency($item->pembayaran_kelangkaan_profesi)}}</td>
                             <td class="text-right">{{currency($item->pembayaran)}}</td>
                             <td class="text-right">
                                 {{currency($item->potongan_pph21)}} <br />

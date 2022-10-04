@@ -188,9 +188,9 @@ class PuskesmasController extends Controller
             // 70 % untuk RS 
             if (Auth::user()->puskesmas->id == 8) {
 
-                $pbk = ($bk_disiplin + $bk_produktivitas) * (87 / 100) * (70 / 100);
-                $ppk = ($pk_disiplin + $pk_produktivitas) * (87 / 100) * (70 / 100);
-                $pkk = ($absensi == 0 ? 0 : $kondisi_kerja) * (87 / 100) * (70 / 100);
+                $pbk = ($bk_disiplin + $bk_produktivitas) *(70 / 100);
+                $ppk = ($pk_disiplin + $pk_produktivitas) * (70 / 100);
+                $pkk = ($absensi == 0 ? 0 : $kondisi_kerja) * (70 / 100);
             } else {
                 $pbk = ($bk_disiplin + $bk_produktivitas) * (87 / 100);
                 $ppk = ($pk_disiplin + $pk_produktivitas) * (87 / 100);

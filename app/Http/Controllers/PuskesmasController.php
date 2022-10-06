@@ -149,7 +149,7 @@ class PuskesmasController extends Controller
             $cuti_bersama = 0;
         }
 
-        $data = RekapTpp::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->where('nip', '198401012009032018')->get();
+        $data = RekapTpp::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
             $pembayaran_ct = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 7)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
@@ -198,7 +198,7 @@ class PuskesmasController extends Controller
                 $pkk = ($absensi == 0 ? 0 : $kondisi_kerja) * (87 / 100);
                 $pkp = $item->perhitungan_kelangkaan_profesi * (87 / 100);
             }
-            dd($pbk, $ppk, $pkk, $pkp, $pbk + $ppk + $pkk + $pkp);
+            //dd($pbk, $ppk, $pkk, $pkp, $pbk + $ppk + $pkk + $pkp);
             $item->update([
                 'pembayaran_absensi' => $absensi,
                 'pembayaran_aktivitas' => $menit_aktivitas,
@@ -220,8 +220,8 @@ class PuskesmasController extends Controller
 
             $pph21 = Pangkat::find($item->pangkat_id)->pph;
             $item->update([
-                'pembayaran' => $pbk + $ppk + $pkk + $pkp,
-                // 'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->pembayaran_kelangkaan_profesi,
+                //'pembayaran' => $pbk + $ppk + $pkk + $pkp,
+                'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->pembayaran_kelangkaan_profesi,
             ]);
 
             $potongan_pph21 = round($item->pembayaran * ($pph21 / 100));

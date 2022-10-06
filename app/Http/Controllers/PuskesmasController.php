@@ -198,7 +198,7 @@ class PuskesmasController extends Controller
                 $pkk = ($absensi == 0 ? 0 : $kondisi_kerja) * (87 / 100);
                 $pkp = $item->perhitungan_kelangkaan_profesi * (87 / 100);
             }
-            dd($pbk, $ppk, $pkk, $pkp, $pbk + $ppk + $pkk + $pkp);
+
             $item->update([
                 'pembayaran_absensi' => $absensi,
                 'pembayaran_aktivitas' => $menit_aktivitas,
@@ -224,6 +224,7 @@ class PuskesmasController extends Controller
                 'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->pembayaran_kelangkaan_profesi,
             ]);
 
+            dd(abs($item->perhitungan_pagu_tpp_asn, $item->pembayaran));
             $potongan_pph21 = round($item->pembayaran * ($pph21 / 100));
 
             $item->update([

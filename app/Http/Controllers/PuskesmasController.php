@@ -191,12 +191,12 @@ class PuskesmasController extends Controller
                 $pbk = ($bk_disiplin + $bk_produktivitas) * (70 / 100);
                 $ppk = ($pk_disiplin + $pk_produktivitas) * (70 / 100);
                 $pkk = ($absensi == 0 ? 0 : $kondisi_kerja) * (70 / 100);
-                $pkp = ($absensi == 0 ? 0 : $item->perhitungan_kelangkaan_profesi) * (70 / 100);
+                $pkp = $item->perhitungan_kelangkaan_profesi * (70 / 100);
             } else {
                 $pbk = ($bk_disiplin + $bk_produktivitas) * (87 / 100);
                 $ppk = ($pk_disiplin + $pk_produktivitas) * (87 / 100);
                 $pkk = ($absensi == 0 ? 0 : $kondisi_kerja) * (87 / 100);
-                $pkp = ($absensi == 0 ? 0 : $item->perhitungan_kelangkaan_profesi) * (87 / 100);
+                $pkp = $item->perhitungan_kelangkaan_profesi * (87 / 100);
             }
             $item->update([
                 'pembayaran_absensi' => $absensi,

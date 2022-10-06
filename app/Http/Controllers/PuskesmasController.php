@@ -219,7 +219,8 @@ class PuskesmasController extends Controller
 
             $pph21 = Pangkat::find($item->pangkat_id)->pph;
             $item->update([
-                'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->pembayaran_kelangkaan_profesi,
+                'pembayaran' => $pbk + $ppk + $pkk + $pkp,
+                // 'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->pembayaran_kelangkaan_profesi,
             ]);
 
             $potongan_pph21 = round($item->pembayaran * ($pph21 / 100));

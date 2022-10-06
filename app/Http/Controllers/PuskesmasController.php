@@ -198,7 +198,7 @@ class PuskesmasController extends Controller
                 $pkk = ($absensi == 0 ? 0 : $kondisi_kerja) * (87 / 100);
                 $pkp = $item->perhitungan_kelangkaan_profesi * (87 / 100);
             }
-            //dd($pbk, $ppk, $pkk, $pkp, $pbk + $ppk + $pkk + $pkp);
+            dd($pbk, $ppk, $pkk, $pkp, $pbk + $ppk + $pkk + $pkp);
             $item->update([
                 'pembayaran_absensi' => $absensi,
                 'pembayaran_aktivitas' => $menit_aktivitas,

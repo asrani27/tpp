@@ -224,7 +224,7 @@ class PuskesmasController extends Controller
                 'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->pembayaran_kelangkaan_profesi,
             ]);
 
-            dd(abs($item->perhitungan_pagu_tpp_asn, $item->pembayaran));
+            dd(abs($item->perhitungan_pagu_tpp_asn - $item->pembayaran));
             $potongan_pph21 = round($item->pembayaran * ($pph21 / 100));
 
             $item->update([

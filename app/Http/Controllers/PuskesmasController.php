@@ -219,9 +219,14 @@ class PuskesmasController extends Controller
             ]);
 
             $pph21 = Pangkat::find($item->pangkat_id)->pph;
+
             $item->update([
-                //'pembayaran' => $pbk + $ppk + $pkk + $pkp,
-                'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->pembayaran_kelangkaan_profesi,
+                //Jika Selisih Rp 1 sesuaikan dengan pagu 
+                if((int)abs($item->perhitungan_pagu_tpp_asn - ($pbk + $ppk + $pkk + $pkp)) == 1){
+                    'pembayaran' => $item->perhitungan_pagu_tpp_asn,
+                }else{
+                    'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->pembayaran_kelangkaan_profesi,
+                }
             ]);
 
             dd(abs($item->perhitungan_pagu_tpp_asn - $item->pembayaran));

@@ -119,7 +119,7 @@ class PuskesmasController extends Controller
                 if (Auth::user()->puskesmas->id == 8) {
 
                     $pagu_asn  = ($disiplin + $produktivitas + $kondisi_kerja + $kelangkaan_profesi) * 0.7;
-                    //dd($pagu_asn, $disiplin, $produktivitas, $kondisi_kerja, $tambahan_beban_kerja, $kelangkaan_profesi, $item);
+                    dd($pagu_asn, $disiplin, $produktivitas, $kondisi_kerja, $tambahan_beban_kerja, $kelangkaan_profesi);
                 } else {
                     $pagu_asn  = $disiplin + $produktivitas + $kondisi_kerja + $tambahan_beban_kerja + $kelangkaan_profesi;
                 }

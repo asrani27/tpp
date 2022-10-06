@@ -229,7 +229,7 @@ class PuskesmasController extends Controller
                 }
             ]);
 
-            dd(abs($item->perhitungan_pagu_tpp_asn - $item->pembayaran));
+            
             $potongan_pph21 = round($item->pembayaran * ($pph21 / 100));
 
             $item->update([

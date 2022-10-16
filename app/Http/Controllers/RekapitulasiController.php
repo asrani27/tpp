@@ -655,11 +655,11 @@ class RekapitulasiController extends Controller
                 $pk_produktivitas = 0;
                 $kondisi_kerja = 0;
             } else {
-                $bk_disiplin = round((($item->perhitungan_basic_tpp * ($jabatan->persen_beban_kerja + $jabatan->persen_tambahan_beban_kerja) / 100) * ((40 / 100) * $absensi / 100)));
-                $bk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * ($jabatan->persen_beban_kerja + $jabatan->persen_tambahan_beban_kerja) / 100) * 0.6 : 0);
-                $pk_disiplin = round((($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * ((40 / 100) * $absensi / 100)));
-                $pk_produktivitas = round($menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * 0.6 : 0);
-                $kondisi_kerja = round($item->perhitungan_basic_tpp * $jabatan->persen_kondisi_kerja / 100);
+                $bk_disiplin = (($item->perhitungan_basic_tpp * ($jabatan->persen_beban_kerja + $jabatan->persen_tambahan_beban_kerja) / 100) * ((40 / 100) * $absensi / 100));
+                $bk_produktivitas = $menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * ($jabatan->persen_beban_kerja + $jabatan->persen_tambahan_beban_kerja) / 100) * 0.6 : 0;
+                $pk_disiplin = (($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * ((40 / 100) * $absensi / 100));
+                $pk_produktivitas = $menit_aktivitas >= 6750 ? ($item->perhitungan_basic_tpp * $jabatan->persen_prestasi_kerja / 100) * 0.6 : 0;
+                $kondisi_kerja = $item->perhitungan_basic_tpp * $jabatan->persen_kondisi_kerja / 100;
             }
 
             $item->update([
@@ -684,10 +684,10 @@ class RekapitulasiController extends Controller
 
             $pph21 = Pangkat::find($item->pangkat_id)->pph;
             $item->update([
-                'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->perhitungan_kelangkaan_profesi,
+                'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->pembayaran_kelangkaan_profesi,
             ]);
 
-            $potongan_pph21 = round($item->pembayaran * ($pph21 / 100));
+            $potongan_pph21 = $item->pembayaran * ($pph21 / 100);
 
             $item->update([
                 'potongan_pph21' => $potongan_pph21,

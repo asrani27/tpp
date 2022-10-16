@@ -228,7 +228,7 @@ class PuskesmasController extends Controller
             ]);
 
 
-            $potongan_pph21 = round($item->pembayaran * ($pph21 / 100));
+            $potongan_pph21 = $item->pembayaran * ($pph21 / 100);
 
             $item->update([
                 'potongan_pph21' => $potongan_pph21,

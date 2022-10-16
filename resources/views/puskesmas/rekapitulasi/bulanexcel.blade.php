@@ -35,8 +35,8 @@ header("Content-Disposition: attachment; filename=tpp.xls");
                     <th rowspan="4">JABATAN</th>
                     <th rowspan="4">JENIS JABATAN</th>
                     <th rowspan="4">KELAS</th>
-                    <th>Perhitungan</th>
-                    <th colspan=9>Pembayaran</th>
+                    <th colspan=2>Perhitungan</th>
+                    <th colspan=11>Pembayaran</th>
                     <th rowspan=4>PPH 21</th>
                     <th rowspan=4>BPJS 1%</th>
                     <th rowspan=4>BPJS 4%</th>
@@ -45,12 +45,15 @@ header("Content-Disposition: attachment; filename=tpp.xls");
                 </tr>
                 <tr>
                     <th rowspan="3">Basic TPP</th>
+                    <th rowspan="3">Pagu ASN</th>
                     <th colspan="2">Beban Kerja</th>
                     <th rowspan="3">Jumlah <br />Beban Kerja<br />5.1.01.02.01.0001</th>
                     <th colspan="2">Prestasi Kerja</th>
                     <th rowspan="3">Jumlah <br />Prestasi Kerja <br />5.1.01.02.05.0001</th>
                     <th rowspan="3">Kondisi Kerja</th>
                     <th rowspan="3">Jumlah <br />Kondisi Kerja <br />5.1.01.02.03.0001</th>
+                    <th rowspan="3">Kelangkaan Profesi</th>
+                    <th rowspan="3">Jumlah <br />Kelangkaan Profesi <br />5.1.01.01.09.0001</th>
                     <th rowspan="3">Jumlah <br /> Pembayaran</th>
                 </tr>
                 <tr>
@@ -80,6 +83,7 @@ header("Content-Disposition: attachment; filename=tpp.xls");
                     <td align="center" valign="top">{{$item->jenis_jabatan}}</td>
                     <td align="center" valign="top">{{$item->kelas}}</td>
                     <td align="right" valign="top">{{currency($item->perhitungan_basic_tpp)}}</td>
+                    <td align="right" valign="top">{{currency($item->perhitungan_pagu_tpp_asn)}}</td>
                     <td align="right" valign="top">{{currency($item->pembayaran_bk_disiplin)}}</td>
                     <td align="right" valign="top">{{currency($item->pembayaran_bk_produktivitas)}}</td>
                     <td align="right" valign="top">{{currency($item->pembayaran_beban_kerja)}}</td>
@@ -100,13 +104,15 @@ header("Content-Disposition: attachment; filename=tpp.xls");
                 </tr>
                 @endforeach
                 <tr>
-                    <td colspan=10 align="right">Total</td>
+                    <td colspan=11 align="right">Total</td>
                     <td align="right">{{currency($data->sum('pembayaran_beban_kerja'))}}</td>
                     <td></td>
                     <td></td>
                     <td align="right">{{currency($data->sum('pembayaran_prestasi_kerja'))}}</td>
                     <td></td>
                     <td align="right">{{currency($data->sum('pembayaran_kondisi_kerja'))}}</td>
+                    <td></td>
+                    <td align="right">{{currency($data->sum('pembayaran_kelangkaan_profesi'))}}</td>
                     <td align="right">{{currency($data->sum('pembayaran'))}}</td>
                     <td align="right">{{currency($data->sum('potongan_pph21'))}}</td>
                     <td align="right">{{currency($data->sum('potongan_bpjs_1persen'))}}</td>

@@ -90,8 +90,10 @@ header("Content-Disposition: attachment; filename=tpp.xls");
                     <td align="right" valign="top">{{currency($item->pembayaran_pk_disiplin)}}</td>
                     <td align="right" valign="top">{{currency($item->pembayaran_pk_produktivitas)}}</td>
                     <td align="right" valign="top">{{currency($item->pembayaran_prestasi_kerja)}}</td>
+                    <td align="right" valign="top">{{currency($item->perhitungan_kondisi_kerja)}}</td>
                     <td align="right" valign="top">{{currency($item->pembayaran_kondisi_kerja)}}</td>
-                    <td align="right" valign="top">{{currency($item->pembayaran_kondisi_kerja)}}</td>
+                    <td align="right" valign="top">{{currency($item->perhitungan_kelangkaan_profesi)}}</td>
+                    <td align="right" valign="top">{{currency($item->pembayaran_kelangkaan_profesi)}}</td>
                     <td align="right" valign="top">{{currency($item->pembayaran)}}</td>
                     <td align="right" valign="top">{{currency($item->potongan_pph21)}}</td>
                     <td align="right" valign="top">{{currency($item->potongan_bpjs_1persen)}}</td>

@@ -688,7 +688,7 @@ class RekapitulasiController extends Controller
                 'pembayaran' => $item->pembayaran_beban_kerja + $item->pembayaran_prestasi_kerja + $item->pembayaran_kondisi_kerja + $item->pembayaran_kelangkaan_profesi,
             ]);
 
-            $potongan_pph21 = $item->pembayaran * ($pph21 / 100);
+            $potongan_pph21 = round($item->pembayaran * ($pph21 / 100));
 
             $item->update([
                 'potongan_pph21' => $potongan_pph21,

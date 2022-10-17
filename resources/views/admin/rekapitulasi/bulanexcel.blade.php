@@ -111,7 +111,7 @@ header("Content-Disposition: attachment; filename=tpp.xls");
                     <td align="right">{{currency($data->sum('potongan_pph21'))}}</td>
                     <td align="right">{{currency($data->sum('potongan_bpjs_1persen'))}}</td>
                     <td align="right">{{currency($data->sum('potongan_bpjs_4persen'))}}</td>
-                    <td align="right">{{currency($data->sum('tpp_diterima'))}}</td>
+                    <td align="right">{{number_format($data->sum('tpp_diterima'))}}</td>
                 </tr>
             </tbody>
         </table>

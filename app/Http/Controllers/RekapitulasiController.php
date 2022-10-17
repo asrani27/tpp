@@ -524,9 +524,10 @@ class RekapitulasiController extends Controller
     public function excel($bulan, $tahun)
     {
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'pns')->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-        $pembayaran_beban_kerja = $data->sum('pembayaran_beban_kerja');
+
         $skpd = Auth::user()->skpd;
-        return view('admin.rekapitulasi.bulanexcel', compact('data', 'skpd', 'bulan', 'tahun', 'pembayaran_beban_kerja'));
+        return view('admin.rekapitulasi.bulanexcel', compact('data', 'skpd', 'bulan', 'tahun'));
+        //        return Excel::download(new TppExport, 'tppexport.xlsx');
     }
 
     public function exceltu($bulan, $tahun)
@@ -534,6 +535,7 @@ class RekapitulasiController extends Controller
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('status_pns', 'pns')->where('puskesmas_id', null)->where('sekolah_id', '!=', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         $skpd = Auth::user()->skpd;
         return view('admin.rekapitulasi.bulanexcel', compact('data', 'skpd', 'bulan', 'tahun'));
+        //        return Excel::download(new TppExport, 'tppexport.xlsx');
     }
 
     public function editJabatan($bulan, $tahun, $id)

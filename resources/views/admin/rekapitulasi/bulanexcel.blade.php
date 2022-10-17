@@ -101,7 +101,7 @@ header("Content-Disposition: attachment; filename=tpp.xls");
                 @endforeach
                 <tr>
                     <td colspan=10 align="right">Total</td>
-                    <td align="right">{{currency($data->sum('pembayaran_beban_kerja'))}}</td>
+                    <td align="right">{{currency($pembayaran_beban_kerja)}}</td>
                     <td></td>
                     <td></td>
                     <td align="right">{{currency($data->sum('pembayaran_prestasi_kerja'))}}</td>

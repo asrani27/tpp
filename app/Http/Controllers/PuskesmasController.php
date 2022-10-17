@@ -188,15 +188,15 @@ class PuskesmasController extends Controller
             // 70 % untuk RS 
             if (Auth::user()->puskesmas->id == 8) {
 
-                $pbk = ($bk_disiplin + $bk_produktivitas) * (70 / 100);
-                $ppk = ($pk_disiplin + $pk_produktivitas) * (70 / 100);
-                $pkk = ($absensi == 0 ? 0 : $kondisi_kerja) * (70 / 100);
-                $pkp = $item->perhitungan_kelangkaan_profesi * (70 / 100);
+                $pbk = round(($bk_disiplin + $bk_produktivitas) * (70 / 100));
+                $ppk = round(($pk_disiplin + $pk_produktivitas) * (70 / 100));
+                $pkk = round(($absensi == 0 ? 0 : $kondisi_kerja) * (70 / 100));
+                $pkp = round($item->perhitungan_kelangkaan_profesi * (70 / 100));
             } else {
-                $pbk = ($bk_disiplin + $bk_produktivitas) * (87 / 100);
-                $ppk = ($pk_disiplin + $pk_produktivitas) * (87 / 100);
-                $pkk = ($absensi == 0 ? 0 : $kondisi_kerja) * (87 / 100);
-                $pkp = $item->perhitungan_kelangkaan_profesi * (87 / 100);
+                $pbk = round(($bk_disiplin + $bk_produktivitas) * (87 / 100));
+                $ppk = round(($pk_disiplin + $pk_produktivitas) * (87 / 100));
+                $pkk = round(($absensi == 0 ? 0 : $kondisi_kerja) * (87 / 100));
+                $pkp = round($item->perhitungan_kelangkaan_profesi * (87 / 100));
             }
 
             $item->update([
@@ -228,7 +228,7 @@ class PuskesmasController extends Controller
             ]);
 
 
-            $potongan_pph21 = $item->pembayaran * ($pph21 / 100);
+            $potongan_pph21 = round($item->pembayaran * ($pph21 / 100));
 
             $item->update([
                 'potongan_pph21' => $potongan_pph21,

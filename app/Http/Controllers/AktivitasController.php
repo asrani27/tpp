@@ -35,6 +35,7 @@ class AktivitasController extends Controller
 
         //cek atasan apakah PLT atau Bukan
         $check = $this->user()->pegawai->jabatan->atasan == null ? Jabatan::where('sekda', 1)->first() : $this->user()->pegawai->jabatan->atasan;
+        //dd($person, $check->pegawai);
         if ($check->pegawai == null) {
             //Jika Pegawai kosong, Check Lagi Apakah ada PLT atau Tidak
             if ($check->pegawaiPlt == null) {

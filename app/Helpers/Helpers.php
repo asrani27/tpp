@@ -201,7 +201,7 @@ function totalAbsensi($bulan, $tahun)
 function checkAtasan($atasan, $person)
 {
     //check atasan
-
+    //dd($atasan->pegawai, $atasan->pegawaiPlt, $atasan->pegawaiPlh);
     if ($atasan == null) {
         $jabatan = '-';
         $nama = '-';
@@ -215,7 +215,6 @@ function checkAtasan($atasan, $person)
             } else {
                 //Jika Atasan == dengan Bawahan
                 if ($atasan->pegawaiPlh->id == $person->id) {
-
                     if ($atasan->atasan == null) {
                         //Penilainya adalah Sekda
                         $sekda = Jabatan::where('sekda', 1)->first();
@@ -236,7 +235,7 @@ function checkAtasan($atasan, $person)
                     }
                 } else {
                     $jabatan = $atasan->nama;
-                    $nama = $atasan->pegawai->nama;
+                    $nama = $atasan->pegawaiPlh->nama;
                 }
             }
         } else {

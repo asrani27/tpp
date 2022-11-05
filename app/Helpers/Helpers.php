@@ -201,6 +201,7 @@ function totalAbsensi($bulan, $tahun)
 function checkAtasan($atasan, $person)
 {
     //check atasan
+    dd($atasan, $person);
     if ($atasan == null) {
         $jabatan = '-';
         $nama = '-';

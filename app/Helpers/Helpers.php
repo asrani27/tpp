@@ -234,7 +234,7 @@ function checkAtasan($atasan, $person)
                         }
                     }
                 } else {
-                    $jabatan = $atasan->nama;
+                    $jabatan = 'Plh. ' . $atasan->nama;
                     $nama = $atasan->pegawaiPlh->nama;
                 }
             }

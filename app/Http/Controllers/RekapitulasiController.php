@@ -131,6 +131,7 @@ class RekapitulasiController extends Controller
                 $n->skpd_id = Auth::user()->skpd->id;
                 $n->bulan = $req->bulan;
                 $n->tahun = $req->tahun;
+                $n->status_pns = $checkDataPegawai->status_pns;
                 $n->save();
                 toastr()->success('Berhasil Di Tambahkan');
                 return back();

@@ -283,6 +283,42 @@ Route::group(['middleware' => ['auth', 'checksinglesession', 'role:pegawai']], f
 
     //Route::post('/pegawai/profil/gantipass', 'ProfilController@gantiPassPegawai');
 
+    Route::get('/pegawai/new-skp', 'SKP2023Controller@index');
+    Route::post('/pegawai/new-skp/periode', 'SKP2023Controller@storePeriode');
+    Route::get('/pegawai/new-skp/periode/aktifkan/{id}', 'SKP2023Controller@aktifkan');
+    Route::get('/pegawai/new-skp/periode/edit/{id}', 'SKP2023Controller@editPeriode');
+    Route::post('/pegawai/new-skp/periode/edit/{id}', 'SKP2023Controller@updatePeriode');
+    Route::get('/pegawai/new-skp/periode/delete/{id}', 'SKP2023Controller@deletePeriode');
+    Route::get('/pegawai/new-skp/periode/view/{id}', 'SKP2023Controller@viewPeriode');
+
+    Route::post('/pegawai/new-skp/utama/rhk/{id}', 'SKP2023Controller@jptRhk');
+    Route::get('/pegawai/new-skp/utama/rhk/{id}/delete', 'SKP2023Controller@deleteJptRhk');
+    Route::post('/pegawai/new-skp/utama/rhk/{id}/edit', 'SKP2023Controller@updateJptRhk');
+    Route::post('/pegawai/new-skp/utama/rhk/{id}/indikator', 'SKP2023Controller@indikatorJptRhk');
+    Route::post('/pegawai/new-skp/utama/rhk/{id}/indikator/edit', 'SKP2023Controller@updateIndikatorJptRhk');
+    Route::get('/pegawai/new-skp/utama/rhk/{id}/indikator/{indikator_id}/delete', 'SKP2023Controller@deleteIndikatorJptRhk');
+
+    Route::post('/pegawai/new-skp/tambahan/rhk/{id}', 'SKP2023Controller@t_jptRhk');
+    Route::get('/pegawai/new-skp/tambahan/rhk/{id}/delete', 'SKP2023Controller@t_deleteJptRhk');
+    Route::post('/pegawai/new-skp/tambahan/rhk/{id}/edit', 'SKP2023Controller@t_updateJptRhk');
+    Route::post('/pegawai/new-skp/tambahan/rhk/{id}/indikator', 'SKP2023Controller@t_indikatorJptRhk');
+    Route::post('/pegawai/new-skp/tambahan/rhk/{id}/indikator/edit', 'SKP2023Controller@t_updateIndikatorJptRhk');
+    Route::get('/pegawai/new-skp/tambahan/rhk/{id}/indikator/{indikator_id}/delete', 'SKP2023Controller@t_deleteIndikatorJptRhk');
+
+    Route::post('/pegawai/new-skp/jf/utama/rhk/{id}', 'JFController@jptRhk');
+    Route::get('/pegawai/new-skp/jf/utama/rhk/{id}/delete', 'JFController@deleteJptRhk');
+    Route::post('/pegawai/new-skp/jf/utama/rhk/{id}/edit', 'JFController@updateJptRhk');
+    Route::post('/pegawai/new-skp/jf/utama/rhk/{id}/indikator', 'JFController@indikatorJptRhk');
+    Route::post('/pegawai/new-skp/jf/utama/rhk/{id}/indikator/edit', 'JFController@updateIndikatorJptRhk');
+    Route::get('/pegawai/new-skp/jf/utama/rhk/{id}/indikator/{indikator_id}/delete', 'JFController@deleteIndikatorJptRhk');
+
+    Route::post('/pegawai/new-skp/jf/tambahan/rhk/{id}', 'JFController@t_jptRhk');
+    Route::get('/pegawai/new-skp/jf/tambahan/rhk/{id}/delete', 'JFController@t_deleteJptRhk');
+    Route::post('/pegawai/new-skp/jf/tambahan/rhk/{id}/edit', 'JFController@t_updateJptRhk');
+    Route::post('/pegawai/new-skp/jf/tambahan/rhk/{id}/indikator', 'JFController@t_indikatorJptRhk');
+    Route::post('/pegawai/new-skp/jf/tambahan/rhk/{id}/indikator/edit', 'JFController@t_updateIndikatorJptRhk');
+    Route::get('/pegawai/new-skp/jf/tambahan/rhk/{id}/indikator/{indikator_id}/delete', 'JFController@t_deleteIndikatorJptRhk');
+
     Route::get('/pegawai/gantipass', 'ProfilController@gantiPassPegawaiView');
     Route::post('/pegawai/gantipass', 'ProfilController@updatePassPegawai');
 

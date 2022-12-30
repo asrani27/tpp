@@ -25,6 +25,26 @@ class SKP2023Controller extends Controller
         $attr['mulai'] = Carbon::createFromFormat('d/m/Y', $req->mulai)->format('Y-m-d');
         $attr['sampai'] = Carbon::createFromFormat('d/m/Y', $req->sampai)->format('Y-m-d');
 
+        $pn = Auth::user()->pegawai;
+
+        $pejabat_dinilai['nama'] = $pn->nama;
+        $pejabat_dinilai['nip'] = $pn->nip;
+        $pejabat_dinilai['pangkat'] = $pn->pangkat->nama;
+        $pejabat_dinilai['gol'] = $pn->pangkat->golongan;
+        $pejabat_dinilai['jabatan'] = $pn->jabatan == null ? '-' : $pn->jabatan->nama;
+        $pejabat_dinilai['unit_kerja'] = null;
+
+        $attr['pn'] = json_encode($pejabat_dinilai);
+
+        // $pejabat_penilai['nama'] = null;
+        // $pejabat_penilai['nip'] = null;
+        // $pejabat_penilai['pangkat'] = null;
+        // $pejabat_penilai['gol'] = null;
+        // $pejabat_penilai['jabatan'] = null;
+        // $pejabat_penilai['instansi'] = null;
+
+        // $attr['pp'] = json_encode($pejabat_penilai);
+
         if ($attr['sampai'] < $attr['mulai']) {
             toastr()->error('Periode Selesai Tidak Bisa Kurang Dari Periode Mulai');
         } else {
@@ -93,7 +113,7 @@ class SKP2023Controller extends Controller
 
 
         if ($u->jenis == 'JPT') {
-            $pn = Auth::user()->pegawai;
+            $pn = json_decode($u->pn);
             $pp = Auth::user()->pegawai->jabatan->atasan->pegawai;
 
             $skp_utama = Skp2023Jpt::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();

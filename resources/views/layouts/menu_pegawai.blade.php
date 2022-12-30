@@ -9,14 +9,14 @@
                 </p>
             </a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a href="/pegawai/new-skp" class="nav-link {{Request::is('pegawai/new-skp*') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-clipboard"></i>
                 <p>
-                    new SKP
+                    SKP baru
                 </p>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
         <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link {{Request::is('pegawai/skp*') ? 'active' : ''}}">

@@ -65,8 +65,14 @@ class SKP2023Controller extends Controller
             return back();
         }
         if ($pn->jabatan->atasan == null) {
-            toastr()->info('Penilai Adalah Wali Kota');
-            return back();
+            $pejabat_penilai['nama'] = null;
+            $pejabat_penilai['nip'] = null;
+            $pejabat_penilai['pangkat'] = null;
+            $pejabat_penilai['gol'] = null;
+            $pejabat_penilai['jabatan'] = null;
+            $pejabat_penilai['skpd'] = null;
+
+            $attr['pp'] = json_encode($pejabat_penilai);
         }
 
         if ($pn->jabatan->atasan->pegawai == null) {

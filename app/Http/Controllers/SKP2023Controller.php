@@ -22,12 +22,14 @@ class SKP2023Controller extends Controller
 
     public function skpAtasan($nip)
     {
-        $pegawai_id = Pegawai::where('nip', $nip)->first()->id;
-        $data = Skp2023::where('pegawai_id', $pegawai_id)->where('is_aktif', 1)->first();
 
+        $pegawai_id = Pegawai::where('nip', $nip)->first()->id;
+
+        $data = Skp2023::where('pegawai_id', $pegawai_id)->where('is_aktif', 1)->first();
+        //dd($data);
         if ($data == null) {
             toastr()->info('Tidak ada SKP / Belum Diaktifkan');
-            return back();
+            return redirect('/pegawai/new-skp');
         }
 
         if ($data->jenis == 'JPT') {
@@ -73,29 +75,31 @@ class SKP2023Controller extends Controller
             $pejabat_penilai['skpd'] = null;
 
             $attr['pp'] = json_encode($pejabat_penilai);
-        }
-
-        if ($pn->jabatan->atasan->pegawai == null) {
-            $pejabat_penilai['nama'] = null;
-            $pejabat_penilai['nip'] = null;
-            $pejabat_penilai['pangkat'] = null;
-            $pejabat_penilai['gol'] = null;
-            $pejabat_penilai['jabatan'] = null;
-            $pejabat_penilai['skpd'] = null;
-
-            $attr['pp'] = json_encode($pejabat_penilai);
         } else {
-            $pp = $pn->jabatan->atasan->pegawai;
-            $pejabat_penilai['nama'] = $pp->nama;
-            $pejabat_penilai['nip'] = $pp->nip;
-            $pejabat_penilai['pangkat'] = $pp->pangkat->nama;
-            $pejabat_penilai['gol'] = $pp->pangkat->golongan;
-            $pejabat_penilai['jabatan'] = $pp->jabatan == null ? '-' : $pp->jabatan->nama;
-            $pejabat_penilai['skpd'] = $pp->skpd->nama;
+            if ($pn->jabatan->atasan->pegawai == null) {
+                $pejabat_penilai['nama'] = null;
+                $pejabat_penilai['nip'] = null;
+                $pejabat_penilai['pangkat'] = null;
+                $pejabat_penilai['gol'] = null;
+                $pejabat_penilai['jabatan'] = null;
+                $pejabat_penilai['skpd'] = null;
 
-            $attr['pp'] = json_encode($pejabat_penilai);
-            $attr['penilai'] = $pp->nip;
+                $attr['pp'] = json_encode($pejabat_penilai);
+            } else {
+                $pp = $pn->jabatan->atasan->pegawai;
+                $pejabat_penilai['nama'] = $pp->nama;
+                $pejabat_penilai['nip'] = $pp->nip;
+                $pejabat_penilai['pangkat'] = $pp->pangkat->nama;
+                $pejabat_penilai['gol'] = $pp->pangkat->golongan;
+                $pejabat_penilai['jabatan'] = $pp->jabatan == null ? '-' : $pp->jabatan->nama;
+                $pejabat_penilai['skpd'] = $pp->skpd->nama;
+
+                $attr['pp'] = json_encode($pejabat_penilai);
+                $attr['penilai'] = $pp->nip;
+            }
         }
+
+
 
         if ($attr['sampai'] < $attr['mulai']) {
             toastr()->error('Periode Selesai Tidak Bisa Kurang Dari Periode Mulai');

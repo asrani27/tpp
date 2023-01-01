@@ -284,12 +284,17 @@ Route::group(['middleware' => ['auth', 'checksinglesession', 'role:pegawai']], f
     //Route::post('/pegawai/profil/gantipass', 'ProfilController@gantiPassPegawai');
 
     Route::get('/pegawai/new-skp', 'SKP2023Controller@index');
+    Route::get('/pegawai/new-skp/atasan/{nip}', 'SKP2023Controller@skpAtasan');
     Route::post('/pegawai/new-skp/periode', 'SKP2023Controller@storePeriode');
     Route::get('/pegawai/new-skp/periode/aktifkan/{id}', 'SKP2023Controller@aktifkan');
     Route::get('/pegawai/new-skp/periode/edit/{id}', 'SKP2023Controller@editPeriode');
     Route::post('/pegawai/new-skp/periode/edit/{id}', 'SKP2023Controller@updatePeriode');
     Route::get('/pegawai/new-skp/periode/delete/{id}', 'SKP2023Controller@deletePeriode');
     Route::get('/pegawai/new-skp/periode/view/{id}', 'SKP2023Controller@viewPeriode');
+    Route::get('/pegawai/new-skp/periode/evaluasi/{id}/triwulan/{triwulan}', 'SKP2023Controller@viewEvaluasi');
+    Route::post('/pegawai/new-skp/periode/evaluasi/{id}/triwulan/{triwulan}/realisasijpt', 'SKP2023Controller@realJPT');
+    Route::post('/pegawai/new-skp/periode/evaluasi/{id}/triwulan/{triwulan}/realisasijf', 'SKP2023Controller@realJF');
+    Route::post('/pegawai/new-skp/periode/evaluasi/{id}/triwulan/{triwulan}/realisasija', 'SKP2023Controller@realJA');
 
     Route::post('/pegawai/new-skp/utama/rhk/{id}', 'SKP2023Controller@jptRhk');
     Route::get('/pegawai/new-skp/utama/rhk/{id}/delete', 'SKP2023Controller@deleteJptRhk');
@@ -318,6 +323,15 @@ Route::group(['middleware' => ['auth', 'checksinglesession', 'role:pegawai']], f
     Route::post('/pegawai/new-skp/jf/tambahan/rhk/{id}/indikator', 'JFController@t_indikatorJptRhk');
     Route::post('/pegawai/new-skp/jf/tambahan/rhk/{id}/indikator/edit', 'JFController@t_updateIndikatorJptRhk');
     Route::get('/pegawai/new-skp/jf/tambahan/rhk/{id}/indikator/{indikator_id}/delete', 'JFController@t_deleteIndikatorJptRhk');
+
+    Route::get('/pegawai/nilai-skp', 'NilaiSKPController@index');
+    Route::get('/pegawai/nilai-skp/triwulan/{triwulan}/{id}', 'NilaiSKPController@evaluasi');
+    Route::post('/pegawai/nilai-skp/triwulan/{triwulan}/{id}/jpt', 'NilaiSKPController@umpanBalikJPT');
+    Route::post('/pegawai/nilai-skp/triwulan/{triwulan}/{id}/jf', 'NilaiSKPController@umpanBalikJF');
+    Route::post('/pegawai/nilai-skp/triwulan/{triwulan}/{id}/ja', 'NilaiSKPController@umpanBalikJA');
+
+    Route::post('/pegawai/nilai-rhk/triwulan/{triwulan}/{id}', 'NilaiSKPController@nilaiRHK');
+    Route::post('/pegawai/nilai-rpk/triwulan/{triwulan}/{id}', 'NilaiSKPController@nilaiRPK');
 
     Route::get('/pegawai/gantipass', 'ProfilController@gantiPassPegawaiView');
     Route::post('/pegawai/gantipass', 'ProfilController@updatePassPegawai');

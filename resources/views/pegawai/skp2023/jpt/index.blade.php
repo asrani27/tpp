@@ -65,7 +65,7 @@
                             <td>{{$pn->pangkat}} / {{$pn->gol}}</td>
                             <td>3</td>
                             <td>PANGKAT/GOL.RUANG</td>
-                            <td>{{$pp->pangkat->nama}} / {{$pp->pangkat->golongan}}</td>
+                            <td>{{$pp->pangkat}} / {{$pp->gol}}</td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>4</td>
@@ -73,7 +73,7 @@
                             <td>{{$pn->jabatan == null ? '-': $pn->jabatan}}</td>
                             <td>4</td>
                             <td>JABATAN</td>
-                            <td>{{$pp->jabatan == null ? '-': $pp->jabatan->nama}}</td>
+                            <td>{{$pp->jabatan == null ? '-': $pp->jabatan}}</td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>5</td>
@@ -81,7 +81,7 @@
                             <td>{{$pn->unit_kerja}}</td>
                             <td>5</td>
                             <td>INSTANSI</td>
-                            <td>{{$pp->skpd == null ? '-': $pp->skpd->nama}}</td>
+                            <td>{{$pp->skpd == null ? '-': $pp->skpd}}</td>
                         </tr>
                     </tbody>
                     </table>

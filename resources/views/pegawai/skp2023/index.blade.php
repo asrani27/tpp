@@ -72,9 +72,11 @@
                       <tr>
                         <th>#</th>
                         <th>Periode</th>
+                        <th>Penilai</th>
                         <th>Jenis</th>
                         <th>Aktif?</th>
                         <th>Aksi</th>
+                        <th>Evaluasi</th>
                       </tr>
                     </thead>
                     @php
@@ -85,6 +87,15 @@
                           <tr>
                             <td>{{$key+ $data->firstItem()}}</td>
                             <td>{{\Carbon\Carbon::parse($item->mulai)->isoFormat('D MMMM Y')}} s/d {{\Carbon\Carbon::parse($item->sampai)->isoFormat('D MMMM Y')}}</td>
+                            <td>
+                              @if ($item->pp == null)
+                                  -
+                              @else
+                              <a href="/pegawai/new-skp/atasan/{{json_decode($item->pp)->nip}}" target="_blank">
+                              {{json_decode($item->pp)->nama}}
+                              </a>
+                              @endif
+                              </td>
                             <td>{{$item->jenis}}</td>
                             <td>
                               @if ($item->is_aktif == 1)
@@ -94,9 +105,15 @@
                               @endif
                             </td>
                             <td>
-                              <a href="/pegawai/new-skp/periode/view/{{$item->id}}" class="btn btn-xs btn-success" data-toggle="tooltip" title='Tambah data'><i class="fas fa-eye"></i> Detail SKP</a>
+                              <a href="/pegawai/new-skp/periode/view/{{$item->id}}" class="btn btn-xs btn-success">Rencana SKP</a>
                             <a href="/pegawai/new-skp/periode/edit/{{$item->id}}" class="btn btn-xs btn-warning" data-toggle="tooltip" title='Edit data'><i class="fas fa-edit"></i></a>
                             <a href="/pegawai/new-skp/periode/delete/{{$item->id}}" class="btn btn-xs btn-danger" data-toggle="tooltip" title='Hapus data' onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
+                            </td>
+                            <td>
+                              <a href="/pegawai/new-skp/periode/evaluasi/{{$item->id}}/triwulan/1" class="btn btn-xs btn-success">TW1</a>
+                              <a href="/pegawai/new-skp/periode/evaluasi/{{$item->id}}/triwulan/2" class="btn btn-xs btn-success">TW2</a>
+                              <a href="/pegawai/new-skp/periode/evaluasi/{{$item->id}}/triwulan/3" class="btn btn-xs btn-success">TW3</a>
+                              <a href="/pegawai/new-skp/periode/evaluasi/{{$item->id}}/triwulan/4" class="btn btn-xs btn-success">TW4</a>
                             </td>
                           </tr>
                       @endforeach

@@ -7,27 +7,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pegawai extends Model
 {
-    protected $table ='pegawai';
+    protected $table = 'pegawai';
     protected $guarded = ['id'];
 
     public function skpd()
     {
         return $this->belongsTo(Skpd::class, 'skpd_id');
     }
-    
+
     public function aktivitas()
     {
-        return $this->hasMany(Aktivitas::class, 'pegawai_id')->orderBy('id','DESC');
+        return $this->hasMany(Aktivitas::class, 'pegawai_id')->orderBy('id', 'DESC');
     }
 
     public function skp_periode()
     {
-        return $this->hasMany(Skp_periode::class, 'pegawai_id')->orderBy('id','DESC');
+        return $this->hasMany(Skp_periode::class, 'pegawai_id')->orderBy('id', 'DESC');
+    }
+
+    public function skp()
+    {
+        return $this->hasMany(Skp2023::class, 'pegawai_id')->orderBy('id', 'DESC');
     }
 
     public function aktivitasToday()
     {
-        return $this->hasMany(Aktivitas::class, 'pegawai_id')->where('tanggal','=',Carbon::today()->format('Y-m-d'))->orderBy('id','DESC');
+        return $this->hasMany(Aktivitas::class, 'pegawai_id')->where('tanggal', '=', Carbon::today()->format('Y-m-d'))->orderBy('id', 'DESC');
     }
 
     public function presensi()
@@ -49,7 +54,7 @@ class Pegawai extends Model
     {
         return $this->belongsTo(Jabatan::class, 'jabatan_id');
     }
-    
+
     public function jabatanPlt()
     {
         return $this->belongsTo(Jabatan::class, 'jabatan_plt');
@@ -69,7 +74,7 @@ class Pegawai extends Model
     {
         return $this->belongsTo(Pangkat::class, 'pangkat_id');
     }
-    
+
     public function eselon()
     {
         return $this->belongsTo(Eselon::class, 'eselon_id');

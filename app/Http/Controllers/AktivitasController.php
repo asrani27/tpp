@@ -6,6 +6,9 @@ use App\Skp;
 
 use App\Jabatan;
 use App\Aktivitas;
+use App\Skp2023;
+use App\Skp2023Jf;
+use App\Skp2023Jpt;
 use Carbon\Carbon;
 use App\Skp_periode;
 use Illuminate\Support\Str;
@@ -72,17 +75,24 @@ class AktivitasController extends Controller
     public function add()
     {
         $tahun = Carbon::now()->year;
-        if ($this->user()->pegawai->skp_periode->count() == 0) {
+
+        if (Auth::user()->pegawai->skp->count() == 0) {
             toastr()->info('Harap isi SKP dulu');
             return back();
         }
 
-        if ($this->user()->pegawai->skp_periode->where('is_aktif', 1)->first() == null) {
+        if (Auth::user()->pegawai->skp->where('is_aktif', 1)->first() == null) {
             toastr()->info('Aktifkan SKP Anda Terlebih dahulu');
             return back();
         }
 
-        $skp = $this->user()->pegawai->skp_periode->where('is_aktif', 1)->first()->skp;
+        $skp = $this->user()->pegawai->skp->where('is_aktif', 1)->first();
+
+        if ($skp->jenis == 'JPT') {
+            $skp = Skp2023Jpt::where('skp2023_id', $skp->id)->get();
+        } else {
+            $skp = Skp2023Jf::where('skp2023_id', $skp->id)->get();
+        }
 
         $data = Aktivitas::where('pegawai_id', $this->user()->pegawai->id)->latest('id')->first();
 
@@ -181,7 +191,7 @@ class AktivitasController extends Controller
             $req->flash();
             return back();
         } else {
-            $skp = Skp_periode::where('pegawai_id', $this->user()->pegawai->id)->where('is_aktif', 1)->first();
+            $skp = Skp2023::where('pegawai_id', $this->user()->pegawai->id)->where('is_aktif', 1)->first();
             $skpMulai = $skp->mulai;
             $skpSampai = $skp->sampai;
             $tgl = $req->tanggal;
@@ -192,6 +202,7 @@ class AktivitasController extends Controller
                 if (strtotime($req->jam_selesai) > strtotime($req->jam_mulai)) {
                     $menit = (strtotime($req->jam_selesai) - strtotime($req->jam_mulai)) / 60;
                     $attr['menit'] = $menit;
+                    $attr['jenis'] = $skp->jenis;
                     Aktivitas::create($attr);
                     toastr()->success('Aktivitas berhasil Di Simpan');
                     return redirect('pegawai/aktivitas/harian');

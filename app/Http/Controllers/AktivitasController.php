@@ -116,7 +116,14 @@ class AktivitasController extends Controller
             return back();
         } else {
             $tahun  = Carbon::now()->year;
-            $skp    = $this->user()->pegawai->skp_periode->where('is_aktif', 1)->first()->skp;
+            $skp = $this->user()->pegawai->skp->where('is_aktif', 1)->first();
+
+            if ($skp->jenis == 'JPT') {
+                $skp = Skp2023Jpt::where('skp2023_id', $skp->id)->get();
+            } else {
+                $skp = Skp2023Jf::where('skp2023_id', $skp->id)->get();
+            }
+
             $data   = $aktivitas;
             return view('pegawai.aktivitas.edit', compact('skp', 'data'));
         }

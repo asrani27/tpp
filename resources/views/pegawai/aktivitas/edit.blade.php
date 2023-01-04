@@ -41,7 +41,7 @@ TAMBAH AKTIVITAS HARIAN
               <select name="skp_id" class="form-control select2" required>
                 <option value="">-kegiatan-</option>
                 @foreach ($skp as $item)
-                <option value="{{$item->id}}" {{$item->id == $data->skp_id ? 'selected':''}}>{{$item->deskripsi}}
+                <option value="{{$item->id}}" {{$item->id == $data->skp2023_id ? 'selected':''}}>{{$item->rhk}}
                 </option>
                 @endforeach
               </select>

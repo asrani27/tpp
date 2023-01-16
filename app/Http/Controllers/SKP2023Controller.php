@@ -225,6 +225,7 @@ class SKP2023Controller extends Controller
 
             return view('pegawai.skp2023.ja.index', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan'));
         }
+        
     }
 
     public function realJPT(Request $req, $id, $triwulan)

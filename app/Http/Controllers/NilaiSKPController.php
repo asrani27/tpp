@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Skp2023;
+use App\Skp2023Ekspektasi;
 use App\Skp2023Jf;
 use App\Skp2023Jpt;
 use App\Skp2023JfIndikator;
@@ -18,6 +19,86 @@ class NilaiSKPController extends Controller
         return view('pegawai.skp2023.nilai.index', compact('data'));
     }
 
+    public function ekspektasi($id)
+    {
+        $pegawai_id = Auth::user()->pegawai->id;
+        $u = Skp2023::findOrFail($id);
+
+        if ($u->jenis == 'JPT') {
+            $pn = json_decode($u->pn);
+            if ($u->pp == null) {
+                $pp['nama'] = null;
+                $pp['nip'] = null;
+                $pp['pangkat'] = null;
+                $pp['gol'] = null;
+                $pp['jabatan'] = null;
+                $pp['skpd'] = null;
+            } else {
+                $pp = json_decode($u->pp);
+            }
+
+            $skp_utama = Skp2023Jpt::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();
+            $skp_tambahan = Skp2023Jpt::where('skp2023_id', $u->id)->where('jenis', 'tambahan')->get();
+
+            return view('pegawai.skp2023.ekspektasi.jpt', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan'));
+        }
+
+        if ($u->jenis == 'JF') {
+
+            $pn = json_decode($u->pn);
+            if ($u->pp == null) {
+                $pp['nama'] = null;
+                $pp['nip'] = null;
+                $pp['pangkat'] = null;
+                $pp['gol'] = null;
+                $pp['jabatan'] = null;
+                $pp['skpd'] = null;
+            } else {
+                $pp = json_decode($u->pp);
+            }
+
+            $skp_utama = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();
+            $skp_tambahan = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'tambahan')->get();
+
+            return view('pegawai.skp2023.ekspektasi.jf', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan'));
+        }
+
+        if ($u->jenis == 'JA') {
+
+            $pn = json_decode($u->pn);
+            if ($u->pp == null) {
+                $pp['nama'] = null;
+                $pp['nip'] = null;
+                $pp['pangkat'] = null;
+                $pp['gol'] = null;
+                $pp['jabatan'] = null;
+                $pp['skpd'] = null;
+            } else {
+                $pp = json_decode($u->pp);
+            }
+
+            $skp_utama = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();
+            $skp_tambahan = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'tambahan')->get();
+
+            return view('pegawai.skp2023.ekspektasi.ja', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan'));
+        }
+    }
+
+    public function deleteEkspektasi($id)
+    {
+        Skp2023Ekspektasi::find($id)->delete();
+        return back();
+    }
+    public function simpanEkspektasi(Request $req, $id)
+    {
+        $new = new Skp2023Ekspektasi;
+        $new->skp2023_id = $id;
+        $new->ekspektasi = $req->ekspektasi;
+        $new->pkid = $req->pkid;
+        $new->save();
+        toastr()->success('Berhasil Di Simpan', 'Success');
+        return back();
+    }
     public function umpanBalikJPT(Request $req, $triwulan, $id)
     {
         //Store realiasasi JPT

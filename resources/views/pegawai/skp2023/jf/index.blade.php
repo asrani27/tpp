@@ -217,7 +217,11 @@
                                 -melakukan perbaikan tiada henti
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan :<br/>
+                                @foreach ($u->ekspektasi1 as $item)
+                                    -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                            </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>2</td>
@@ -231,7 +235,11 @@
                                 -Tidak menyalahgunakan kewenangan jabatan
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan :<br/>
+                                @foreach ($u->ekspektasi2 as $item)
+                                    -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                            </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>3</td>
@@ -245,7 +253,11 @@
                                 -Melaksanakan tugas dengan kualitas terbaik
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan :<br/>
+                                @foreach ($u->ekspektasi3 as $item)
+                                    -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                            </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>4</td>
@@ -259,7 +271,11 @@
                                 -Membangun lingkungan kerja yang kondusif
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan :<br/>
+                                @foreach ($u->ekspektasi4 as $item)
+                                    -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                            </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>5</td>
@@ -273,7 +289,11 @@
                                 -Menjaga rahasia jabatan dan negara
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan :<br/>
+                                @foreach ($u->ekspektasi5 as $item)
+                                    -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                            </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>6</td>
@@ -287,7 +307,11 @@
                                 -Bertindak proaktif
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan :<br/>
+                                @foreach ($u->ekspektasi6 as $item)
+                                    -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                            </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>7</td>
@@ -301,7 +325,11 @@
                                 -Menggerakkan pemanfaatan berbagai sumberdaya untuk tujuan bersama
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan :<br/>
+                                @foreach ($u->ekspektasi7 as $item)
+                                    -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                            </td>
                         </tr>
                     </table>
                 </div>

@@ -49,6 +49,7 @@
                             <td>{{\Carbon\Carbon::parse($item->mulai)->isoFormat('D MMMM Y')}} s/d {{\Carbon\Carbon::parse($item->sampai)->isoFormat('D MMMM Y')}}</td>
                             
                             <td>
+                              <a href="/pegawai/nilai-skp/ekspektasi/{{$item->id}}" class="btn btn-xs btn-success">EKSPEKTASI</a>
                               <a href="/pegawai/nilai-skp/triwulan/1/{{$item->id}}" class="btn btn-xs btn-success">TRIWULAN 1</a>
                               <a href="/pegawai/nilai-skp/triwulan/2/{{$item->id}}" class="btn btn-xs btn-success">TRIWULAN 2</a>
                               <a href="/pegawai/nilai-skp/triwulan/3/{{$item->id}}" class="btn btn-xs btn-success">TRIWULAN 3</a>

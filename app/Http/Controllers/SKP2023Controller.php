@@ -42,7 +42,30 @@ class SKP2023Controller extends Controller
 
         return back();
     }
+    public function updatePenilai(Request $req, $id)
+    {
+        $data = Skp2023::find($id);
+        $u = json_decode($data->pn);
 
+        $pp = Pegawai::where('nip', $req->nip)->first();
+
+        $pejabat_penilai['nama'] = $pp->nama;
+        $pejabat_penilai['nip'] = $pp->nip;
+        $pejabat_penilai['pangkat'] = $pp->pangkat->nama;
+        $pejabat_penilai['gol'] = $pp->pangkat->golongan;
+        $pejabat_penilai['jabatan'] = $pp->jabatan == null ? '-' : $pp->jabatan->nama;
+        $pejabat_penilai['skpd'] = $pp->skpd->nama;
+
+        $attr['pp'] = json_encode($pejabat_penilai);
+
+        $data->pp = $attr['pp'];
+        $data->penilai = $req->nip;
+        $data->save();
+
+        toastr()->success('Berhasil Di Update');
+
+        return back();
+    }
     public function updateUnitkerjaSKP(Request $req, $id)
     {
         $data = Skp2023::find($id);
@@ -54,6 +77,17 @@ class SKP2023Controller extends Controller
         toastr()->success('Berhasil Di Update');
         return back();
     }
+
+    public function getPenilai(Request $req)
+    {
+        if ($req->searchTerm == null) {
+            $data = null;
+        } else {
+            $data = Pegawai::where('nama', 'LIKE', '%' . $req->searchTerm . '%')->orWhere('nip', 'LIKE', '%' . $req->searchTerm . '%')->get()->take(10)->toArray();
+            return json_encode($data);
+        }
+    }
+
     public function skpAtasan($nip)
     {
 

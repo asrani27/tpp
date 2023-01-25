@@ -285,6 +285,10 @@ Route::group(['middleware' => ['auth', 'checksinglesession', 'role:pegawai']], f
 
     Route::get('/pegawai/new-skp', 'SKP2023Controller@index');
     Route::get('/pegawai/new-skp/updatepegawai/{id}', 'SKP2023Controller@updatePegawaiSKP');
+
+    Route::post('pegawai/new-skp/getPenilai', 'SKP2023Controller@getPenilai');
+    Route::post('pegawai/new-skp/penilai/{id}', 'SKP2023Controller@updatePenilai');
+
     Route::post('/pegawai/new-skp/unitkerja/{id}', 'SKP2023Controller@updateUnitkerjaSKP');
     Route::get('/pegawai/new-skp/atasan/{nip}', 'SKP2023Controller@skpAtasan');
     Route::post('/pegawai/new-skp/periode', 'SKP2023Controller@storePeriode');

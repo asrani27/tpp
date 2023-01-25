@@ -754,5 +754,5 @@ $(document).on('click', '.skp-tambahan', function() {
             }
         });
     });
-  </script>
+</script>
 @endpush

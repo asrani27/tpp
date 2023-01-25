@@ -6,6 +6,7 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 @endpush
 @section('title')
@@ -37,9 +38,9 @@
                     <thead>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px; background-color:rgb(218, 236, 249)">
                             <th>NO</th>
-                            <th colspan="2">PEGAWAI YG DINILAI</th>
+                            <th colspan="2">PEGAWAI YG DINILAI <a href="/pegawai/new-skp/updatepegawai/{{$u->id}}" onclick="return confirm('Yakin ingin diupdate');"><i class="fa fa-refresh"></i> update</a></th>
                             <th>NO</th>
-                            <th colspan="2">PEJABAT PENILAI KINERJA</th>
+                            <th colspan="2">PEJABAT PENILAI KINERJA <a href="#" class="penilai"><i class="fas fa-edit"></i></a></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,7 +79,7 @@
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>5</td>
                             <td>UNIT KERJA</td>
-                            <td>{{$pn->unit_kerja}}</td>
+                            <td>{{$pn->unit_kerja}} <a href="#" class="unit-kerja" data-unitkerja="{{$pn->unit_kerja}}"><i class="fas fa-edit"></i></a></td>
                             <td>5</td>
                             <td>INSTANSI</td>
                             <td>{{$pp->skpd == null ? '-': $pp->skpd}}</td>
@@ -596,6 +597,65 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modal-unit-kerja" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form method="post" action="/pegawai/new-skp/unitkerja/{{$u->id}}" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header bg-gradient-primary" style="padding:10px">
+                    <h4 class="modal-title text-sm">UNIT KERJA</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>UNIT KERJA</label>
+                        <input type="text" class="form-control" name="unit kerja" id="unit_kerja" placeholder="unit kerja" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="submit" class="btn btn-block btn-primary"><i class="fas fa-paper-plane"></i>
+                        Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-penilai" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form method="post" action="/pegawai/new-skp/penilai/{{$u->id}}" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header bg-gradient-primary" style="padding:10px">
+                    <h4 class="modal-title text-sm">PENILAI</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>PENILAI</label>
+                        
+                        <select id="selPenilai" class="form-control form-control-sm select2 selPenilai" name="nip">
+                              
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="submit" class="btn btn-block btn-primary"><i class="fas fa-paper-plane"></i>
+                        Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('js')
@@ -648,5 +708,51 @@ $(document).on('click', '.skp-tambahan', function() {
     $('#perspektif_tambahan').val($(this).data('perspektif'));
     $("#t-modal-edit-indikator").modal();
  });
+
+ $(document).on('click', '.unit-kerja', function() {
+    $('#unit_kerja').val($(this).data('unitkerja'));
+    $("#modal-unit-kerja").modal();
+ });
+ 
+ $(document).on('click', '.penilai', function() {
+    $("#modal-penilai").modal();
+ });
  </script>
+  <script src="/theme/plugins/select2/js/select2.full.min.js"></script>
+  <script>
+      $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2()
+      })
+  </script>
+   <script>
+      $(document).ready(function(){
+           $("#selPenilai").select2({
+              placeholder: '-Pilih-',
+              ajax: { 
+              url: '/pegawai/new-skp/getPenilai',
+              type: "post",
+              dataType: 'json',
+              delay: 250,
+              headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+              data: function (params) {
+                  return {
+                  searchTerm: params.term // search term
+                  };
+              },
+              processResults: function (response) {
+                console.log(response);
+                  var data_array = [];
+                          response.forEach(function(value,key){
+                      data_array.push({id:value.nip,text:value.nip+' - '+value.nama})
+                  });
+                  return {
+                      results: data_array
+                  };
+              },
+              cache: true
+              }
+          });
+      });
+  </script>
 @endpush

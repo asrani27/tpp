@@ -20,6 +20,41 @@ class SKP2023Controller extends Controller
         return view('pegawai.skp2023.index', compact('data'));
     }
 
+    public function updatePegawaiSKP($id)
+    {
+        $data = Skp2023::find($id);
+        $u = json_decode($data->pn);
+
+        $pn = Auth::user()->pegawai;
+
+        $pejabat_dinilai['nama'] = $pn->nama;
+        $pejabat_dinilai['nip'] = $pn->nip;
+        $pejabat_dinilai['pangkat'] = $pn->pangkat->nama;
+        $pejabat_dinilai['gol'] = $pn->pangkat->golongan;
+        $pejabat_dinilai['jabatan'] = $pn->jabatan == null ? '-' : $pn->jabatan->nama;
+        $pejabat_dinilai['unit_kerja'] = $u->unit_kerja;
+
+        $attr['pn'] = json_encode($pejabat_dinilai);
+
+        $data->pn = $attr['pn'];
+        $data->save();
+        toastr()->success('Berhasil Di Update');
+
+        return back();
+    }
+
+    public function updateUnitkerjaSKP(Request $req, $id)
+    {
+        $data = Skp2023::find($id);
+        $u = json_decode($data->pn);
+        $u->unit_kerja = $req->unit_kerja;
+        $attr['pn'] = json_encode($u);
+        $data->pn = $attr['pn'];
+        $data->save();
+        toastr()->success('Berhasil Di Update');
+
+        return back();
+    }
     public function skpAtasan($nip)
     {
 
@@ -225,7 +260,6 @@ class SKP2023Controller extends Controller
 
             return view('pegawai.skp2023.ja.index', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan'));
         }
-        
     }
 
     public function realJPT(Request $req, $id, $triwulan)

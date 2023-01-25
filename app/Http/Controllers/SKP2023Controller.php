@@ -52,7 +52,6 @@ class SKP2023Controller extends Controller
         $data->pn = $attr['pn'];
         $data->save();
         toastr()->success('Berhasil Di Update');
-
         return back();
     }
     public function skpAtasan($nip)

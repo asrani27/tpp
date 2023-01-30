@@ -625,13 +625,7 @@ class RekapitulasiController extends Controller
     public function pembayaran($bulan, $tahun)
     {
         //cuti bersama
-        if ($bulan == '04' && $tahun == '2022') {
-            $cuti_bersama = 420;
-        } elseif ($bulan == '05' && $tahun == '2022') {
-            $cuti_bersama = 420 * 3;
-        } else {
-            $cuti_bersama = 0;
-        }
+        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
 
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {

@@ -141,13 +141,8 @@ class PuskesmasController extends Controller
 
     public function pembayaran($bulan, $tahun)
     {
-        if ($bulan == '04' && $tahun == '2022') {
-            $cuti_bersama = 420;
-        } elseif ($bulan == '05' && $tahun == '2022') {
-            $cuti_bersama = 420 * 3;
-        } else {
-            $cuti_bersama = 0;
-        }
+
+        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
 
         $data = RekapTpp::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {

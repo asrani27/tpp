@@ -15,9 +15,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </head>
 
 <body class="hold-transition sidebar-mini">
-  <div class="bg-warning text-bold">
+  {{-- <div class="bg-warning text-bold">
     <marquee>PER 1 FEBRUARI 2023 PENGISIAN AKTIVITAS HARIAN BERLAKU ATURAN 2x24 JAM</marquee>
-  </div>
+  </div> --}}
   <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-dark navbar-lightblue">

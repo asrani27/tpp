@@ -21,15 +21,24 @@
               <div class="card">
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-3 col-12">
                       <label class="col-form-label" for="inputWarning"><i class="far fa-calendar"></i> Periode Mulai</label>
                       
                       <input type="text" name="mulai" class="form-control" id="periodemulai" required autocomplete="off" value="{{\Carbon\Carbon::parse($data->mulai)->format('d/m/Y')}}">
                       {{-- <input type="date" name="mulai" class="form-control" placeholder=".col-3" value="{{$data->mulai}}" required> --}}
                     </div>
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-3 col-12">
                       <label class="col-form-label" for="inputWarning"><i class="far fa-calendar"></i> Periode Selesai</label>
                       <input type="text" name="sampai" class="form-control" id="periodesampai" required autocomplete="off" value="{{\Carbon\Carbon::parse($data->sampai)->format('d/m/Y')}}">
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <label class="col-form-label" for="inputWarning"><i class="far fa-calendar"></i> Jenis</label>
+                      <select name="jenis" class="form-control">
+                        <option value="">-pilih-</option>
+                        <option value="JPT" {{$data->jenis == 'JPT' ? 'selected':''}}>JPT</option>
+                        <option value="JF" {{$data->jenis == 'JF' ? 'selected':''}}>JF</option>
+                        <option value="JA" {{$data->jenis == 'JA' ? 'selected':''}}>JA</option>
+                      </select>
                     </div>
                     <div class="col-md-4 col-12">
                       <label class="col-form-label" for="inputWarning"><i class="far fa-user"></i> </label><br />

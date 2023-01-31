@@ -21,7 +21,7 @@
                 <div class="card-body p-2 text-center text-sm">
                     <strong>
                     SASARAN KINERJA PEGAWAI<br/>
-                    JF<br/>
+                    JA<br/>
                     PENDEKATAN HASIL KERJA KUANTITATIF<br/>
                     TRIWULAN : {{$triwulan}}</strong>
                 </div>

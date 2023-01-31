@@ -15,6 +15,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </head>
 
 <body class="hold-transition sidebar-mini">
+  <div class="bg-warning text-bold">
+    <marquee>PER 1 FEBRUARI 2023 INPUT AKTIVITAS AKAN DIKEMBALIKAN SEPERTI SEMULA</marquee>
+  </div>
   <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-dark navbar-lightblue">

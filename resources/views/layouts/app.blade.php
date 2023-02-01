@@ -15,9 +15,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </head>
 
 <body class="hold-transition sidebar-mini">
-  {{-- <div class="bg-warning text-bold">
+  <div class="bg-warning text-bold">
     <marquee>Pengisian aktivitas hari bulan Januari 2023 bisa diinput sampai dengan tgl 5 Februari  2023 jam 23.59 wita.</marquee>
-  </div> --}}
+  </div>
   <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-dark navbar-lightblue">

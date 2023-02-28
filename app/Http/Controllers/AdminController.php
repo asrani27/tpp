@@ -300,8 +300,9 @@ class AdminController extends Controller
 
     public function editPersen()
     {
-        $data = Jabatan::where('skpd_id', Auth::user()->skpd->id)->orderBy('kelas_id', 'DESC')->get();
-        return view('admin.edit_persen', compact('data'));
+        $data = Jabatan::where('skpd_id', Auth::user()->skpd->id)->where('rs_puskesmas_id', null)->orderBy('kelas_id', 'DESC')->get();
+        $datapuskesmas = Jabatan::where('skpd_id', Auth::user()->skpd->id)->where('rs_puskesmas_id', '!=', null)->orderBy('kelas_id', 'DESC')->get();
+        return view('admin.edit_persen', compact('data', 'datapuskesmas'));
     }
 
     public function editPersentase($id)

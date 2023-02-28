@@ -120,14 +120,15 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="/admin/rekapitulasi" class="nav-link {{Request::is('admin/rekapitulasi') ? 'active' : ''}}">
+            <a href="#" class="nav-link {{Request::is('admin/rekapitulasi') ? 'active' : ''}}">
+            {{-- <a href="/admin/rekapitulasi" class="nav-link {{Request::is('admin/rekapitulasi') ? 'active' : ''}}"> --}}
                 <i class="nav-icon fas fa-file"></i>
                 <p>
-                    Rekap TPP
+                    Rekap TPP (Maintenance)
                 </p>
             </a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a href="/admin/rekapitulasi/cpns"
                 class="nav-link {{Request::is('admin/rekapitulasi/cpns') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-file"></i>
@@ -155,32 +156,6 @@
                 </p>
             </a>
         </li>
-        {{-- <li class="nav-item">
-            <a href="/admin/rekapitulasi/puskesmas"
-                class="nav-link {{Request::is('admin/rekapitulasi/puskesmas') ? 'active' : ''}}">
-                <i class="nav-icon fas fa-file"></i>
-                <p>
-                    Rekap TPP PNS Puskesmas
-                </p>
-            </a>
-        </li> --}}
-        {{-- <li class="nav-item">
-            <a href="#" class="nav-link {{Request::is('admin/rekapitulasi/rs') ? 'active' : ''}}">
-                <i class="nav-icon fas fa-file"></i>
-                <p>
-                    Rekap TPP PNS RS
-                </p>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a href="#" class="nav-link {{Request::is('admin/rekapitulasi/cpns/dinkes') ? 'active' : ''}}">
-                <i class="nav-icon fas fa-file"></i>
-                <p>
-                    Rekap TPP CPNS Dinas
-                </p>
-            </a>
-        </li> --}}
         <li class="nav-item">
             <a href="/admin/rekapitulasi-cpns-puskesmas"
                 class="nav-link {{Request::is('admin/rekapitulasi-cpns-puskesmas') ? 'active' : ''}}">
@@ -191,28 +166,8 @@
             </a>
         </li>
         @else
-        {{-- <li class="nav-item">
-            <a href="#" class="nav-link {{Request::is('admin/rekapitulasi/cpns/rs') ? 'active' : ''}}">
-                <i class="nav-icon fas fa-file"></i>
-                <p>
-                    Rekap TPP CPNS RS
-                </p>
-            </a>
-        </li> --}}
-        @endif
-
-        </li>
-
-        {{-- <li class="nav-item">
-            <a href="/admin/rekapitulasi/plt"
-                class="nav-link {{Request::is('admin/rekapitulasi/plt') ? 'active' : ''}}">
-                <i class="nav-icon fas fa-file"></i>
-                <p>
-                    Rekap TPP PLT
-                </p>
-            </a>
-        </li>
-        </li> --}}
+        
+        @endif --}}
 
         @if (session()->get('uuid') != null)
         <li class="nav-item">

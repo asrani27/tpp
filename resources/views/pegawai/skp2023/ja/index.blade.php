@@ -725,7 +725,7 @@ $(document).on('click', '.skp-tambahan', function() {
       $('.select2').select2()
     })
 </script>
- <script>
+<script>
     $(document).ready(function(){
          $("#selPenilai").select2({
             placeholder: '-Pilih-',

@@ -120,11 +120,10 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link {{Request::is('admin/rekapitulasi') ? 'active' : ''}}">
-            {{-- <a href="/admin/rekapitulasi" class="nav-link {{Request::is('admin/rekapitulasi') ? 'active' : ''}}"> --}}
+            <a href="/admin/rekapitulasi" class="nav-link {{Request::is('admin/rekapitulasi') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
-                    Rekap TPP (Maintenance)
+                    Rekap TPP
                 </p>
             </a>
         </li>

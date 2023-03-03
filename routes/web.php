@@ -121,6 +121,7 @@ Route::group(['middleware' => ['XSS']], function () {
 
     Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('/home/admin', 'HomeController@admin');
+        Route::get('/home/excel', 'ExcelController@index');
 
         Route::get('/home/admin/persen', 'AdminController@editPersen');
         Route::get('/home/admin/persen/edit/{id}', 'AdminController@editPersentase');
@@ -199,6 +200,23 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/admin/rekapitulasi', 'RekapitulasiController@index');
         Route::get('/admin/rekapitulasi/cetaktpp', 'RekapitulasiController@cetaktpp');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}', 'RekapitulasiController@bulanTahun');
+        //-------new route rekap tpp 2023--------//
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/reguler', 'RekapitulasiController@reguler');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/reguler/mp', 'RekapitulasiController@reguler_mp');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/reguler/psa', 'RekapitulasiController@reguler_psa');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/reguler/perhitungan', 'RekapitulasiController@reguler_perhitungan');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/reguler/pembayaran', 'RekapitulasiController@reguler_pembayaran');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/reguler/{id}/delete', 'RekapitulasiController@reguler_delete');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/reguler/excel', 'RekapitulasiController@reguler_excel');
+        Route::post('/admin/rekapitulasi/bpjs/reguler', 'RekapitulasiController@reguler_bpjs');
+        Route::post('/admin/rekapitulasi/editjabatan/reguler', 'RekapitulasiController@reguler_editjabatan');
+        Route::post('/admin/rekapitulasi/{bulan}/{tahun}/tambahpegawai/reguler', 'RekapitulasiController@reguler_tambahpegawai');
+        Route::post('admin/rekapitulasi/getJabatan', 'RekapitulasiController@getJabatan');
+        Route::post('admin/rekapitulasi/getPegawai', 'RekapitulasiController@getPegawai');
+
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/cpns', 'RekapitulasiController@cpns');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/plt', 'RekapitulasiController@plt');
+        //----------------------------------------//
         Route::get('/admin/rekapitulasi/tu/{bulan}/{tahun}', 'RekapitulasiController@bulanTahunTU');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/pdf', 'RekapitulasiController@pdf');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/excel', 'RekapitulasiController@excel');

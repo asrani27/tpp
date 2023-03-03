@@ -1067,13 +1067,13 @@ class RekapitulasiController extends Controller
             $item->pbk_jumlah = round($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp);
 
             //PPK
-            $item->ppk_absensi = $item->basic * (($item->p_pk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
+            $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
             if ($item->dp_ta >= 6750) {
-                $item->ppk_aktivitas = $item->basic * (($item->p_pk + $item->p_tbk) / 100) * (40 / 100);
+                $item->ppk_aktivitas = $item->basic * ($item->p_pk / 100) * (40 / 100);
                 if ($item->dp_skp == 'kurang') {
-                    $item->ppk_skp = $item->basic * (($item->p_pk + $item->p_tbk) / 100) * (10 / 100);
+                    $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (10 / 100);
                 } else {
-                    $item->ppk_skp = $item->basic * (($item->p_pk + $item->p_tbk) / 100) * (20 / 100);
+                    $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (20 / 100);
                 }
             } else {
                 $item->ppk_aktivitas = 0;
@@ -1291,10 +1291,11 @@ class RekapitulasiController extends Controller
         return back();
     }
 
-    public function reguler_excel()
+    public function reguler_excel($bulan, $tahun)
     {
-        toastr()->info('Dalam pengembangan');
-        return back();
+
+        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+
         $filename = 'TPP_' . Carbon::now()->format('d-m-Y-H:i:s') . '.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header("Content-Disposition: attachment;filename=$filename");
@@ -1304,8 +1305,21 @@ class RekapitulasiController extends Controller
         $reader = IOFactory::createReader('Xlsx');
         $spreadsheet = $reader->load($path);
 
-        $spreadsheet->getActiveSheet()->setCellValue('B8', 'asdasd');
-        $spreadsheet->getActiveSheet()->setCellValue('C8', 'sdfsdfs');
+        $contentRow = 8;
+        foreach ($data as $key => $item) {
+            $spreadsheet->getActiveSheet()->setCellValue('B' . $contentRow, $item->nama);
+            $spreadsheet->getActiveSheet()->setCellValue('C' . $contentRow, '\'' . $item->nip);
+            $spreadsheet->getActiveSheet()->setCellValue('D' . $contentRow, $item->pangkat . '/' . $item->golongan);
+            $spreadsheet->getActiveSheet()->setCellValue('E' . $contentRow, $item->jabatan);
+            $spreadsheet->getActiveSheet()->setCellValue('F' . $contentRow, $item->jenis_jabatan);
+            $spreadsheet->getActiveSheet()->setCellValue('G' . $contentRow, $item->kelas);
+            $spreadsheet->getActiveSheet()->setCellValue('I' . $contentRow, $item->basic);
+            $spreadsheet->getActiveSheet()->setCellValue('I' . $contentRow, $item->p_bk);
+            $spreadsheet->getActiveSheet()->setCellValue('I' . $contentRow, $item->basic);
+            $spreadsheet->getActiveSheet()->setCellValue('I' . $contentRow, $item->basic);
+            $spreadsheet->getActiveSheet()->setCellValue('I' . $contentRow, $item->basic);
+            $contentRow++;
+        }
 
 
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');

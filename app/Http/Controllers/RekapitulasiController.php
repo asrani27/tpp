@@ -1324,7 +1324,7 @@ class RekapitulasiController extends Controller
             $spreadsheet->getActiveSheet()->setCellValue('K' . $contentRow, ($item->p_pk / 100));
             $spreadsheet->getActiveSheet()->setCellValue('L' . $contentRow, ($item->p_kk / 100));
             $spreadsheet->getActiveSheet()->setCellValue('M' . $contentRow, ($item->p_kp / 100));
-            $spreadsheet->getActiveSheet()->setCellValue('O' . $contentRow, $item->dp_absensi);
+            $spreadsheet->getActiveSheet()->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getActiveSheet()->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getActiveSheet()->setCellValue('Q' . $contentRow, $item->dp_skp);
             $spreadsheet->getActiveSheet()->setCellValue('R' . $contentRow, ($item->pph21 / 100));

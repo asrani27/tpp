@@ -25,6 +25,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class RekapitulasiController extends Controller
 {
@@ -1295,8 +1296,11 @@ class RekapitulasiController extends Controller
     {
 
         $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $dataBulan = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun);
+        $kinerjaBulan = $dataBulan->translatedFormat('F Y');
+        $pembayaranBulan = $dataBulan->addMonth(1)->translatedFormat('F Y');
 
-        $filename = 'TPP_' . Carbon::now()->format('d-m-Y-H:i:s') . '.xlsx';
+        $filename = 'TPP_' . $bulan . '-' . $tahun . '-' . Carbon::now()->format('H:i:s') . '.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header("Content-Disposition: attachment;filename=$filename");
         header('Cache-Control: max-age=0');
@@ -1304,7 +1308,8 @@ class RekapitulasiController extends Controller
         $path = public_path('/excel/testing.xlsx');
         $reader = IOFactory::createReader('Xlsx');
         $spreadsheet = $reader->load($path);
-
+        $spreadsheet->getActiveSheet()->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        $spreadsheet->getActiveSheet()->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
         $contentRow = 8;
         foreach ($data as $key => $item) {
             $spreadsheet->getActiveSheet()->setCellValue('B' . $contentRow, $item->nama);
@@ -1314,13 +1319,22 @@ class RekapitulasiController extends Controller
             $spreadsheet->getActiveSheet()->setCellValue('F' . $contentRow, $item->jenis_jabatan);
             $spreadsheet->getActiveSheet()->setCellValue('G' . $contentRow, $item->kelas);
             $spreadsheet->getActiveSheet()->setCellValue('I' . $contentRow, $item->basic);
-            $spreadsheet->getActiveSheet()->setCellValue('I' . $contentRow, $item->p_bk);
-            $spreadsheet->getActiveSheet()->setCellValue('I' . $contentRow, $item->basic);
-            $spreadsheet->getActiveSheet()->setCellValue('I' . $contentRow, $item->basic);
-            $spreadsheet->getActiveSheet()->setCellValue('I' . $contentRow, $item->basic);
+
+            $spreadsheet->getActiveSheet()->setCellValue('J' . $contentRow, (($item->p_bk + $item->p_tbk) / 100));
+            $spreadsheet->getActiveSheet()->setCellValue('K' . $contentRow, ($item->p_pk / 100));
+            $spreadsheet->getActiveSheet()->setCellValue('L' . $contentRow, ($item->p_kk / 100));
+            $spreadsheet->getActiveSheet()->setCellValue('M' . $contentRow, ($item->p_kp / 100));
+            $spreadsheet->getActiveSheet()->setCellValue('O' . $contentRow, $item->dp_absensi);
+            $spreadsheet->getActiveSheet()->setCellValue('P' . $contentRow, $item->dp_ta);
+            $spreadsheet->getActiveSheet()->setCellValue('Q' . $contentRow, $item->dp_skp);
+            $spreadsheet->getActiveSheet()->setCellValue('R' . $contentRow, ($item->pph21 / 100));
+            $spreadsheet->getActiveSheet()->setCellValue('AG' . $contentRow, $item->bpjs1);
+            $spreadsheet->getActiveSheet()->setCellValue('AH' . $contentRow, $item->bpjs4);
             $contentRow++;
         }
-
+        //remove row
+        $countRemove = 86 + 8 - $contentRow;
+        $spreadsheet->getActiveSheet()->removeRow($contentRow, $countRemove);
 
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('php://output');

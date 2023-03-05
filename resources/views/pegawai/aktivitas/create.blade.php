@@ -33,7 +33,7 @@ TAMBAH AKTIVITAS HARIAN
             <label class="col-sm-2 col-form-label">Tanggal</label>
             <div class="col-sm-10">
 
-              {{-- @if (Auth::user()->username == '198108032007012004' || Auth::user()->username == '198207022000121002')
+              @if (Auth::user()->username == '197707052007012034' || Auth::user()->username == '198207022000121002')
               <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"
                 max="{{\Carbon\Carbon::today()->format('Y-m-d')}}">
               @else
@@ -41,11 +41,11 @@ TAMBAH AKTIVITAS HARIAN
               <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"
                 min="{{\Carbon\Carbon::today()->subdays(1)->format('Y-m-d')}}"
                 max="{{\Carbon\Carbon::today()->format('Y-m-d')}}">
-              @endif --}}
+              @endif
 
-              <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"
+              {{-- <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"
                 min="{{\Carbon\Carbon::today()->subdays(1)->format('Y-m-d')}}"
-                max="{{\Carbon\Carbon::today()->format('Y-m-d')}}">
+                max="{{\Carbon\Carbon::today()->format('Y-m-d')}}"> --}}
 
               {{-- <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"
               min="2023-01-01"

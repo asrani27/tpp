@@ -153,6 +153,7 @@ class AdminController extends Controller
                 toastr()->success('Pegawai Berhasil di Update');
                 return back();
             } catch (\Exception $e) {
+                dd($e);
                 DB::rollback();
                 $req->flash();
                 toastr()->error('Pegawai Gagal Diupdate');

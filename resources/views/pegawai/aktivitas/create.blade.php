@@ -37,7 +37,6 @@ TAMBAH AKTIVITAS HARIAN
               <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"
                 max="{{\Carbon\Carbon::today()->format('Y-m-d')}}">
               @else
-
               <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"
                 min="{{\Carbon\Carbon::today()->subdays(1)->format('Y-m-d')}}"
                 max="{{\Carbon\Carbon::today()->format('Y-m-d')}}">

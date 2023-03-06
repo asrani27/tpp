@@ -137,6 +137,7 @@ class AdminController extends Controller
         $req->flash();
 
         $attr = $req->all();
+        $attr['eselon_id'] = $req->eselon_id == null ? null : $req->eselon_id;
 
         $pegawai = Pegawai::find($id);
         if ($pegawai->user == null) {
@@ -153,7 +154,7 @@ class AdminController extends Controller
                 toastr()->success('Pegawai Berhasil di Update');
                 return back();
             } catch (\Exception $e) {
-                dd($e);
+
                 DB::rollback();
                 $req->flash();
                 toastr()->error('Pegawai Gagal Diupdate');

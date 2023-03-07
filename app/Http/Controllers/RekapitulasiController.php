@@ -1261,6 +1261,7 @@ class RekapitulasiController extends Controller
         $data->kelas = $jabatan->kelas->nama;
         $data->basic = 0;
         $data->pagu = 0;
+        $data->jabatan_id = $jabatan->id;
         $data->save();
         toastr()->success('Berhasil Di Ubah');
         return back();

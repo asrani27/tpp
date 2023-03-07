@@ -1106,7 +1106,7 @@ class RekapitulasiController extends Controller
     public function reguler_mp($bulan, $tahun)
     {
 
-        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
+        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->->where('status_pns', 'pns')->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
             return $query->where('rs_puskesmas_id', null)->where('sekolah_id', null);
         })->get();
 

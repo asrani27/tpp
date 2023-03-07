@@ -1122,6 +1122,7 @@ class RekapitulasiController extends Controller
                 $n->pangkat          = $item->pangkat == null ? null : $item->pangkat->nama;
                 $n->golongan         = $item->pangkat == null ? null : $item->pangkat->golongan;
                 $n->jabatan          = $item->jabatan == null ? null : $item->jabatan->nama;
+                $n->jabatan_id       = $item->jabatan == null ? null : $item->jabatan->id;
                 $n->jenis_jabatan    = $item->jabatan == null ? null : $item->jabatan->jenis_jabatan;
                 $n->kelas            = $item->jabatan == null ? null : $item->jabatan->kelas->nama;
                 $n->bulan            = $bulan;
@@ -1139,6 +1140,7 @@ class RekapitulasiController extends Controller
                         'pangkat'       => $item->pangkat == null ? null : $item->pangkat->nama,
                         'golongan'      => $item->pangkat == null ? null : $item->pangkat->golongan,
                         'jabatan'       => $item->jabatan == null ? null : $item->jabatan->nama,
+                        'jabatan_id'    => $item->jabatan == null ? null : $item->jabatan->id,
                         'jenis_jabatan' => $item->jabatan == null ? null : $item->jabatan->jenis_jabatan,
                         'kelas'         => $item->jabatan == null ? null : $item->jabatan->kelas->nama,
                         'bulan' => $bulan,
@@ -1197,8 +1199,8 @@ class RekapitulasiController extends Controller
         $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
 
         foreach ($data as $item) {
-            $jabatan_id = Pegawai::where('nip', $item->nip)->first()->jabatan_id;
-            $persen = Jabatan::find($jabatan_id);
+            //$jabatan_id = Pegawai::where('nip', $item->nip)->first()->jabatan_id;
+            $persen = Jabatan::find($item->jabatan_id);
             if ($persen == null) {
                 $basic = 0;
                 $p_bk = 0;

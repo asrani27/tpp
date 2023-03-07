@@ -1260,6 +1260,11 @@ class RekapitulasiController extends Controller
         $data->jenis_jabatan = $jabatan->jenis_jabatan;
         $data->kelas = $jabatan->kelas->nama;
         $data->basic = 0;
+        $data->p_bk = 0;
+        $data->p_tbk = 0;
+        $data->p_pk = 0;
+        $data->p_kk = 0;
+        $data->basic = 0;
         $data->pagu = 0;
         $data->jabatan_id = $jabatan->id;
         $data->save();

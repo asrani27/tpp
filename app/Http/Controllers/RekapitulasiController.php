@@ -1344,7 +1344,7 @@ class RekapitulasiController extends Controller
         }
         //remove row
         $rowMulaiHapus = $contentRow;
-        $jumlahDihapus = 111 - $rowMulaiHapus;
+        $jumlahDihapus = 156 - $rowMulaiHapus;
         //dd($rowMulaiHapus, $jumlahDihapus, $contentRow);
         $sumV = '=SUM(V8:V' . ($contentRow - 1) . ')';
         $sumZ = '=SUM(Z8:Z' . ($contentRow - 1) . ')';

@@ -1282,6 +1282,7 @@ class RekapitulasiController extends Controller
             $n->pangkat          = $pegawai->pangkat == null ? null : $pegawai->pangkat->nama;
             $n->golongan         = $pegawai->pangkat == null ? null : $pegawai->pangkat->golongan;
             $n->jabatan          = $jabatan == null ? null : $jabatan->nama;
+            $n->jabatan_id       = $jabatan == null ? null : $jabatan->id;
             $n->jenis_jabatan    = $jabatan == null ? null : $jabatan->jenis_jabatan;
             $n->kelas            = $jabatan == null ? null : $jabatan->kelas->nama;
             $n->bulan            = $bulan;

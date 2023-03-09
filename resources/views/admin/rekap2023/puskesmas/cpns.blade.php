@@ -28,13 +28,13 @@ SUPERADMIN
             </div>
             <div class="card-body p-2">
                 
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/rs/cpns/mp" class="btn btn-xs btn-primary"
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/puskes/cpns/mp" class="btn btn-xs btn-primary"
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
                     Pegawai CPNS</a>
 
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/rs/cpns/psa" class="btn btn-flat btn-xs btn-secondary"
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/puskes/cpns/psa" class="btn btn-flat btn-xs btn-secondary"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Tarik PSA</a>
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/rs/cpns/perhitungan" class="btn btn-xs btn-warning"
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/puskes/cpns/perhitungan" class="btn btn-xs btn-warning"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
             <br /><br />
 

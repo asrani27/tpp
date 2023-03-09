@@ -1305,6 +1305,7 @@ class RekapitulasiController extends Controller
         toastr()->success('Berhasil Memasukkan Pegawai');
         return back();
     }
+
     public function rs_reguler_mp($bulan, $tahun)
     {
 

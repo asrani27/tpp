@@ -91,7 +91,6 @@ class AdminController extends Controller
         //$req->validate($rules, $messages);
 
         $req->flash();
-        $attr['eselon_id'] = $req->eselon_id == null ? null : $req->eselon_id;
 
         if (count(Skpd::find($this->skpd_id())->pegawai) == 0) {
             $urutan      = 1;
@@ -100,6 +99,7 @@ class AdminController extends Controller
         }
 
         $attr            = $req->all();
+        $attr['eselon_id'] = $req->eselon_id == null ? null : $req->eselon_id;
         $attr['urutan']  = $urutan;
         $attr['skpd_id'] = $this->skpd_id();
         $attr['verified'] = 1;

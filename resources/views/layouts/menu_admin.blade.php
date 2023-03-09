@@ -127,31 +127,14 @@
                 </p>
             </a>
         </li>
-        {{-- <li class="nav-item">
-            <a href="/admin/rekapitulasi/cpns"
-                class="nav-link {{Request::is('admin/rekapitulasi/cpns') ? 'active' : ''}}">
-                <i class="nav-icon fas fa-file"></i>
-                <p>
-                    Rekap TPP CPNS
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="/admin/rekapitulasi/plt"
-                class="nav-link {{Request::is('admin/rekapitulasi/plt') ? 'active' : ''}}">
-                <i class="nav-icon fas fa-file"></i>
-                <p>
-                    Rekap TPP PLT
-                </p>
-            </a>
-        </li>
+        
         @if (Auth::user()->skpd->id == 34)
         <li class="nav-item">
             <a href="/admin/rekapitulasi-puskesmas-gabungan"
                 class="nav-link {{Request::is('admin/rekapitulasi-puskesmas-gabungan') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
-                    Rekap TPP Puskesmas Gabungan
+                    Rekap TPP Puskes & RSSS
                 </p>
             </a>
         </li>
@@ -160,13 +143,13 @@
                 class="nav-link {{Request::is('admin/rekapitulasi-cpns-puskesmas') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
-                    Rekap TPP CPNS Puskesmas
+                    Rekap TPP IFK
                 </p>
             </a>
         </li>
         @else
         
-        @endif --}}
+        @endif
 
         @if (session()->get('uuid') != null)
         <li class="nav-item">

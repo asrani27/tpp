@@ -131,6 +131,9 @@ SUPERADMIN
                             <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif;
                             @if($item->dp_ta < 6750)
                             background-color:#f2dede
+                            @endif
+                            @if($item->puskesmas_id == 37)
+                            background-color:#b0fffe
                             @endif">
                                 <td>{{$no++}}</td>
                                 <td>

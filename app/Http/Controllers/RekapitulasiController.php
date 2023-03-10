@@ -1053,7 +1053,16 @@ class RekapitulasiController extends Controller
     //new function rekap 2023 
     public function reguler($bulan, $tahun)
     {
-        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        if (Auth::user()->skpd->id == 34) {
+            $dataDinas = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+            $dataIFK = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+
+            $data = $dataDinas->merge($dataIFK);
+        } else {
+            $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        }
+
+
         $data->map(function ($item) {
             //PBK
             $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
@@ -1204,9 +1213,14 @@ class RekapitulasiController extends Controller
     public function reguler_mp($bulan, $tahun)
     {
         if (Auth::user()->skpd->id == 34) {
-            $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('status_pns', 'pns')->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
+            $pegawaiDinas = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('status_pns', 'pns')->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
+                return $query->where('rs_puskesmas_id', null)->where('sekolah_id', null);
+            })->get();
+            $pegawaiIFK = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('status_pns', 'pns')->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
                 return $query->where('rs_puskesmas_id', 37)->where('sekolah_id', null);
             })->get();
+
+            $pegawai = $pegawaiDinas->merge($pegawaiIFK);
         } else {
             $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('status_pns', 'pns')->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
                 return $query->where('rs_puskesmas_id', null)->where('sekolah_id', null);

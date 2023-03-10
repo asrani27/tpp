@@ -1381,7 +1381,14 @@ class RekapitulasiController extends Controller
     {
         //cuti bersama
         $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
-        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+
+        if (Auth::user()->skpd->id == 34) {
+            $dataDinas = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+            $dataIFK = RekapReguler::where('puskesmas_id', 37)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+            $data = $dataDinas->merge($dataIFK);
+        } else {
+            $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        }
         foreach ($data as $item) {
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
             $dp_ct = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 7)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;

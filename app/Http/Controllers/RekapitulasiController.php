@@ -1676,7 +1676,7 @@ class RekapitulasiController extends Controller
 
     public function reguler_excel($bulan, $tahun)
     {
-        if (Auth::user()->skpd->id == 37) {
+        if (Auth::user()->skpd->id == 34) {
             $dataDinas = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
             $dataIFK = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
             $data = $dataDinas->merge($dataIFK);

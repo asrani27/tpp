@@ -1203,10 +1203,15 @@ class RekapitulasiController extends Controller
 
     public function reguler_mp($bulan, $tahun)
     {
-
-        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('status_pns', 'pns')->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
-            return $query->where('rs_puskesmas_id', null)->where('sekolah_id', null);
-        })->get();
+        if (Auth::user()->skpd->id == 34) {
+            $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('status_pns', 'pns')->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
+                return $query->where('rs_puskesmas_id', 37)->where('sekolah_id', null);
+            })->get();
+        } else {
+            $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('status_pns', 'pns')->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
+                return $query->where('rs_puskesmas_id', null)->where('sekolah_id', null);
+            })->get();
+        }
 
         foreach ($pegawai as $item) {
             $check = RekapReguler::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();

@@ -1678,7 +1678,7 @@ class RekapitulasiController extends Controller
     {
         if (Auth::user()->skpd->id == 37) {
             $dataDinas = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-            $dataIFK = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+            $dataIFK = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
             $data = $dataDinas->merge($dataIFK);
         } else {
 

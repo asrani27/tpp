@@ -1631,6 +1631,21 @@ class RekapitulasiController extends Controller
         toastr()->success('Berhasil Di Input');
         return back();
     }
+
+
+    public function plt_bpjs(Request $req)
+    {
+        $data = RekapPlt::find($req->id_rekap);
+        if ($data->skpd_id != Auth::user()->skpd->id) {
+            toastr()->error('Bukan Data Milik SKPD Anda');
+            return back();
+        }
+        $data->bpjs1 = $req->satu_persen;
+        $data->bpjs4 = $req->empat_persen;
+        $data->save();
+        toastr()->success('Berhasil Di Input');
+        return back();
+    }
     public function reguler_editjabatan(Request $req)
     {
         $jabatan = Jabatan::find($req->jabatan);

@@ -229,6 +229,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/plt/perhitungan', 'RekapitulasiController@plt_perhitungan');
         Route::post('/admin/rekapitulasi/{bulan}/{tahun}/tambahpegawai/plt', 'RekapitulasiController@plt_tambahpegawai');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/plt/{id}/delete', 'RekapitulasiController@plt_delete');
+        Route::post('/admin/rekapitulasi/bpjs/plt', 'RekapitulasiController@plt_bpjs');
 
         //puskesmas
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/puskes/reguler', 'RekapitulasiController@puskes_reguler');

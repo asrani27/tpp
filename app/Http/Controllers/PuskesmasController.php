@@ -29,10 +29,10 @@ class PuskesmasController extends Controller
             return back();
         }
     }
-    public function bulanTahun($bulan, $tahun)
+    public function rekapitulasi($bulan, $tahun)
     {
-        $data = RekapTpp::where('skpd_id', 34)->where('puskesmas_id', Auth::user()->puskesmas->id)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-        return view('puskesmas.rekapitulasi.bulantahun', compact('data', 'bulan', 'tahun'));
+        //$data = RekapTpp::where('skpd_id', 34)->where('puskesmas_id', Auth::user()->puskesmas->id)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        return view('puskesmas.rekapitulasi.bulantahun', compact('bulan', 'tahun'));
     }
 
     public function masukkanPegawai($bulan, $tahun)
@@ -320,7 +320,7 @@ class PuskesmasController extends Controller
     }
     public function delete($bulan, $tahun, $id)
     {
-        RekapTpp::find($id)->delete();
+        RekapReguler::find($id)->delete();
         toastr()->success('Berhasil Di Hapus');
         return back();
     }

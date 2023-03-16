@@ -495,7 +495,8 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('/puskesmas/rekapitulasi/bpjs/reguler', 'PuskesmasController@reguler_bpjs');
         Route::get('/home/puskesmas', 'HomeController@puskesmas');
         Route::get('/puskesmas/dinkes/{uuid}', 'PuskesmasController@loginDinkes');
-        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}', 'PuskesmasController@reguler');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}', 'PuskesmasController@rekapitulasi');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/reguler', 'PuskesmasController@reguler');
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/masukkanpegawai', 'PuskesmasController@masukkanPegawai');
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/perhitungan', 'PuskesmasController@perhitungan');
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/pembayaran', 'PuskesmasController@pembayaran');

@@ -31,6 +31,9 @@ SUPERADMIN
                 </div>
             </div>
         </div>
+
+        @include('puskesmas.rekapitulasi.menu')
+        <br/><br/>
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Daftar TPP Bulan
@@ -176,7 +179,7 @@ SUPERADMIN
                                 <td class="text-right">{{number_format($item->tpp_diterima)}}</td>
 
                                 <td>
-                                    <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/{{$item->id}}/delete"
+                                    <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/{{$item->id}}/delete"
                                         onclick="return confirm('Yakin Ingin Dihapus?');"><span
                                             class="badge badge-danger">Hapus</span></a>
                                 </td>

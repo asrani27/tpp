@@ -502,6 +502,22 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/pembayaran', 'PuskesmasController@pembayaran');
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/excel', 'PuskesmasController@excel');
         Route::post('/puskesmas/rekapitulasi/tambahpegawai', 'PuskesmasController@tambahPegawai');
-        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/{id}/delete', 'PuskesmasController@delete');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/reguler/{id}/delete', 'PuskesmasController@delete');
+
+        Route::post('/puskesmas/rekapitulasi/editjabatan/reguler', 'PuskesmasController@reguler_editjabatan');
+        Route::post('/puskesmas/rekapitulasi/{bulan}/{tahun}/tambahpegawai/reguler', 'PuskesmasController@reguler_tambahpegawai');
+        Route::post('puskesmas/rekapitulasi/getJabatan', 'PuskesmasController@getJabatan');
+        Route::post('puskesmas/rekapitulasi/getPegawai', 'PuskesmasController@getPegawai');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/reguler/mp', 'PuskesmasController@puskes_reguler_mp');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/reguler/psa', 'PuskesmasController@puskes_reguler_psa');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/reguler/perhitungan', 'PuskesmasController@puskes_reguler_perhitungan');
+
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/cpns', 'PuskesmasController@cpns');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/cpns/mp', 'PuskesmasController@cpns_mp');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/cpns/psa', 'PuskesmasController@cpns_psa');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/cpns/perhitungan', 'PuskesmasController@cpns_perhitungan');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/cpns/{id}/delete', 'PuskesmasController@cpns_delete');
+        Route::post('/puskesmas/rekapitulasi/bpjs/cpns', 'PuskesmasController@cpns_bpjs');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/reguler/excel', 'PuskesmasController@puskes_reguler_excel');
     });
 });

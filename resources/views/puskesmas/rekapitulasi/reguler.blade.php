@@ -9,7 +9,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
 @section('title')
-SUPERADMIN
+ADMIN
 @endsection
 @section('content')
 <div class="row">
@@ -40,19 +40,39 @@ SUPERADMIN
                     {{convertBulan($bulan)}} {{$tahun}}</h3>
             </div>
             <div class="card-body p-2">
-                
-                {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/mp" class="btn btn-flat btn-xs btn-primary"
+                <div class="alert alert-default alert-dismissible text-sm">
+                    <h5><i class="icon fas fa-info"></i> Informasi</h5>
+                    Format Laporan TPP terbaru, langkah-langkahnya adalah<br />
+                    1. Memasukkan pegawai terlebih dahulu, klik <span class="badge badge-primary">
+                        masukkan pegawai</span>, jika
+                        ada pegawai baru dan yang membayarkan SKPD yang lama, klik tombol <span
+                            class="badge badge-danger">hapus</span> paling kanan di daftar
+                        laporan. Jika ada pegawai yang sudah mutasi/keluar namun masih di bayarkan TPP nya, klik <span class="badge badge-primary">tambah pegawai</span>, pilih pegawai dan jabatan sebelum pindah<br />
+
+
+                    2. Klik Tombol <span class="badge badge-secondary">Tarik PSA</span> (Presensi, SKP, dan Aktivitas), untuk menarik data presensi, data nilai SKP dan menit aktivitas<br />
+                        
+                    3. Melakukan perhitungan dengan mengklik tombol <span class="badge badge-warning">perhitungan</span>
+                    akan menghitung di kolom perhitungan<br />
+                    
+                    4. Bila basic tpp = 0, dan kolomnya berwarna <span class="badge badge-danger">MERAH</span>, maka
+                    kemungkinan besar, ASN tsb pensiun / tidak memiliki jabatan/persen jabatan 0, Solusinya klik tombol
+                    hapus di paling kanan
+                    jika pensiun, jika tidak pensiun hapus terlebih dahulu, kemudian masukkan/input kembali di kolom
+                    paling bawah.
+                </div>
+                <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/mp" class="btn btn-flat btn-xs btn-primary"
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
                     Semua Pegawai</a>
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/psa" class="btn btn-flat btn-xs btn-secondary"
+                <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/psa" class="btn btn-flat btn-xs btn-secondary"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Tarik PSA</a>
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/perhitungan" class="btn btn-flat btn-xs btn-warning"
+                <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/perhitungan" class="btn btn-flat btn-xs btn-warning"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
 
-                <a href="#" class="btn btn-xs btn-flat btn-primary tambahpegawai"><i class="fas fa-user-plus"></i>Tambah Pegawai</a> --}}
+                    <a href="#" class="btn btn-xs btn-flat btn-primary tambahpegawai"><i class="fas fa-user-plus"></i>Tambah Pegawai</a>
                     {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/excel" class="btn btn-xs btn-flat btn-primary"><i class="fas fa-file-excel"></i> Export To Excel</a> --}}
-               
-
+                <br /><br />
+                
                 <table class="table table-hover text-nowrap table-sm table-responsive ">
                     <thead>
                         <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center">
@@ -269,7 +289,7 @@ SUPERADMIN
 <div class="modal fade" id="modal-editjabatan" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="/admin/rekapitulasi/editjabatan/reguler" enctype="multipart/form-data">
+            <form method="post" action="/puskesmas/rekapitulasi/editjabatan/reguler" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header bg-gradient-success" style="padding:10px">
                     <h4 class="modal-title text-sm">EDIT JABATAN DI REKAPITULASI</h4>
@@ -302,7 +322,7 @@ SUPERADMIN
 <div class="modal fade" id="modal-tambahpegawai" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/tambahpegawai/reguler" enctype="multipart/form-data">
+            <form method="post" action="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/tambahpegawai/reguler" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header bg-gradient-success" style="padding:10px">
                     <h4 class="modal-title text-sm">TAMBAH PEGAWAI DI REKAPITULASI</h4>
@@ -385,7 +405,7 @@ SUPERADMIN
          $("#selJabatan").select2({
             placeholder: '-Pilih-',
             ajax: { 
-            url: '/admin/rekapitulasi/getJabatan',
+            url: '/puskesmas/rekapitulasi/getJabatan',
             type: "post",
             dataType: 'json',
             delay: 250,
@@ -416,7 +436,7 @@ SUPERADMIN
          $("#selectPegawai").select2({
             placeholder: '-Cari NIP/Nama-',
             ajax: { 
-            url: '/admin/rekapitulasi/getPegawai',
+            url: '/puskesmas/rekapitulasi/getPegawai',
             type: "post",
             dataType: 'json',
             delay: 250,
@@ -447,7 +467,7 @@ SUPERADMIN
          $("#selectJabatan").select2({
             placeholder: '-Cari Jabatan-',
             ajax: { 
-            url: '/admin/rekapitulasi/getJabatan',
+            url: '/puskesmas/rekapitulasi/getJabatan',
             type: "post",
             dataType: 'json',
             delay: 250,

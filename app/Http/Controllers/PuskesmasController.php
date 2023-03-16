@@ -797,7 +797,7 @@ class PuskesmasController extends Controller
         header("Content-Disposition: attachment;filename=$filename");
         header('Cache-Control: max-age=0');
 
-        $path = public_path('/excel/perpuskes.xlsx');
+        $path = public_path('/excel/perpuskes2.xlsx');
         $reader = IOFactory::createReader('Xlsx');
         $spreadsheet = $reader->load($path);
 

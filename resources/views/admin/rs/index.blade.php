@@ -83,7 +83,7 @@ SUPERADMIN
                     <a href="/admin/rspuskesmas/{{$item->id}}/delete" class="btn btn-sm btn-danger"
                       data-toggle="tooltip" title='Hapus data' onclick="return confirm('Yakin ingin di hapus?');"><i
                         class="fas fa-trash"></i></a>
-                      @if ($item->id == 8)
+                      @if ($item->id == 8 || $item->id == 37)
                           
                       @else
                     <a href="/admin/rspuskesmas/{{$item->id}}/login" class="btn btn-sm btn-danger" data-toggle="tooltip"

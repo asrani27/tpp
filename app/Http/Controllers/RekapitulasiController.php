@@ -629,7 +629,7 @@ class RekapitulasiController extends Controller
     public function pembayaran($bulan, $tahun)
     {
         //cuti bersama
-        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count() * 420;
 
         $data = RekapTpp::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
@@ -1482,7 +1482,7 @@ class RekapitulasiController extends Controller
     public function reguler_psa($bulan, $tahun)
     {
         //cuti bersama
-        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count() * 420;
 
         if (Auth::user()->skpd->id == 34) {
             $dataDinas = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
@@ -1527,7 +1527,7 @@ class RekapitulasiController extends Controller
     public function tu_psa($bulan, $tahun)
     {
         //cuti bersama
-        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count() * 420;
 
         if (Auth::user()->skpd->id == 34) {
             $dataDinas = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
@@ -1572,7 +1572,7 @@ class RekapitulasiController extends Controller
     public function puskes_reguler_psa($bulan, $tahun)
     {
         //cuti bersama
-        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count() * 420;
         $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', '!=', 8)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 37)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
@@ -1609,7 +1609,7 @@ class RekapitulasiController extends Controller
     public function rs_reguler_psa($bulan, $tahun)
     {
         //cuti bersama
-        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count() * 420;
         $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 8)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
@@ -2456,7 +2456,7 @@ class RekapitulasiController extends Controller
     public function cpns_psa($bulan, $tahun)
     {
         //cuti bersama
-        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count() * 420;
         $data = RekapCpns::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
@@ -2493,7 +2493,7 @@ class RekapitulasiController extends Controller
     public function puskes_cpns_psa($bulan, $tahun)
     {
         //cuti bersama
-        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count() * 420;
         $data = RekapCpns::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('puskesmas_id', '!=', 37)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
@@ -2530,7 +2530,7 @@ class RekapitulasiController extends Controller
     public function rs_cpns_psa($bulan, $tahun)
     {
         //cuti bersama
-        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count() * 420;
         $data = RekapCpns::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 8)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
@@ -2817,7 +2817,7 @@ class RekapitulasiController extends Controller
     public function plt_psa($bulan, $tahun)
     {
         //cuti bersama
-        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count() * 420;
         $data = RekapPlt::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();

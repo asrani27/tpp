@@ -44,38 +44,20 @@ LAPORAN AKTIVITAS
               @endphp
               <tbody>
 
-                @foreach (bulanTahun() as $key => $item)
-                @php
-
-                $hasil = \App\RekapTpp::where('nip', Auth::user()->username)->where('bulan',
-                $item->bulan)->where('tahun',
-                $item->tahun)->first();
-                @endphp
+                @foreach ($data as $key => $item)
+                
                 <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
                   <td>{{$no++}}</td>
                   <td>{{\Carbon\Carbon::createFromFormat('m',$item->bulan)->translatedFormat('F')}} {{$item->tahun}}
                   </td>
-                  <td>{{totalMenit($item->bulan, $item->tahun)}} </td>
-                  <td>{{($hasil == null ? 0: $hasil->pembayaran_cutitahunan) == null ? 0
-                    :$hasil->pembayaran_cutitahunan}}
-                  </td>
-                  <td>{{($hasil == null ? 0: $hasil->pembayaran_cuti_bersama) == null ? 0
-                    :$hasil->pembayaran_cuti_bersama}}</td>
-                  <td>{{($hasil == null ? 0: $hasil->pembayaran_diklat) == null ? 0
-                    :$hasil->pembayaran_diklat}}</td>
-                  <td>{{($hasil == null ? 0: $hasil->pembayaran_tugasluar) == null ? 0
-                    :$hasil->pembayaran_tugasluar}}</td>
-                  <td>{{($hasil == null ? 0: $hasil->pembayaran_covid) == null ? 0
-                    :$hasil->pembayaran_covid}}</td>
-                  <td>
-                    {{-- @if ($hasil == null)
-                    0
-                    @else
-                    {{totalMenit($item->bulan, $item->tahun) + $hasil->pembayaran_cutitahunan +
-                    $hasil->pembayaran_cuti_bersama + $hasil->pembayaran_diklat + $hasil->pembayaran_tugasluar +
-                    $hasil->pembayaran_covid}}
-                    @endif</td> --}}
-                  <td>{{totalAbsensi($item->bulan, $item->tahun)}} %</td>
+                  <td>{{$item->menit}} </td>
+                  <td>{{$item->cuti_tahunan}} </td>
+                  <td>{{$item->cuti_bersama}} </td>
+                  <td>{{$item->diklat}} </td>
+                  <td>{{$item->tugas_luar}} </td>
+                  <td>{{$item->covid}} </td>
+                  <td>{{$item->presensi}} </td>
+                  
                   <td>
                     <a href="/pegawai/laporan/aktivitas/{{$item->bulan}}/{{$item->tahun}}"
                       class='btn btn-xs btn-primary'>Detail Aktivitas</a>

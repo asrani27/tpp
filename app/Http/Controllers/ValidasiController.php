@@ -38,6 +38,7 @@ class ValidasiController extends Controller
         })->where('nama_pegawai', '!=', null);
 
         if ($this->user()->pegawai->jabatan->sekda == 1) {
+            //dd('d');
             $data2 = Jabatan::where('jabatan_id', null)->where('sekda', null)->where('sekolah_id', null)->get()->map(function ($item) {
                 $item->nama = $item->skpd->nama;
                 if ($item->pegawai == null) {
@@ -46,14 +47,15 @@ class ValidasiController extends Controller
                         $item->aktivitas_baru = 0;
                     } else {
                         $item->nama_pegawai   = $item->pegawaiplt->nama;
-                        $item->aktivitas_baru = $item->pegawaiplt->aktivitas->where('validasi', 0)->count();
+                        $item->aktivitas_baru = Aktivitas::where('pegawai_id', $item->pegawaiplt->id)->where('validasi', 0)->count();
                     }
                 } else {
                     $item->nama_pegawai   = $item->pegawai->nama;
-                    $item->aktivitas_baru = $item->pegawai->aktivitas->where('validasi', 0)->count();
+                    $item->aktivitas_baru = Aktivitas::where('pegawai_id', $item->pegawai->id)->where('validasi', 0)->count();
                 }
                 return $item;
             });
+            //dd($data2);
         } else {
             $data2 = collect([]);
         }

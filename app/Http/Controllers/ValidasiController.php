@@ -21,21 +21,22 @@ class ValidasiController extends Controller
             return back();
         }
 
-        $data1 = $this->user()->pegawai->jabatan->bawahan->load('pegawai')->map(function ($item) {
-            if ($item->pegawai == null) {
-                if ($item->pegawaiplt == null) {
-                    $item->nama_pegawai = null;
-                    $item->aktivitas_baru = 0;
+        $data1 = $this->user()->pegawai->jabatan->bawahan
+            ->map(function ($item) {
+                if ($item->pegawai == null) {
+                    if ($item->pegawaiplt == null) {
+                        $item->nama_pegawai = null;
+                        $item->aktivitas_baru = 0;
+                    } else {
+                        $item->nama_pegawai   = $item->pegawaiplt->nama;
+                        $item->aktivitas_baru = Aktivitas::where('pegawai_id', $item->pegawaiplt->id)->where('validasi', 0)->count();
+                    }
                 } else {
-                    $item->nama_pegawai   = $item->pegawaiplt->nama;
-                    $item->aktivitas_baru = $item->pegawaiplt->aktivitas->where('validasi', 0)->count();
+                    $item->nama_pegawai   = $item->pegawai->nama;
+                    $item->aktivitas_baru = Aktivitas::where('pegawai_id', $item->pegawai->id)->where('validasi', 0)->count();
                 }
-            } else {
-                $item->nama_pegawai   = $item->pegawai->nama;
-                $item->aktivitas_baru = $item->pegawai->aktivitas->where('validasi', 0)->count();
-            }
-            return $item;
-        })->where('nama_pegawai', '!=', null);
+                return $item;
+            })->where('nama_pegawai', '!=', null);
 
         if ($this->user()->pegawai->jabatan->sekda == 1) {
             //dd('d');

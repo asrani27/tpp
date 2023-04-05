@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Role;
 use App\Skpd;
 use App\User;
+use App\Bagian;
 use App\Jabatan;
 use App\Pegawai;
 use Carbon\Carbon;

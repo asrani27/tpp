@@ -56,6 +56,7 @@ class AdminController extends Controller
         //     $data['nip'] = '';
         //     $data['nm_lengkap'] = '';
         // } else {
+        $bagian = Bagian::get();
         $jabatan = Jabatan::where('skpd_id', Auth::user()->skpd->id)->get()->map(function ($item) {
             $item->pegawai = $item->pegawai;
             return $item;
@@ -64,7 +65,7 @@ class AdminController extends Controller
         $data['nm_lengkap'] = '';
         // }
 
-        return view('admin.pegawai.create', compact('jabatan', 'data'));
+        return view('admin.pegawai.create', compact('jabatan', 'data', 'bagian'));
     }
 
     public function storePegawai(Request $req)

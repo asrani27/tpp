@@ -1897,7 +1897,6 @@ class RekapitulasiController extends Controller
             $dataIFK = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
             $data = $dataDinas->merge($dataIFK);
         } else {
-
             $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         }
 
@@ -1922,11 +1921,13 @@ class RekapitulasiController extends Controller
 
 
         if (Auth::user()->skpd->id == 1) {
+
+            $dataTU = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', '!=', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
             //sheet TU disdik
             $spreadsheet->getSheetByName('TU')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
             $spreadsheet->getSheetByName('TU')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
             $contentRow = 8;
-            foreach ($data as $key => $item) {
+            foreach ($dataTU as $key => $item) {
                 $spreadsheet->getSheetByName('TU')->setCellValue('B' . $contentRow, $item->nama);
                 $spreadsheet->getSheetByName('TU')->setCellValue('C' . $contentRow, '\'' . $item->nip);
                 $spreadsheet->getSheetByName('TU')->setCellValue('D' . $contentRow, $item->pangkat . '/' . $item->golongan);
@@ -1965,7 +1966,7 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('TU')->setCellValue('AF' . $contentRow, $sumAF);
             $spreadsheet->getSheetByName('TU')->setCellValue('AI' . $contentRow, $sumAI);
         }
-        
+
         //sheet reguler
         $spreadsheet->getSheetByName('REGULER')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
         $spreadsheet->getSheetByName('REGULER')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));

@@ -150,8 +150,10 @@ ADMIN SKPD
                                     <div class="col-sm-10">
                                         <select name="bagian_id" class="form-control" required>
                                             <option value="">-pilih-</option>
-                                            <option value="pns">pns</option>
-                                            <option value="cpns">cpns</option>
+                                            @foreach ($bagian as $item)
+                                            <option value="{{$item->id}}">{{$item->nama}}</option>
+                                                
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

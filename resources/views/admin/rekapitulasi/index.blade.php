@@ -86,7 +86,7 @@ SUPERADMIN
               <td>{{$no++}}</td>
               <td>{{convertBulan($item->bulan)}}</td>
               <td>{{$item->tahun}}</td>
-              <td><a href="/admin/rekapitulasi/tu/{{$item->bulan}}/{{$item->tahun}}" class="btn btn-xs btn-primary"><i
+              <td><a href="/admin/rekapitulasi/{{$item->bulan}}/{{$item->tahun}}/tu" class="btn btn-xs btn-primary"><i
                     class="fas fa-eye"></i> Detail</a></td>
             </tr>
             @endforeach

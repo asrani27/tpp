@@ -120,6 +120,20 @@ ADMIN SKPD
                                     </select>
                                 </div>
                             </div>
+                            @if (Auth::user()->skpd->kode_skpd == "4.01.03.")
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Bagian</label>
+                                    <div class="col-sm-10">
+                                        <select name="bagian_id" class="form-control" required>
+                                            <option value="">-pilih-</option>
+                                            @foreach ($bagian as $item)
+                                            <option value="{{$item->id}}" {{$data->bagian_id == $item->id ? 'selected':''}}>{{$item->nama}}</option>
+                                                
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">

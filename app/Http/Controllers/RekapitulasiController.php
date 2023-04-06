@@ -1843,8 +1843,15 @@ class RekapitulasiController extends Controller
         return back();
     }
 
+    public function setda_excel($bulan, $tahun)
+    {
+        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        return $data;
+    }
     public function reguler_excel($bulan, $tahun)
     {
+        // dd($this->setda_excel($bulan, $tahun));
+
         if (Auth::user()->skpd->id == 34) {
             $dataDinas = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
             $dataIFK = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();

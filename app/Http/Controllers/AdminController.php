@@ -116,11 +116,12 @@ class AdminController extends Controller
     {
         $data = Pegawai::find($id);
 
+        $bagian = Bagian::get();
         $jabatan = Jabatan::where('skpd_id', Auth::user()->skpd->id)->get()->map(function ($item) {
             $item->pegawai = $item->pegawai;
             return $item;
         })->where('pegawai', null);
-        return view('admin.pegawai.edit', compact('data', 'jabatan'));
+        return view('admin.pegawai.edit', compact('data', 'jabatan', 'bagian'));
     }
 
     public function updatePegawai(Request $req, $id)

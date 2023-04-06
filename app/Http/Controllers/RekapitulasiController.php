@@ -1912,11 +1912,60 @@ class RekapitulasiController extends Controller
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header("Content-Disposition: attachment;filename=$filename");
         header('Cache-Control: max-age=0');
-
-        $path = public_path('/excel/testing.xlsx');
+        if (Auth::user()->skpd->id == 1) {
+            $path = public_path('/excel/disdik.xlsx');
+        } else {
+            $path = public_path('/excel/testing.xlsx');
+        }
         $reader = IOFactory::createReader('Xlsx');
         $spreadsheet = $reader->load($path);
 
+
+        if (Auth::user()->skpd->id == 1) {
+            //sheet TU disdik
+            $spreadsheet->getSheetByName('TU')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+            $spreadsheet->getSheetByName('TU')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+            $contentRow = 8;
+            foreach ($data as $key => $item) {
+                $spreadsheet->getSheetByName('TU')->setCellValue('B' . $contentRow, $item->nama);
+                $spreadsheet->getSheetByName('TU')->setCellValue('C' . $contentRow, '\'' . $item->nip);
+                $spreadsheet->getSheetByName('TU')->setCellValue('D' . $contentRow, $item->pangkat . '/' . $item->golongan);
+                $spreadsheet->getSheetByName('TU')->setCellValue('E' . $contentRow, $item->jabatan);
+                $spreadsheet->getSheetByName('TU')->setCellValue('F' . $contentRow, $item->jenis_jabatan);
+                $spreadsheet->getSheetByName('TU')->setCellValue('G' . $contentRow, $item->kelas);
+                $spreadsheet->getSheetByName('TU')->setCellValue('I' . $contentRow, $item->basic);
+
+                $spreadsheet->getSheetByName('TU')->setCellValue('J' . $contentRow, (($item->p_bk + $item->p_tbk) / 100));
+                $spreadsheet->getSheetByName('TU')->setCellValue('K' . $contentRow, ($item->p_pk / 100));
+                $spreadsheet->getSheetByName('TU')->setCellValue('L' . $contentRow, ($item->p_kk / 100));
+                $spreadsheet->getSheetByName('TU')->setCellValue('M' . $contentRow, ($item->p_kp / 100));
+                $spreadsheet->getSheetByName('TU')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
+                $spreadsheet->getSheetByName('TU')->setCellValue('P' . $contentRow, $item->dp_ta);
+                $spreadsheet->getSheetByName('TU')->setCellValue('Q' . $contentRow, $item->dp_skp);
+                $spreadsheet->getSheetByName('TU')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
+                $spreadsheet->getSheetByName('TU')->setCellValue('AG' . $contentRow, $item->bpjs1);
+                $spreadsheet->getSheetByName('TU')->setCellValue('AH' . $contentRow, $item->bpjs4);
+                $contentRow++;
+            }
+            //remove row
+            $rowMulaiHapus = $contentRow;
+            $jumlahDihapus = 156 - $rowMulaiHapus;
+            //dd($rowMulaiHapus, $jumlahDihapus, $contentRow);
+            $sumV = '=SUM(V8:V' . ($contentRow - 1) . ')';
+            $sumZ = '=SUM(Z8:Z' . ($contentRow - 1) . ')';
+            $sumAB = '=SUM(AB8:AB' . ($contentRow - 1) . ')';
+            $sumAE = '=SUM(AE8:AE' . ($contentRow - 1) . ')';
+            $sumAF = '=SUM(AF8:AF' . ($contentRow - 1) . ')';
+            $sumAI = '=SUM(AI8:AI' . ($contentRow - 1) . ')';
+            $spreadsheet->getSheetByName('TU')->removeRow($rowMulaiHapus, $jumlahDihapus);
+            $spreadsheet->getSheetByName('TU')->setCellValue('V' . $contentRow, $sumV);
+            $spreadsheet->getSheetByName('TU')->setCellValue('Z' . $contentRow, $sumZ);
+            $spreadsheet->getSheetByName('TU')->setCellValue('AB' . $contentRow, $sumAB);
+            $spreadsheet->getSheetByName('TU')->setCellValue('AE' . $contentRow, $sumAE);
+            $spreadsheet->getSheetByName('TU')->setCellValue('AF' . $contentRow, $sumAF);
+            $spreadsheet->getSheetByName('TU')->setCellValue('AI' . $contentRow, $sumAI);
+        }
+        
         //sheet reguler
         $spreadsheet->getSheetByName('REGULER')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
         $spreadsheet->getSheetByName('REGULER')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));

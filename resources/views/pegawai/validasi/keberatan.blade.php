@@ -14,10 +14,10 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Data Bawahan</h3>
+                  <h3 class="card-title">Data Pengajuan Keberatan</h3>
                 </div>
                 <div class="card-body table-responsive p-0">
-                  <table class="table table-striped table-valign-middle table-sm">
+                  <table class="table table-sm">
                     <thead>
                     <tr>
                       <th>No</th>
@@ -35,26 +35,18 @@
                     <tr>
                       <td width="10px">{{$no++}}</td>
                       <td>
-                        {{$item->pegawai == null ? '-': $item->pegawai->nama}} <br />
-                        {{$item->nama}}
+                        {{$item->pegawai == null ? '-': $item->pegawai->nama}}
                       </td>
                       <td>
-                        @if ($item->pegawai == null)
-                            
-                        @else
-                        <button href="#" class="btn btn-sm bg-purple">
-                          <i class="fas fa-user-edit"></i> <strong>{{$item->aktivitas_baru}} Keberatan </strong>
-                        </button>
-                        @endif
+                        {{$item->deskripsi}}
                       </td>
+                      
                       <td>
-                        @if ($item->pegawai == null)
-                            
-                        @else
-                          <a href="/pegawai/validasi/harian/view/{{$item->id}}" class="btn btn-sm btn-info">
-                            <i class="fas fa-eye"></i> VIEW
-                          </a>
-                        @endif
+
+                        <a href="/pegawai/validasi/keberatan/setujui/{{$item->id}}" class="btn btn-xs btn-success">
+                          <i class="fas fa-check"></i> Setujui </a>
+                        <a href="/pegawai/validasi/keberatan/tolak/{{$item->id}}" class="btn btn-xs btn-danger">
+                          <i class="fas fa-times"></i> Tolak</a>
                       </td>
                     </tr>
                     @endforeach

@@ -26,7 +26,7 @@
             </a>
         </li>
         <li class="nav-item">
-        <li class="nav-item has-treeview menu-open">
+        {{-- <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link {{Request::is('pegawai/skp*') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-address-book"></i>
                 <p>
@@ -66,7 +66,7 @@
                 </li>
                 @endif
             </ul>
-        </li>
+        </li> --}}
 
         <li class="nav-item has-treeview  menu-open">
             <a href="#" class="nav-link {{Request::is('pegawai/aktivitas*') ? 'active' : ''}}">
@@ -84,13 +84,13 @@
                         <p>Aktivitas Harian</p>
                     </a>
                 </li>
-                {{-- <li class="nav-item">
+                <li class="nav-item">
                     <a href="/pegawai/aktivitas/keberatan"
                         class="nav-link {{ Request::is('pegawai/aktivitas/keberatan') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-list"></i>
+                        <i class="nav-icon far fa-circle nav-icon"></i>
                         <p>Pengajuan Keberatan</p>
                     </a>
-                </li> --}}
+                </li>
             </ul>
         </li>
         <li class="nav-item has-treeview  menu-open">
@@ -107,6 +107,13 @@
                         class="nav-link {{ Request::is('pegawai/validasi/harian') ? 'active' : '' }}">
                         <i class="nav-icon far fa-circle nav-icon"></i>
                         <p>Validasi Aktivitas</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/pegawai/validasi/keberatan"
+                        class="nav-link {{ Request::is('pegawai/validasi/keberatan') ? 'active' : '' }}">
+                        <i class="nav-icon far fa-circle nav-icon"></i>
+                        <p>Validasi Keberatan</p>
                     </a>
                 </li>
                 <li class="nav-item">

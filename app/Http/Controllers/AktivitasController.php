@@ -248,6 +248,31 @@ class AktivitasController extends Controller
     {
 
         $data = Aktivitas::where('pegawai_id', $this->user()->pegawai->id)->where('validasi', 2)->paginate(10);
-        return view('pegawai.aktivitas.keberatan', compact('data'));
+        if (Auth::user()->pegawai->jabatan->atasan->atasan == null) {
+            //penilainya sekda
+            $atasan_penilai = Jabatan::where('sekda', 1)->first();
+            $nama_penilai   = $atasan_penilai->pegawai == null ? $atasan_penilai->pegawaiplt : $atasan_penilai->pegawai;
+        } else {
+            $atasan_penilai = Auth::user()->pegawai->jabatan->atasan->atasan;
+            $nama_penilai   = $atasan_penilai->pegawai == null ? $atasan_penilai->pegawaiplt : $atasan_penilai->pegawai;
+        }
+
+        $hasilkeberatan = Aktivitas::where('keberatan', 3)->orWhere('keberatan', 2)->paginate(15);
+        return view('pegawai.aktivitas.keberatan', compact('data', 'atasan_penilai', 'nama_penilai', 'hasilkeberatan'));
+    }
+
+    public function ajukanKeberatan($id, $penilai_id)
+    {
+        if ($penilai_id == null) {
+            toastr()->error('Atasan Penilai Tidak Ada');
+            return back();
+        } else {
+            $data = Aktivitas::find($id);
+            $data->keberatan = 1;
+            $data->validator_keberatan = $penilai_id;
+            $data->save();
+            toastr()->success('Berhasil Di Ajukan');
+            return back();
+        }
     }
 }

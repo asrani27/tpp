@@ -435,6 +435,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/pegawai/aktivitas/harian/delete/{id}', 'AktivitasController@delete');
 
         Route::get('/pegawai/aktivitas/keberatan', 'AktivitasController@keberatan');
+        Route::get('/pegawai/aktivitas/keberatan/{id}/{penilai_id}', 'AktivitasController@ajukanKeberatan');
 
         Route::get('/pegawai/validasi/harian', 'ValidasiController@index');
         Route::get('/pegawai/validasi/riwayat', 'ValidasiController@riwayat');
@@ -462,6 +463,8 @@ Route::group(['middleware' => ['XSS']], function () {
         //Route::get('/pegawai/plh/validasi/harian/tolak/{id}', 'ValidasiPlhController@tolakAktivitas');
 
         Route::get('/pegawai/validasi/keberatan', 'ValidasiController@keberatan');
+        Route::get('/pegawai/validasi/keberatan/setujui/{id}', 'ValidasiController@setujuiKeberatan');
+        Route::get('/pegawai/validasi/keberatan/tolak/{id}', 'ValidasiController@tolakKeberatan');
 
         Route::get('/pegawai/verifikasi', 'VerifikasiController@index');
         Route::get('/pegawai/verifikasi/detail', 'VerifikasiController@detail');

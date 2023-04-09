@@ -135,15 +135,29 @@ class ValidasiController extends Controller
 
         $jabatan = Jabatan::where('skpd_id', Auth::user()->pegawai->skpd_id)->where('tingkat', $tingkat)->get();
 
-        $data = $jabatan->map(function ($item) {
-            $item->nama_pegawai = $item->pegawai == null ? '-' : $item->pegawai->nama;
-            $item->aktivitas_baru = $item->pegawai == null ? 0 : $item->pegawai->aktivitas->where('validasi', 0)->count();
-            return $item;
-        });
+        $data = Aktivitas::where('keberatan', 1)->where('validator_keberatan', Auth::user()->pegawai->id)->get();
+
 
         return view('pegawai.validasi.keberatan', compact('data'));
     }
-
+    public function setujuiKeberatan($id)
+    {
+        Aktivitas::find($id)->update([
+            'validasi' => 1,
+            'keberatan' => 3,
+        ]);
+        toastr()->success('Keberatan Di Setujui');
+        return back();
+    }
+    public function tolakKeberatan($id)
+    {
+        Aktivitas::find($id)->update([
+            'validasi' => 2,
+            'keberatan' => 2,
+        ]);
+        toastr()->error('Keberatan Di Tolak');
+        return back();
+    }
     public function accAktivitas($id)
     {
         //check apakah aktivitas bawahan ini adalah bawahan ku

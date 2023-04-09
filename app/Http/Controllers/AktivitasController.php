@@ -246,19 +246,24 @@ class AktivitasController extends Controller
 
     public function keberatan()
     {
-
         $data = Aktivitas::where('pegawai_id', $this->user()->pegawai->id)->where('validasi', 2)->paginate(10);
-        if (Auth::user()->pegawai->jabatan->atasan->atasan == null) {
-            //penilainya sekda
-            $atasan_penilai = Jabatan::where('sekda', 1)->first();
-            $nama_penilai   = $atasan_penilai->pegawai == null ? $atasan_penilai->pegawaiplt : $atasan_penilai->pegawai;
+        if (Auth::user()->pegawai->jabatan->atasan == null) {
+            //berarti kepala dinas
+            toastr()->error('Kepala Dinas Tidak Bisa Mengajukan Keberatan');
+            return back();
         } else {
-            $atasan_penilai = Auth::user()->pegawai->jabatan->atasan->atasan;
-            $nama_penilai   = $atasan_penilai->pegawai == null ? $atasan_penilai->pegawaiplt : $atasan_penilai->pegawai;
-        }
+            if (Auth::user()->pegawai->jabatan->atasan->atasan == null) {
+                //penilainya sekda
+                $atasan_penilai = Jabatan::where('sekda', 1)->first();
+                $nama_penilai   = $atasan_penilai->pegawai == null ? $atasan_penilai->pegawaiplt : $atasan_penilai->pegawai;
+            } else {
+                $atasan_penilai = Auth::user()->pegawai->jabatan->atasan->atasan;
+                $nama_penilai   = $atasan_penilai->pegawai == null ? $atasan_penilai->pegawaiplt : $atasan_penilai->pegawai;
+            }
 
-        $hasilkeberatan = Aktivitas::where('keberatan', 3)->orWhere('keberatan', 2)->paginate(15);
-        return view('pegawai.aktivitas.keberatan', compact('data', 'atasan_penilai', 'nama_penilai', 'hasilkeberatan'));
+            $hasilkeberatan = Aktivitas::where('keberatan', 3)->orWhere('keberatan', 2)->paginate(15);
+            return view('pegawai.aktivitas.keberatan', compact('data', 'atasan_penilai', 'nama_penilai', 'hasilkeberatan'));
+        }
     }
 
     public function ajukanKeberatan($id, $penilai_id)

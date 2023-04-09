@@ -2079,6 +2079,544 @@ class RekapitulasiController extends Controller
         $writer->save('php://output');
         exit;
     }
+
+    public function reguler_excel_setda($bulan, $tahun)
+    {
+        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $data->map(function ($item) {
+            $item->bagian = Pegawai::where('nip', $item->nip)->first()->bagian == null ? null : Pegawai::where('nip', $item->nip)->first()->bagian->nama;
+            return $item;
+        });
+
+        $pejabat        = $data->where('bagian', 'pejabat');
+        $umum           = $data->where('bagian', 'umum');
+        $kesra          = $data->where('bagian', 'kesra');
+        $organisasi     = $data->where('bagian', 'organisasi');
+        $perekonomian   = $data->where('bagian', 'perekonomian');
+        $prokom         = $data->where('bagian', 'prokom');
+        $pbj            = $data->where('bagian', 'pbj');
+        $adpem          = $data->where('bagian', 'adpem');
+        $hukum          = $data->where('bagian', 'hukum');
+        $pemerintahan   = $data->where('bagian', 'pemerintahan');
+
+        $dataCpns = RekapCpns::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $dataPlt = RekapPlt::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+
+        $dataBulan = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun);
+        $kinerjaBulan = $dataBulan->translatedFormat('F Y');
+        $pembayaranBulan = $dataBulan->addMonth(1)->translatedFormat('F Y');
+
+        $filename = 'TPP_' . $bulan . '-' . $tahun . '-' . Carbon::now()->format('H:i:s') . '.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header("Content-Disposition: attachment;filename=$filename");
+        header('Cache-Control: max-age=0');
+
+        $path = public_path('/excel/setda.xlsx');
+        $reader = IOFactory::createReader('Xlsx');
+        $spreadsheet = $reader->load($path);
+
+
+        //sheet Pejabat
+        $spreadsheet->getSheetByName('Pejabat')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        $spreadsheet->getSheetByName('Pejabat')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        $contentRow = 8;
+        foreach ($pejabat as $key => $item) {
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('B' . $contentRow, $item->nama);
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('C' . $contentRow, '\'' . $item->nip);
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('D' . $contentRow, $item->pangkat . '/' . $item->golongan);
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('E' . $contentRow, $item->jabatan);
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('F' . $contentRow, $item->jenis_jabatan);
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('G' . $contentRow, $item->kelas);
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('I' . $contentRow, $item->basic);
+
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('J' . $contentRow, (($item->p_bk + $item->p_tbk) / 100));
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('K' . $contentRow, ($item->p_pk / 100));
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('L' . $contentRow, ($item->p_kk / 100));
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('M' . $contentRow, ($item->p_kp / 100));
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('P' . $contentRow, $item->dp_ta);
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('Q' . $contentRow, $item->dp_skp);
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('AG' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('AH' . $contentRow, $item->bpjs4);
+            $contentRow++;
+        }
+        //remove row
+        $rowMulaiHapus = $contentRow;
+        $jumlahDihapus = 22 - $rowMulaiHapus;
+        //dd($rowMulaiHapus, $jumlahDihapus, $contentRow);
+        $sumV = '=SUM(V8:V' . ($contentRow - 1) . ')';
+        $sumZ = '=SUM(Z8:Z' . ($contentRow - 1) . ')';
+        $sumAB = '=SUM(AB8:AB' . ($contentRow - 1) . ')';
+        $sumAE = '=SUM(AE8:AE' . ($contentRow - 1) . ')';
+        $sumAF = '=SUM(AF8:AF' . ($contentRow - 1) . ')';
+        $sumAI = '=SUM(AI8:AI' . ($contentRow - 1) . ')';
+        $spreadsheet->getSheetByName('Pejabat')->removeRow($rowMulaiHapus, $jumlahDihapus);
+        $spreadsheet->getSheetByName('Pejabat')->setCellValue('V' . $contentRow, $sumV);
+        $spreadsheet->getSheetByName('Pejabat')->setCellValue('Z' . $contentRow, $sumZ);
+        $spreadsheet->getSheetByName('Pejabat')->setCellValue('AB' . $contentRow, $sumAB);
+        $spreadsheet->getSheetByName('Pejabat')->setCellValue('AE' . $contentRow, $sumAE);
+        $spreadsheet->getSheetByName('Pejabat')->setCellValue('AF' . $contentRow, $sumAF);
+        $spreadsheet->getSheetByName('Pejabat')->setCellValue('AI' . $contentRow, $sumAI);
+
+
+        //sheet umum
+        $spreadsheet->getSheetByName('Umum')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        $spreadsheet->getSheetByName('Umum')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        $contentRow = 8;
+        foreach ($umum as $key => $item) {
+            $spreadsheet->getSheetByName('Umum')->setCellValue('B' . $contentRow, $item->nama);
+            $spreadsheet->getSheetByName('Umum')->setCellValue('C' . $contentRow, '\'' . $item->nip);
+            $spreadsheet->getSheetByName('Umum')->setCellValue('D' . $contentRow, $item->pangkat . '/' . $item->golongan);
+            $spreadsheet->getSheetByName('Umum')->setCellValue('E' . $contentRow, $item->jabatan);
+            $spreadsheet->getSheetByName('Umum')->setCellValue('F' . $contentRow, $item->jenis_jabatan);
+            $spreadsheet->getSheetByName('Umum')->setCellValue('G' . $contentRow, $item->kelas);
+            $spreadsheet->getSheetByName('Umum')->setCellValue('I' . $contentRow, $item->basic);
+
+            $spreadsheet->getSheetByName('Umum')->setCellValue('J' . $contentRow, (($item->p_bk + $item->p_tbk) / 100));
+            $spreadsheet->getSheetByName('Umum')->setCellValue('K' . $contentRow, ($item->p_pk / 100));
+            $spreadsheet->getSheetByName('Umum')->setCellValue('L' . $contentRow, ($item->p_kk / 100));
+            $spreadsheet->getSheetByName('Umum')->setCellValue('M' . $contentRow, ($item->p_kp / 100));
+            $spreadsheet->getSheetByName('Umum')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
+            $spreadsheet->getSheetByName('Umum')->setCellValue('P' . $contentRow, $item->dp_ta);
+            $spreadsheet->getSheetByName('Umum')->setCellValue('Q' . $contentRow, $item->dp_skp);
+            $spreadsheet->getSheetByName('Umum')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('Umum')->setCellValue('AG' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Umum')->setCellValue('AH' . $contentRow, $item->bpjs4);
+            $contentRow++;
+        }
+        //remove row
+        $rowMulaiHapus = $contentRow;
+        $jumlahDihapus = 36 - $rowMulaiHapus;
+        //dd($rowMulaiHapus, $jumlahDihapus, $contentRow);
+        $sumV = '=SUM(V8:V' . ($contentRow - 1) . ')';
+        $sumZ = '=SUM(Z8:Z' . ($contentRow - 1) . ')';
+        $sumAB = '=SUM(AB8:AB' . ($contentRow - 1) . ')';
+        $sumAE = '=SUM(AE8:AE' . ($contentRow - 1) . ')';
+        $sumAF = '=SUM(AF8:AF' . ($contentRow - 1) . ')';
+        $sumAI = '=SUM(AI8:AI' . ($contentRow - 1) . ')';
+        $spreadsheet->getSheetByName('Umum')->removeRow($rowMulaiHapus, $jumlahDihapus);
+        $spreadsheet->getSheetByName('Umum')->setCellValue('V' . $contentRow, $sumV);
+        $spreadsheet->getSheetByName('Umum')->setCellValue('Z' . $contentRow, $sumZ);
+        $spreadsheet->getSheetByName('Umum')->setCellValue('AB' . $contentRow, $sumAB);
+        $spreadsheet->getSheetByName('Umum')->setCellValue('AE' . $contentRow, $sumAE);
+        $spreadsheet->getSheetByName('Umum')->setCellValue('AF' . $contentRow, $sumAF);
+        $spreadsheet->getSheetByName('Umum')->setCellValue('AI' . $contentRow, $sumAI);
+
+
+        //sheet kesra
+        $spreadsheet->getSheetByName('Kesra')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        $spreadsheet->getSheetByName('Kesra')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        $contentRow = 8;
+        foreach ($kesra as $key => $item) {
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('B' . $contentRow, $item->nama);
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('C' . $contentRow, '\'' . $item->nip);
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('D' . $contentRow, $item->pangkat . '/' . $item->golongan);
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('E' . $contentRow, $item->jabatan);
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('F' . $contentRow, $item->jenis_jabatan);
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('G' . $contentRow, $item->kelas);
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('I' . $contentRow, $item->basic);
+
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('J' . $contentRow, (($item->p_bk + $item->p_tbk) / 100));
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('K' . $contentRow, ($item->p_pk / 100));
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('L' . $contentRow, ($item->p_kk / 100));
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('M' . $contentRow, ($item->p_kp / 100));
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('P' . $contentRow, $item->dp_ta);
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('Q' . $contentRow, $item->dp_skp);
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('AG' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('AH' . $contentRow, $item->bpjs4);
+            $contentRow++;
+        }
+        //remove row
+        $rowMulaiHapus = $contentRow;
+        $jumlahDihapus = 25 - $rowMulaiHapus;
+        //dd($rowMulaiHapus, $jumlahDihapus, $contentRow);
+        $sumV = '=SUM(V8:V' . ($contentRow - 1) . ')';
+        $sumZ = '=SUM(Z8:Z' . ($contentRow - 1) . ')';
+        $sumAB = '=SUM(AB8:AB' . ($contentRow - 1) . ')';
+        $sumAE = '=SUM(AE8:AE' . ($contentRow - 1) . ')';
+        $sumAF = '=SUM(AF8:AF' . ($contentRow - 1) . ')';
+        $sumAI = '=SUM(AI8:AI' . ($contentRow - 1) . ')';
+        $spreadsheet->getSheetByName('Kesra')->removeRow($rowMulaiHapus, $jumlahDihapus);
+        $spreadsheet->getSheetByName('Kesra')->setCellValue('V' . $contentRow, $sumV);
+        $spreadsheet->getSheetByName('Kesra')->setCellValue('Z' . $contentRow, $sumZ);
+        $spreadsheet->getSheetByName('Kesra')->setCellValue('AB' . $contentRow, $sumAB);
+        $spreadsheet->getSheetByName('Kesra')->setCellValue('AE' . $contentRow, $sumAE);
+        $spreadsheet->getSheetByName('Kesra')->setCellValue('AF' . $contentRow, $sumAF);
+        $spreadsheet->getSheetByName('Kesra')->setCellValue('AI' . $contentRow, $sumAI);
+
+
+        //sheet organisasi
+        $spreadsheet->getSheetByName('Organisasi')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        $spreadsheet->getSheetByName('Organisasi')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        $contentRow = 8;
+        foreach ($organisasi as $key => $item) {
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('B' . $contentRow, $item->nama);
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('C' . $contentRow, '\'' . $item->nip);
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('D' . $contentRow, $item->pangkat . '/' . $item->golongan);
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('E' . $contentRow, $item->jabatan);
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('F' . $contentRow, $item->jenis_jabatan);
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('G' . $contentRow, $item->kelas);
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('I' . $contentRow, $item->basic);
+
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('J' . $contentRow, (($item->p_bk + $item->p_tbk) / 100));
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('K' . $contentRow, ($item->p_pk / 100));
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('L' . $contentRow, ($item->p_kk / 100));
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('M' . $contentRow, ($item->p_kp / 100));
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('P' . $contentRow, $item->dp_ta);
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('Q' . $contentRow, $item->dp_skp);
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('AG' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('AH' . $contentRow, $item->bpjs4);
+            $contentRow++;
+        }
+        //remove row
+        $rowMulaiHapus = $contentRow;
+        $jumlahDihapus = 32 - $rowMulaiHapus;
+        //dd($rowMulaiHapus, $jumlahDihapus, $contentRow);
+        $sumV = '=SUM(V8:V' . ($contentRow - 1) . ')';
+        $sumZ = '=SUM(Z8:Z' . ($contentRow - 1) . ')';
+        $sumAB = '=SUM(AB8:AB' . ($contentRow - 1) . ')';
+        $sumAE = '=SUM(AE8:AE' . ($contentRow - 1) . ')';
+        $sumAF = '=SUM(AF8:AF' . ($contentRow - 1) . ')';
+        $sumAI = '=SUM(AI8:AI' . ($contentRow - 1) . ')';
+        $spreadsheet->getSheetByName('Organisasi')->removeRow($rowMulaiHapus, $jumlahDihapus);
+        $spreadsheet->getSheetByName('Organisasi')->setCellValue('V' . $contentRow, $sumV);
+        $spreadsheet->getSheetByName('Organisasi')->setCellValue('Z' . $contentRow, $sumZ);
+        $spreadsheet->getSheetByName('Organisasi')->setCellValue('AB' . $contentRow, $sumAB);
+        $spreadsheet->getSheetByName('Organisasi')->setCellValue('AE' . $contentRow, $sumAE);
+        $spreadsheet->getSheetByName('Organisasi')->setCellValue('AF' . $contentRow, $sumAF);
+        $spreadsheet->getSheetByName('Organisasi')->setCellValue('AI' . $contentRow, $sumAI);
+
+        //sheet perekonomian
+        $spreadsheet->getSheetByName('Perekonomian')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        $spreadsheet->getSheetByName('Perekonomian')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        $contentRow = 8;
+        foreach ($perekonomian as $key => $item) {
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('B' . $contentRow, $item->nama);
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('C' . $contentRow, '\'' . $item->nip);
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('D' . $contentRow, $item->pangkat . '/' . $item->golongan);
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('E' . $contentRow, $item->jabatan);
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('F' . $contentRow, $item->jenis_jabatan);
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('G' . $contentRow, $item->kelas);
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('I' . $contentRow, $item->basic);
+
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('J' . $contentRow, (($item->p_bk + $item->p_tbk) / 100));
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('K' . $contentRow, ($item->p_pk / 100));
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('L' . $contentRow, ($item->p_kk / 100));
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('M' . $contentRow, ($item->p_kp / 100));
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('P' . $contentRow, $item->dp_ta);
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('Q' . $contentRow, $item->dp_skp);
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('AG' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('AH' . $contentRow, $item->bpjs4);
+            $contentRow++;
+        }
+        //remove row
+        $rowMulaiHapus = $contentRow;
+        $jumlahDihapus = 21 - $rowMulaiHapus;
+        //dd($rowMulaiHapus, $jumlahDihapus, $contentRow);
+        $sumV = '=SUM(V8:V' . ($contentRow - 1) . ')';
+        $sumZ = '=SUM(Z8:Z' . ($contentRow - 1) . ')';
+        $sumAB = '=SUM(AB8:AB' . ($contentRow - 1) . ')';
+        $sumAE = '=SUM(AE8:AE' . ($contentRow - 1) . ')';
+        $sumAF = '=SUM(AF8:AF' . ($contentRow - 1) . ')';
+        $sumAI = '=SUM(AI8:AI' . ($contentRow - 1) . ')';
+        $spreadsheet->getSheetByName('Perekonomian')->removeRow($rowMulaiHapus, $jumlahDihapus);
+        $spreadsheet->getSheetByName('Perekonomian')->setCellValue('V' . $contentRow, $sumV);
+        $spreadsheet->getSheetByName('Perekonomian')->setCellValue('Z' . $contentRow, $sumZ);
+        $spreadsheet->getSheetByName('Perekonomian')->setCellValue('AB' . $contentRow, $sumAB);
+        $spreadsheet->getSheetByName('Perekonomian')->setCellValue('AE' . $contentRow, $sumAE);
+        $spreadsheet->getSheetByName('Perekonomian')->setCellValue('AF' . $contentRow, $sumAF);
+        $spreadsheet->getSheetByName('Perekonomian')->setCellValue('AI' . $contentRow, $sumAI);
+
+        //sheet prokom
+        $spreadsheet->getSheetByName('Prokom')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        $spreadsheet->getSheetByName('Prokom')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        $contentRow = 8;
+        foreach ($prokom as $key => $item) {
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('B' . $contentRow, $item->nama);
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('C' . $contentRow, '\'' . $item->nip);
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('D' . $contentRow, $item->pangkat . '/' . $item->golongan);
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('E' . $contentRow, $item->jabatan);
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('F' . $contentRow, $item->jenis_jabatan);
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('G' . $contentRow, $item->kelas);
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('I' . $contentRow, $item->basic);
+
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('J' . $contentRow, (($item->p_bk + $item->p_tbk) / 100));
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('K' . $contentRow, ($item->p_pk / 100));
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('L' . $contentRow, ($item->p_kk / 100));
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('M' . $contentRow, ($item->p_kp / 100));
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('P' . $contentRow, $item->dp_ta);
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('Q' . $contentRow, $item->dp_skp);
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('AG' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('AH' . $contentRow, $item->bpjs4);
+            $contentRow++;
+        }
+        //remove row
+        $rowMulaiHapus = $contentRow;
+        $jumlahDihapus = 36 - $rowMulaiHapus;
+        //dd($rowMulaiHapus, $jumlahDihapus, $contentRow);
+        $sumV = '=SUM(V8:V' . ($contentRow - 1) . ')';
+        $sumZ = '=SUM(Z8:Z' . ($contentRow - 1) . ')';
+        $sumAB = '=SUM(AB8:AB' . ($contentRow - 1) . ')';
+        $sumAE = '=SUM(AE8:AE' . ($contentRow - 1) . ')';
+        $sumAF = '=SUM(AF8:AF' . ($contentRow - 1) . ')';
+        $sumAI = '=SUM(AI8:AI' . ($contentRow - 1) . ')';
+        $spreadsheet->getSheetByName('Prokom')->removeRow($rowMulaiHapus, $jumlahDihapus);
+        $spreadsheet->getSheetByName('Prokom')->setCellValue('V' . $contentRow, $sumV);
+        $spreadsheet->getSheetByName('Prokom')->setCellValue('Z' . $contentRow, $sumZ);
+        $spreadsheet->getSheetByName('Prokom')->setCellValue('AB' . $contentRow, $sumAB);
+        $spreadsheet->getSheetByName('Prokom')->setCellValue('AE' . $contentRow, $sumAE);
+        $spreadsheet->getSheetByName('Prokom')->setCellValue('AF' . $contentRow, $sumAF);
+        $spreadsheet->getSheetByName('Prokom')->setCellValue('AI' . $contentRow, $sumAI);
+
+        //sheet PBJ
+        $spreadsheet->getSheetByName('PBJ')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        $spreadsheet->getSheetByName('PBJ')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        $contentRow = 8;
+        foreach ($pbj as $key => $item) {
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('B' . $contentRow, $item->nama);
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('C' . $contentRow, '\'' . $item->nip);
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('D' . $contentRow, $item->pangkat . '/' . $item->golongan);
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('E' . $contentRow, $item->jabatan);
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('F' . $contentRow, $item->jenis_jabatan);
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('G' . $contentRow, $item->kelas);
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('I' . $contentRow, $item->basic);
+
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('J' . $contentRow, (($item->p_bk + $item->p_tbk) / 100));
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('K' . $contentRow, ($item->p_pk / 100));
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('L' . $contentRow, ($item->p_kk / 100));
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('M' . $contentRow, ($item->p_kp / 100));
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('P' . $contentRow, $item->dp_ta);
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('Q' . $contentRow, $item->dp_skp);
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('AG' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('AH' . $contentRow, $item->bpjs4);
+            $contentRow++;
+        }
+        //remove row
+        $rowMulaiHapus = $contentRow;
+        $jumlahDihapus = 38 - $rowMulaiHapus;
+        //dd($rowMulaiHapus, $jumlahDihapus, $contentRow);
+        $sumV = '=SUM(V8:V' . ($contentRow - 1) . ')';
+        $sumZ = '=SUM(Z8:Z' . ($contentRow - 1) . ')';
+        $sumAB = '=SUM(AB8:AB' . ($contentRow - 1) . ')';
+        $sumAE = '=SUM(AE8:AE' . ($contentRow - 1) . ')';
+        $sumAF = '=SUM(AF8:AF' . ($contentRow - 1) . ')';
+        $sumAI = '=SUM(AI8:AI' . ($contentRow - 1) . ')';
+        $spreadsheet->getSheetByName('PBJ')->removeRow($rowMulaiHapus, $jumlahDihapus);
+        $spreadsheet->getSheetByName('PBJ')->setCellValue('V' . $contentRow, $sumV);
+        $spreadsheet->getSheetByName('PBJ')->setCellValue('Z' . $contentRow, $sumZ);
+        $spreadsheet->getSheetByName('PBJ')->setCellValue('AB' . $contentRow, $sumAB);
+        $spreadsheet->getSheetByName('PBJ')->setCellValue('AE' . $contentRow, $sumAE);
+        $spreadsheet->getSheetByName('PBJ')->setCellValue('AF' . $contentRow, $sumAF);
+        $spreadsheet->getSheetByName('PBJ')->setCellValue('AI' . $contentRow, $sumAI);
+
+        //sheet Adpem
+        $spreadsheet->getSheetByName('Adpem')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        $spreadsheet->getSheetByName('Adpem')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        $contentRow = 8;
+        foreach ($adpem as $key => $item) {
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('B' . $contentRow, $item->nama);
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('C' . $contentRow, '\'' . $item->nip);
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('D' . $contentRow, $item->pangkat . '/' . $item->golongan);
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('E' . $contentRow, $item->jabatan);
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('F' . $contentRow, $item->jenis_jabatan);
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('G' . $contentRow, $item->kelas);
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('I' . $contentRow, $item->basic);
+
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('J' . $contentRow, (($item->p_bk + $item->p_tbk) / 100));
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('K' . $contentRow, ($item->p_pk / 100));
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('L' . $contentRow, ($item->p_kk / 100));
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('M' . $contentRow, ($item->p_kp / 100));
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('P' . $contentRow, $item->dp_ta);
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('Q' . $contentRow, $item->dp_skp);
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('AG' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('AH' . $contentRow, $item->bpjs4);
+            $contentRow++;
+        }
+        //remove row
+        $rowMulaiHapus = $contentRow;
+        $jumlahDihapus = 21 - $rowMulaiHapus;
+        //dd($rowMulaiHapus, $jumlahDihapus, $contentRow);
+        $sumV = '=SUM(V8:V' . ($contentRow - 1) . ')';
+        $sumZ = '=SUM(Z8:Z' . ($contentRow - 1) . ')';
+        $sumAB = '=SUM(AB8:AB' . ($contentRow - 1) . ')';
+        $sumAE = '=SUM(AE8:AE' . ($contentRow - 1) . ')';
+        $sumAF = '=SUM(AF8:AF' . ($contentRow - 1) . ')';
+        $sumAI = '=SUM(AI8:AI' . ($contentRow - 1) . ')';
+        $spreadsheet->getSheetByName('Adpem')->removeRow($rowMulaiHapus, $jumlahDihapus);
+        $spreadsheet->getSheetByName('Adpem')->setCellValue('V' . $contentRow, $sumV);
+        $spreadsheet->getSheetByName('Adpem')->setCellValue('Z' . $contentRow, $sumZ);
+        $spreadsheet->getSheetByName('Adpem')->setCellValue('AB' . $contentRow, $sumAB);
+        $spreadsheet->getSheetByName('Adpem')->setCellValue('AE' . $contentRow, $sumAE);
+        $spreadsheet->getSheetByName('Adpem')->setCellValue('AF' . $contentRow, $sumAF);
+        $spreadsheet->getSheetByName('Adpem')->setCellValue('AI' . $contentRow, $sumAI);
+
+        //sheet Hukum
+        $spreadsheet->getSheetByName('Hukum')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        $spreadsheet->getSheetByName('Hukum')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        $contentRow = 8;
+        foreach ($hukum as $key => $item) {
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('B' . $contentRow, $item->nama);
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('C' . $contentRow, '\'' . $item->nip);
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('D' . $contentRow, $item->pangkat . '/' . $item->golongan);
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('E' . $contentRow, $item->jabatan);
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('F' . $contentRow, $item->jenis_jabatan);
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('G' . $contentRow, $item->kelas);
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('I' . $contentRow, $item->basic);
+
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('J' . $contentRow, (($item->p_bk + $item->p_tbk) / 100));
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('K' . $contentRow, ($item->p_pk / 100));
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('L' . $contentRow, ($item->p_kk / 100));
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('M' . $contentRow, ($item->p_kp / 100));
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('P' . $contentRow, $item->dp_ta);
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('Q' . $contentRow, $item->dp_skp);
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('AG' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('AH' . $contentRow, $item->bpjs4);
+            $contentRow++;
+        }
+        //remove row
+        $rowMulaiHapus = $contentRow;
+        $jumlahDihapus = 20 - $rowMulaiHapus;
+        //dd($rowMulaiHapus, $jumlahDihapus, $contentRow);
+        $sumV = '=SUM(V8:V' . ($contentRow - 1) . ')';
+        $sumZ = '=SUM(Z8:Z' . ($contentRow - 1) . ')';
+        $sumAB = '=SUM(AB8:AB' . ($contentRow - 1) . ')';
+        $sumAE = '=SUM(AE8:AE' . ($contentRow - 1) . ')';
+        $sumAF = '=SUM(AF8:AF' . ($contentRow - 1) . ')';
+        $sumAI = '=SUM(AI8:AI' . ($contentRow - 1) . ')';
+        $spreadsheet->getSheetByName('Hukum')->removeRow($rowMulaiHapus, $jumlahDihapus);
+        $spreadsheet->getSheetByName('Hukum')->setCellValue('V' . $contentRow, $sumV);
+        $spreadsheet->getSheetByName('Hukum')->setCellValue('Z' . $contentRow, $sumZ);
+        $spreadsheet->getSheetByName('Hukum')->setCellValue('AB' . $contentRow, $sumAB);
+        $spreadsheet->getSheetByName('Hukum')->setCellValue('AE' . $contentRow, $sumAE);
+        $spreadsheet->getSheetByName('Hukum')->setCellValue('AF' . $contentRow, $sumAF);
+        $spreadsheet->getSheetByName('Hukum')->setCellValue('AI' . $contentRow, $sumAI);
+
+        //sheet Pemerintahan
+        $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        $contentRow = 8;
+        foreach ($pemerintahan as $key => $item) {
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('B' . $contentRow, $item->nama);
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('C' . $contentRow, '\'' . $item->nip);
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('D' . $contentRow, $item->pangkat . '/' . $item->golongan);
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('E' . $contentRow, $item->jabatan);
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('F' . $contentRow, $item->jenis_jabatan);
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('G' . $contentRow, $item->kelas);
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('I' . $contentRow, $item->basic);
+
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('J' . $contentRow, (($item->p_bk + $item->p_tbk) / 100));
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('K' . $contentRow, ($item->p_pk / 100));
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('L' . $contentRow, ($item->p_kk / 100));
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('M' . $contentRow, ($item->p_kp / 100));
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('P' . $contentRow, $item->dp_ta);
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('Q' . $contentRow, $item->dp_skp);
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('AG' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('AH' . $contentRow, $item->bpjs4);
+            $contentRow++;
+        }
+        //remove row
+        $rowMulaiHapus = $contentRow;
+        $jumlahDihapus = 28 - $rowMulaiHapus;
+        //dd($rowMulaiHapus, $jumlahDihapus, $contentRow);
+        $sumV = '=SUM(V8:V' . ($contentRow - 1) . ')';
+        $sumZ = '=SUM(Z8:Z' . ($contentRow - 1) . ')';
+        $sumAB = '=SUM(AB8:AB' . ($contentRow - 1) . ')';
+        $sumAE = '=SUM(AE8:AE' . ($contentRow - 1) . ')';
+        $sumAF = '=SUM(AF8:AF' . ($contentRow - 1) . ')';
+        $sumAI = '=SUM(AI8:AI' . ($contentRow - 1) . ')';
+        $spreadsheet->getSheetByName('Pemerintahan')->removeRow($rowMulaiHapus, $jumlahDihapus);
+        $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('V' . $contentRow, $sumV);
+        $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('Z' . $contentRow, $sumZ);
+        $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('AB' . $contentRow, $sumAB);
+        $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('AE' . $contentRow, $sumAE);
+        $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('AF' . $contentRow, $sumAF);
+        $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('AI' . $contentRow, $sumAI);
+
+        //sheet CPNS
+        $spreadsheet->getSheetByName('CPNS')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        $spreadsheet->getSheetByName('CPNS')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        $contentRowCpns = 8;
+        foreach ($dataCpns as $key => $item) {
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('B' . $contentRowCpns, $item->nama);
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('C' . $contentRowCpns, '\'' . $item->nip);
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('D' . $contentRowCpns, $item->pangkat . '/' . $item->golongan);
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('E' . $contentRowCpns, $item->jabatan);
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('F' . $contentRowCpns, $item->jenis_jabatan);
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('G' . $contentRowCpns, $item->kelas);
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('I' . $contentRowCpns, $item->basic);
+
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('J' . $contentRowCpns, (($item->p_bk + $item->p_tbk) / 100));
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('K' . $contentRowCpns, ($item->p_pk / 100));
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('L' . $contentRowCpns, ($item->p_kk / 100));
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('M' . $contentRowCpns, ($item->p_kp / 100));
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('O' . $contentRowCpns, ($item->dp_absensi / 100));
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('P' . $contentRowCpns, $item->dp_ta);
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('Q' . $contentRowCpns, $item->dp_skp);
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('R' . $contentRowCpns, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('AG' . $contentRowCpns, $item->bpjs1);
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('AH' . $contentRowCpns, $item->bpjs4);
+            $contentRowCpns++;
+        }
+
+        //sheet PLT
+        $spreadsheet->getSheetByName('PLT')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        $spreadsheet->getSheetByName('PLT')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        $contentRowPlt = 8;
+        foreach ($dataPlt as $key => $item) {
+            $spreadsheet->getSheetByName('PLT')->setCellValue('B' . $contentRowPlt, $item->nama);
+            $spreadsheet->getSheetByName('PLT')->setCellValue('C' . $contentRowPlt, '\'' . $item->nip);
+            $spreadsheet->getSheetByName('PLT')->setCellValue('D' . $contentRowPlt, $item->pangkat . '/' . $item->golongan);
+            $spreadsheet->getSheetByName('PLT')->setCellValue('E' . $contentRowPlt, $item->jabatan . '/ Plt. ' . $item->jabatan_plt);
+            $spreadsheet->getSheetByName('PLT')->setCellValue('F' . $contentRowPlt, $item->jenis_jabatan);
+            $spreadsheet->getSheetByName('PLT')->setCellValue('G' . $contentRowPlt, $item->kelas);
+            $spreadsheet->getSheetByName('PLT')->setCellValue('I' . $contentRowPlt, $item->basic);
+
+            $spreadsheet->getSheetByName('PLT')->setCellValue('J' . $contentRowPlt, (($item->p_bk + $item->p_tbk) / 100));
+            $spreadsheet->getSheetByName('PLT')->setCellValue('K' . $contentRowPlt, ($item->p_pk / 100));
+            $spreadsheet->getSheetByName('PLT')->setCellValue('L' . $contentRowPlt, ($item->p_kk / 100));
+            $spreadsheet->getSheetByName('PLT')->setCellValue('M' . $contentRowPlt, ($item->p_kp / 100));
+            if ($item->jenis_plt == '2') {
+                //=ROUND(SUM(S9:U9);0)
+                $formulaPagu = '=ROUND(I' . $contentRowPlt . '*(SUM(J' . $contentRowPlt . ':M' . $contentRowPlt . '))*20%,0)';
+                //$formulaBK = '=ROUND(SUM(S9:U9)*20%,0)';
+                $formulaBK = '=ROUND(SUM(S' . $contentRowPlt . ':U' . $contentRowPlt . ')*20%,0)';
+
+                $formulaPK = '=ROUND(SUM(W' . $contentRowPlt . ':Y' . $contentRowPlt . ')*20%,0)';
+                $formulaKK = '=ROUND(AA' . $contentRowPlt . '*20%,0)';
+                $spreadsheet->getSheetByName('PLT')->setCellValue('N' . $contentRowPlt, $formulaPagu);
+                $spreadsheet->getSheetByName('PLT')->setCellValue('V' . $contentRowPlt, $formulaBK);
+                $spreadsheet->getSheetByName('PLT')->setCellValue('Z' . $contentRowPlt, $formulaPK);
+                $spreadsheet->getSheetByName('PLT')->setCellValue('AB' . $contentRowPlt, $formulaKK);
+            }
+            $spreadsheet->getSheetByName('PLT')->setCellValue('O' . $contentRowPlt, ($item->dp_absensi / 100));
+            $spreadsheet->getSheetByName('PLT')->setCellValue('P' . $contentRowPlt, $item->dp_ta);
+            $spreadsheet->getSheetByName('PLT')->setCellValue('Q' . $contentRowPlt, $item->dp_skp);
+            $spreadsheet->getSheetByName('PLT')->setCellValue('R' . $contentRowPlt, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('PLT')->setCellValue('AG' . $contentRowPlt, $item->bpjs1);
+            $spreadsheet->getSheetByName('PLT')->setCellValue('AH' . $contentRowPlt, $item->bpjs4);
+            $contentRowPlt++;
+        }
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+        exit;
+    }
     public function puskes_reguler_excel($bulan, $tahun)
     {
 

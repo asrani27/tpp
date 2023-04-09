@@ -208,6 +208,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/reguler/perhitungan', 'RekapitulasiController@reguler_perhitungan');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/reguler/{id}/delete', 'RekapitulasiController@reguler_delete');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/reguler/excel', 'RekapitulasiController@reguler_excel');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/reguler/excel/setda', 'RekapitulasiController@reguler_excel_setda');
         Route::post('/admin/rekapitulasi/bpjs/reguler', 'RekapitulasiController@reguler_bpjs');
 
         Route::post('/admin/rekapitulasi/editjabatan/reguler', 'RekapitulasiController@reguler_editjabatan');

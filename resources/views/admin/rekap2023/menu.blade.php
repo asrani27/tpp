@@ -5,4 +5,10 @@
 @if (Auth::user()->skpd->id == 1)
 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/tu" class="btn btn-sm btn-flat btn-primary">TU</a>
 @endif
+@if (Auth::user()->username == '4.01.03.')
+    
+<a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/excel/setda" class="btn btn-sm btn-flat btn-primary"><i class="fas fa-file-excel"></i> EXPORT EXCEL</a>
+@else
 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/excel" class="btn btn-sm btn-flat btn-primary"><i class="fas fa-file-excel"></i> EXPORT EXCEL</a>
+
+@endif

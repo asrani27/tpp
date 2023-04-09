@@ -249,7 +249,7 @@ class AktivitasController extends Controller
         $data = Aktivitas::where('pegawai_id', $this->user()->pegawai->id)->where('validasi', 2)->paginate(10);
         if (Auth::user()->pegawai->jabatan->atasan == null) {
             //berarti kepala dinas
-            toastr()->error('Kepala Dinas Tidak Bisa Mengajukan Keberatan');
+            toastr()->error('Kepala Dinas/Setda/Staff Ahli Tidak Bisa Mengajukan Keberatan');
             return back();
         } else {
             if (Auth::user()->pegawai->jabatan->atasan->atasan == null) {

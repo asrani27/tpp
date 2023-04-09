@@ -199,12 +199,13 @@
 
                     <table class="table table-sm table-bordered">
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
-                            <th colspan="5">PERILAKU KERJA </th>
+                            <th colspan="3">PERILAKU KERJA </th>
+                            <th class="text-center">UMPAN BALIK BERKELANJUTAN BERDASARKAN BUKTI DUKUNG</th>
                         </tr>
                         
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>1</td>
-                            <td colspan="2">Berorientasi Pelayanan</td>
+                            <td colspan="3">Berorientasi Pelayanan</td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td></td>
@@ -212,9 +213,15 @@
                                 -Memahami dan memenuhi kebutuhan masyarakat<br/>
                                 -Ramah, cekatan, solutif, dan dapat diandalkan <br/>
                                 -melakukan perbaikan tiada henti
-
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan : <br/>
+                                @foreach ($u->ekspektasi1 as $item)
+                                    
+                                <a href="/pegawai/nilai-skp/ekspektasi/delete/{{$item->id}}" onclick="return confirm('Yakin Ingin Di hapus?');"><i class="fas fa-trash"></i></a> -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                                <a href="#" class="ekspektasi" data-id="{{$u->id}}" data-tw="{{$triwulan}}" data-pkid="1" data-namapk="Berorientasi Pelayanan"><i class="fas fa-plus-circle"></i></a>
+                            </td>
+                            <td>Pimpinan/Stakeholder (Nama) : </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>2</td>
@@ -228,7 +235,14 @@
                                 -Tidak menyalahgunakan kewenangan jabatan
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan : <br/>
+                                @foreach ($u->ekspektasi2 as $item)
+                                    
+                                <a href="/pegawai/nilai-skp/ekspektasi/delete/{{$item->id}}" onclick="return confirm('Yakin Ingin Di hapus?');"><i class="fas fa-trash"></i></a> -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                                <a href="#" class="ekspektasi" data-id="{{$u->id}}" data-tw="{{$triwulan}}" data-pkid="2" data-namapk="Akuntabel"><i class="fas fa-plus-circle"></i></a>
+                            </td>
+                            <td>Pimpinan/Stakeholder (Nama) : </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>3</td>
@@ -242,7 +256,14 @@
                                 -Melaksanakan tugas dengan kualitas terbaik
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan : <br/>
+                                @foreach ($u->ekspektasi3 as $item)
+                                    
+                                <a href="/pegawai/nilai-skp/ekspektasi/delete/{{$item->id}}" onclick="return confirm('Yakin Ingin Di hapus?');"><i class="fas fa-trash"></i></a> -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                                <a href="#" class="ekspektasi" data-id="{{$u->id}}" data-tw="{{$triwulan}}" data-pkid="3" data-namapk="Kompeten"><i class="fas fa-plus-circle"></i></a>
+                            </td>
+                            <td>Pimpinan/Stakeholder (Nama) : </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>4</td>
@@ -256,7 +277,14 @@
                                 -Membangun lingkungan kerja yang kondusif
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan : <br/>
+                                @foreach ($u->ekspektasi4 as $item)
+                                    
+                                <a href="/pegawai/nilai-skp/ekspektasi/delete/{{$item->id}}" onclick="return confirm('Yakin Ingin Di hapus?');"><i class="fas fa-trash"></i></a> -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                                <a href="#" class="ekspektasi" data-id="{{$u->id}}" data-tw="{{$triwulan}}" data-pkid="4" data-namapk="Harmonis"><i class="fas fa-plus-circle"></i></a>
+                            </td>
+                            <td>Pimpinan/Stakeholder (Nama) : </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>5</td>
@@ -270,7 +298,14 @@
                                 -Menjaga rahasia jabatan dan negara
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan : <br/>
+                                @foreach ($u->ekspektasi5 as $item)
+                                    
+                                <a href="/pegawai/nilai-skp/ekspektasi/delete/{{$item->id}}" onclick="return confirm('Yakin Ingin Di hapus?');"><i class="fas fa-trash"></i></a> -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                                <a href="#" class="ekspektasi" data-id="{{$u->id}}" data-tw="{{$triwulan}}" data-pkid="5" data-namapk="Loyal"><i class="fas fa-plus-circle"></i></a>
+                            </td>
+                            <td>Pimpinan/Stakeholder (Nama) : </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>6</td>
@@ -284,7 +319,14 @@
                                 -Bertindak proaktif
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan : <br/>
+                                @foreach ($u->ekspektasi6 as $item)
+                                    
+                                <a href="/pegawai/nilai-skp/ekspektasi/delete/{{$item->id}}" onclick="return confirm('Yakin Ingin Di hapus?');"><i class="fas fa-trash"></i></a> -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                                <a href="#" class="ekspektasi" data-id="{{$u->id}}" data-tw="{{$triwulan}}" data-pkid="6" data-namapk="Adaptif"><i class="fas fa-plus-circle"></i></a>
+                            </td>
+                            <td>Pimpinan/Stakeholder (Nama) : </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>7</td>
@@ -298,7 +340,14 @@
                                 -Menggerakkan pemanfaatan berbagai sumberdaya untuk tujuan bersama
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan : <br/>
+                                @foreach ($u->ekspektasi7 as $item)
+                                    
+                                <a href="/pegawai/nilai-skp/ekspektasi/delete/{{$item->id}}" onclick="return confirm('Yakin Ingin Di hapus?');"><i class="fas fa-trash"></i></a> -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                                <a href="#" class="ekspektasi" data-id="{{$u->id}}" data-tw="{{$triwulan}}" data-pkid="7" data-namapk="Kolaboratif"><i class="fas fa-plus-circle"></i></a>
+                            </td>
+                            <td>Pimpinan/Stakeholder (Nama) : </td>
                         </tr>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -361,12 +410,54 @@
 </div>
 
 {{-- SKP TAMBAHAN --}}
+<div class="modal fade" id="modal-tambah" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form method="post" action="/pegawai/nilai-skp/ekspektasi/{{$u->id}}/triwulan" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header bg-gradient-primary" style="padding:10px">
+                    <h4 class="modal-title text-sm">EKSPEKTASI</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
 
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>JENIS</label>
+                        <input type="text" class="form-control" id="namapk" name="namapk" readonly>
+                        <input type="hidden" class="form-control" id="pk" name="pkid" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>TRIWULAN</label>
+                        <input type="text" class="form-control" id="triwulan" name="triwulan" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>EKSPEKTASI</label>
+                        <input type="text" class="form-control" name="ekspektasi" placeholder="ekspektasi" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="submit" class="btn btn-block btn-primary"><i class="fas fa-paper-plane"></i>
+                        Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('js')
 
 <script>
+    $(document).on('click', '.ekspektasi', function() {
+        $('#skp2023_id').val($(this).data('id'));
+        $('#pk').val($(this).data('pkid'));
+        $('#namapk').val($(this).data('namapk'));
+        $('#triwulan').val($(this).data('tw'));
+        $("#modal-tambah").modal();
+    });
     $(document).on('click', '.edit-umpan-balik', function() {
         $('#umpan_balik').val($(this).data('umpan_balik'));
         $('#umpan_balik_id').val($(this).data('id'));

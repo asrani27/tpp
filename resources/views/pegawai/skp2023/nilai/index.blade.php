@@ -50,10 +50,10 @@
                             
                             <td>
                               <a href="/pegawai/nilai-skp/ekspektasi/{{$item->id}}" class="btn btn-xs btn-success">EKSPEKTASI</a>
-                              <a href="/pegawai/nilai-skp/triwulan/1/{{$item->id}}" class="btn btn-xs btn-success">TRIWULAN 1</a>
-                              <a href="/pegawai/nilai-skp/triwulan/2/{{$item->id}}" class="btn btn-xs btn-success">TRIWULAN 2</a>
-                              <a href="/pegawai/nilai-skp/triwulan/3/{{$item->id}}" class="btn btn-xs btn-success">TRIWULAN 3</a>
-                              <a href="/pegawai/nilai-skp/triwulan/4/{{$item->id}}" class="btn btn-xs btn-success">TRIWULAN 4</a>
+                              <a href="/pegawai/nilai-skp/triwulan/1/{{$item->id}}" class="btn btn-xs btn-success">TRIWULAN 1 : {{$item->nilai_tw1}}</a>
+                              <a href="/pegawai/nilai-skp/triwulan/2/{{$item->id}}" class="btn btn-xs btn-success">TRIWULAN 2 : {{$item->nilai_tw2}}</a>
+                              <a href="/pegawai/nilai-skp/triwulan/3/{{$item->id}}" class="btn btn-xs btn-success">TRIWULAN 3 : {{$item->nilai_tw3}}</a>
+                              <a href="/pegawai/nilai-skp/triwulan/4/{{$item->id}}" class="btn btn-xs btn-success">TRIWULAN 4 : {{$item->nilai_tw4}}</a>
                             </td>
                           </tr>
                       @endforeach

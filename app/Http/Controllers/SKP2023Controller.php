@@ -7,6 +7,7 @@ use App\Skp2023;
 use App\Skp2023Jf;
 use Carbon\Carbon;
 use App\Skp2023Jpt;
+use App\Skp2023Ekspektasi;
 use App\Skp2023JfIndikator;
 use App\Skp2023JptIndikator;
 use Illuminate\Http\Request;
@@ -250,6 +251,7 @@ class SKP2023Controller extends Controller
     {
         $pegawai_id = Auth::user()->pegawai->id;
         $u = Skp2023::findOrFail($id);
+
         if ($pegawai_id != $u->pegawai_id) {
             toastr()->error('Terdeteksi Percobaan Tindakan Penyalahgunaan, Akan dimasukkan ke History Keamanan', 'Authorize');
             return back();
@@ -349,6 +351,39 @@ class SKP2023Controller extends Controller
     {
         $pegawai_id = Auth::user()->pegawai->id;
         $u = Skp2023::findOrFail($id);
+        if ($triwulan == '1') {
+            $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 1)->get();
+            $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 2)->get();
+            $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 3)->get();
+            $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 4)->get();
+            $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 5)->get();
+            $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 6)->get();
+            $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 7)->get();
+        } elseif ($triwulan == '2') {
+            $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 1)->get();
+            $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 2)->get();
+            $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 3)->get();
+            $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 4)->get();
+            $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 5)->get();
+            $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 6)->get();
+            $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 7)->get();
+        } elseif ($triwulan == '3') {
+            $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 1)->get();
+            $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 2)->get();
+            $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 3)->get();
+            $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 4)->get();
+            $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 5)->get();
+            $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 6)->get();
+            $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 7)->get();
+        } elseif ($triwulan == '4') {
+            $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 1)->get();
+            $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 2)->get();
+            $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 3)->get();
+            $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 4)->get();
+            $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 5)->get();
+            $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 6)->get();
+            $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 7)->get();
+        }
         if ($pegawai_id != $u->pegawai_id) {
             toastr()->error('Terdeteksi Percobaan Tindakan Penyalahgunaan, Akan dimasukkan ke History Keamanan', 'Authorize');
             return back();

@@ -16,6 +16,13 @@ class NilaiSKPController extends Controller
     public function index()
     {
         $data = Skp2023::where('penilai', Auth::user()->pegawai->nip)->where('is_aktif', 1)->get();
+        $data->map(function ($item) {
+            $item->nilai_tw1 = nilaiSkp($item->rhk_tw1, $item->rpk_tw1);
+            $item->nilai_tw2 = nilaiSkp($item->rhk_tw2, $item->rpk_tw2);
+            $item->nilai_tw3 = nilaiSkp($item->rhk_tw3, $item->rpk_tw3);
+            $item->nilai_tw4 = nilaiSkp($item->rhk_tw4, $item->rpk_tw4);
+            return $item;
+        });
         return view('pegawai.skp2023.nilai.index', compact('data'));
     }
 
@@ -99,6 +106,17 @@ class NilaiSKPController extends Controller
         toastr()->success('Berhasil Di Simpan', 'Success');
         return back();
     }
+    public function simpanEkspektasiTriwulan(Request $req, $id)
+    {
+        $new = new Skp2023Ekspektasi;
+        $new->skp2023_id = $id;
+        $new->ekspektasi = $req->ekspektasi;
+        $new->pkid = $req->pkid;
+        $new->jenis = 'TW' . $req->triwulan;
+        $new->save();
+        toastr()->success('Berhasil Di Simpan', 'Success');
+        return back();
+    }
     public function umpanBalikJPT(Request $req, $triwulan, $id)
     {
         //Store realiasasi JPT
@@ -152,6 +170,40 @@ class NilaiSKPController extends Controller
     public function evaluasi($triwulan, $id)
     {
         $u = Skp2023::findOrFail($id);
+        if ($triwulan == '1') {
+            $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 1)->get();
+            $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 2)->get();
+            $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 3)->get();
+            $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 4)->get();
+            $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 5)->get();
+            $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 6)->get();
+            $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 7)->get();
+        } elseif ($triwulan == '2') {
+            $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 1)->get();
+            $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 2)->get();
+            $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 3)->get();
+            $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 4)->get();
+            $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 5)->get();
+            $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 6)->get();
+            $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 7)->get();
+        } elseif ($triwulan == '3') {
+            $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 1)->get();
+            $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 2)->get();
+            $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 3)->get();
+            $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 4)->get();
+            $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 5)->get();
+            $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 6)->get();
+            $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 7)->get();
+        } elseif ($triwulan == '4') {
+            $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 1)->get();
+            $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 2)->get();
+            $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 3)->get();
+            $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 4)->get();
+            $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 5)->get();
+            $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 6)->get();
+            $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 7)->get();
+        }
+
         if ($u->jenis == 'JPT') {
             $pn = json_decode($u->pn);
             if ($u->pp == null) {

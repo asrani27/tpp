@@ -188,12 +188,13 @@
 
                     <table class="table table-sm table-bordered">
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
-                            <th colspan="5">PERILAKU KERJA </th>
+                            <th colspan="3">PERILAKU KERJA </th>
+                            <th class="text-center">UMPAN BALIK BERKELANJUTAN BERDASARKAN BUKTI DUKUNG</th>
                         </tr>
                         
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>1</td>
-                            <td colspan="2">Berorientasi Pelayanan</td>
+                            <td colspan="3">Berorientasi Pelayanan</td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td></td>
@@ -203,11 +204,16 @@
                                 -melakukan perbaikan tiada henti
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan :<br/>
+                                @foreach ($u->ekspektasi1 as $item)
+                                    -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                            </td>
+                            <td>Pimpinan/Stakeholder (Nama) : </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>2</td>
-                            <td colspan="2">Akuntabel</td>
+                            <td colspan="3">Akuntabel</td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td></td>
@@ -217,11 +223,16 @@
                                 -Tidak menyalahgunakan kewenangan jabatan
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan :<br/>
+                                @foreach ($u->ekspektasi2 as $item)
+                                    -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                            </td>
+                            <td>Pimpinan/Stakeholder (Nama) : </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>3</td>
-                            <td colspan="2">Kompeten</td>
+                            <td colspan="3">Kompeten</td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td></td>
@@ -231,11 +242,16 @@
                                 -Melaksanakan tugas dengan kualitas terbaik
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan :<br/>
+                                @foreach ($u->ekspektasi3 as $item)
+                                    -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                            </td>
+                            <td>Pimpinan/Stakeholder (Nama) : </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>4</td>
-                            <td colspan="2">Harmonis</td>
+                            <td colspan="3">Harmonis</td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td></td>
@@ -245,11 +261,16 @@
                                 -Membangun lingkungan kerja yang kondusif
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan :<br/>
+                                @foreach ($u->ekspektasi4 as $item)
+                                    -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                            </td>
+                            <td>Pimpinan/Stakeholder (Nama) : </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>5</td>
-                            <td colspan="2">Loyal</td>
+                            <td colspan="3">Loyal</td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td></td>
@@ -259,11 +280,16 @@
                                 -Menjaga rahasia jabatan dan negara
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan :<br/>
+                                @foreach ($u->ekspektasi5 as $item)
+                                    -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                            </td>
+                            <td>Pimpinan/Stakeholder (Nama) : </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>6</td>
-                            <td colspan="2">Adaptif</td>
+                            <td colspan="3">Adaptif</td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td></td>
@@ -273,11 +299,16 @@
                                 -Bertindak proaktif
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan :<br/>
+                                @foreach ($u->ekspektasi6 as $item)
+                                    -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                            </td>
+                            <td>Pimpinan/Stakeholder (Nama) : </td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td>7</td>
-                            <td colspan="2">Kolaboratif</td>
+                            <td colspan="3">Kolaboratif</td>
                         </tr>
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                             <td></td>
@@ -287,7 +318,12 @@
                                 -Menggerakkan pemanfaatan berbagai sumberdaya untuk tujuan bersama
 
                             </td>
-                            <td>Ekspektasi Khusus Pimpinan :</td>
+                            <td>Ekspektasi Khusus Pimpinan :<br/>
+                                @foreach ($u->ekspektasi7 as $item)
+                                    -{{$item->ekspektasi}} <br/>
+                                @endforeach
+                            </td>
+                            <td>Pimpinan/Stakeholder (Nama) : </td>
                         </tr>
                     </table>
                     <table class="table table-sm table-bordered">

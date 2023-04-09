@@ -400,7 +400,6 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('/pegawai/nilai-skp/triwulan/{triwulan}/{id}/jpt', 'NilaiSKPController@umpanBalikJPT');
         Route::post('/pegawai/nilai-skp/triwulan/{triwulan}/{id}/jf', 'NilaiSKPController@umpanBalikJF');
         Route::post('/pegawai/nilai-skp/triwulan/{triwulan}/{id}/ja', 'NilaiSKPController@umpanBalikJA');
-
         Route::post('/pegawai/nilai-rhk/triwulan/{triwulan}/{id}', 'NilaiSKPController@nilaiRHK');
         Route::post('/pegawai/nilai-rpk/triwulan/{triwulan}/{id}', 'NilaiSKPController@nilaiRPK');
 
@@ -489,6 +488,19 @@ Route::group(['middleware' => ['XSS']], function () {
 
     Route::group(['middleware' => ['auth', 'role:walikota']], function () {
         Route::get('/home/walikota', 'HomeController@walikota');
+        Route::get('/walikota/nilai-skp/ekspektasi/{id}', 'WalikotaController@ekspektasi');
+        Route::get('/walikota/nilai-skp/ekspektasi/delete/{id}', 'WalikotaController@deleteEkspektasi');
+        Route::post('/walikota/nilai-skp/ekspektasi/{id}', 'WalikotaController@simpanEkspektasi');
+        Route::post('/walikota/nilai-skp/ekspektasi/{id}/triwulan', 'WalikotaController@simpanEkspektasiTriwulan');
+        Route::get('/walikota/nilai-skp/triwulan/{triwulan}/{id}', 'WalikotaController@evaluasi');
+        Route::post('/walikota/nilai-skp/triwulan/{triwulan}/{id}/jpt', 'WalikotaController@umpanBalikJPT');
+        Route::post('/walikota/nilai-skp/triwulan/{triwulan}/{id}/jf', 'WalikotaController@umpanBalikJF');
+        Route::post('/walikota/nilai-skp/triwulan/{triwulan}/{id}/ja', 'WalikotaController@umpanBalikJA');
+        Route::post('/walikota/nilai-rhk/triwulan/{triwulan}/{id}', 'WalikotaController@nilaiRHK');
+        Route::post('/walikota/nilai-rpk/triwulan/{triwulan}/{id}', 'WalikotaController@nilaiRPK');
+
+        Route::get('/walikota/ganti-password', 'ProfilController@gantiPassWalikota');
+        Route::post('/walikota/ganti-password', 'ProfilController@updatePassWalikota');
     });
 
     Route::group(['middleware' => ['auth', 'role:puskesmas']], function () {

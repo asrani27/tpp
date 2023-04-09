@@ -16,7 +16,15 @@ class SKP2023Controller extends Controller
 {
     public function index()
     {
-        $data = Skp2023::where('pegawai_id', Auth::user()->pegawai->id)->paginate(15);
+        $data = Skp2023::where('pegawai_id', Auth::user()->pegawai->id)->paginate(25);
+        $data->map(function ($item) {
+            $item->nilai_tw1 = nilaiSkp($item->rhk_tw1, $item->rpk_tw1);
+            $item->nilai_tw2 = nilaiSkp($item->rhk_tw2, $item->rpk_tw2);
+            $item->nilai_tw3 = nilaiSkp($item->rhk_tw3, $item->rpk_tw3);
+            $item->nilai_tw4 = nilaiSkp($item->rhk_tw4, $item->rpk_tw4);
+            return $item;
+        });
+
         return view('pegawai.skp2023.index', compact('data'));
     }
 
@@ -49,12 +57,22 @@ class SKP2023Controller extends Controller
 
         $pp = Pegawai::where('nip', $req->nip)->first();
 
-        $pejabat_penilai['nama'] = $pp->nama;
-        $pejabat_penilai['nip'] = $pp->nip;
-        $pejabat_penilai['pangkat'] = $pp->pangkat->nama;
-        $pejabat_penilai['gol'] = $pp->pangkat->golongan;
-        $pejabat_penilai['jabatan'] = $pp->jabatan == null ? '-' : $pp->jabatan->nama;
-        $pejabat_penilai['skpd'] = $pp->skpd->nama;
+        if ($req->nip == 'Walikota') {
+
+            $pejabat_penilai['nama'] = $pp->nama;
+            $pejabat_penilai['nip'] = null;
+            $pejabat_penilai['pangkat'] = null;
+            $pejabat_penilai['gol'] = null;
+            $pejabat_penilai['jabatan'] = 'Walikota';
+            $pejabat_penilai['skpd'] = 'Pemerintah Kota Banjarmasin';
+        } else {
+            $pejabat_penilai['nama'] = $pp->nama;
+            $pejabat_penilai['nip'] = $pp->nip;
+            $pejabat_penilai['pangkat'] = $pp->pangkat->nama;
+            $pejabat_penilai['gol'] = $pp->pangkat->golongan;
+            $pejabat_penilai['jabatan'] = $pp->jabatan == null ? '-' : $pp->jabatan->nama;
+            $pejabat_penilai['skpd'] = $pp->skpd->nama;
+        }
 
         $attr['pp'] = json_encode($pejabat_penilai);
 
@@ -66,6 +84,7 @@ class SKP2023Controller extends Controller
 
         return back();
     }
+
     public function updateUnitkerjaSKP(Request $req, $id)
     {
         $data = Skp2023::find($id);
@@ -84,6 +103,7 @@ class SKP2023Controller extends Controller
             $data = null;
         } else {
             $data = Pegawai::where('nama', 'LIKE', '%' . $req->searchTerm . '%')->orWhere('nip', 'LIKE', '%' . $req->searchTerm . '%')->get()->take(10)->toArray();
+            //dd($data);
             return json_encode($data);
         }
     }

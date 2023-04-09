@@ -312,3 +312,30 @@ function pegawaiByNip($param)
 {
     return Pegawai::find($param);
 }
+
+function nilaiSkp($rhk, $rpk)
+{
+    if ($rhk == null || $rpk == null) {
+        $hasil = null;
+    } elseif ($rhk == 'DIBAWAH EKSPEKTASI' && $rpk == 'DIBAWAH EKSPEKTASI') {
+        $hasil = 'SANGAT KURANG';
+    } elseif ($rhk == 'DIBAWAH EKSPEKTASI' && $rpk == 'SESUAI EKSPEKTASI') {
+        $hasil = 'BUTUH PERBAIKAN';
+    } elseif ($rhk == 'DIBAWAH EKSPEKTASI' && $rpk == 'DIATAS EKSPEKTASI') {
+        $hasil = 'BUTUH PERBAIKAN';
+    } elseif ($rhk == 'SESUAI EKSPEKTASI' && $rpk == 'DIBAWAH EKSPEKTASI') {
+        $hasil = 'KURANG';
+    } elseif ($rhk == 'DIATAS EKSPEKTASI' && $rpk == 'DIBAWAH EKSPEKTASI') {
+        $hasil = 'KURANG';
+    } elseif ($rhk == 'SESUAI EKSPEKTASI' && $rpk == 'SESUAI EKSPEKTASI') {
+        $hasil = 'BAIK';
+    } elseif ($rhk == 'SESUAI EKSPEKTASI' && $rpk == 'DIATAS EKSPEKTASI') {
+        $hasil = 'BAIK';
+    } elseif ($rhk == 'DIATAS EKSPEKTASI' && $rpk == 'SESUAI EKSPEKTASI') {
+        $hasil = 'BAIK';
+    } elseif ($rhk == 'DIATAS EKSPEKTASI' && $rpk == 'DIATAS EKSPEKTASI') {
+        $hasil = 'SANGAT BAIK';
+    }
+
+    return $hasil;
+}

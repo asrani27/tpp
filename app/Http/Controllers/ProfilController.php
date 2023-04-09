@@ -139,6 +139,40 @@ class ProfilController extends Controller
         return view('gantipass');
     }
 
+    public function gantiPassWalikota()
+    {
+        return view('gantipasswalikota');
+    }
+    public function updatePassWalikota(Request $req)
+    {
+        if (!Hash::check($req->old_password, Auth::user()->password)) {
+            toastr()->error('Password Lama Tidak Sama');
+            return back();
+        }
+        if ($req->password != $req->password_confirmation) {
+            toastr()->error('Password Baru Tidak Sesuai');
+            return back();
+        } else {
+
+            $validator = Validator::make($req->all(), [
+                'password' => 'required|min:8|regex:/[0-9]/|regex:/[a-z]/',
+            ]);
+
+            if ($validator->fails()) {
+                toastr()->error('Password min 8 karakter serta kombinasi angka dan huruf');
+                return back();
+            }
+
+            Auth::user()->update([
+                'password' => bcrypt($req->password),
+                'change_password' => 1,
+            ]);
+
+            Auth::logout();
+            toastr()->success('Berhasil Di Update, Login Dengan Password Baru');
+            return redirect('/');
+        }
+    }
     public function updatePassPegawai(Request $req)
     {
         if (!Hash::check($req->old_password, Auth::user()->password)) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Skpd;
 use App\Jabatan;
 use App\Pegawai;
+use App\Skp2023;
 use App\Presensi;
 use App\RekapTpp;
 use App\Aktivitas;
@@ -283,7 +284,16 @@ class HomeController extends Controller
 
     public function walikota()
     {
-        return view('walikota.home');
+        $data = Skp2023::where('penilai', 'walikota')->where('is_aktif', 1)->get();
+        $data->map(function ($item) {
+            $item->nilai_tw1 = nilaiSkp($item->rhk_tw1, $item->rpk_tw1);
+            $item->nilai_tw2 = nilaiSkp($item->rhk_tw2, $item->rpk_tw2);
+            $item->nilai_tw3 = nilaiSkp($item->rhk_tw3, $item->rpk_tw3);
+            $item->nilai_tw4 = nilaiSkp($item->rhk_tw4, $item->rpk_tw4);
+            return $item;
+        });
+
+        return view('walikota.home', compact('data'));
     }
 
     public function pegawaiSubMonth()

@@ -1647,9 +1647,10 @@ class RekapitulasiController extends Controller
     public function reguler_perhitungan($bulan, $tahun)
     {
         $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-
+        //dd($data);
         foreach ($data as $item) {
             //$jabatan_id = Pegawai::where('nip', $item->nip)->first()->jabatan_id;
+
             $persen = Jabatan::find($item->jabatan_id);
             if ($persen == null) {
                 $basic = 0;

@@ -110,10 +110,10 @@
                             <a href="/pegawai/new-skp/periode/delete/{{$item->id}}" class="btn btn-xs btn-danger" data-toggle="tooltip" title='Hapus data' onclick="return confirm('Yakin ingin di hapus?');"><i class="fas fa-trash"></i></a>
                             </td>
                             <td>
-                              <a href="/pegawai/new-skp/periode/evaluasi/{{$item->id}}/triwulan/1" class="btn btn-xs btn-success">TW1 : {{$item->nilai_tw1}}</a>
-                              <a href="/pegawai/new-skp/periode/evaluasi/{{$item->id}}/triwulan/2" class="btn btn-xs btn-success">TW2 : {{$item->nilai_tw2}}</a>
-                              <a href="/pegawai/new-skp/periode/evaluasi/{{$item->id}}/triwulan/3" class="btn btn-xs btn-success">TW3 : {{$item->nilai_tw3}}</a>
-                              <a href="/pegawai/new-skp/periode/evaluasi/{{$item->id}}/triwulan/4" class="btn btn-xs btn-success">TW4 : {{$item->nilai_tw4}}</a>
+                              <a href="/pegawai/new-skp/periode/evaluasi/{{$item->id}}/triwulan/1" class="btn btn-xs btn-success">TW1</a>
+                              <a href="/pegawai/new-skp/periode/evaluasi/{{$item->id}}/triwulan/2" class="btn btn-xs btn-success">TW2</a>
+                              <a href="/pegawai/new-skp/periode/evaluasi/{{$item->id}}/triwulan/3" class="btn btn-xs btn-success">TW3</a>
+                              <a href="/pegawai/new-skp/periode/evaluasi/{{$item->id}}/triwulan/4" class="btn btn-xs btn-success">TW4</a>
                             </td>
                           </tr>
                       @endforeach

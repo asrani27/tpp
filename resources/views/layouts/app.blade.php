@@ -15,9 +15,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </head>
 
 <body class="hold-transition sidebar-mini">
-  {{-- <div class="bg-warning text-bold">
-    <marquee>Pengisian aktivitas hari bulan Januari 2023 bisa diinput sampai dengan tgl 5 Februari  2023 jam 23.59 wita.</marquee>
-  </div> --}}
+  <div class="bg-warning text-bold">
+    <marquee>Mohon Perhatian. Sehubungan dengan berakhirnya periode Triwulan I, diharapkan kepada Bapak/Ibu utk mengisi realisasi capaian SKP pada Triwulan I dan khusus untuk Pejabat Penilai SKP diharapkan memberikan umpan balik serta menentukan rating hasil dan perilaku kerja</marquee>
+  </div>
   <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-dark navbar-lightblue">

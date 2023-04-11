@@ -3536,6 +3536,7 @@ class RekapitulasiController extends Controller
             $data = null;
         } else {
             $data = Jabatan::where('skpd_id', Auth::user()->skpd->id)->where('nama', 'LIKE', '%' . $req->searchTerm . '%')->get()->map(function ($item) {
+                $item->persen_kondisi_kerja = $item->persen_kondisi_kerja == null ? 0 : $item->persen_kondisi_kerja;
                 $item->kelas = $item->kelas->nama;
                 return $item;
             })->take(10)->toArray();

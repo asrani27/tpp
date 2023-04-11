@@ -408,7 +408,7 @@ SUPERADMIN
               console.log(response);
                 var data_array = [];
                         response.forEach(function(value,key){
-                    data_array.push({id:value.id,text:value.nama+' - Kelas:'+value.kelas.nama})
+                    data_array.push({id:value.id,text:value.nama+' - Kelas:'+value.kelas.nama+' (KK : '+value.persen_kondisi_kerja+')'})
                 });
                 return {
                     results: data_array

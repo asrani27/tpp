@@ -158,7 +158,6 @@ class AktivitasController extends Controller
 
     public function store(Request $req)
     {
-
         $bulan = Carbon::parse($req->tanggal)->format('m');
         $tahun = Carbon::parse($req->tanggal)->format('Y');
 

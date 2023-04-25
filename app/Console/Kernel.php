@@ -24,7 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('tarikpresensi')->cron('45 19 * * *');
+        //        $schedule->command('tarikpresensi')->cron('45 19 * * *');
+        $schedule->command('setujuisistem')->cron('45 19 * * *');
     }
 
     /**

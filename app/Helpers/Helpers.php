@@ -339,3 +339,45 @@ function nilaiSkp($rhk, $rpk)
 
     return $hasil;
 }
+
+function nilaiTW($bulan)
+{
+    if ($bulan == '01') {
+        $tw = 'tw4';
+    }
+    if ($bulan == '02') {
+        $tw = 'tw4';
+    }
+    if ($bulan == '03') {
+        $tw = 'tw4';
+    }
+    if ($bulan == '04') {
+        $tw = 'tw1';
+    }
+    if ($bulan == '05') {
+        $tw = 'tw1';
+    }
+    if ($bulan == '06') {
+        $tw = 'tw1';
+    }
+    if ($bulan == '07') {
+        $tw = 'tw2';
+    }
+    if ($bulan == '08') {
+        $tw = 'tw2';
+    }
+    if ($bulan == '09') {
+        $tw = 'tw2';
+    }
+    if ($bulan == '10') {
+        $tw = 'tw3';
+    }
+    if ($bulan == '11') {
+        $tw = 'tw3';
+    }
+    if ($bulan == '12') {
+        $tw = 'tw3';
+    }
+
+    return $tw;
+}

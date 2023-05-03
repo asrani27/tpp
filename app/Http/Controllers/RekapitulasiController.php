@@ -1503,7 +1503,7 @@ class RekapitulasiController extends Controller
             $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
             $skp = Skp2023::where('pegawai_id', $pegawai_id)->where('is_aktif', 1)->first();
             if ($skp == null) {
-                $nilaiSKP == null;
+                $nilaiSKP = null;
             } else {
                 $rhk = 'rhk_' . nilaiTW($bulan);
                 $rpk = 'rpk_' . nilaiTW($bulan);

@@ -1498,14 +1498,19 @@ class RekapitulasiController extends Controller
         } else {
             $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         }
+
         foreach ($data as $item) {
             $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
             $skp = Skp2023::where('pegawai_id', $pegawai_id)->where('is_aktif', 1)->first();
-            $rhk = 'rhk_' . nilaiTW($bulan);
-            $rpk = 'rpk_' . nilaiTW($bulan);
-            $nilai_rhk = $skp[$rhk];
-            $nilai_rpk = $skp[$rpk];
-            $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+            if ($skp == null) {
+                $nilaiSKP == null;
+            } else {
+                $rhk = 'rhk_' . nilaiTW($bulan);
+                $rpk = 'rpk_' . nilaiTW($bulan);
+                $nilai_rhk = $skp[$rhk];
+                $nilai_rpk = $skp[$rpk];
+                $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+            }
 
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
             $dp_ct = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 7)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
@@ -1535,6 +1540,7 @@ class RekapitulasiController extends Controller
                 'dp_skp'       => $nilaiSKP,
             ]);
         }
+
         toastr()->success('Berhasil di tarik');
         return back();
     }

@@ -1069,7 +1069,9 @@ class RekapitulasiController extends Controller
             $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
             if ($item->dp_ta >= 6750) {
                 $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
-                if ($item->dp_skp == 'kurang') {
+                if ($item->dp_skp == null) {
+                    $item->pbk_skp = 0;
+                } else if ($item->dp_skp == 'KURANG' || $item->dp_skp == "SANGAT KURANG" || $item->dp_skp == "BUTUH PERBAIKAN") {
                     $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
                 } else {
                     $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
@@ -1084,7 +1086,9 @@ class RekapitulasiController extends Controller
             $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
             if ($item->dp_ta >= 6750) {
                 $item->ppk_aktivitas = $item->basic * ($item->p_pk / 100) * (40 / 100);
-                if ($item->dp_skp == 'kurang') {
+                if ($item->dp_skp == null) {
+                    $item->pbk_skp = 0;
+                } else if ($item->dp_skp == 'KURANG' || $item->dp_skp == "SANGAT KURANG" || $item->dp_skp == "BUTUH PERBAIKAN") {
                     $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (10 / 100);
                 } else {
                     $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (20 / 100);
@@ -1108,6 +1112,7 @@ class RekapitulasiController extends Controller
             $item->tpp_diterima = $item->jumlah_pembayaran - $item->pph21 - $item->bpjs1;
             return $item;
         });
+
         return view('admin.rekap2023.reguler', compact('data', 'bulan', 'tahun'));
     }
     public function puskes_reguler($bulan, $tahun)

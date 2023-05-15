@@ -141,6 +141,7 @@ ADMIN SKPD
                                             <option value="">-pilih-</option>
                                             <option value="pns">pns</option>
                                             <option value="cpns">cpns</option>
+                                            <option value="pppk">pppk</option>
                                         </select>
                                     </div>
                                 </div>

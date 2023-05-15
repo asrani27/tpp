@@ -115,8 +115,8 @@ ADMIN SKPD
                                     <select name="status_pns" class="form-control" required>
                                         <option value="">-pilih-</option>
                                         <option value="pns" {{$data->status_pns == 'pns' ? 'selected':''}}>pns</option>
-                                        <option value="cpns" {{$data->status_pns == 'cpns' ? 'selected':''}}>cpns
-                                        </option>
+                                        <option value="cpns" {{$data->status_pns == 'cpns' ? 'selected':''}}>cpns</option>
+                                        <option value="pppk" {{$data->status_pns == 'pppk' ? 'selected':''}}>pppk</option>
                                     </select>
                                 </div>
                             </div>

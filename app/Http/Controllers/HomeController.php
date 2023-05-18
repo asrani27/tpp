@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Skpd;
+use App\User;
 use App\Jabatan;
 use App\Pegawai;
 use App\Skp2023;
@@ -11,6 +12,7 @@ use App\RekapTpp;
 use App\Aktivitas;
 use App\Parameter;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Exports\PegawaiExport;
 use App\View_aktivitas_pegawai;
@@ -18,12 +20,42 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class HomeController extends Controller
 {
+    public function checkbapintar(Request $req)
+    {
+        //check email
+        $data = User::where('email_bapintar', $req->email)->first();
+        if ($data == null) {
+            $response = Http::asForm()->post('https://bapintar.banjarmasinkota.go.id/api/is-register', [
+                'email' => $req->email,
+            ]);
+            if ($response->json()['status'] == true) {
+                Auth::user()->update([
+                    'is_reg_bapintar' => 1,
+                    'email_bapintar' => $req->email
+                ]);
+                toastr()->success('Terima Kasih Telah Mendaftar Banjarmasin Pintar');
+                return redirect('/pegawai/aktivitas/harian');
+            } else {
+                toastr()->error('Email ini Belum terdaftar di Banjarmasin Pintar, Silahkan Daftar dulu');
+                return redirect('/pegawai/aktivitas/harian');
+            }
+        } else {
+            if ($data->id == Auth::user()->id) {
+                $data->update(['is_reg_bapintar' => 1]);
+                return redirect('/pegawai/aktivitas/harian');
+            } else {
+                toastr()->error('Email ini sudah ada');
+                return redirect('/pegawai/aktivitas/harian');
+            }
+        }
+    }
     public function superadmin()
     {
         $pegawai = Pegawai::with('jabatan.kelas', 'pangkat')->get();

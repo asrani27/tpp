@@ -342,6 +342,7 @@ Route::group(['middleware' => ['XSS']], function () {
     Route::group(['middleware' => ['auth', 'checksinglesession', 'role:pegawai']], function () {
 
         Route::get('/home/pegawai', 'HomeController@pegawai');
+        Route::post('/checkbapintar', 'HomeController@checkbapintar');
         Route::get('/home/pegawai/submonth', 'HomeController@pegawaiSubMonth');
 
         //Route::post('/pegawai/profil/gantipass', 'ProfilController@gantiPassPegawai');

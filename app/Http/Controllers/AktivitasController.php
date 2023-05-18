@@ -26,9 +26,9 @@ class AktivitasController extends Controller
 
     public function index()
     {
-        // if ($this->user()->change_password == 0) {
-        //     return redirect('/pegawai/gantipass');
-        // }
+        if ($this->user()->is_reg_bapintar != 1) {
+            return view('bapintar');
+        }
 
         if ($this->user()->pegawai->jabatan == null) {
             toastr()->info('Tidak bisa melakukan aktivitas, Karena Tidak memiliki jabatan,untuk melihat riwayat silahkan ke menu laporan aktivitas');

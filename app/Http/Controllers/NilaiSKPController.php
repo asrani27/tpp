@@ -15,8 +15,8 @@ class NilaiSKPController extends Controller
 {
     public function index()
     {
-        toastr()->info('Penilaian Triwulan I di tutup', 'info');
-        return back();
+        // toastr()->info('Penilaian Triwulan I di tutup', 'info');
+        // return back();
         $data = Skp2023::where('penilai', Auth::user()->pegawai->nip)->where('is_aktif', 1)->get();
         $data->map(function ($item) {
             $item->nilai_tw1 = nilaiSkp($item->rhk_tw1, $item->rpk_tw1);

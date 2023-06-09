@@ -16,7 +16,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <body class="hold-transition sidebar-mini">
   <div class="bg-warning text-bold">
-    <marquee>PENILAIAN TRIWULAN I DI TUTUP, TERIMA KASIH</marquee>
+    <marquee>Selamat Beraktivitas</marquee>
   </div>
   <div class="wrapper">
     <!-- Navbar -->

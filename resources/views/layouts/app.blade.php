@@ -16,7 +16,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <body class="hold-transition sidebar-mini">
   <div class="bg-warning text-bold">
-    <marquee>Mohon Perhatian. Sehubungan dengan berakhirnya periode Triwulan I, diharapkan kepada Bapak/Ibu utk mengisi realisasi capaian SKP pada Triwulan I dan khusus untuk Pejabat Penilai SKP diharapkan memberikan umpan balik serta menentukan rating hasil dan perilaku kerja</marquee>
+    <marquee>PENILAIAN TRIWULAN I DI TUTUP, TERIMA KASIH</marquee>
   </div>
   <div class="wrapper">
     <!-- Navbar -->

@@ -1514,14 +1514,21 @@ class RekapitulasiController extends Controller
         foreach ($data as $item) {
             $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
             $skp = Skp2023::where('pegawai_id', $pegawai_id)->where('is_aktif', 1)->first();
+
             if ($skp == null) {
                 $nilaiSKP = null;
             } else {
-                $rhk = 'rhk_' . nilaiTW($bulan);
-                $rpk = 'rpk_' . nilaiTW($bulan);
-                $nilai_rhk = $skp[$rhk];
-                $nilai_rpk = $skp[$rpk];
-                $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                if ($bulan == '01' || $bulan == '04' || $bulan == '07' || $bulan == '10') {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+                if ($bulan == '02' || $bulan == '03' || $bulan == '05' || $bulan == '06' || $bulan == '08' || $bulan == '09' || $bulan == '11' || $bulan == '12') {
+                    $search = RekapReguler::where('nip', $item->nip)->where('bulan', $bulan - 1)->where('tahun', $tahun)->first();
+                    $nilaiSKP = $search->dp_skp;
+                }
             }
 
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();

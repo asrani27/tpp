@@ -22,6 +22,28 @@ class PegawaiController extends Controller
         $data['jumlah']        = count($pegawai);
         return response()->json($data);
     }
+    public function pegawaibanjarmasin()
+    {
+        $pegawai = Pegawai::get();
+
+        $list = [];
+        foreach ($pegawai as $item) {
+            $list[] = [
+                'nip' => $item->nip,
+                'nama' => $item->nama,
+                'jabatan' => $item->jabatan == null ? null : $item->jabatan->nama,
+                'skpd' => $item->skpd == null ? null : $item->skpd->nama,
+                'alamat_kantor' => null,
+                'goldarah' => $item->gol_darah,
+            ];
+        }
+
+        $data['message_code'] = 200;
+        $data['message']       = 'data ditemukan';
+        $data['data']          = $list;
+        $data['jumlah']        = count($list);
+        return response()->json($data);
+    }
     public function pegawai($nip)
     {
         $pegawai = Pegawai::with('jabatan', 'pangkat')->where('nip', $nip)->first();

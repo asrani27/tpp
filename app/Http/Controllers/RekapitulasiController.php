@@ -1526,12 +1526,16 @@ class RekapitulasiController extends Controller
                     $nilai_rpk = $skp[$rpk];
                     $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
                 }
-                if ($bulan == '02' || $bulan == '03' || $bulan == '05' || $bulan == '06' || $bulan == '08' || $bulan == '09' || $bulan == '11' || $bulan == '12') {
+                if ($bulan == '02' ||  $bulan == '05' || $bulan == '08' || $bulan == '11') {
                     $search = RekapReguler::where('nip', $item->nip)->where('bulan', $bulan - 1)->where('tahun', $tahun)->first();
                     $nilaiSKP = $search->dp_skp;
                 }
+                if ($bulan == '03'  || $bulan == '06' || $bulan == '09' || $bulan == '12') {
+                    $search = RekapReguler::where('nip', $item->nip)->where('bulan', $bulan - 2)->where('tahun', $tahun)->first();
+                    $nilaiSKP = $search->dp_skp;
+                }
             }
-
+            //dd($nilaiSKP);
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
             $dp_ct = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 7)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
             $dp_tl = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 5)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;

@@ -1510,24 +1510,23 @@ class RekapitulasiController extends Controller
         } else {
             $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         }
-        //$filter = $data->where('nip', '198710042006041001');
+        $filter = $data->where('nip', '198710042006041001');
 
-        foreach ($data as $item) {
+        foreach ($filter as $item) {
             $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
             $skp = Skp2023::where('pegawai_id', $pegawai_id)->where('is_aktif', 1)->first();
 
             if ($skp == null) {
                 $nilaiSKP = null;
             } else {
-                if ($bulan == '12' || $bulan == '03' || $bulan == '06' || $bulan == '9') {
+                if ($bulan == '01' || $bulan == '04' || $bulan == '07' || $bulan == '10') {
                     $rhk = 'rhk_' . nilaiTW($bulan);
                     $rpk = 'rpk_' . nilaiTW($bulan);
                     $nilai_rhk = $skp[$rhk];
                     $nilai_rpk = $skp[$rpk];
                     $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
-                    //dd($skp, $rhk, $bulan);
                 }
-                if ($bulan == '01' || $bulan == '02' || $bulan == '04' || $bulan == '05' || $bulan == '07' || $bulan == '08' || $bulan == '10' || $bulan == '11') {
+                if ($bulan == '02' || $bulan == '03' || $bulan == '05' || $bulan == '06' || $bulan == '08' || $bulan == '09' || $bulan == '11' || $bulan == '12') {
                     $search = RekapReguler::where('nip', $item->nip)->where('bulan', $bulan - 1)->where('tahun', $tahun)->first();
                     $nilaiSKP = $search->dp_skp;
                 }

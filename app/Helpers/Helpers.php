@@ -349,7 +349,7 @@ function nilaiTW($bulan)
         $tw = 'tw4';
     }
     if ($bulan == '03') {
-        $tw = 'tw4';
+        $tw = 'tw1';
     }
     if ($bulan == '04') {
         $tw = 'tw1';
@@ -358,7 +358,7 @@ function nilaiTW($bulan)
         $tw = 'tw1';
     }
     if ($bulan == '06') {
-        $tw = 'tw1';
+        $tw = 'tw2';
     }
     if ($bulan == '07') {
         $tw = 'tw2';
@@ -367,7 +367,7 @@ function nilaiTW($bulan)
         $tw = 'tw2';
     }
     if ($bulan == '09') {
-        $tw = 'tw2';
+        $tw = 'tw3';
     }
     if ($bulan == '10') {
         $tw = 'tw3';
@@ -376,7 +376,7 @@ function nilaiTW($bulan)
         $tw = 'tw3';
     }
     if ($bulan == '12') {
-        $tw = 'tw3';
+        $tw = 'tw4';
     }
 
     return $tw;

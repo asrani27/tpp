@@ -1510,9 +1510,9 @@ class RekapitulasiController extends Controller
         } else {
             $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         }
-        $filter = $data->where('nip', '198710042006041001');
+        //$filter = $data->where('nip', '198710042006041001');
 
-        foreach ($filter as $item) {
+        foreach ($data as $item) {
             $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
             $skp = Skp2023::where('pegawai_id', $pegawai_id)->where('is_aktif', 1)->first();
 

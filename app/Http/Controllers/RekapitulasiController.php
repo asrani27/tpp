@@ -1528,11 +1528,19 @@ class RekapitulasiController extends Controller
                 }
                 if ($bulan == '02' ||  $bulan == '05' || $bulan == '08' || $bulan == '11') {
                     $search = RekapReguler::where('nip', $item->nip)->where('bulan', $bulan - 1)->where('tahun', $tahun)->first();
-                    $nilaiSKP = $search->dp_skp;
+                    if ($search == null) {
+                        $nilaiSKP = null;
+                    } else {
+                        $nilaiSKP = $search->dp_skp;
+                    }
                 }
                 if ($bulan == '03'  || $bulan == '06' || $bulan == '09' || $bulan == '12') {
                     $search = RekapReguler::where('nip', $item->nip)->where('bulan', $bulan - 2)->where('tahun', $tahun)->first();
-                    $nilaiSKP = $search->dp_skp;
+                    if ($search == null) {
+                        $nilaiSKP = null;
+                    } else {
+                        $nilaiSKP = $search->dp_skp;
+                    }
                 }
             }
             //dd($nilaiSKP);
@@ -1951,9 +1959,11 @@ class RekapitulasiController extends Controller
         $pembayaranBulan = $dataBulan->addMonth(1)->translatedFormat('F Y');
 
         $filename = 'TPP_' . $bulan . '-' . $tahun . '-' . Carbon::now()->format('H:i:s') . '.xlsx';
+
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header("Content-Disposition: attachment;filename=$filename");
         header('Cache-Control: max-age=0');
+
         if (Auth::user()->skpd->id == 1) {
             $path = public_path('/excel/disdik.xlsx');
         } else {

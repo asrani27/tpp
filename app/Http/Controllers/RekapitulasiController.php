@@ -1503,13 +1503,16 @@ class RekapitulasiController extends Controller
         //cuti bersama
         $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count() * 420;
 
-        if (Auth::user()->skpd->id == 34) {
-            $dataDinas = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-            $dataIFK = RekapReguler::where('puskesmas_id', 37)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-            $data = $dataDinas->merge($dataIFK);
-        } else {
-            $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-        }
+
+        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->where('nip', '198904272011012002')->get();
+        // dd($data);
+        // if (Auth::user()->skpd->id == 34) {
+        //     $dataDinas = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        //     $dataIFK = RekapReguler::where('puskesmas_id', 37)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        //     $data = $dataDinas->merge($dataIFK);
+        // } else {
+        //     $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        // }
         //$filter = $data->where('nip', '198710042006041001');
 
         foreach ($data as $item) {
@@ -1527,9 +1530,16 @@ class RekapitulasiController extends Controller
                     $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
                 }
                 if ($bulan == '02' ||  $bulan == '05' || $bulan == '08' || $bulan == '11') {
+
                     $search = RekapReguler::where('nip', $item->nip)->where('bulan', $bulan - 1)->where('tahun', $tahun)->first();
+
                     if ($search == null) {
-                        $nilaiSKP = null;
+                        $searchPlt = RekapPlt::where('nip', $item->nip)->where('bulan', $bulan - 1)->where('tahun', $tahun)->first();
+                        if ($searchPlt == null) {
+                            $nilaiSKP = null;
+                        } else {
+                            $nilaiSKP = $searchPlt->dp_skp;
+                        }
                     } else {
                         $nilaiSKP = $search->dp_skp;
                     }
@@ -1543,7 +1553,7 @@ class RekapitulasiController extends Controller
                     }
                 }
             }
-            //dd($nilaiSKP);
+
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
             $dp_ct = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 7)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
             $dp_tl = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 5)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;

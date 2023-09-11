@@ -1519,7 +1519,7 @@ class RekapitulasiController extends Controller
         foreach ($data->where('nip', '197608152006042009') as $item) {
             $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
             $skp = Skp2023::where('pegawai_id', $pegawai_id)->where('is_aktif', 1)->first();
-            //dd($item, $skp);
+            dd($item, $skp);
             if ($skp == null) {
                 $nilaiSKP = null;
             } else {

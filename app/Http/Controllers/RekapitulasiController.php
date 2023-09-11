@@ -1507,11 +1507,11 @@ class RekapitulasiController extends Controller
         //$data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->where('nip', '198904272011012002')->get();
         // dd($data);
         if (Auth::user()->skpd->id == 34) {
-            $dataDinas = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->where('nip', '198308082008031003')->get();
+            $dataDinas = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
             $dataIFK = RekapReguler::where('puskesmas_id', 37)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
             $data = $dataDinas->merge($dataIFK);
         } else {
-            $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+            $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->where('nip', '198308082008031003')->get();
         }
         dd($data);
         //$filter = $data->where('nip', '198710042006041001');

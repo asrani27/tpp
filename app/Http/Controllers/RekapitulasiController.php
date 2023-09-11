@@ -1513,6 +1513,7 @@ class RekapitulasiController extends Controller
         } else {
             $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         }
+        dd($data);
         //$filter = $data->where('nip', '198710042006041001');
 
         foreach ($data as $item) {

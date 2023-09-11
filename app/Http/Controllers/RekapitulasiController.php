@@ -1516,7 +1516,7 @@ class RekapitulasiController extends Controller
         //dd($data);
         //$filter = $data->where('nip', '198710042006041001');
 
-        foreach ($data as $item) {
+        foreach ($data->where('nip', '197608152006042009') as $item) {
             $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
             $skp = Skp2023::where('pegawai_id', $pegawai_id)->where('is_aktif', 1)->first();
             //dd($item, $skp);

@@ -1535,19 +1535,20 @@ class RekapitulasiController extends Controller
                     $search = RekapReguler::where('nip', $item->nip)->where('bulan', $bulan - 1)->where('tahun', $tahun)->first();
 
                     if ($search == null) {
-                        $searchPlt = RekapPlt::where('nip', $item->nip)->where('bulan', $bulan - 1)->where('tahun', $tahun)->first();
-                        if ($searchPlt == null) {
-                            $nilaiSKP = null;
-                        } else {
-                            $nilaiSKP = $searchPlt->dp_skp;
-                        }
+                        $nilaiSKP = 'BAIK';
+                        // $searchPlt = RekapPlt::where('nip', $item->nip)->where('bulan', $bulan - 1)->where('tahun', $tahun)->first();
+                        // if ($searchPlt == null) {
+                        //     $nilaiSKP = null;
+                        // } else {
+                        //     $nilaiSKP = $searchPlt->dp_skp;
+                        // }
                     } else {
                         $nilaiSKP = $search->dp_skp;
                     }
                 }
                 if ($bulan == '03'  || $bulan == '06' || $bulan == '09' || $bulan == '12') {
                     $search = RekapReguler::where('nip', $item->nip)->where('bulan', $bulan - 2)->where('tahun', $tahun)->first();
-                    dd($search);
+                    //dd($search);
                     if ($search == null) {
                         $nilaiSKP = 'BAIK';
                     } else {

@@ -1511,7 +1511,7 @@ class RekapitulasiController extends Controller
             $dataIFK = RekapReguler::where('puskesmas_id', 37)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
             $data = $dataDinas->merge($dataIFK);
         } else {
-            $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->where('nip', '198308082008031003')->get();
+            $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         }
         //dd($data);
         //$filter = $data->where('nip', '198710042006041001');

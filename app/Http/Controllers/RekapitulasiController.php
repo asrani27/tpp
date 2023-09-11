@@ -1548,7 +1548,7 @@ class RekapitulasiController extends Controller
                 if ($bulan == '03'  || $bulan == '06' || $bulan == '09' || $bulan == '12') {
                     $search = RekapReguler::where('nip', $item->nip)->where('bulan', $bulan - 2)->where('tahun', $tahun)->first();
                     if ($search == null) {
-                        $nilaiSKP = null;
+                        $nilaiSKP = 'BAIK';
                     } else {
                         $nilaiSKP = $search->dp_skp;
                     }

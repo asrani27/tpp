@@ -239,7 +239,7 @@ class AktivitasController extends Controller
         } else {
             toastr()->error('Jam Selesai Tidak Bisa Kurang Dari Jam Mulai');
             $req->flash();
-            return back();
+            return redirect('pegawai/aktivitas/harian');
         }
     }
 

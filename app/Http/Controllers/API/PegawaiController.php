@@ -85,6 +85,7 @@ class PegawaiController extends Controller
         $skpd_id = Skpd::where('kode_skpd', $id)->first()->id;
 
         $pegawai = Pegawai::where('skpd_id', $skpd_id)->get()->map(function ($item) {
+            $item->pangkat = $item->pangkat == null ? null : $item->pangkat;
             $item->nama_puskesmas = $item->jabatan == null ? null : $item->jabatan->puskesmas;
             return $item;
         });

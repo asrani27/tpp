@@ -38,7 +38,7 @@ TAMBAH AKTIVITAS HARIAN
                 max="{{\Carbon\Carbon::today()->format('Y-m-d')}}">
               @else
               <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"
-              min="2024-01-01"
+              min="2023-12-01"
               max="2024-01-31">
 
               {{-- <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"

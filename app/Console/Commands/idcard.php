@@ -49,8 +49,8 @@ class idcard extends Command
         $dp = Pegawai::whereIn('nip', $np)->get()->map(function ($item) {
             $card['nip'] = $item->nip;
             $card['nama_baru'] = $item->nama;
-            $card['jabatan_baru'] = $item->jabatan->nama;
-            $card['skpd_baru'] = $item->skpd->nama;
+            $card['jabatan_baru'] = $item->jabatan == null ? null : $item->jabatan->nama;
+            $card['skpd_baru'] = $item->skpd == null ? null : $item->skpd->nama;
             return $card;
         });
 

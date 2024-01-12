@@ -158,8 +158,8 @@ class AdminController extends Controller
                 $param = [
                     'nip' => $pegawai->nip,
                     'nama_baru' => $pegawai->nama,
-                    'jabatan_baru' => $pegawai->jabatan->nama,
-                    'skpd_baru' => $pegawai->skpd->nama,
+                    'jabatan_baru' => $pegawai->jabatan == null ? null : $pegawai->jabatan->nama,
+                    'skpd_baru' => $pegawai->skpd == null ? null : $pegawai->skpd->nama,
                 ];
                 $client = new Client();
 

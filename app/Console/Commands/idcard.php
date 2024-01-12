@@ -60,6 +60,8 @@ class idcard extends Command
             $response = $client->request("POST", "https://idcardpegawai.banjarmasinkota.go.id/api/updatePegawai", [
                 'form_params' => $cd,
             ]);
+
+            sleep(5);
         }
         return 'sukses';
     }

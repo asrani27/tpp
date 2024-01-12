@@ -46,7 +46,7 @@ class idcard extends Command
             $removestring = str_replace(array("\r", ' '), '', $p);
             array_push($np, $removestring);
         }
-        $dp = Pegawai::whereIn('nip', $np)->get()->map(function ($item) {
+        $dp = Pegawai::whereIn('nip', $np)->take(10)->get()->map(function ($item) {
             $card['nip'] = $item->nip;
             $card['nama_baru'] = $item->nama;
             $card['jabatan_baru'] = $item->jabatan == null ? null : $item->jabatan->nama;

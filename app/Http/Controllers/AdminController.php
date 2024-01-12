@@ -154,6 +154,21 @@ class AdminController extends Controller
                     'username' => $req->nip,
                 ]);
                 $pegawai->update($attr);
+
+                $param = [
+                    'nip' => $pegawai->nip,
+                    'nama_baru' => $pegawai->nama,
+                    'jabatan_baru' => $pegawai->jabatan->nama,
+                    'skpd_baru' => $pegawai->skpd->nama,
+                ];
+                $client = new Client();
+
+                $response = $client->request("POST", "https://idcardpegawai.banjarmasinkota.go.id/api/updatePegawai", [
+                    'form_params' => $param,
+                ]);
+
+                $resp = $response->getStatusCode();
+
                 DB::commit();
                 toastr()->success('Pegawai Berhasil di Update');
                 return back();

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::post('/login', 'API\LoginController@login');
+Route::post('/login_m', 'API\LoginController@login_m');
 Route::get('/pegawai', 'API\PegawaiController@allpegawai');
 Route::get('/pegawai/{nip}', 'API\PegawaiController@pegawai');
 Route::get('/pegawai/aktivitas/{nip}/{bulan}/{tahun}', 'API\PegawaiController@aktivitaspegawai');

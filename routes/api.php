@@ -14,6 +14,7 @@ Route::get('/pegawai/aktivitas/{nip}/{bulan}/{tahun}', 'API\PegawaiController@ak
 Route::get('/pegawai/skpd/{id}', 'API\PegawaiController@pegawaiSkpd');
 Route::get('/skpd', 'API\SkpdController@all');
 Route::get('/pegawaibanjarmasinkotagoid', 'API\PegawaiController@pegawaibanjarmasin');
+Route::get('/pegawaibynip/{nip}', 'API\PegawaiController@pegawaibynip');
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });

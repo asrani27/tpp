@@ -60,6 +60,21 @@ class PegawaiController extends Controller
         }
     }
 
+    public function pegawaibynip($nip)
+    {
+        $pegawai = Pegawai::with('jabatan', 'pangkat')->where('nip', $nip)->first();
+        if ($pegawai == null) {
+            $data['message']       = 'data tidak ditemukan';
+            return response()->json($data);
+        } else {
+            $data['nip'] = $pegawai->nip;
+            $data['nama'] = $pegawai->nama;
+            $data['jabatan'] = $pegawai->jabatan == null ? null : $pegawai->jabatan->nama;
+            $data['skpd'] = $pegawai->skpd == null ? null : $pegawai->skpd->nama;
+            return response()->json($data);
+        }
+    }
+
     public function aktivitaspegawai($nip, $bulan, $tahun)
     {
         $pegawai = Pegawai::where('nip', $nip)->first();

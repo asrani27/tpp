@@ -32,11 +32,23 @@ SUPERADMIN
               @endphp
               <tbody>
                 @foreach ($skpd as $item)
+                @if ($item->verifikasi == 1)
+                <tr style="background-color: beige">
+                @else
                 <tr>
+                @endif
                   <td>{{$no++}}</td>
                   <td><strong>{{$item->kode_skpd}}</strong></td>
                   <td>{{$item->nama}}</td>
                   <td>
+                    @if ($item->verifikasi == 0)
+                    <a href="/superadmin/persentase/skpd/{{$item->id}}/verifikasi" class="btn btn-xs btn-success"><i
+                        class="fas fa-check"></i> verifikasi</a>
+                      @else
+                      <a href="/superadmin/persentase/skpd/{{$item->id}}/unverifikasi" class="btn btn-xs btn-danger"><i
+                          class="fas fa-times"></i> unverifikasi</a>
+
+                    @endif
                     <a href="/superadmin/persentase/skpd/{{$item->id}}" class="btn btn-xs btn-primary"><i
                         class="fas fa-percent"></i></a>
                   </td>

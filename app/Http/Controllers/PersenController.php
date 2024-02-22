@@ -16,6 +16,19 @@ class PersenController extends Controller
         return view('superadmin.persen.index', compact('skpd', 'puskesmas'));
     }
 
+    public function verifikasi($id)
+    {
+        Skpd::find($id)->update(['verifikasi' => 1]);
+        toastr()->success('Berhasil diverifikasi');
+        return back();
+    }
+
+    public function unverifikasi($id)
+    {
+        Skpd::find($id)->update(['verifikasi' => 0]);
+        toastr()->success('Berhasil diverifikasi');
+        return back();
+    }
     public function detailSkpd($id)
     {
         $data = Skpd::find($id)->jabatan->where('rs_puskesmas_id', null)->sortByDesc('kelas_id');

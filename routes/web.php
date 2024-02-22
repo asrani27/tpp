@@ -110,6 +110,8 @@ Route::group(['middleware' => ['XSS']], function () {
 
         Route::get('/superadmin/persentase', 'PersenController@index');
         Route::get('/superadmin/persentase/skpd/{id}', 'PersenController@detailSkpd');
+        Route::get('/superadmin/persentase/skpd/{id}/verifikasi', 'PersenController@verifikasi');
+        Route::get('/superadmin/persentase/skpd/{id}/unverifikasi', 'PersenController@unverifikasi');
         Route::get('/superadmin/persentase/puskesmas/{id}', 'PersenController@detailPuskesmas');
         Route::get('/superadmin/persentase/skpd/{skpd_id}/edit/{id}', 'PersenController@editPersen');
         Route::post('/superadmin/persentase/skpd/{skpd_id}/edit/{id}', 'PersenController@updatePersen');

@@ -41,7 +41,7 @@ SUPERADMIN
               <tbody>
 
                 @foreach ($data as $item)
-                <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
+                <tr style="font-size:14px; font-family:Arial, Helvetica, sans-serif">
                   <td>{{$no++}}</td>
                   <td>{{$item->nama}}<br />
                     {{$item->pegawai == null ? $item->pegawaiplt == null ? '-':'(PLT) ' . $item->pegawaiplt->nama
@@ -58,12 +58,12 @@ SUPERADMIN
                       onclick="return confirm('Ubah Menjadi Bukan SubKoordinator?');"><i class="fa fa-check"></i></a>
                     @endif
                   </td> --}}
-                  <td class="text-center; font-size:16px;">{{$item->persen_beban_kerja == null ? 0:$item->persen_beban_kerja}}</td>
-                  <td class="text-center; font-size:16px;">{{$item->persen_tambahan_beban_kerja == null ?
+                  <td class="text-center">{{$item->persen_beban_kerja == null ? 0:$item->persen_beban_kerja}}</td>
+                  <td class="text-center">{{$item->persen_tambahan_beban_kerja == null ?
                     0:$item->persen_tambahan_beban_kerja}}</td>
-                  <td class="text-center; font-size:16px;">{{$item->persen_prestasi_kerja == null ? 0:$item->persen_prestasi_kerja}}</td>
-                  <td class="text-center; font-size:16px;">{{$item->persen_kondisi_kerja == null ? 0:$item->persen_kondisi_kerja}}</td>
-                  <td class="text-center; font-size:16px;">{{$item->persen_kelangkaan_profesi == null ?
+                  <td class="text-center">{{$item->persen_prestasi_kerja == null ? 0:$item->persen_prestasi_kerja}}</td>
+                  <td class="text-center">{{$item->persen_kondisi_kerja == null ? 0:$item->persen_kondisi_kerja}}</td>
+                  <td class="text-center">{{$item->persen_kelangkaan_profesi == null ?
                     0:$item->persen_kelangkaan_profesi}}</td>
                   <td>
 

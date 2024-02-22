@@ -33,8 +33,8 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
                     <th>Prestasi<br /> Kerja</th>
                     <th>Kondisi<br /> Kerja</th>
                     <th>Kelangkaan<br /> Profesi</th>
-                    <th>Persentasi TPP<br />(BK+TBK+PK)</th>
-                    <th>Aksi</th>
+                    {{-- <th>Persentasi TPP<br />(BK+TBK+PK)</th>
+                    <th>Aksi</th> --}}
                   </tr>
                 </thead>
                 @php
@@ -70,13 +70,13 @@ ADMIN SKPD {{strtoupper(Auth::user()->name)}}
                     <td class="text-center">
                       {{$item->persen_kelangkaan_profesi == null ? 0 :$item->persen_kelangkaan_profesi}}
                     </td>
-                    <td class="text-center">
+                    {{-- <td class="text-center">
                       {{$item->persentase_tpp == null ? 0 :$item->persentase_tpp}}
                     </td>
                     <td class="text-center">
                       <a href="/home/admin/persen/edit/{{$item->id}}" class="btn btn-xs btn-primary"
                         class="btn btn-xs btn-primary"><i class="fas fa-edit"></i>edit</a>
-                    </td>
+                    </td> --}}
                   </tr>
                   @endforeach
 

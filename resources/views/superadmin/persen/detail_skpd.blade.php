@@ -41,9 +41,10 @@ SUPERADMIN
               <tbody>
 
                 @foreach ($data as $item)
-                <tr style="font-size:14px; font-family:Arial, Helvetica, sans-serif">
+                <tr style="font-size:12px; font-family:Arial, Helvetica, sans-serif">
                   <td>{{$no++}}</td>
-                  <td>{{$item->nama}}<br />
+                  <td>
+                    {!!wordwrap($item->nama,50,"<br>")!!}<br/>
                     {{$item->pegawai == null ? $item->pegawaiplt == null ? '-':'(PLT) ' . $item->pegawaiplt->nama
                     :$item->pegawai->nama
                     }}</td>

@@ -31,7 +31,7 @@ SUPERADMIN
                   <th>Prestasi<br /> Kerja</th>
                   <th>Kondisi<br /> Kerja</th>
                   <th>Kelangkaan <br /> Profesi</th>
-                  <th>Persen TPP <br />(BK + TBK + PK)</th>
+                  
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -65,7 +65,6 @@ SUPERADMIN
                   <td class="text-center">{{$item->persen_kondisi_kerja == null ? 0:$item->persen_kondisi_kerja}}</td>
                   <td class="text-center">{{$item->persen_kelangkaan_profesi == null ?
                     0:$item->persen_kelangkaan_profesi}}</td>
-                  <td class="text-center">{{$item->persentase_tpp == null ? 0:$item->persentase_tpp}}</td>
                   <td>
 
                     <a href="/superadmin/persentase/skpd/{{$id}}/edit/{{$item->id}}" class="btn btn-xs btn-primary"><i

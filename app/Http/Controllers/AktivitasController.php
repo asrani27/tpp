@@ -84,7 +84,11 @@ class AktivitasController extends Controller
         } else {
             $eselon = substr_replace($es->eselon->nama, "", -2);
             $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $es->nip . '/2024');
-            $rencana_aksi = json_decode($response->getBody()->getContents())->data;
+            if ($response->getStatusCode() == 200) {
+                $rencana_aksi = json_decode($response->getBody()->getContents())->data;
+            } else {
+                $rencana_aksi = null;
+            }
         }
 
         if (Auth::user()->pegawai->skp->count() == 0) {
@@ -136,7 +140,11 @@ class AktivitasController extends Controller
             } else {
                 $eselon = substr_replace($es->eselon->nama, "", -2);
                 $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $es->nip . '/2024');
-                $rencana_aksi = json_decode($response->getBody()->getContents())->data;
+                if ($response->getStatusCode() == 200) {
+                    $rencana_aksi = json_decode($response->getBody()->getContents())->data;
+                } else {
+                    $rencana_aksi = null;
+                }
             }
 
             $tahun  = Carbon::now()->year;

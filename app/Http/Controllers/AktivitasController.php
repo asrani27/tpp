@@ -87,7 +87,7 @@ class AktivitasController extends Controller
             if ($response->getStatusCode() == 200) {
                 $rencana_aksi = json_decode($response->getBody()->getContents())->data;
             } else {
-                $rencana_aksi = null;
+                $rencana_aksi = [];
             }
         }
 
@@ -143,7 +143,7 @@ class AktivitasController extends Controller
                 if ($response->getStatusCode() == 200) {
                     $rencana_aksi = json_decode($response->getBody()->getContents())->data;
                 } else {
-                    $rencana_aksi = null;
+                    $rencana_aksi = [];
                 }
             }
 

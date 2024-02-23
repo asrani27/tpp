@@ -48,10 +48,10 @@ TAMBAH AKTIVITAS HARIAN
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Kegiatan</label>
+            <label class="col-sm-2 col-form-label">Sasaran kinerja</label>
             <div class="col-sm-10">
               <select name="skp2023_id" class="form-control select2" required>
-                <option value="">-kegiatan-</option>
+                <option value="">-</option>
                 @foreach ($skp as $item)
                 <option value="{{$item->id}}" {{$item->id == old('skp_id') ? 'selected':''}}>{{$item->rhk}}
                 </option>
@@ -59,6 +59,22 @@ TAMBAH AKTIVITAS HARIAN
               </select>
             </div>
           </div>
+          @if ($eselon == 'IV' || $eselon == 'III' || $eselon == 'II')
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Rencana Aksi</label>
+            <div class="col-sm-10">
+              <select name="rencana_aksi" class="form-control select2">
+                <option value="">-</option>
+                @foreach ($rencana_aksi as $item)
+                <option value="{{$item->keterangan}}" {{$item->keterangan == old('rencana_aksi') ? 'selected':''}}>TW : {{$item->triwulan}} - {{$item->keterangan}}
+                </option>
+                
+                </option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+          @endif
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Nama Aktivitas</label>
             <div class="col-sm-10">

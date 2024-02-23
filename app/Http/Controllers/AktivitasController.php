@@ -5,16 +5,17 @@ namespace App\Http\Controllers;
 use App\Skp;
 
 use App\Jabatan;
-use App\Aktivitas;
 use App\Skp2023;
+use App\Aktivitas;
 use App\Skp2023Jf;
-use App\Skp2023Jpt;
 use Carbon\Carbon;
+use App\Skp2023Jpt;
 use App\Skp_periode;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class AktivitasController extends Controller
 {
@@ -76,6 +77,16 @@ class AktivitasController extends Controller
     {
         $tahun = Carbon::now()->year;
 
+        $es = Auth::user()->pegawai;
+        if ($es->eselon_id == null) {
+            $eselon = null;
+            $rencana_aksi = null;
+        } else {
+            $eselon = substr_replace($es->eselon->nama, "", -2);
+            $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $es->nip . '/2024');
+            $rencana_aksi = json_decode($response->getBody()->getContents())->data;
+        }
+
         if (Auth::user()->pegawai->skp->count() == 0) {
             toastr()->info('Harap isi SKP dulu');
             return back();
@@ -106,16 +117,28 @@ class AktivitasController extends Controller
             $jam_selesai = Carbon::parse($data->jam_selesai)->addHour()->format('H:i');
         }
 
-        return view('pegawai.aktivitas.create', compact('skp', 'tanggal', 'jam_mulai', 'jam_selesai'));
+        return view('pegawai.aktivitas.create', compact('skp', 'tanggal', 'jam_mulai', 'jam_selesai', 'eselon', 'rencana_aksi'));
     }
 
     public function edit($id)
     {
         $aktivitas = Aktivitas::find($id);
+
         if ($this->user()->pegawai->id != $aktivitas->pegawai_id) {
             toastr()->error('Aktivitas tidak bisa di edit, bukan milik anda', 'Authorize');
             return back();
         } else {
+
+            $es = Auth::user()->pegawai;
+            if ($es->eselon_id == null) {
+                $eselon = null;
+                $rencana_aksi = null;
+            } else {
+                $eselon = substr_replace($es->eselon->nama, "", -2);
+                $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $es->nip . '/2024');
+                $rencana_aksi = json_decode($response->getBody()->getContents())->data;
+            }
+
             $tahun  = Carbon::now()->year;
             $skp = $this->user()->pegawai->skp->where('is_aktif', 1)->first();
 
@@ -125,7 +148,7 @@ class AktivitasController extends Controller
                 $skp = Skp2023Jf::where('skp2023_id', $skp->id)->get();
             }
             $data   = $aktivitas;
-            return view('pegawai.aktivitas.edit', compact('skp', 'data'));
+            return view('pegawai.aktivitas.edit', compact('skp', 'data', 'eselon', 'rencana_aksi'));
         }
     }
 
@@ -209,6 +232,7 @@ class AktivitasController extends Controller
                     $menit = (strtotime($req->jam_selesai) - strtotime($req->jam_mulai)) / 60;
                     $attr['menit'] = $menit;
                     $attr['jenis'] = $skp->jenis;
+                    $attr['rencana_aksi'] = $req->rencana_aksi;
 
                     Aktivitas::create($attr);
                     toastr()->success('Aktivitas berhasil Di Simpan');
@@ -276,7 +300,8 @@ class AktivitasController extends Controller
                     $menit = (strtotime($req->jam_selesai) - strtotime($req->jam_mulai)) / 60;
                     $attr['menit'] = $menit;
                     $attr['jenis'] = $skp->jenis;
-                    //dd($attr);
+                    $attr['rencana_aksi'] = $req->rencana_aksi;
+
                     Aktivitas::find($id)->update($attr);
                     toastr()->success('Aktivitas berhasil Di Simpan');
                     return redirect('pegawai/aktivitas/harian');
@@ -291,19 +316,6 @@ class AktivitasController extends Controller
                 return back();
             }
         }
-
-        // if (strtotime($req->jam_selesai) > strtotime($req->jam_mulai)) {
-        //     $menit = (strtotime($req->jam_selesai) - strtotime($req->jam_mulai)) / 60;
-        //     $attr['menit'] = $menit;
-        //     dd(Aktivitas::find($id), $attr);
-        //     Aktivitas::find($id)->update($attr);
-        //     toastr()->success('Aktivitas berhasil Di Update');
-        //     return redirect('pegawai/aktivitas/harian');
-        // } else {
-        //     toastr()->error('Jam Selesai Tidak Bisa Kurang Dari Jam Mulai');
-        //     $req->flash();
-        //     return redirect('pegawai/aktivitas/harian');
-        // }
     }
 
     public function keberatan()

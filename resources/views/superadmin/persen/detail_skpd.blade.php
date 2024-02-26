@@ -25,7 +25,7 @@ SUPERADMIN
                   <th>Jabatan</th>
                   <th>Jenis</th>
                   <th>Kelas</th>
-                  {{-- <th>Subkoordinator</th> --}}
+                  <th>Subkoordinator</th>
                   <th>Beban <br /> Kerja</th>
                   <th>Tambahan <br /> Beban <br /> Kerja</th>
                   <th>Prestasi<br /> Kerja</th>
@@ -50,7 +50,7 @@ SUPERADMIN
                     }}</td>
                   <td>{{$item->jenis_jabatan}}</td>
                   <td>{{$item->kelas->nama}}</td>
-                  {{-- <td class="text-center">
+                  <td class="text-center">
                     @if ($item->subkoordinator == null)
                     <a href="/superadmin/persentase/subkoordinator/ya/{{$item->id}}" class="btn btn-xs btn-danger"
                       onclick="return confirm('Ubah Menjadi SubKoordinator?');"><i class="fa fa-times"></i></a>
@@ -58,7 +58,7 @@ SUPERADMIN
                     <a href="/superadmin/persentase/subkoordinator/tidak/{{$item->id}}" class="btn btn-xs btn-success"
                       onclick="return confirm('Ubah Menjadi Bukan SubKoordinator?');"><i class="fa fa-check"></i></a>
                     @endif
-                  </td> --}}
+                  </td>
                   <td class="text-center">{{$item->persen_beban_kerja == null ? 0:$item->persen_beban_kerja}}</td>
                   <td class="text-center">{{$item->persen_tambahan_beban_kerja == null ?
                     0:$item->persen_tambahan_beban_kerja}}</td>

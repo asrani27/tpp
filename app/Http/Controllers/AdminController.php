@@ -176,7 +176,7 @@ class AdminController extends Controller
 
                 DB::rollback();
                 $req->flash();
-                toastr()->error('Pegawai Gagal Diupdate');
+                toastr()->error($e);
                 return back();
             }
         }

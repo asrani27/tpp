@@ -176,7 +176,8 @@ class AdminController extends Controller
 
                 DB::rollback();
                 $req->flash();
-                toastr()->error($e);
+                dd($e);
+                toastr()->error('gagal di update');
                 return back();
             }
         }

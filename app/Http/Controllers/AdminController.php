@@ -161,13 +161,13 @@ class AdminController extends Controller
                     'jabatan_baru' => $pegawai->jabatan == null ? null : $pegawai->jabatan->nama,
                     'skpd_baru' => $pegawai->skpd == null ? null : $pegawai->skpd->nama,
                 ];
-                $client = new Client();
+                // $client = new Client();
 
-                $response = $client->request("POST", "https://idcardpegawai.banjarmasinkota.go.id/api/updatePegawai", [
-                    'form_params' => $param,
-                ]);
+                // $response = $client->request("POST", "https://idcardpegawai.banjarmasinkota.go.id/api/updatePegawai", [
+                //     'form_params' => $param,
+                // ]);
 
-                $resp = $response->getStatusCode();
+                // $resp = $response->getStatusCode();
 
                 DB::commit();
                 toastr()->success('Pegawai Berhasil di Update');
@@ -176,8 +176,8 @@ class AdminController extends Controller
 
                 DB::rollback();
                 $req->flash();
-                dd($e);
-                toastr()->error('gagal di update');
+
+                toastr()->error('Gagal integrasi dengan idcardpegawai');
                 return back();
             }
         }

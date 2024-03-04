@@ -1503,9 +1503,6 @@ class RekapitulasiController extends Controller
         //cuti bersama
         $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count() * 420;
 
-
-        //$data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->where('nip', '198904272011012002')->get();
-        // dd($data);
         if (Auth::user()->skpd->id == 34) {
             $dataDinas = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
             $dataIFK = RekapReguler::where('puskesmas_id', 37)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
@@ -1513,47 +1510,65 @@ class RekapitulasiController extends Controller
         } else {
             $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         }
-        //dd($data);
-        //$filter = $data->where('nip', '198710042006041001');
 
         foreach ($data as $item) {
             $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
-            $skp = Skp2023::where('pegawai_id', $pegawai_id)->where('is_aktif', 1)->first();
             //dd($item, $skp, $bulan);
-            if ($skp == null) {
-                $nilaiSKP = null;
-            } else {
-                if ($bulan == '01' || $bulan == '04' || $bulan == '07' || $bulan == '10') {
+
+            if ($bulan == '01' || $bulan == '02' || $bulan == '03') {
+                //ambil penilaian TW 4 tahun sebelumnya
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun - 1)->orderBy('id', 'DESC')->first();
+
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
                     $rhk = 'rhk_' . nilaiTW($bulan);
                     $rpk = 'rpk_' . nilaiTW($bulan);
                     $nilai_rhk = $skp[$rhk];
                     $nilai_rpk = $skp[$rpk];
                     $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
                 }
-                if ($bulan == '02' ||  $bulan == '05' || $bulan == '08' || $bulan == '11') {
+            }
 
-                    $search = RekapReguler::where('nip', $item->nip)->where('bulan', $bulan - 1)->where('tahun', $tahun)->first();
-
-                    if ($search == null) {
-                        $nilaiSKP = 'BAIK';
-                        // $searchPlt = RekapPlt::where('nip', $item->nip)->where('bulan', $bulan - 1)->where('tahun', $tahun)->first();
-                        // if ($searchPlt == null) {
-                        //     $nilaiSKP = null;
-                        // } else {
-                        //     $nilaiSKP = $searchPlt->dp_skp;
-                        // }
-                    } else {
-                        $nilaiSKP = $search->dp_skp;
-                    }
+            if ($bulan == '04' || $bulan == '05' || $bulan == '06') {
+                //ambil penilaian TW 1 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
                 }
-                if ($bulan == '03'  || $bulan == '06' || $bulan == '09' || $bulan == '12') {
-                    $search = RekapReguler::where('nip', $item->nip)->where('bulan', $bulan - 2)->where('tahun', $tahun)->first();
-                    //dd($search);
-                    if ($search == null) {
-                        $nilaiSKP = 'BAIK';
-                    } else {
-                        $nilaiSKP = $search->dp_skp;
-                    }
+            }
+
+            if ($bulan == '07' || $bulan == '08' || $bulan == '09') {
+                //ambil penilaian TW 2 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
+            if ($bulan == '10' || $bulan == '11' || $bulan == '12') {
+                //ambil penilaian TW 3 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
                 }
             }
 

@@ -1513,7 +1513,6 @@ class RekapitulasiController extends Controller
 
         foreach ($data as $item) {
             $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
-            //dd($item, $skp, $bulan);
 
             if ($bulan == '01' || $bulan == '02' || $bulan == '03') {
                 //ambil penilaian TW 4 tahun sebelumnya
@@ -1634,6 +1633,65 @@ class RekapitulasiController extends Controller
                 $absensi = $presensi->persen_kehadiran;
             }
 
+            $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
+
+            if ($bulan == '01' || $bulan == '02' || $bulan == '03') {
+                //ambil penilaian TW 4 tahun sebelumnya
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun - 1)->orderBy('id', 'DESC')->first();
+
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
+            if ($bulan == '04' || $bulan == '05' || $bulan == '06') {
+                //ambil penilaian TW 1 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
+            if ($bulan == '07' || $bulan == '08' || $bulan == '09') {
+                //ambil penilaian TW 2 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
+            if ($bulan == '10' || $bulan == '11' || $bulan == '12') {
+                //ambil penilaian TW 3 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
             $item->update([
                 'dp_aktivitas' => $aktivitas->sum('menit'),
                 'dp_ct'        => $dp_ct,
@@ -1643,7 +1701,7 @@ class RekapitulasiController extends Controller
                 'dp_cb'        => $cuti_bersama,
                 'dp_ta'        => $menit_aktivitas,
                 'dp_absensi'   => $absensi,
-                'dp_skp'       => 'baik'
+                'dp_skp'       => $nilaiSKP,
             ]);
         }
         toastr()->success('Berhasil di tarik');
@@ -1671,6 +1729,64 @@ class RekapitulasiController extends Controller
                 $absensi = $presensi->persen_kehadiran;
             }
 
+            $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
+
+            if ($bulan == '01' || $bulan == '02' || $bulan == '03') {
+                //ambil penilaian TW 4 tahun sebelumnya
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun - 1)->orderBy('id', 'DESC')->first();
+
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
+            if ($bulan == '04' || $bulan == '05' || $bulan == '06') {
+                //ambil penilaian TW 1 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
+            if ($bulan == '07' || $bulan == '08' || $bulan == '09') {
+                //ambil penilaian TW 2 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
+            if ($bulan == '10' || $bulan == '11' || $bulan == '12') {
+                //ambil penilaian TW 3 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
             $item->update([
                 'dp_aktivitas' => $aktivitas->sum('menit'),
                 'dp_ct'        => $dp_ct,
@@ -1680,7 +1796,7 @@ class RekapitulasiController extends Controller
                 'dp_cb'        => $cuti_bersama,
                 'dp_ta'        => $menit_aktivitas,
                 'dp_absensi'   => $absensi,
-                'dp_skp'       => 'baik'
+                'dp_skp'       => $nilaiSKP,
             ]);
         }
         toastr()->success('Berhasil di tarik');
@@ -1707,7 +1823,64 @@ class RekapitulasiController extends Controller
             } else {
                 $absensi = $presensi->persen_kehadiran;
             }
+            $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
 
+            if ($bulan == '01' || $bulan == '02' || $bulan == '03') {
+                //ambil penilaian TW 4 tahun sebelumnya
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun - 1)->orderBy('id', 'DESC')->first();
+
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
+            if ($bulan == '04' || $bulan == '05' || $bulan == '06') {
+                //ambil penilaian TW 1 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
+            if ($bulan == '07' || $bulan == '08' || $bulan == '09') {
+                //ambil penilaian TW 2 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
+            if ($bulan == '10' || $bulan == '11' || $bulan == '12') {
+                //ambil penilaian TW 3 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
             $item->update([
                 'dp_aktivitas' => $aktivitas->sum('menit'),
                 'dp_ct'        => $dp_ct,
@@ -1717,7 +1890,7 @@ class RekapitulasiController extends Controller
                 'dp_cb'        => $cuti_bersama,
                 'dp_ta'        => $menit_aktivitas,
                 'dp_absensi'   => $absensi,
-                'dp_skp'       => 'baik'
+                'dp_skp'       => $nilaiSKP,
             ]);
         }
         toastr()->success('Berhasil di tarik');

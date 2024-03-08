@@ -110,6 +110,14 @@
                 </p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="/admin/mutasikeluar" class="nav-link {{Request::is('admin/mutasikeluar') ? 'active' : ''}}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Mutasi Keluar Pemko
+                </p>
+            </a>
+        </li>
         @endif
         <li class="nav-item">
             <a href="/admin/org" class="nav-link" target="_blank">

@@ -171,6 +171,10 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('/admin/pensiun/add', 'PensiunController@adminStorePensiun');
         Route::get('/admin/pensiun/delete/{id}', 'PensiunController@adminDeletePensiun');
 
+        Route::get('/admin/mutasikeluar', 'MutasiKeluarController@index');
+        Route::post('/admin/mutasikeluar/add', 'MutasiKeluarController@store');
+        Route::get('/admin/mutasikeluar/delete/{id}', 'MutasiKeluarController@delete');
+
         Route::get('/admin/rspuskesmas', 'RsController@index');
         Route::get('/admin/rspuskesmas/add', 'RsController@create');
         Route::post('/admin/rspuskesmas/add', 'RsController@store');

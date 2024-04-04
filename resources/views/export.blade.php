@@ -22,7 +22,7 @@
         @foreach ($data as $key=>$item)
             <tr>
                 <td>{{$key + 1}}</td>
-                <td>{{$item['nip']}}</td>
+                <td>'{{$item['nip']}}</td>
                 <td>{{$item['nama']}}</td>
                 <td>{{$item['kelas']}}</td>
                 <td>{{$item['nama_jabatan']}}</td>

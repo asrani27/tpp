@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Skpd;
 use App\User;
+use App\Kelas;
 use App\Jabatan;
 use App\Pegawai;
 use App\Skp2023;
@@ -102,6 +103,38 @@ class HomeController extends Controller
         return view('puskesmas.home');
     }
 
+    public function export()
+    {
+        $data = Pegawai::get()->map(function ($item) {
+            if ($item->jabatan == null) {
+                $atasan = null;
+            } else {
+                if ($item->jabatan->atasan == null) {
+                    $atasan = null;
+                } else {
+                    $atasan = $item->jabatan->atasan->nama;
+                }
+            }
+            $item->nama_jabatan = $item->jabatan == null ? null : $item->jabatan->nama;
+            if ($item->jabatan == null) {
+                $kelas = null;
+            } else {
+                if ($item->jabatan->kelas == null) {
+                    $kelas = null;
+                } else {
+                    $kelas = $item->jabatan->kelas->nama;
+                }
+            }
+            $item->kelas = $kelas;
+            $item->skpd = $item->skpd == null ? null : $item->skpd->nama;
+
+            $item->atasan = $atasan;
+            return $item->only(['nip', 'nama', 'kelas', 'nama_jabatan', 'skpd', 'status_pns', 'is_aktif', 'atasan']);
+        });
+
+
+        return view('export', compact('data'));
+    }
     public function exportPegawai(Request $req)
     {
         $skpd_id = $req->skpd_id;

@@ -13,13 +13,13 @@ class PegawaiExport implements FromCollection, WithHeadings
      */
     private $skpd_id;
 
-    public function __construct(string $skpd_id)
-    {
-        $this->skpd_id = $skpd_id;
-    }
+    // public function __construct(string $skpd_id)
+    // {
+    //     $this->skpd_id = $skpd_id;
+    // }
     public function collection()
     {
-        $pegawai = Pegawai::where('skpd_id', $this->skpd_id)->get()->map(function ($item, $key) {
+        $pegawai = Pegawai::get()->map(function ($item, $key) {
             $item->nomor = $key + 1;
             $item->nip = '`' . $item->nip;
             if ($item->jabatan == null) {

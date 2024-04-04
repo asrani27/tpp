@@ -14,7 +14,6 @@
             <td>nama</td>
             <td>kelas</td>
             <td>jabatan</td>
-            <td>Kelas Jabatan</td>
             <td>skpd</td>
             <td>status pns</td>
             <td>is aktif</td>

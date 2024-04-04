@@ -105,7 +105,7 @@ class HomeController extends Controller
 
     public function export()
     {
-        $data = Pegawai::get()->map(function ($item) {
+        $data = Pegawai::orderBy('skpd_id', 'asc')->get()->map(function ($item) {
             if ($item->jabatan == null) {
                 $atasan = null;
             } else {

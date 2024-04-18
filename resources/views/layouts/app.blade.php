@@ -16,9 +16,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <body class="hold-transition sidebar-mini">
   <div class="bg-warning text-center">
-    Assalamualaikum, Mohon perhatian Bapak/Ibu. Sehubungan dengan berakhirnya Triwulan 4 Tahun 2023, dimohon kepada Bapak/Ibu untuk mengisi realisasi SKP Triwulan 4 di Aplikasi TPP, setelah itu meminta umpan balik dan penilaian dari Atasan.
+    Assalammualaikum... Mohon perhatian bapak/ibu pegawai. Sehubungan dengan akan berakhirnya Triwulan I, mohon kepada seluruh bapak/ibu pegawai untuk mengisi realisasi capaian Triwulan I di aplikasi TPP di menu SKP Baru, dan khusus untuk Pejabat Penilai mohon mengisi umpan balik di menu Penilaian SKP
 
-    Kemudian, untuk membuat periode Rencana SKP Tahun 2024 (1 Januari-31 Desember 2024) di Aplikasi TPP dan mengaktifkannya agar bisa mengisi aktivitas Tahun 2024. Batas waktu pengisian Tanggal 8 Januari 2024.    
+Pengisian Realisasi dan penilaian SKP ditutup di aplikasi TPP pada tanggal 13 Mei 2024  
   </div>
   <div class="wrapper">
     <!-- Navbar -->

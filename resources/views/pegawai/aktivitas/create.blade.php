@@ -59,7 +59,7 @@ TAMBAH AKTIVITAS HARIAN
               </select>
             </div>
           </div>
-          @if ($eselon == 'IV' || $eselon == 'III' || $eselon == 'II')
+          {{-- @if ($eselon == 'IV' || $eselon == 'III' || $eselon == 'II')
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Rencana Aksi</label>
             <div class="col-sm-10">
@@ -74,7 +74,7 @@ TAMBAH AKTIVITAS HARIAN
               </select>
             </div>
           </div>
-          @endif
+          @endif --}}
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Nama Aktivitas</label>
             <div class="col-sm-10">

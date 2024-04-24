@@ -78,18 +78,18 @@ class AktivitasController extends Controller
         $tahun = Carbon::now()->year;
 
         $es = Auth::user()->pegawai;
-        if ($es->eselon_id == null) {
-            $eselon = null;
-            $rencana_aksi = null;
-        } else {
-            $eselon = substr_replace($es->eselon->nama, "", -2);
-            $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $es->nip . '/2024');
-            if ($response->getStatusCode() == 200) {
-                $rencana_aksi = json_decode($response->getBody()->getContents())->data;
-            } else {
-                $rencana_aksi = [];
-            }
-        }
+        // if ($es->eselon_id == null) {
+        //     $eselon = null;
+        //     $rencana_aksi = null;
+        // } else {
+        //     $eselon = substr_replace($es->eselon->nama, "", -2);
+        //     $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $es->nip . '/2024');
+        //     if ($response->getStatusCode() == 200) {
+        //         $rencana_aksi = json_decode($response->getBody()->getContents())->data;
+        //     } else {
+        //         $rencana_aksi = [];
+        //     }
+        // }
 
         if (Auth::user()->pegawai->skp->count() == 0) {
             toastr()->info('Harap isi SKP dulu');
@@ -121,7 +121,7 @@ class AktivitasController extends Controller
             $jam_selesai = Carbon::parse($data->jam_selesai)->addHour()->format('H:i');
         }
 
-        return view('pegawai.aktivitas.create', compact('skp', 'tanggal', 'jam_mulai', 'jam_selesai', 'eselon', 'rencana_aksi'));
+        return view('pegawai.aktivitas.create', compact('skp', 'tanggal', 'jam_mulai', 'jam_selesai', 'eselon'));
     }
 
     public function edit($id)

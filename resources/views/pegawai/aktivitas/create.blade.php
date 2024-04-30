@@ -33,7 +33,7 @@ TAMBAH AKTIVITAS HARIAN
             <label class="col-sm-2 col-form-label">Tanggal</label>
             <div class="col-sm-10">
 
-              @if (Auth::user()->username == '197508312010011005' || Auth::user()->username == '198707242010011009'|| Auth::user()->username == '198003281998102001')
+              @if (Auth::user()->username == '197508312010011005' || Auth::user()->username == '198707242010011009')
               <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"
                 max="{{\Carbon\Carbon::today()->format('Y-m-d')}}">
               @else
@@ -59,7 +59,7 @@ TAMBAH AKTIVITAS HARIAN
               </select>
             </div>
           </div>
-          {{-- @if ($eselon == 'IV' || $eselon == 'III' || $eselon == 'II')
+          @if ($eselon == 'IV' || $eselon == 'III' || $eselon == 'II')
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Rencana Aksi</label>
             <div class="col-sm-10">
@@ -74,7 +74,7 @@ TAMBAH AKTIVITAS HARIAN
               </select>
             </div>
           </div>
-          @endif --}}
+          @endif
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Nama Aktivitas</label>
             <div class="col-sm-10">

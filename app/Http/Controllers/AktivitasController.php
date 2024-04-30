@@ -78,18 +78,18 @@ class AktivitasController extends Controller
         $tahun = Carbon::now()->year;
 
         $es = Auth::user()->pegawai;
-        // if ($es->eselon_id == null) {
-        //     $eselon = null;
-        //     $rencana_aksi = null;
-        // } else {
-        //     $eselon = substr_replace($es->eselon->nama, "", -2);
-        //     $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $es->nip . '/2024');
-        //     if ($response->getStatusCode() == 200) {
-        //         $rencana_aksi = json_decode($response->getBody()->getContents())->data;
-        //     } else {
-        //         $rencana_aksi = [];
-        //     }
-        // }
+        if ($es->eselon_id == null) {
+            $eselon = null;
+            $rencana_aksi = null;
+        } else {
+            $eselon = substr_replace($es->eselon->nama, "", -2);
+            $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $es->nip . '/2024');
+            if ($response->getStatusCode() == 200) {
+                $rencana_aksi = json_decode($response->getBody()->getContents())->data;
+            } else {
+                $rencana_aksi = [];
+            }
+        }
 
         if (Auth::user()->pegawai->skp->count() == 0) {
             toastr()->info('Harap isi SKP dulu');

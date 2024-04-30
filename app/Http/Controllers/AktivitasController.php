@@ -121,7 +121,7 @@ class AktivitasController extends Controller
             $jam_selesai = Carbon::parse($data->jam_selesai)->addHour()->format('H:i');
         }
 
-        return view('pegawai.aktivitas.create', compact('skp', 'tanggal', 'jam_mulai', 'jam_selesai'));
+        return view('pegawai.aktivitas.create', compact('skp', 'tanggal', 'jam_mulai', 'jam_selesai', 'eselon', 'rencana_aksi'));
     }
 
     public function edit($id)

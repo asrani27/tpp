@@ -26,7 +26,7 @@
             </a>
         </li>
         <li class="nav-item">
-        {{-- <li class="nav-item has-treeview menu-open">
+        <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link {{Request::is('pegawai/skp*') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-address-book"></i>
                 <p>
@@ -66,7 +66,7 @@
                 </li>
                 @endif
             </ul>
-        </li> --}}
+        </li>
 
         <li class="nav-item has-treeview  menu-open">
             <a href="#" class="nav-link {{Request::is('pegawai/aktivitas*') ? 'active' : ''}}">

@@ -132,7 +132,12 @@
                                 <td rowspan="{{$item->indikator->count()}}" class="text-center">{{$key+1}}</td>
                                 <td rowspan="{{$item->indikator->count()}}">{{$item->rhk_intervensi}}</td>
 
-                                <td rowspan="{{$item->indikator->count()}}">{{$item->rhk}} </td>
+                                <td rowspan="{{$item->indikator->count()}}">{{$item->rhk}} 
+                                
+                                    <br/>
+                                    <a href="#" data-id="{{$item->id}}" 
+                                         class="tambah-rencana-aksi"><i class="fas fa-plus-circle"></i> rencana aksi</a>
+                                </td>
                                 @php ($first = false) @endphp
                                 @endif
                                 <td>{{$item2->aspek}}
@@ -376,6 +381,43 @@
 
 {{-- SKP TAMBAHAN --}}
 
+{{-- RENCANA AKSI --}}
+<div class="modal fade" id="modal-ra" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form method="post" action="/pegawai/new-skp/periode/evaluasi/{{$u->id}}/triwulan/{{$triwulan}}/rencana_aksi" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header bg-gradient-primary" style="padding:10px">
+                    <h4 class="modal-title text-sm">Rencana Aksi</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Rencana Aksi</label>
+                        <select class="form-control" name="rencana_aksi">
+                           
+                            @foreach ($ra as $item)
+                                <option value="{{$item->id_sasaran}}">{{$item->keterangan}}</option>
+                            @endforeach
+
+                        </select>
+                        <input type="text" class="form-control" id="skp2023_jf_id" name="skp2023_jf_id">
+                    </div>
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="submit" class="btn btn-block btn-primary"><i class="fas fa-save"></i>
+                        Simpan Rencana Aksi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{-- rencana aksi --}}
 @endsection
 
 @push('js')
@@ -388,4 +430,11 @@ $(document).on('click', '.edit-realisasi', function() {
 });
  </script>
 
+
+<script>
+    $(document).on('click', '.tambah-rencana-aksi', function() {
+        $('#skp2023_jf_id').val($(this).data('id'));
+        $("#modal-ra").modal();
+    });
+     </script>
 @endpush

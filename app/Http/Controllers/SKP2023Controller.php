@@ -12,6 +12,7 @@ use App\Skp2023JfIndikator;
 use App\Skp2023JptIndikator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class SKP2023Controller extends Controller
 {
@@ -321,7 +322,73 @@ class SKP2023Controller extends Controller
                 return view('pegawai.skp2023.ja.index', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan'));
             }
         } else {
-            
+
+
+            $pegawai_id = Auth::user()->pegawai->id;
+            $u = Skp2023::findOrFail($id);
+            if ($pegawai_id != $u->pegawai_id) {
+                toastr()->error('Terdeteksi Percobaan Tindakan Penyalahgunaan, Akan dimasukkan ke History Keamanan', 'Authorize');
+                return back();
+            }
+
+            if ($u->jenis == 'JPT') {
+                $pn = json_decode($u->pn);
+                if ($u->pp == null) {
+                    $pp['nama'] = null;
+                    $pp['nip'] = null;
+                    $pp['pangkat'] = null;
+                    $pp['gol'] = null;
+                    $pp['jabatan'] = null;
+                    $pp['skpd'] = null;
+                } else {
+                    $pp = json_decode($u->pp);
+                }
+
+                $skp_utama = Skp2023Jpt::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();
+                $skp_tambahan = Skp2023Jpt::where('skp2023_id', $u->id)->where('jenis', 'tambahan')->get();
+
+                return view('pegawai.skp2023.jpt.index', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan'));
+            }
+
+            if ($u->jenis == 'JF') {
+
+                $pn = json_decode($u->pn);
+                if ($u->pp == null) {
+                    $pp['nama'] = null;
+                    $pp['nip'] = null;
+                    $pp['pangkat'] = null;
+                    $pp['gol'] = null;
+                    $pp['jabatan'] = null;
+                    $pp['skpd'] = null;
+                } else {
+                    $pp = json_decode($u->pp);
+                }
+
+                $skp_utama = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();
+                $skp_tambahan = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'tambahan')->get();
+
+                return view('pegawai.skp2023.jf.index', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan'));
+            }
+
+            if ($u->jenis == 'JA') {
+
+                $pn = json_decode($u->pn);
+                if ($u->pp == null) {
+                    $pp['nama'] = null;
+                    $pp['nip'] = null;
+                    $pp['pangkat'] = null;
+                    $pp['gol'] = null;
+                    $pp['jabatan'] = null;
+                    $pp['skpd'] = null;
+                } else {
+                    $pp = json_decode($u->pp);
+                }
+
+                $skp_utama = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();
+                $skp_tambahan = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'tambahan')->get();
+
+                return view('pegawai.skp2023.ja.index', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan'));
+            }
         }
     }
 
@@ -357,103 +424,222 @@ class SKP2023Controller extends Controller
 
     public function viewEvaluasi($id, $triwulan)
     {
-        $pegawai_id = Auth::user()->pegawai->id;
-        $u = Skp2023::findOrFail($id);
-        if ($triwulan == '1') {
-            $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 1)->get();
-            $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 2)->get();
-            $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 3)->get();
-            $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 4)->get();
-            $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 5)->get();
-            $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 6)->get();
-            $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 7)->get();
-        } elseif ($triwulan == '2') {
-            $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 1)->get();
-            $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 2)->get();
-            $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 3)->get();
-            $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 4)->get();
-            $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 5)->get();
-            $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 6)->get();
-            $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 7)->get();
-        } elseif ($triwulan == '3') {
-            $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 1)->get();
-            $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 2)->get();
-            $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 3)->get();
-            $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 4)->get();
-            $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 5)->get();
-            $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 6)->get();
-            $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 7)->get();
-        } elseif ($triwulan == '4') {
-            $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 1)->get();
-            $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 2)->get();
-            $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 3)->get();
-            $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 4)->get();
-            $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 5)->get();
-            $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 6)->get();
-            $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 7)->get();
-        }
-        if ($pegawai_id != $u->pegawai_id) {
-            toastr()->error('Terdeteksi Percobaan Tindakan Penyalahgunaan, Akan dimasukkan ke History Keamanan', 'Authorize');
-            return back();
-        }
 
-        if ($u->jenis == 'JPT') {
-            $pn = json_decode($u->pn);
-            if ($u->pp == null) {
-                $pp['nama'] = null;
-                $pp['nip'] = null;
-                $pp['pangkat'] = null;
-                $pp['gol'] = null;
-                $pp['jabatan'] = null;
-                $pp['skpd'] = null;
-            } else {
-                $pp = json_decode($u->pp);
+
+        $eselon_id = [5, 6, 7, 8, 9, 10, 11];
+        $eselon = Auth::user()->pegawai->eselon_id;
+        $checkEselon = array_search($eselon, $eselon_id);
+
+        if ($checkEselon == false) {
+
+            $pegawai_id = Auth::user()->pegawai->id;
+            $u = Skp2023::findOrFail($id);
+            if ($triwulan == '1') {
+                $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 1)->get();
+                $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 2)->get();
+                $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 3)->get();
+                $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 4)->get();
+                $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 5)->get();
+                $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 6)->get();
+                $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 7)->get();
+            } elseif ($triwulan == '2') {
+                $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 1)->get();
+                $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 2)->get();
+                $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 3)->get();
+                $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 4)->get();
+                $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 5)->get();
+                $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 6)->get();
+                $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 7)->get();
+            } elseif ($triwulan == '3') {
+                $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 1)->get();
+                $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 2)->get();
+                $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 3)->get();
+                $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 4)->get();
+                $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 5)->get();
+                $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 6)->get();
+                $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 7)->get();
+            } elseif ($triwulan == '4') {
+                $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 1)->get();
+                $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 2)->get();
+                $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 3)->get();
+                $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 4)->get();
+                $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 5)->get();
+                $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 6)->get();
+                $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 7)->get();
+            }
+            if ($pegawai_id != $u->pegawai_id) {
+                toastr()->error('Terdeteksi Percobaan Tindakan Penyalahgunaan, Akan dimasukkan ke History Keamanan', 'Authorize');
+                return back();
             }
 
-            $skp_utama = Skp2023Jpt::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();
-            $skp_tambahan = Skp2023Jpt::where('skp2023_id', $u->id)->where('jenis', 'tambahan')->get();
+            if ($u->jenis == 'JPT') {
+                $pn = json_decode($u->pn);
+                if ($u->pp == null) {
+                    $pp['nama'] = null;
+                    $pp['nip'] = null;
+                    $pp['pangkat'] = null;
+                    $pp['gol'] = null;
+                    $pp['jabatan'] = null;
+                    $pp['skpd'] = null;
+                } else {
+                    $pp = json_decode($u->pp);
+                }
 
-            return view('pegawai.skp2023.jpt.evaluasi', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan', 'triwulan'));
-        }
+                $skp_utama = Skp2023Jpt::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();
+                $skp_tambahan = Skp2023Jpt::where('skp2023_id', $u->id)->where('jenis', 'tambahan')->get();
 
-        if ($u->jenis == 'JF') {
-
-            $pn = json_decode($u->pn);
-            if ($u->pp == null) {
-                $pp['nama'] = null;
-                $pp['nip'] = null;
-                $pp['pangkat'] = null;
-                $pp['gol'] = null;
-                $pp['jabatan'] = null;
-                $pp['skpd'] = null;
-            } else {
-                $pp = json_decode($u->pp);
+                return view('pegawai.skp2023.jpt.evaluasi', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan', 'triwulan'));
             }
 
-            $skp_utama = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();
-            $skp_tambahan = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'tambahan')->get();
+            if ($u->jenis == 'JF') {
 
-            return view('pegawai.skp2023.jf.evaluasi', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan', 'triwulan'));
-        }
+                $pn = json_decode($u->pn);
+                if ($u->pp == null) {
+                    $pp['nama'] = null;
+                    $pp['nip'] = null;
+                    $pp['pangkat'] = null;
+                    $pp['gol'] = null;
+                    $pp['jabatan'] = null;
+                    $pp['skpd'] = null;
+                } else {
+                    $pp = json_decode($u->pp);
+                }
 
-        if ($u->jenis == 'JA') {
+                $skp_utama = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();
+                $skp_tambahan = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'tambahan')->get();
 
-            $pn = json_decode($u->pn);
-            if ($u->pp == null) {
-                $pp['nama'] = null;
-                $pp['nip'] = null;
-                $pp['pangkat'] = null;
-                $pp['gol'] = null;
-                $pp['jabatan'] = null;
-                $pp['skpd'] = null;
-            } else {
-                $pp = json_decode($u->pp);
+                return view('pegawai.skp2023.jf.evaluasi', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan', 'triwulan'));
             }
 
-            $skp_utama = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();
-            $skp_tambahan = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'tambahan')->get();
+            if ($u->jenis == 'JA') {
 
-            return view('pegawai.skp2023.ja.evaluasi', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan', 'triwulan'));
+                $pn = json_decode($u->pn);
+                if ($u->pp == null) {
+                    $pp['nama'] = null;
+                    $pp['nip'] = null;
+                    $pp['pangkat'] = null;
+                    $pp['gol'] = null;
+                    $pp['jabatan'] = null;
+                    $pp['skpd'] = null;
+                } else {
+                    $pp = json_decode($u->pp);
+                }
+
+                $skp_utama = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();
+                $skp_tambahan = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'tambahan')->get();
+
+                return view('pegawai.skp2023.ja.evaluasi', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan', 'triwulan'));
+            }
+        } else {
+
+            $nip = Auth::user()->pegawai->nip;
+            $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $nip . '/2024');
+            //dd(json_decode($response->getBody()->getContents())->data);
+            if ($response->getStatusCode() == 200) {
+                $rencana_aksi = json_decode($response->getBody()->getContents())->data;
+            } else {
+                $rencana_aksi = [];
+            }
+            $ra = collect($rencana_aksi)->where('triwulan', $triwulan);
+
+            $pegawai_id = Auth::user()->pegawai->id;
+            $u = Skp2023::findOrFail($id);
+            if ($triwulan == '1') {
+                $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 1)->get();
+                $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 2)->get();
+                $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 3)->get();
+                $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 4)->get();
+                $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 5)->get();
+                $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 6)->get();
+                $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW1')->where('pkid', 7)->get();
+            } elseif ($triwulan == '2') {
+                $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 1)->get();
+                $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 2)->get();
+                $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 3)->get();
+                $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 4)->get();
+                $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 5)->get();
+                $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 6)->get();
+                $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW2')->where('pkid', 7)->get();
+            } elseif ($triwulan == '3') {
+                $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 1)->get();
+                $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 2)->get();
+                $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 3)->get();
+                $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 4)->get();
+                $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 5)->get();
+                $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 6)->get();
+                $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW3')->where('pkid', 7)->get();
+            } elseif ($triwulan == '4') {
+                $u['ekspektasi1'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 1)->get();
+                $u['ekspektasi2'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 2)->get();
+                $u['ekspektasi3'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 3)->get();
+                $u['ekspektasi4'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 4)->get();
+                $u['ekspektasi5'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 5)->get();
+                $u['ekspektasi6'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 6)->get();
+                $u['ekspektasi7'] = Skp2023Ekspektasi::where('skp2023_id', $id)->where('jenis', 'TW4')->where('pkid', 7)->get();
+            }
+            if ($pegawai_id != $u->pegawai_id) {
+                toastr()->error('Terdeteksi Percobaan Tindakan Penyalahgunaan, Akan dimasukkan ke History Keamanan', 'Authorize');
+                return back();
+            }
+
+            if ($u->jenis == 'JPT') {
+                $pn = json_decode($u->pn);
+                if ($u->pp == null) {
+                    $pp['nama'] = null;
+                    $pp['nip'] = null;
+                    $pp['pangkat'] = null;
+                    $pp['gol'] = null;
+                    $pp['jabatan'] = null;
+                    $pp['skpd'] = null;
+                } else {
+                    $pp = json_decode($u->pp);
+                }
+
+                $skp_utama = Skp2023Jpt::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();
+                $skp_tambahan = Skp2023Jpt::where('skp2023_id', $u->id)->where('jenis', 'tambahan')->get();
+
+                return view('pegawai.skp2023.jpt.evaluasi', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan', 'triwulan', 'ra'));
+            }
+
+            if ($u->jenis == 'JF') {
+
+                $pn = json_decode($u->pn);
+                if ($u->pp == null) {
+                    $pp['nama'] = null;
+                    $pp['nip'] = null;
+                    $pp['pangkat'] = null;
+                    $pp['gol'] = null;
+                    $pp['jabatan'] = null;
+                    $pp['skpd'] = null;
+                } else {
+                    $pp = json_decode($u->pp);
+                }
+
+                $skp_utama = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();
+                $skp_tambahan = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'tambahan')->get();
+
+                return view('pegawai.skp2023.jf.evaluasi', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan', 'triwulan', 'ra'));
+            }
+
+            if ($u->jenis == 'JA') {
+
+                $pn = json_decode($u->pn);
+                if ($u->pp == null) {
+                    $pp['nama'] = null;
+                    $pp['nip'] = null;
+                    $pp['pangkat'] = null;
+                    $pp['gol'] = null;
+                    $pp['jabatan'] = null;
+                    $pp['skpd'] = null;
+                } else {
+                    $pp = json_decode($u->pp);
+                }
+
+                $skp_utama = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();
+                $skp_tambahan = Skp2023Jf::where('skp2023_id', $u->id)->where('jenis', 'tambahan')->get();
+
+                return view('pegawai.skp2023.ja.evaluasi', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan', 'triwulan', 'ra'));
+            }
         }
     }
     public function deletePeriode($id)

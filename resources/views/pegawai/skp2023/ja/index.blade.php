@@ -132,7 +132,7 @@
                                         data-rhk="{{$item->rhk}}" data-rhk_intervensi="{{$item->rhk_intervensi}}" class="edit-skp-utama"><i class="fas fa-edit"></i></a>
                                     <a href="/pegawai/new-skp/jf/utama/rhk/{{$item->id}}/delete" onclick="return confirm('Yakin ingin dihapus');"><i class="fas fa-trash"></i></a></td>
 
-                                <td rowspan="{{$item->indikator->count() + 1}}">{{$item->rhk}} </td>
+                                <td rowspan="{{$item->indikator->count() + 1}}">{{$item->rhk}}</td>
                                 @php ($first = false) @endphp
                                 @endif
                                 <td>{{$item2->aspek}} 

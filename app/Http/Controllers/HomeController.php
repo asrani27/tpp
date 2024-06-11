@@ -24,10 +24,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class HomeController extends Controller
 {
+
+    public function upload()
+    {
+        return view('upload');
+    }
+
+    public function storeUpload(Request $req)
+    {
+        Storage::disk('ftp')->put($req->file, 'Contents');
+        return back();
+    }
     public function checkbapintar(Request $req)
     {
         //check email

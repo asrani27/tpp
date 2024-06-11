@@ -50,7 +50,7 @@ return [
 
         'ftp' => [
             'driver' => 'local',
-            'root' => '/mnt/my_ftp/Proxmox',
+            'root' => '/mnt/my_ftp',
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],

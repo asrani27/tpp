@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/testinguploadfiletonas', 'HomeController@upload');
-Route::post('/testinguploadfiletonas', 'HomeController@storeUpload');
+// Route::get('/dataasnte', 'HomeController@upload');
+// Route::post('/testinguploadfiletonas', 'HomeController@storeUpload');
 
 Route::group(['middleware' => ['XSS']], function () {
     Route::get('/', 'LoginController@index');

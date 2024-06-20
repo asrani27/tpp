@@ -472,7 +472,7 @@ class SKP2023Controller extends Controller
                 return back();
             }
 
-            dd($u->jenis);
+
             if ($u->jenis == 'JPT') {
                 $pn = json_decode($u->pn);
                 if ($u->pp == null) {

@@ -397,14 +397,14 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Rencana Aksi</label>
-                        <select class="form-control" name="rencana_aksi">
+                        <select class="form-control" name="rencana_aksi" required>
                            
                             @foreach ($ra as $item)
                                 <option value="{{$item->id_sasaran}}">{{$item->keterangan}}</option>
                             @endforeach
 
                         </select>
-                        <input type="text" class="form-control" id="skp2023_jf_id" name="skp2023_jf_id">
+                        <input type="hidden" class="form-control" id="skp2023_jf_id" name="skp2023_jf_id">
                     </div>
                 </div>
 

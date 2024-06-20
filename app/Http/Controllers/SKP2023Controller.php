@@ -429,7 +429,7 @@ class SKP2023Controller extends Controller
         $eselon_id = [5, 6, 7, 8, 9, 10, 11];
         $eselon = Auth::user()->pegawai->eselon_id;
         $checkEselon = array_search($eselon, $eselon_id);
-
+        dd($checkEselon);
         if ($checkEselon == false) {
 
             $pegawai_id = Auth::user()->pegawai->id;

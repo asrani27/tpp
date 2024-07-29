@@ -10,10 +10,19 @@ class Skp2023 extends Model
     protected $guarded = ['id'];
     public $timestamps = false;
 
+    public function pegawai()
+    {
+        return $this->belongsTo(Pegawai::class, 'pegawai_id');
+    }
     public function jpt()
     {
         return $this->hasMany(Skp2023Jpt::class, 'skp2023_id');
     }
+    public function rencana_aksi()
+    {
+        return $this->hasMany(RencanaAksi::class, 'skp2023_id');
+    }
+
 
     public function ekspektasi1()
     {

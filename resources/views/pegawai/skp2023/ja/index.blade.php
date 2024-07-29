@@ -159,6 +159,51 @@
                             <td></td>
                             <td></td>
                         </tr>
+
+                        <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
+                            <th colspan="6">RENCANA AKSI (Tarik Dari Kayuh Baimbai) </th>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                <a href="/pegawai/new-skp/periode/view/{{$u->id}}/tarik-rencana-aksi" class="btn btn-xs btn-primary "><i class="fas fa-sync"></i> Tarik Rencana Aksi</a>
+                            </td>
+                        </tr>
+
+                        <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
+                            <td colspan="6">
+                                <table>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tahun</th>
+                                        <th>Triwulan</th>
+                                        <th>Keterangan</th>
+                                        <th>Satuan</th>
+                                        <th>Target</th>
+                                        <th>Realisasi</th>
+                                        <th>Bukti Dukung</th>
+                                        <th>Masalah</th>
+                                        <th>Umpan Balik Atasan</th>
+                                    </tr>
+
+                                @foreach ($u->rencana_aksi as $key => $item)
+
+                                <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
+                                    <td>{{$key + 1}}</td>
+                                    <td>{{$item->tahun}}</td>
+                                    <td>{{$item->triwulan}}</td>
+                                    <td>{{$item->keterangan}}</td>
+                                    <td>{{$item->satuan}}</td>
+                                    <td>{{$item->target_kinerja}}</td>
+                                    <td><a href="#" class="btn btn-xs btn-primary skp-utama"><i class="fas fa-plus-circle"> </a></td>
+                                    <td><a href="#" class="btn btn-xs btn-primary skp-utama"><i class="fas fa-plus-circle"> </a></td>
+                                        <td><a href="#" class="btn btn-xs btn-primary skp-utama"><i class="fas fa-plus-circle"> </a></td>
+                                            <td><a href="#" class="btn btn-xs btn-primary skp-utama"><i class="fas fa-plus-circle"> </a></td>
+                                </tr>
+                                @endforeach
+                                </table>
+                            </td>
+                        </tr>
+
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
                             <th colspan="6">B.TAMBAHAN </th>
                         </tr>

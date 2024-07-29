@@ -371,6 +371,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('/pegawai/new-skp/periode/edit/{id}', 'SKP2023Controller@updatePeriode');
         Route::get('/pegawai/new-skp/periode/delete/{id}', 'SKP2023Controller@deletePeriode');
         Route::get('/pegawai/new-skp/periode/view/{id}', 'SKP2023Controller@viewPeriode');
+        Route::get('/pegawai/new-skp/periode/view/{id}/tarik-rencana-aksi', 'SKP2023Controller@tarikRencanaAksi');
         Route::get('/pegawai/new-skp/periode/evaluasi/{id}/triwulan/{triwulan}', 'SKP2023Controller@viewEvaluasi');
         Route::post('/pegawai/new-skp/periode/evaluasi/{id}/triwulan/{triwulan}/realisasijpt', 'SKP2023Controller@realJPT');
         Route::post('/pegawai/new-skp/periode/evaluasi/{id}/triwulan/{triwulan}/realisasijf', 'SKP2023Controller@realJF');

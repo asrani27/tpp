@@ -7,6 +7,7 @@ use App\Skp2023;
 use App\Skp2023Jf;
 use Carbon\Carbon;
 use App\Skp2023Jpt;
+use App\RencanaAksi;
 use App\Skp2023Ekspektasi;
 use App\Skp2023JfIndikator;
 use App\Skp2023JptIndikator;
@@ -248,6 +249,31 @@ class SKP2023Controller extends Controller
         }
     }
 
+    public function tarikRencanaAksi($id)
+    {
+        $u = Skp2023::findOrFail($id);
+        $pegawai = $u->pegawai;
+
+        $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $pegawai->nip . '/2024');
+        $data = json_decode($response->getBody()->getContents())->data;
+
+        foreach ($data as $i) {
+            $check = RencanaAksi::where('tahun', '2024')->where('keterangan', $i->keterangan)->first();
+            if ($check == null) {
+                $n = new RencanaAksi;
+                $n->nip = $pegawai->nip;
+                $n->skp2023_id = $u->id;
+                $n->tahun = $i->tahun;
+                $n->triwulan = $i->triwulan;
+                $n->keterangan = $i->keterangan;
+                $n->satuan = $i->satuan;
+                $n->target_kinerja = $i->target_kinerja;
+                $n->save();
+            } else {
+            }
+        }
+        return back();
+    }
     public function viewPeriode($id)
     {
 
@@ -536,7 +562,7 @@ class SKP2023Controller extends Controller
 
             $nip = Auth::user()->pegawai->nip;
             $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $nip . '/2024');
-            //dd(json_decode($response->getBody()->getContents())->data);
+
             if ($response->getStatusCode() == 200) {
                 $rencana_aksi = json_decode($response->getBody()->getContents())->data;
             } else {

@@ -418,6 +418,17 @@ class SKP2023Controller extends Controller
         }
     }
 
+    public function storeRencanaAksi(Request $req)
+    {
+
+        RencanaAksi::find($req->ra_id)->update([
+            'realisasi' => $req->realisasi,
+            'bukti_dukung' => $req->bukti_dukung,
+            'masalah' => $req->masalah
+        ]);
+        toastr()->success('disimpan', 'success');
+        return back();
+    }
     public function realJPT(Request $req, $id, $triwulan)
     {
         //Store realiasasi JPT
@@ -561,14 +572,14 @@ class SKP2023Controller extends Controller
         } else {
 
             $nip = Auth::user()->pegawai->nip;
-            $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $nip . '/2024');
+            // $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $nip . '/2024');
 
-            if ($response->getStatusCode() == 200) {
-                $rencana_aksi = json_decode($response->getBody()->getContents())->data;
-            } else {
-                $rencana_aksi = [];
-            }
-            $ra = collect($rencana_aksi)->where('triwulan', $triwulan);
+            // if ($response->getStatusCode() == 200) {
+            //     $rencana_aksi = json_decode($response->getBody()->getContents())->data;
+            // } else {
+            //     $rencana_aksi = [];
+            // }
+            $ra = RencanaAksi::where('nip', $nip)->where('triwulan', $triwulan)->get();
 
             $pegawai_id = Auth::user()->pegawai->id;
             $u = Skp2023::findOrFail($id);

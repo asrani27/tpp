@@ -183,6 +183,7 @@
                                         <th>Bukti Dukung</th>
                                         <th>Masalah</th>
                                         <th>Umpan Balik Atasan</th>
+                                        <th></th>
                                     </tr>
 
                                 @foreach ($u->rencana_aksi as $key => $item)
@@ -194,10 +195,11 @@
                                     <td>{{$item->keterangan}}</td>
                                     <td>{{$item->satuan}}</td>
                                     <td>{{$item->target_kinerja}}</td>
-                                    <td><a href="#" class="btn btn-xs btn-primary skp-utama"><i class="fas fa-plus-circle"> </a></td>
-                                    <td><a href="#" class="btn btn-xs btn-primary skp-utama"><i class="fas fa-plus-circle"> </a></td>
-                                        <td><a href="#" class="btn btn-xs btn-primary skp-utama"><i class="fas fa-plus-circle"> </a></td>
-                                            <td><a href="#" class="btn btn-xs btn-primary skp-utama"><i class="fas fa-plus-circle"> </a></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><a href="#" class="btn btn-xs btn-primary isirencana"><i class="fas fa-plus-circle"></td>
                                 </tr>
                                 @endforeach
                                 </table>

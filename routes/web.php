@@ -357,6 +357,7 @@ Route::group(['middleware' => ['XSS']], function () {
 
         //Route::post('/pegawai/profil/gantipass', 'ProfilController@gantiPassPegawai');
 
+        Route::post('/pegawai/rencana-aksi', 'SKP2023Controller@storeRencanaAksi');
         Route::get('/pegawai/new-skp', 'SKP2023Controller@index');
         Route::get('/pegawai/new-skp/updatepegawai/{id}', 'SKP2023Controller@updatePegawaiSKP');
 

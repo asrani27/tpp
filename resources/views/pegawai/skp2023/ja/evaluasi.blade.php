@@ -20,7 +20,7 @@
               <div class="card">
                 <div class="card-body p-2 text-center text-sm">
                     <strong>
-                    SASARAN KINERJA PEGAWAI<br/>
+                    SASARAN KINERJA PEGAWAI.<br/>
                     JA<br/>
                     PENDEKATAN HASIL KERJA KUANTITATIF<br/>
                     TRIWULAN : {{$triwulan}}</strong>
@@ -135,8 +135,6 @@
                                 <td rowspan="{{$item->indikator->count()}}">{{$item->rhk}} 
                                 
                                     <br/>
-                                    <a href="#" data-id="{{$item->id}}" 
-                                         class="tambah-rencana-aksi"><i class="fas fa-plus-circle"></i> rencana aksi</a>
                                 </td>
                                 @php ($first = false) @endphp
                                 @endif
@@ -150,6 +148,52 @@
                             </tr>
                             @endforeach
                         @endforeach
+                        <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
+                            <th colspan="6">RENCANA AKSI (Tarik Dari Kayuh Baimbai) </th>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                <a href="/pegawai/new-skp/periode/view/{{$u->id}}/tarik-rencana-aksi" class="btn btn-xs btn-primary "><i class="fas fa-sync"></i> Tarik Rencana Aksi</a>
+                            </td>
+                        </tr>
+
+                        <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
+                            <td colspan="6">
+                                <table>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tahun</th>
+                                        <th>Triwulan</th>
+                                        <th>Keterangan</th>
+                                        <th>Satuan</th>
+                                        <th>Target</th>
+                                        <th>Realisasi</th>
+                                        <th>Bukti Dukung</th>
+                                        <th>Masalah</th>
+                                        <th>Umpan Balik Atasan</th>
+                                        <th></th>
+                                    </tr>
+
+                                @foreach ($u->rencana_aksi->where('triwulan',1) as $key => $item)
+
+                                <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
+                                    <td>{{$key + 1}}</td>
+                                    <td>{{$item->tahun}}</td>
+                                    <td>{{$item->triwulan}}</td>
+                                    <td>{{$item->keterangan}}</td>
+                                    <td>{{$item->satuan}}</td>
+                                    <td>{{$item->target_kinerja}}</td>
+                                    <td>{{$item->realisasi}}</td>
+                                    <td>{{$item->bukti_dukung}}</td>
+                                    <td>{{$item->masalah}}</td>
+                                    <td></td>
+                                    <td><a href="#" class="btn btn-xs btn-primary rencana-aksi" data-id="{{$item->id}}"><i class="fas fa-plus-circle"></td>
+                                </tr>
+                                @endforeach
+                                </table>
+                            </td>
+                        </tr>
+
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
                             <th colspan="8">B.TAMBAHAN </th>
                         </tr>
@@ -385,7 +429,7 @@
 <div class="modal fade" id="modal-ra" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <form method="post" action="/pegawai/new-skp/periode/evaluasi/{{$u->id}}/triwulan/{{$triwulan}}/rencana_aksi" enctype="multipart/form-data">
+            <form method="post" action="/pegawai/rencana-aksi" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header bg-gradient-primary" style="padding:10px">
                     <h4 class="modal-title text-sm">Rencana Aksi</h4>
@@ -396,15 +440,17 @@
 
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Rencana Aksi</label>
-                        <select class="form-control" name="rencana_aksi" required>
-                           
-                            @foreach ($ra as $item)
-                                <option value="{{$item->id_sasaran}}">{{$item->keterangan}}</option>
-                            @endforeach
-
-                        </select>
-                        <input type="hidden" class="form-control" id="skp2023_jf_id" name="skp2023_jf_id">
+                        <label>Realisasi</label>
+                        <input type="text" class="form-control" name="realisasi">
+                        <input type="hidden" class="form-control" id="ra_id" name="ra_id">
+                    </div>
+                    <div class="form-group">
+                        <label>Bukti Dukung</label>
+                        <input type="text" class="form-control" name="bukti_dukung">
+                    </div>
+                    <div class="form-group">
+                        <label>Masalah</label>
+                        <input type="text" class="form-control" name="masalah">
                     </div>
                 </div>
 
@@ -432,8 +478,8 @@ $(document).on('click', '.edit-realisasi', function() {
 
 
 <script>
-    $(document).on('click', '.tambah-rencana-aksi', function() {
-        $('#skp2023_jf_id').val($(this).data('id'));
+    $(document).on('click', '.rencana-aksi', function() {
+        $('#ra_id').val($(this).data('id'));
         $("#modal-ra").modal();
     });
      </script>

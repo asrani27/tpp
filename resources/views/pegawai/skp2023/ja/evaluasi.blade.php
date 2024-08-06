@@ -174,7 +174,8 @@
                                         <th></th>
                                     </tr>
 
-                                @foreach ($u->rencana_aksi->where('triwulan',1) as $key => $item)
+                                    
+                                @foreach ($u->rencana_aksi->where('triwulan',$triwulan) as $key => $item)
 
                                 <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                                     <td>{{$key + 1}}</td>

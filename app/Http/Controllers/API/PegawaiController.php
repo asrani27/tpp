@@ -8,10 +8,28 @@ use App\Aktivitas;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\RekapTpp;
+use App\Skp2023;
 
 class PegawaiController extends Controller
 {
+    public function rhk($nip)
+    {
+        $pegawai = Pegawai::where('nip', $nip)->first();
+        $skp2023_id = Skp2023::where('pegawai_id', $pegawai->id)->where('is_aktif', 1)->first();
+        if ($skp2023_id != null) {
 
+            $data['message_code']  = 200;
+            $data['message']       = 'data ditemukan';
+            $data['data_pegawai']  = json_decode($skp2023_id->pn);
+            $data['data_rhk']      = $skp2023_id->jf->map(function ($item) {
+                return $item->only('id', 'rhk');
+            });
+        } else {
+            $data['message_code']  = 404;
+            $data['message']       = 'data tidak ditemukan';
+        }
+        return response()->json($data);
+    }
     public function allpegawai()
     {
         $pegawai = Pegawai::with('jabatan', 'pangkat')->get();

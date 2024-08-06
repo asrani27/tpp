@@ -160,7 +160,7 @@
                             <td></td>
                         </tr>
 
-                        <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
+                        {{-- <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
                             <th colspan="6">RENCANA AKSI (Tarik Dari Kayuh Baimbai) </th>
                         </tr>
                         <tr>
@@ -204,7 +204,7 @@
                                 @endforeach
                                 </table>
                             </td>
-                        </tr>
+                        </tr> --}}
 
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
                             <th colspan="6">B.TAMBAHAN </th>

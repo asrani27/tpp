@@ -30,7 +30,6 @@ class PegawaiController extends Controller
             $data['message_code']  = 404;
             $data['message']       = 'data tidak ditemukan';
         }
-        return response()->json($data);
 
         return response()->json($data);
     }

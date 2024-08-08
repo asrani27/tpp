@@ -22,6 +22,7 @@ class Skp2023 extends Model
     {
         return $this->hasMany(Skp2023Jf::class, 'skp2023_id');
     }
+
     public function rencana_aksi()
     {
         return $this->hasMany(RencanaAksi::class, 'skp2023_id');

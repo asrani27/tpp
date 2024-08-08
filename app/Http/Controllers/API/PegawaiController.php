@@ -8,6 +8,7 @@ use App\Aktivitas;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\RekapTpp;
+use App\RencanaAksi;
 use App\Skp2023;
 
 class PegawaiController extends Controller
@@ -22,12 +23,15 @@ class PegawaiController extends Controller
             $data['message']       = 'data ditemukan';
             $data['data_pegawai']  = json_decode($skp2023_id->pn);
             $data['data_rhk']      = $skp2023_id->jf->map(function ($item) {
-                return $item->only('id', 'rhk');
+                $item['rencana_aksi'] = RencanaAksi::where('rhk_id', $item->id)->get()->map->only('id', 'triwulan', 'tahun', 'keterangan', 'realisasi', 'bukti_dukung', 'masalah');
+                return $item->only('id', 'rhk', 'rencana_aksi');
             });
         } else {
             $data['message_code']  = 404;
             $data['message']       = 'data tidak ditemukan';
         }
+        return response()->json($data);
+
         return response()->json($data);
     }
     public function allpegawai()

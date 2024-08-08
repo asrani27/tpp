@@ -149,48 +149,44 @@
                             @endforeach
                         @endforeach
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
-                            <th colspan="6">RENCANA AKSI (Tarik Dari Kayuh Baimbai) </th>
+                            <th colspan="8">RENCANA AKSI TRIWULAN I  </th>
                         </tr>
                         <tr>
-                            <td colspan="6">
+                            <td colspan="8">
                                 <a href="/pegawai/new-skp/periode/view/{{$u->id}}/tarik-rencana-aksi" class="btn btn-xs btn-primary "><i class="fas fa-sync"></i> Tarik Rencana Aksi</a>
                             </td>
                         </tr>
 
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
-                            <td colspan="6">
-                                <table>
+                            <td colspan="8">
+                                <table width="100%">
                                     <tr>
                                         <th>No</th>
-                                        <th>Tahun</th>
-                                        <th>Triwulan</th>
-                                        <th>Keterangan</th>
-                                        <th>Satuan</th>
-                                        <th>Target</th>
-                                        <th>Realisasi</th>
-                                        <th>Bukti Dukung</th>
-                                        <th>Masalah</th>
-                                        <th>Umpan Balik Atasan</th>
-                                        <th></th>
+                                        <th>Rencana Hasil Kerja (RHK)</th>
+                                        <th>Rencana Aksi</th>
+                                    </tr>           
+                                    @foreach ($skp_utama as $key => $item)
+                                    <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
+                                        <td>{{$key + 1}}</td>
+                                        <td>{{$item->rhk}}</td>
+                                        <td>
+                                            <ul>
+                                                {{-- {{dd($item->id, $u->rencana_aksi->where('rhk_id',$item->id))}} --}}
+                                                @foreach ($u->rencana_aksi->where('rhk_id',$item->id) as $rencana)
+                                                    <li>{{$rencana->keterangan}}</li> 
+                                                    Target : {{$rencana->target_kinerja}} {{$rencana->satuan}} <br/>
+                                                    Realisasi : {{$rencana->realisasi}}<br/>
+                                                    Bukti Dukung : {{$rencana->bukti_dukung}}<br/>
+                                                    Masalah : {{$rencana->masalah}}<br/>
+                                                    <a href="#" class="btn btn-xs btn-primary rencana-aksi" data-id="{{$rencana->id}}"><i class="fas fa-edit"></i></a>
+                                                    <br/>
+                                                    <br/>
+                                                @endforeach
+                                            </ul>
+                                        </td>
                                     </tr>
-
                                     
-                                @foreach ($u->rencana_aksi->where('triwulan',$triwulan) as $key => $item)
-
-                                <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
-                                    <td>{{$key + 1}}</td>
-                                    <td>{{$item->tahun}}</td>
-                                    <td>{{$item->triwulan}}</td>
-                                    <td>{{$item->keterangan}}</td>
-                                    <td>{{$item->satuan}}</td>
-                                    <td>{{$item->target_kinerja}}</td>
-                                    <td>{{$item->realisasi}}</td>
-                                    <td>{{$item->bukti_dukung}}</td>
-                                    <td>{{$item->masalah}}</td>
-                                    <td></td>
-                                    <td><a href="#" class="btn btn-xs btn-primary rencana-aksi" data-id="{{$item->id}}"><i class="fas fa-plus-circle"></td>
-                                </tr>
-                                @endforeach
+                                    @endforeach
                                 </table>
                             </td>
                         </tr>

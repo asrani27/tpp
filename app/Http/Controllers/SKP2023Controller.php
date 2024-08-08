@@ -268,6 +268,8 @@ class SKP2023Controller extends Controller
                 $n->keterangan = $i->keterangan;
                 $n->satuan = $i->satuan;
                 $n->target_kinerja = $i->target_kinerja;
+                $n->rhk_id = $i->id_rhk;
+                $n->id_sasaran = $i->id_sasaran;
                 $n->save();
             } else {
             }
@@ -420,7 +422,6 @@ class SKP2023Controller extends Controller
 
     public function storeRencanaAksi(Request $req)
     {
-
         RencanaAksi::find($req->ra_id)->update([
             'realisasi' => $req->realisasi,
             'bukti_dukung' => $req->bukti_dukung,
@@ -461,7 +462,6 @@ class SKP2023Controller extends Controller
 
     public function viewEvaluasi($id, $triwulan)
     {
-
 
         $eselon_id = [5, 6, 7, 8, 9, 10, 11];
         $eselon = Auth::user()->pegawai->eselon_id;

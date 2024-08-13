@@ -178,7 +178,7 @@
                                                     Realisasi : {{$rencana->realisasi}}<br/>
                                                     Bukti Dukung : {{$rencana->bukti_dukung}}<br/>
                                                     Masalah : {{$rencana->masalah}}<br/>
-                                                    <a href="#" class="btn btn-xs btn-primary rencana-aksi" data-id="{{$rencana->id}}"><i class="fas fa-edit"></i></a>
+                                                    <a href="#" class="btn btn-xs btn-primary rencana-aksi" data-id="{{$rencana->id}}" data-realisasi="{{$rencana->realisasi}}" data-link="{{$rencana->bukti_dukung}}" data-masalah="{{$rencana->masalah}}"><i class="fas fa-edit"></i></a>
                                                     <br/>
                                                     <br/>
                                                 @endforeach
@@ -438,16 +438,16 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Realisasi</label>
-                        <input type="text" class="form-control" name="realisasi">
+                        <input type="text" class="form-control" id="realisasi_rencana_aksi" name="realisasi" placeholder="realisasi" required>
                         <input type="hidden" class="form-control" id="ra_id" name="ra_id">
                     </div>
                     <div class="form-group">
-                        <label>Bukti Dukung</label>
-                        <input type="text" class="form-control" name="bukti_dukung">
+                        <label>Bukti Dukung (link google drive)</label>
+                        <input type="text" class="form-control" id="link" name="bukti_dukung" placeholder="Link google drive" required>
                     </div>
                     <div class="form-group">
                         <label>Masalah</label>
-                        <input type="text" class="form-control" name="masalah">
+                        <input type="text" class="form-control" id="masalah" name="masalah" placeholder="tidak ada masalah" required>
                     </div>
                 </div>
 
@@ -477,6 +477,9 @@ $(document).on('click', '.edit-realisasi', function() {
 <script>
     $(document).on('click', '.rencana-aksi', function() {
         $('#ra_id').val($(this).data('id'));
+        $('#realisasi_rencana_aksi').val($(this).data('realisasi'));
+        $('#link').val($(this).data('link'));
+        $('#masalah').val($(this).data('masalah'));
         $("#modal-ra").modal();
     });
      </script>

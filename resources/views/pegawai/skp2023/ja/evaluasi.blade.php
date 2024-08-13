@@ -149,7 +149,7 @@
                             @endforeach
                         @endforeach
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
-                            <th colspan="8">RENCANA AKSI TRIWULAN I  </th>
+                            <th colspan="8">RENCANA AKSI TRIWULAN {{$triwulan}}  </th>
                         </tr>
                         <tr>
                             <td colspan="8">
@@ -172,7 +172,7 @@
                                         <td>
                                             <ul>
                                                 {{-- {{dd($item->id, $u->rencana_aksi->where('rhk_id',$item->id))}} --}}
-                                                @foreach ($u->rencana_aksi->where('rhk_id',$item->id) as $rencana)
+                                                @foreach ($u->rencana_aksi->where('rhk_id',$item->id)->where('triwulan', $triwulan) as $rencana)
                                                     <li>{{$rencana->keterangan}}</li> 
                                                     Target : {{$rencana->target_kinerja}} {{$rencana->satuan}} <br/>
                                                     Realisasi : {{$rencana->realisasi}}<br/>

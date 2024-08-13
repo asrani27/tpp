@@ -24,7 +24,7 @@ class PegawaiController extends Controller
             $data['data_pegawai']  = json_decode($skp2023_id->pn);
             $data['data_rhk']      = $skp2023_id->jf->map(function ($item) {
                 $item['rencana_aksi'] = RencanaAksi::where('rhk_id', $item->id)->get()->map->only('id', 'triwulan', 'tahun', 'keterangan', 'realisasi', 'bukti_dukung', 'masalah');
-                return $item->only('id', 'rhk', 'rencana_aksi');
+                return $item->only('id', 'rhk', 'rencana_aksi', 'id_rencana_aksi');
             });
         } else {
             $data['message_code']  = 404;

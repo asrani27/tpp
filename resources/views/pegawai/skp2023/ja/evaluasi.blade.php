@@ -446,7 +446,7 @@
                         <input type="text" class="form-control" id="link" name="bukti_dukung" placeholder="Link google drive" required>
                     </div>
                     <div class="form-group">
-                        <label>Masalah</label>
+                        <label>Permasalahan / Faktor Keberhasilan</label>
                         <input type="text" class="form-control" id="masalah" name="masalah" placeholder="tidak ada masalah" required>
                     </div>
                 </div>

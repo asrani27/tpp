@@ -273,6 +273,10 @@ class SKP2023Controller extends Controller
                 $n->id_rencana_aksi = $i->id;
                 $n->save();
             } else {
+                $check->update([
+                    'rhk_id' => $i->id_rhk,
+                    'id_rencana_aksi' => $i->id,
+                ]);
             }
         }
         return back();

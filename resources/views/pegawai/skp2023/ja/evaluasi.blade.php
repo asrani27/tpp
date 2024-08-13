@@ -171,7 +171,7 @@
                                         <td>{{$item->rhk}}</td>
                                         <td>
                                             <ul>
-                                                {{-- {{dd($item->id, $u->rencana_aksi->where('rhk_id',$item->id))}} --}}
+                                                {{-- {{dd($item->id, $u->rencana_aksi->where('rhk_id',$item->id)->where('triwulan', $triwulan))}} --}}
                                                 @foreach ($u->rencana_aksi->where('rhk_id',$item->id)->where('triwulan', $triwulan) as $rencana)
                                                     <li>{{$rencana->keterangan}}</li> 
                                                     Target : {{$rencana->target_kinerja}} {{$rencana->satuan}} <br/>

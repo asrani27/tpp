@@ -270,6 +270,7 @@ class SKP2023Controller extends Controller
                 $n->target_kinerja = $i->target_kinerja;
                 $n->rhk_id = $i->id_rhk;
                 $n->id_sasaran = $i->id_sasaran;
+                $n->id_rencana_aksi = $i->id;
                 $n->save();
             } else {
             }

@@ -170,19 +170,31 @@
                                         <td>{{$key + 1}}</td>
                                         <td>{{$item->rhk}}</td>
                                         <td>
-                                            <ul>
-                                                {{-- {{dd($item->id, $u->rencana_aksi->where('rhk_id',$item->id)->where('triwulan', $triwulan))}} --}}
+                                            <table>
+                                                <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
+                                                    <td>Keterangan</td>
+                                                    <td>Target</td>
+                                                    <td>Realisasi</td>
+                                                    <td>Bukti Dukung</td>
+                                                    <td>Masalah</td>
+                                                    <td>Umpan Balik</td>
+                                                    <td></td>
+                                                </tr>
+
                                                 @foreach ($u->rencana_aksi->where('rhk_id',$item->id)->where('triwulan', $triwulan) as $rencana)
-                                                    <li>{{$rencana->keterangan}}</li> 
-                                                    Target : {{$rencana->target_kinerja}} {{$rencana->satuan}} <br/>
-                                                    Realisasi : {{$rencana->realisasi}}<br/>
-                                                    Bukti Dukung : {{$rencana->bukti_dukung}}<br/>
-                                                    Masalah : {{$rencana->masalah}}<br/>
-                                                    <a href="#" class="btn btn-xs btn-primary rencana-aksi" data-id="{{$rencana->id}}" data-realisasi="{{$rencana->realisasi}}" data-link="{{$rencana->bukti_dukung}}" data-masalah="{{$rencana->masalah}}"><i class="fas fa-edit"></i></a>
-                                                    <br/>
-                                                    <br/>
+                                                    <tr>
+                                                        <td>{!!wordwrap($rencana->keterangan, 100, '<br/>')!!}</td>
+                                                        <td>{{$rencana->target_kinerja}} {{$rencana->satuan}}</td>
+                                                        <td>{{$rencana->realisasi}}</td>
+                                                        <td><a href="{{$rencana->bukti_dukung}}">Link</a></td>
+                                                        <td>{{$rencana->masalah}}</td>
+                                                        <td></td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-xs btn-primary rencana-aksi" data-id="{{$rencana->id}}" data-realisasi="{{$rencana->realisasi}}" data-link="{{$rencana->bukti_dukung}}" data-masalah="{{$rencana->masalah}}"><i class="fas fa-edit"></i></a></td>
+                                                    </tr>
                                                 @endforeach
-                                            </ul>
+                                            </table>
+                                            
                                         </td>
                                     </tr>
                                     

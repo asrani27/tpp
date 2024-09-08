@@ -141,6 +141,61 @@
                             @endforeach
                         @endforeach
                         <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
+                            <th colspan="8">RENCANA AKSI TRIWULAN {{$triwulan}}  </th>
+                        </tr>
+                        <tr>
+                            <td colspan="8">
+                                <a href="/pegawai/new-skp/periode/view/{{$u->id}}/tarik-rencana-aksi" class="btn btn-xs btn-primary "><i class="fas fa-sync"></i> Tarik Rencana Aksi</a>
+                            </td>
+                        </tr>
+
+                        <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
+                            <td colspan="8">
+                                <table width="100%">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Rencana Hasil Kerja (RHK)</th>
+                                        <th>Rencana Aksi</th>
+                                    </tr>           
+                                    @foreach ($skp_utama as $key => $item)
+                                    <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
+                                        <td>{{$key + 1}}</td>
+                                        <td>{{$item->rhk}}</td>
+                                        <td>
+                                            <table>
+                                                <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
+                                                    <td>Keterangan</td>
+                                                    <td>Target</td>
+                                                    <td>Realisasi</td>
+                                                    <td>Bukti Dukung</td>
+                                                    <td>Masalah</td>
+                                                    <td>Umpan Balik</td>
+                                                    <td></td>
+                                                </tr>
+
+                                                @foreach ($u->rencana_aksi->where('rhk_id',$item->id)->where('triwulan', $triwulan) as $rencana)
+                                                    <tr>
+                                                        <td>{!!wordwrap($rencana->keterangan, 100, '<br/>')!!}</td>
+                                                        <td>{{$rencana->target_kinerja}} {{$rencana->satuan}}</td>
+                                                        <td>{{$rencana->realisasi}}</td>
+                                                        <td><a href="{{$rencana->bukti_dukung}}">Link</a></td>
+                                                        <td>{{$rencana->masalah}}</td>
+                                                        <td></td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-xs btn-primary rencana-aksi" data-id="{{$rencana->id}}" data-realisasi="{{$rencana->realisasi}}" data-link="{{$rencana->bukti_dukung}}" data-masalah="{{$rencana->masalah}}"><i class="fas fa-edit"></i></a></td>
+                                                    </tr>
+                                                @endforeach
+                                            </table>
+                                            
+                                        </td>
+                                    </tr>
+                                    
+                                    @endforeach
+                                </table>
+                            </td>
+                        </tr>
+                        
+                        <tr style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
                             <th colspan="7">B.TAMBAHAN </th>
                         </tr>
 

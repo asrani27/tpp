@@ -256,7 +256,7 @@ class SKP2023Controller extends Controller
 
         $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $pegawai->nip . '/2024');
         $data = json_decode($response->getBody()->getContents())->data;
-
+        //dd($response->getBody()->getContents());
         foreach ($data as $i) {
             $check = RencanaAksi::where('tahun', '2024')->where('keterangan', $i->keterangan)->first();
             if ($check == null) {

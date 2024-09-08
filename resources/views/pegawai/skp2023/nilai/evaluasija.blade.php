@@ -183,7 +183,7 @@
                                                         <td>{{$rencana->masalah}}</td>
                                                         <td></td>
                                                         <td>
-                                                            <a href="#" class="btn btn-xs btn-primary rencana-aksi" data-id="{{$rencana->id}}" data-realisasi="{{$rencana->realisasi}}" data-link="{{$rencana->bukti_dukung}}" data-masalah="{{$rencana->masalah}}"><i class="fas fa-comment"></i></a></td>
+                                                            <a href="#" class="btn btn-xs btn-primary komentar" data-id="{{$rencana->id}}" data-komentar="{{$rencana->umpan_balik}}"><i class="fas fa-comment"></i></a></td>
                                                     </tr>
                                                 @endforeach
                                             </table>
@@ -497,6 +497,38 @@
         </div>
     </div>
 </div>
+
+
+{{-- UMPAN BALI RENCANA AKSI --}}
+
+<div class="modal fade" id="modal-komentar" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form method="post" action="/pegawai/nilai-skp/triwulan/{{$triwulan}}/{{$u->id}}/komentarja" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header bg-gradient-primary" style="padding:10px">
+                    <h4 class="modal-title text-sm">UMPAN BALIK</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>UMPAN BALIK</label>
+                        <input type="text" class="form-control" id="komentar" name="umpan_balik">
+                        <input type="hidden" class="form-control" id="komentar_id" name="komentar_id">
+                    </div>
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="submit" class="btn btn-block btn-primary"><i class="fas fa-paper-plane"></i>
+                        Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('js')
@@ -515,6 +547,13 @@ $(document).on('click', '.ekspektasi', function() {
         $('#umpan_balik').val($(this).data('umpan_balik'));
         $('#umpan_balik_id').val($(this).data('id'));
         $("#modal-edit").modal();
+    });
+
+
+    $(document).on('click', '.komentar', function() {
+        $('#komentar').val($(this).data('komentar'));
+        $('#komentar_id').val($(this).data('id'));
+        $("#modal-komentar").modal();
     });
 </script>
 

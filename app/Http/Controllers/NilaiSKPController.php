@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Skp2023;
-use App\Skp2023Ekspektasi;
 use App\Skp2023Jf;
 use App\Skp2023Jpt;
+use App\RencanaAksi;
+use App\Skp2023Ekspektasi;
 use App\Skp2023JfIndikator;
 use App\Skp2023JptIndikator;
 use Illuminate\Http\Request;
@@ -165,6 +166,16 @@ class NilaiSKPController extends Controller
 
         $data = Skp2023::find($id);
         $data['rpk_tw' . $triwulan] = $req->rating;
+        $data->save();
+        toastr()->success('Berhasil Di Simpan', 'Success');
+        return back();
+    }
+
+    public function komentarJa(Request $req, $triwulan, $id)
+    {
+        $data = RencanaAksi::find($req->komentar_id);
+        $data->nip_atasan = Auth::user()->username;
+        $data->umpan_balik = $req->umpan_balik;
         $data->save();
         toastr()->success('Berhasil Di Simpan', 'Success');
         return back();

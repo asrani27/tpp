@@ -412,6 +412,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('/pegawai/nilai-skp/ekspektasi/{id}', 'NilaiSKPController@simpanEkspektasi');
         Route::post('/pegawai/nilai-skp/ekspektasi/{id}/triwulan', 'NilaiSKPController@simpanEkspektasiTriwulan');
         Route::get('/pegawai/nilai-skp/triwulan/{triwulan}/{id}', 'NilaiSKPController@evaluasi');
+        Route::post('/pegawai/nilai-skp/triwulan/{triwulan}/{id}/komentarja', 'NilaiSKPController@komentarJa');
         Route::post('/pegawai/nilai-skp/triwulan/{triwulan}/{id}/jpt', 'NilaiSKPController@umpanBalikJPT');
         Route::post('/pegawai/nilai-skp/triwulan/{triwulan}/{id}/jf', 'NilaiSKPController@umpanBalikJF');
         Route::post('/pegawai/nilai-skp/triwulan/{triwulan}/{id}/ja', 'NilaiSKPController@umpanBalikJA');

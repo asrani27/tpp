@@ -181,7 +181,7 @@
                                                         <td>{{$rencana->realisasi}}</td>
                                                         <td><a href="{{$rencana->bukti_dukung}}">Link</a></td>
                                                         <td>{{$rencana->masalah}}</td>
-                                                        <td></td>
+                                                        <td>{{$rencana->umpan_balik}}</td>
                                                         <td>
                                                             <a href="#" class="btn btn-xs btn-primary komentar" data-id="{{$rencana->id}}" data-komentar="{{$rencana->umpan_balik}}"><i class="fas fa-comment"></i></a></td>
                                                     </tr>

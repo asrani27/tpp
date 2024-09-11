@@ -191,13 +191,13 @@
                                                                 
                                                             @else
                                                                 
-                                                            <a href="{{$rencana->bukti_dukung}}">Link</a>
+                                                            <a href="{{$rencana->bukti_dukung}}" target="_blank"><strong>Google Drive</strong></a>
                                                             @endif
                                                         </td>
                                                         <td>{{$rencana->masalah}}</td>
                                                         <td>{{$rencana->umpan_balik}}</td>
                                                         <td>
-                                                                <a href="#" class="btn btn-xs btn-primary rencana-aksi" data-id="{{$rencana->id}}" data-realisasi="{{$rencana->realisasi}}" data-link="{{$rencana->bukti_dukung}}" data-masalah="{{$rencana->masalah}}" target="_blank"><i class="fas fa-edit"></i></a>
+                                                                <a href="#" class="btn btn-xs btn-primary rencana-aksi" data-id="{{$rencana->id}}" data-realisasi="{{$rencana->realisasi}}" data-link="{{$rencana->bukti_dukung}}" data-masalah="{{$rencana->masalah}}"><i class="fas fa-edit"></i></a>
                                                         </td>
                                                         
                                                     </tr>

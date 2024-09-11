@@ -178,6 +178,7 @@
                                                     <td>Bukti Dukung</td>
                                                     <td>Masalah</td>
                                                     <td>Umpan Balik Atasan</td>
+                                                    <td></td>
                                                 </tr>
 
                                                 @foreach ($u->rencana_aksi->where('rhk_id',$item->id)->where('triwulan', $triwulan) as $rencana)
@@ -188,6 +189,9 @@
                                                         <td><a href="{{$rencana->bukti_dukung}}">Link</a></td>
                                                         <td>{{$rencana->masalah}}</td>
                                                         <td>{{$rencana->umpan_balik}}</td>
+                                                        <td>
+                                                                <a href="#" class="btn btn-xs btn-primary rencana-aksi" data-id="{{$rencana->id}}" data-realisasi="{{$rencana->realisasi}}" data-link="{{$rencana->bukti_dukung}}" data-masalah="{{$rencana->masalah}}"><i class="fas fa-edit"></i></a>
+                                                        </td>
                                                         
                                                     </tr>
                                                 @endforeach

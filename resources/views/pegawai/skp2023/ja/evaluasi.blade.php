@@ -186,11 +186,18 @@
                                                         <td>{!!wordwrap($rencana->keterangan, 100, '<br/>')!!}</td>
                                                         <td>{{$rencana->target_kinerja}} {{$rencana->satuan}}</td>
                                                         <td>{{$rencana->realisasi}}</td>
-                                                        <td><a href="{{$rencana->bukti_dukung}}">Link</a></td>
+                                                        <td>
+                                                            @if ($rencana->bukti_dukung == null)
+                                                                
+                                                            @else
+                                                                
+                                                            <a href="{{$rencana->bukti_dukung}}">Link</a>
+                                                            @endif
+                                                        </td>
                                                         <td>{{$rencana->masalah}}</td>
                                                         <td>{{$rencana->umpan_balik}}</td>
                                                         <td>
-                                                                <a href="#" class="btn btn-xs btn-primary rencana-aksi" data-id="{{$rencana->id}}" data-realisasi="{{$rencana->realisasi}}" data-link="{{$rencana->bukti_dukung}}" data-masalah="{{$rencana->masalah}}"><i class="fas fa-edit"></i></a>
+                                                                <a href="#" class="btn btn-xs btn-primary rencana-aksi" data-id="{{$rencana->id}}" data-realisasi="{{$rencana->realisasi}}" data-link="{{$rencana->bukti_dukung}}" data-masalah="{{$rencana->masalah}}" target="_blank"><i class="fas fa-edit"></i></a>
                                                         </td>
                                                         
                                                     </tr>

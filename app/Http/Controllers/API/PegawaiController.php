@@ -26,6 +26,10 @@ class PegawaiController extends Controller
                 $item['rencana_aksi'] = RencanaAksi::where('rhk_id', $item->id)->get()->map->only('id', 'triwulan', 'tahun', 'keterangan', 'realisasi', 'bukti_dukung', 'masalah', 'id_rencana_aksi');
                 return $item->only('id', 'rhk', 'rencana_aksi');
             });
+            $data['data_rhk_jpt']      = $skp2023_id->jpt->map(function ($item) {
+                $item['rencana_aksi'] = RencanaAksi::where('rhk_id', $item->id)->get()->map->only('id', 'triwulan', 'tahun', 'keterangan', 'realisasi', 'bukti_dukung', 'masalah', 'id_rencana_aksi');
+                return $item->only('id', 'rhk', 'rencana_aksi');
+            });
         } else {
             $data['message_code']  = 404;
             $data['message']       = 'data tidak ditemukan';

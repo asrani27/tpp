@@ -17,6 +17,8 @@ class PegawaiController extends Controller
     {
         $pegawai = Pegawai::where('nip', $nip)->first();
         $skp2023_id = Skp2023::where('pegawai_id', $pegawai->id)->where('is_aktif', 1)->first();
+
+        return response()->json('s');
         dd($skp2023_id->jf, $skp2023_id->jpt);
         if ($skp2023_id != null) {
 

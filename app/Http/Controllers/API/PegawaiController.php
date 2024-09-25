@@ -32,7 +32,7 @@ class PegawaiController extends Controller
                 });
             } else {
                 $data['message_code']  = 404;
-                $data['message']       = 'data tidak ditemukan';
+                $data['message']       = 'data rhk tidak ditemukan';
             }
         }
 

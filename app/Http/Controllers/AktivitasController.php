@@ -83,12 +83,12 @@ class AktivitasController extends Controller
             $rencana_aksi = null;
         } else {
             $eselon = substr_replace($es->eselon->nama, "", -2);
-            $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $es->nip . '/2024');
-            if ($response->getStatusCode() == 200) {
-                $rencana_aksi = json_decode($response->getBody()->getContents())->data;
-            } else {
-                $rencana_aksi = [];
-            }
+            // $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $es->nip . '/2024');
+            // if ($response->getStatusCode() == 200) {
+            //     $rencana_aksi = json_decode($response->getBody()->getContents())->data;
+            // } else {
+            $rencana_aksi = [];
+            // }
         }
 
         if (Auth::user()->pegawai->skp->count() == 0) {

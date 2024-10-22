@@ -16,9 +16,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <body class="hold-transition sidebar-mini">
   <div class="bg-warning text-center">
-    Assalammualaikum... Mohon perhatian bapak/ibu pegawai. Sehubungan dengan akan berakhirnya Triwulan II, mohon kepada seluruh bapak/ibu pegawai untuk mengisi realisasi capaian Triwulan I di aplikasi TPP di menu SKP Baru, dan khusus untuk Pejabat Penilai mohon mengisi umpan balik di menu Penilaian SKP
+    Assalammualaikum... Mohon perhatian bapak/ibu pegawai. Sehubungan dengan akan berakhirnya Triwulan III, mohon kepada seluruh bapak/ibu pegawai untuk mengisi realisasi capaian Triwulan III di aplikasi TPP di menu SKP Baru, dan khusus untuk Pejabat Penilai mohon mengisi umpan balik di menu Penilaian SKP
 
-Pengisian Realisasi dan penilaian SKP ditutup di aplikasi TPP pada tanggal 13 Agustus 2024  
+Pengisian Realisasi dan penilaian SKP ditutup di aplikasi TPP pada tanggal 31 Oktober 2024
   </div>
   <div class="wrapper">
     <!-- Navbar -->

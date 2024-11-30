@@ -42,7 +42,7 @@ class SetujuiSistem extends Command
      */
     public function handle()
     {
-        $tanggal   = Carbon::today()->subDays(6)->format('Y-m-d');
+        $tanggal   = Carbon::today()->subDays(2)->format('Y-m-d');
         $aktivitas = Aktivitas::where('validasi', 0)->where('tanggal', '<=', $tanggal)->get();
 
         $aktivitas->map(function ($item) {

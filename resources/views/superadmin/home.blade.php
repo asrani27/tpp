@@ -61,6 +61,9 @@ SUPERADMIN
       </div>
     </div>
 
+    <a href="/home/superadmin/allpegawai" class='btn btn-primary'>Data Pegawai</a>
+    <br /><br />
+
     <div class="row">
       <div class="col-12">
         <div class="card">

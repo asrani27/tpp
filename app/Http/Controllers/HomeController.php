@@ -11,6 +11,7 @@ use App\Skp2023;
 use App\Presensi;
 use App\RekapTpp;
 use App\Aktivitas;
+use App\Exports\PegawaiAllExport;
 use App\Parameter;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -29,6 +30,11 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class HomeController extends Controller
 {
+
+    public function allpegawai()
+    {
+        return Excel::download(new PegawaiAllExport, 'datapegawai.xlsx');
+    }
 
     public function upload()
     {

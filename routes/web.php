@@ -15,6 +15,7 @@ Route::group(['middleware' => ['XSS']], function () {
 
     Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::get('/home/superadmin', 'HomeController@superadmin');
+        Route::get('/home/superadmin/allpegawai', 'HomeController@allpegawai');
         Route::post('/home/superadmin/exportpegawai', 'HomeController@exportPegawai');
 
         Route::get('/superadmin/tpp/{bulan}/{tahun}', 'TppController@tppBulanTahun');

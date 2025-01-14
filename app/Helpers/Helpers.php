@@ -12,10 +12,20 @@ use App\RekapTpp;
 use App\Aktivitas;
 use App\Parameter;
 use App\BulanTahun;
+use App\KunciTpp;
 use App\Rspuskesmas;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+function checkKunci($bulan, $tahun, $skpd_id)
+{
+    $check = KunciTpp::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', $skpd_id)->first();
+    if ($check == null) {
+        return false;
+    } else {
+        return true;
+    }
+}
 function terbilang($angka)
 {
     $angka = abs($angka);

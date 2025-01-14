@@ -52,6 +52,9 @@ SUPERADMIN
                     hapus di paling kanan
                     jika pensiun, jika tidak pensiun hapus terlebih dahulu, kemudian masukkan/input kembali di kolom
                     paling bawah.
+                    <br />
+                    5. Tombol Kunci TPP, jika sudah dikunci maka tidak bisa melakukan aktivitas perhitungan rekapitulasi
+                    tpp
                 </div>
                 @if (checkKunci($bulan, $tahun, Auth::user()->skpd->id) == true)
 
@@ -216,17 +219,29 @@ SUPERADMIN
                             <td class="text-right">{{number_format($item->jumlah_pembayaran)}}</td>
                             <td class="text-right">{{number_format($item->pph21)}}</td>
                             <td class="text-right">{{number_format($item->bpjs1)}}<br />
+                                @if (checkKunci($bulan, $tahun, Auth::user()->skpd->id) == true)
+
+
+                                @else
                                 <button type="button" class=" btn btn-xs editbpjs" data-id="{{$item->id}}"
                                     data-nama="{{$item->nama}}" data-1persen="{{$item->bpjs1}}"
-                                    data-4persen="{{$item->bpjs4}}"><i class="fas fa-edit"></i></button>
+                                    data-4persen="{{$item->bpjs4}}"><i class="fas fa-edit"></i>
+                                    @endif
+                                </button>
                             </td>
                             <td class="text-right">{{number_format($item->bpjs4)}}</td>
                             <td class="text-right">{{number_format($item->tpp_diterima)}}</td>
 
                             <td>
+                                @if (checkKunci($bulan, $tahun, Auth::user()->skpd->id) == true)
+
+
+                                @else
                                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/{{$item->id}}/delete"
                                     onclick="return confirm('Yakin Ingin Dihapus?');"><span
                                         class="badge badge-danger">Hapus</span></a>
+
+                                @endif
                             </td>
                         </tr>
                         @endforeach

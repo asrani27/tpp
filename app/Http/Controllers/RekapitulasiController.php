@@ -1150,7 +1150,7 @@ class RekapitulasiController extends Controller
             }
             $data->map(function ($item) use ($pphTerutangData) {
                 $nip = $item->nip; // Asumsikan kolom NIP ada di `rekap_reguler`
-                $item->pph21 = $pphTerutangData[$nip]->pph_terutang ?? 0;
+                $item->pph_terutang = $pphTerutangData[$nip]->pph_terutang ?? 0;
                 $item->bpjs1 = $pphTerutangData[$nip]->bpjs_satu_persen ?? 0;
                 $item->bpjs4 = $pphTerutangData[$nip]->bpjs_empat_persen ?? 0;
                 $item->save();
@@ -1217,7 +1217,7 @@ class RekapitulasiController extends Controller
             $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
             //PPH 21
             $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
-            $item->tpp_diterima = $item->jumlah_pembayaran - $item->pph21 - $item->bpjs1;
+            $item->tpp_diterima = $item->jumlah_pembayaran - $item->pph_terutang - $item->bpjs1;
             return $item;
         });
 

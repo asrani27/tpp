@@ -1150,7 +1150,7 @@ class RekapitulasiController extends Controller
             }
             $data->map(function ($item) use ($pphTerutangData) {
                 $nip = $item->nip; // Asumsikan kolom NIP ada di `rekap_reguler`
-                $item->pph_terutang = $pphTerutangData[$nip]->pph_terutang ?? 0;
+                $item->pph21 = $pphTerutangData[$nip]->pph_terutang ?? 0;
                 $item->bpjs1 = $pphTerutangData[$nip]->bpjs_satu_persen ?? 0;
                 $item->bpjs4 = $pphTerutangData[$nip]->bpjs_empat_persen ?? 0;
                 $item->save();

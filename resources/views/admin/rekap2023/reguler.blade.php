@@ -103,7 +103,11 @@ SUPERADMIN
                             <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=4>Pagu<br /> TPP ASN
                             </th>
                             <th style="background-color:#bbfac6; border:1px solid silver" colspan=13>Pembayaran</th>
-                            <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>PPH 21</th>
+                            <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>PPH 21 (TER)
+                                <br />
+                                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/tarikter"
+                                    class="btn btn-xs btn-danger">Tarik TER</a>
+                            </th>
                             <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>BPJS 1%</th>
                             <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>BPJS 4%</th>
                             <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>TPP Diterima</th>
@@ -217,7 +221,7 @@ SUPERADMIN
                             <td class="text-right">{{number_format($item->pkp)}}</td>
                             <td class="text-right">{{number_format($item->pkp_jumlah)}}</td>
                             <td class="text-right">{{number_format($item->jumlah_pembayaran)}}</td>
-                            <td class="text-right">{{number_format($item->pph21)}}</td>
+                            <td class="text-right">{{number_format($item->pph_terutang)}}</td>
                             <td class="text-right">{{number_format($item->bpjs1)}}<br />
                                 @if (checkKunci($bulan, $tahun, Auth::user()->skpd->id) == true)
 

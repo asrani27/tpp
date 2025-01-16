@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Log;
 use App\Cuti;
 use App\Skpd;
 use App\Kelas;
@@ -9,6 +10,7 @@ use App\Jabatan;
 use App\Pangkat;
 use App\Pegawai;
 use App\Skp2023;
+use App\KunciTpp;
 use App\RekapPlt;
 use App\RekapTpp;
 use App\Aktivitas;
@@ -18,7 +20,6 @@ use Carbon\Carbon;
 use App\RekapReguler;
 use App\Exports\TppExport;
 use App\Imports\BpjsImport;
-use App\KunciTpp;
 use Illuminate\Http\Request;
 use App\View_aktivitas_pegawai;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -1122,6 +1123,42 @@ class RekapitulasiController extends Controller
         });
         toastr()->success('Telah Di Kunci');
         return back();
+    }
+    public function tarikter($bulan, $tahun)
+    {
+        $bulanTahunId = DB::connection('pajakasn')->table('bulan_tahun')->where('bulan', convertBulan($bulan))->where('tahun', $tahun)->first();
+        if ($bulanTahunId == null) {
+            toastr()->error('Gaji Belum Di Upload Oleh BPKPAD');
+            return back();
+        } else {
+            $pphTerutangData = DB::connection('pajakasn')
+                ->table('pajak')
+                ->select('nip', 'pph_terutang', 'bpjs_satu_persen', 'bpjs_empat_persen')
+                ->where('bulan_tahun_id', $bulanTahunId->id)
+                ->where('skpd_id', Auth::user()->skpd->id)
+                ->get()
+                ->mapWithKeys(function ($item) {
+                    return [(string) $item->nip => $item]; // Pastikan key adalah string
+                });
+            if (Auth::user()->skpd->id == 34) {
+                $dataDinas = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+                $dataIFK = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+
+                $data = $dataDinas->merge($dataIFK);
+            } else {
+                $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+            }
+            $data->map(function ($item) use ($pphTerutangData) {
+                $nip = $item->nip; // Asumsikan kolom NIP ada di `rekap_reguler`
+                $item->pph_terutang = $pphTerutangData[$nip]->pph_terutang ?? 0;
+                $item->bpjs1 = $pphTerutangData[$nip]->bpjs_satu_persen ?? 0;
+                $item->bpjs4 = $pphTerutangData[$nip]->bpjs_empat_persen ?? 0;
+                $item->save();
+            });
+
+            toastr()->success('berhasil di tarik');
+            return back();
+        }
     }
     public function reguler($bulan, $tahun)
     {

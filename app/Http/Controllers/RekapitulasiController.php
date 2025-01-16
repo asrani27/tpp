@@ -2306,7 +2306,7 @@ class RekapitulasiController extends Controller
                 $spreadsheet->getSheetByName('TU')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
                 $spreadsheet->getSheetByName('TU')->setCellValue('P' . $contentRow, $item->dp_ta);
                 $spreadsheet->getSheetByName('TU')->setCellValue('Q' . $contentRow, $item->dp_skp);
-                $spreadsheet->getSheetByName('TU')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
+                $spreadsheet->getSheetByName('TU')->setCellValue('R' . $contentRow, ($item->pph_terutang));
                 $spreadsheet->getSheetByName('TU')->setCellValue('AG' . $contentRow, $item->bpjs1);
                 $spreadsheet->getSheetByName('TU')->setCellValue('AH' . $contentRow, $item->bpjs4);
                 $contentRow++;
@@ -2350,7 +2350,7 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('REGULER')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('REGULER')->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getSheetByName('REGULER')->setCellValue('Q' . $contentRow, $item->dp_skp);
-            $spreadsheet->getSheetByName('REGULER')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('REGULER')->setCellValue('R' . $contentRow, ($item->pph_terutang));
             $spreadsheet->getSheetByName('REGULER')->setCellValue('AG' . $contentRow, $item->bpjs1);
             $spreadsheet->getSheetByName('REGULER')->setCellValue('AH' . $contentRow, $item->bpjs4);
             $contentRow++;
@@ -2393,7 +2393,7 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('CPNS')->setCellValue('O' . $contentRowCpns, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('CPNS')->setCellValue('P' . $contentRowCpns, $item->dp_ta);
             $spreadsheet->getSheetByName('CPNS')->setCellValue('Q' . $contentRowCpns, $item->dp_skp);
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('R' . $contentRowCpns, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('R' . $contentRowCpns, ($item->pph_terutang));
             $spreadsheet->getSheetByName('CPNS')->setCellValue('AG' . $contentRowCpns, $item->bpjs1);
             $spreadsheet->getSheetByName('CPNS')->setCellValue('AH' . $contentRowCpns, $item->bpjs4);
             $contentRowCpns++;
@@ -2432,7 +2432,7 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('PLT')->setCellValue('O' . $contentRowPlt, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('PLT')->setCellValue('P' . $contentRowPlt, $item->dp_ta);
             $spreadsheet->getSheetByName('PLT')->setCellValue('Q' . $contentRowPlt, $item->dp_skp);
-            $spreadsheet->getSheetByName('PLT')->setCellValue('R' . $contentRowPlt, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('PLT')->setCellValue('R' . $contentRowPlt, ($item->pph_terutang));
             $spreadsheet->getSheetByName('PLT')->setCellValue('AG' . $contentRowPlt, $item->bpjs1);
             $spreadsheet->getSheetByName('PLT')->setCellValue('AH' . $contentRowPlt, $item->bpjs4);
             $contentRowPlt++;
@@ -2498,7 +2498,7 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('Pejabat')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('Pejabat')->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getSheetByName('Pejabat')->setCellValue('Q' . $contentRow, $item->dp_skp);
-            $spreadsheet->getSheetByName('Pejabat')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('R' . $contentRow, ($item->pph_terutang));
             $spreadsheet->getSheetByName('Pejabat')->setCellValue('AG' . $contentRow, $item->bpjs1);
             $spreadsheet->getSheetByName('Pejabat')->setCellValue('AH' . $contentRow, $item->bpjs4);
             $contentRow++;
@@ -2586,7 +2586,7 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('Kesra')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('Kesra')->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getSheetByName('Kesra')->setCellValue('Q' . $contentRow, $item->dp_skp);
-            $spreadsheet->getSheetByName('Kesra')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('R' . $contentRow, ($item->pph_terutang));
             $spreadsheet->getSheetByName('Kesra')->setCellValue('AG' . $contentRow, $item->bpjs1);
             $spreadsheet->getSheetByName('Kesra')->setCellValue('AH' . $contentRow, $item->bpjs4);
             $contentRow++;

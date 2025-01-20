@@ -20,23 +20,32 @@ class PegawaiController extends Controller
             $data['message_code']  = 200;
             $data['message']       = 'nip tidak ditemukan';
         } else {
-            $skp2023_id = Skp2023::where('pegawai_id', $pegawai->id)->where('is_aktif', 1)->first();
-            if ($skp2023_id != null) {
-                $merge_rhk = $skp2023_id->jf->merge($skp2023_id->jpt);
-                $data['message_code']  = 200;
-                $data['message']       = 'data ditemukan';
-                $data['data_pegawai']  = json_decode($skp2023_id->pn);
-                $data['data_rhk']      = $merge_rhk->map(function ($item) {
-                    $item['rencana_aksi'] = RencanaAksi::where('rhk_id', $item->id)->get()->map->only('id', 'triwulan', 'tahun', 'keterangan', 'realisasi', 'bukti_dukung', 'masalah', 'id_rencana_aksi');
-                    return $item->only('id', 'rhk', 'rencana_aksi');
+            $skp = Skp2023::where('pegawai_id', $pegawai->id)->get();
+
+            $param = $skp->map(function ($item) {
+                $item->rhk = $item->jf->merge($item->jpt)->map(function ($item2) {
+                    $item2['rencana_aksi'] = RencanaAksi::where('rhk_id', $item2->id)->get()->map->only('id', 'triwulan', 'tahun', 'keterangan', 'realisasi', 'bukti_dukung', 'masalah', 'id_rencana_aksi');
+                    return $item2->only('id', 'rhk', 'rencana_aksi');
                 });
-            } else {
-                $data['message_code']  = 404;
-                $data['message']       = 'data rhk tidak ditemukan';
-            }
+                return $item;
+            });
+            return response()->json($param);
+            // if ($skp2023_id != null) {
+            //     $merge_rhk = $skp2023_id->jf->merge($skp2023_id->jpt);
+            //     $data['message_code']  = 200;
+            //     $data['message']       = 'data ditemukan';
+            //     $data['data_pegawai']  = json_decode($skp2023_id->pn);
+            //     $data['data_rhk']      = $merge_rhk->map(function ($item) {
+            //         $item['rencana_aksi'] = RencanaAksi::where('rhk_id', $item->id)->get()->map->only('id', 'triwulan', 'tahun', 'keterangan', 'realisasi', 'bukti_dukung', 'masalah', 'id_rencana_aksi');
+            //         return $item->only('id', 'rhk', 'rencana_aksi');
+            //     });
+            // } else {
+            //     $data['message_code']  = 404;
+            //     $data['message']       = 'data rhk tidak ditemukan';
+            // }
         }
 
-        return response()->json($data);
+        //return response()->json($data);
     }
     public function allpegawai()
     {

@@ -13,6 +13,26 @@ use App\Skp2023;
 
 class PegawaiController extends Controller
 {
+
+    public function rhk_tahun($nip, $tahun)
+    {
+        $pegawai = Pegawai::where('nip', $nip)->first();
+        if ($pegawai == null) {
+            $data['message_code']  = 200;
+            $data['message']       = 'nip tidak ditemukan';
+        } else {
+            $skp = Skp2023::where('pegawai_id', $pegawai->id)->whereYear('sampai', $tahun)->get();
+
+            $param = $skp->map(function ($item) {
+                $item->rhk = $item->jf->merge($item->jpt)->map(function ($item2) {
+                    $item2['rencana_aksi'] = RencanaAksi::where('rhk_id', $item2->id)->get()->map->only('id', 'triwulan', 'tahun', 'keterangan', 'realisasi', 'bukti_dukung', 'masalah', 'id_rencana_aksi');
+                    return $item2->only('id', 'rhk', 'rencana_aksi');
+                });
+                return $item;
+            });
+            return response()->json($param);
+        }
+    }
     public function rhk($nip)
     {
         $pegawai = Pegawai::where('nip', $nip)->first();

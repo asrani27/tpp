@@ -253,12 +253,15 @@ class SKP2023Controller extends Controller
     {
         $u = Skp2023::findOrFail($id);
         $pegawai = $u->pegawai;
+        $tahun = Carbon::parse($u->mulai)->format('Y');
 
-        $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $pegawai->nip . '/2024');
+        $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $pegawai->nip . '/' . $tahun);
+        //dd($pegawai->nip, $response->getBody()->getContents());
         $data = json_decode($response->getBody()->getContents())->data;
-        //dd($response->getBody()->getContents());
+
+
         foreach ($data as $i) {
-            $check = RencanaAksi::where('tahun', '2024')->where('keterangan', $i->keterangan)->first();
+            $check = RencanaAksi::where('tahun', $tahun)->where('keterangan', $i->keterangan)->first();
             if ($check == null) {
                 $n = new RencanaAksi;
                 $n->nip = $pegawai->nip;

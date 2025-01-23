@@ -256,7 +256,7 @@ class SKP2023Controller extends Controller
         $tahun = Carbon::parse($u->mulai)->format('Y');
 
         $response = Http::get('https://kayuhbaimbai.banjarmasinkota.go.id/api/rencana-aksi/' . $pegawai->nip . '/' . $tahun);
-        //dd($pegawai->nip, $response->getBody()->getContents());
+
         $data = json_decode($response->getBody()->getContents())->data;
 
 

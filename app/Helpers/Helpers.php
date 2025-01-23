@@ -26,6 +26,15 @@ function checkKunci($bulan, $tahun, $skpd_id)
         return true;
     }
 }
+function checkKunciTU($bulan, $tahun, $skpd_id)
+{
+    $check = KunciTpp::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', $skpd_id)->where('jenis', 'tu')->first();
+    if ($check == null) {
+        return false;
+    } else {
+        return true;
+    }
+}
 function terbilang($angka)
 {
     $angka = abs($angka);

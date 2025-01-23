@@ -1054,12 +1054,75 @@ class RekapitulasiController extends Controller
     }
 
     //new function rekap 2023 
+    public function kuncitpptu($bulan, $tahun)
+    {
+        $param['bulan'] = $bulan;
+        $param['tahun'] = $tahun;
+        $param['skpd_id'] = Auth::user()->skpd->id;
+        $param['jenis'] = 'tu';
+        KunciTpp::create($param);
 
+        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('sekolah_id', '!=', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+
+        $data->map(function ($item) {
+            //PBK
+            $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
+            if ($item->dp_ta >= 6750) {
+                $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
+                if ($item->dp_skp == null) {
+                    $item->pbk_skp = 0;
+                } else if ($item->dp_skp == 'KURANG' || $item->dp_skp == "SANGAT KURANG") {
+                    $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
+                } else {
+                    $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
+                }
+            } else {
+                $item->pbk_aktivitas = 0;
+                $item->pbk_skp = 0;
+            }
+            $item->pbk_jumlah = round($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp);
+
+            //PPK
+            $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
+            if ($item->dp_ta >= 6750) {
+                $item->ppk_aktivitas = $item->basic * ($item->p_pk / 100) * (40 / 100);
+                if ($item->dp_skp == null) {
+                    $item->pbk_skp = 0;
+                } else if ($item->dp_skp == 'KURANG' || $item->dp_skp == "SANGAT KURANG") {
+                    $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (10 / 100);
+                } else {
+                    $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (20 / 100);
+                }
+            } else {
+                $item->ppk_aktivitas = 0;
+                $item->ppk_skp = 0;
+            }
+            $item->ppk_jumlah = round($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp);
+
+            //PKK
+            $item->pkk = round($item->basic * ($item->p_kk / 100));
+            $item->pkk_jumlah = $item->pkk;
+
+            //PKP
+            $item->pkp = round($item->basic * ($item->p_kp / 100));
+            $item->pkp_jumlah = $item->pkp;
+            $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
+
+            //simpan jumlah pembayaran
+            $save = $item;
+            $save->jumlah_pembayaran = $item->jumlah_pembayaran;
+            $save->save();
+            return $item;
+        });
+        toastr()->success('Telah Di Kunci');
+        return back();
+    }
     public function kuncitpp($bulan, $tahun)
     {
         $param['bulan'] = $bulan;
         $param['tahun'] = $tahun;
         $param['skpd_id'] = Auth::user()->skpd->id;
+        $param['jenis'] = null;
         KunciTpp::create($param);
         if (Auth::user()->skpd->id == 34) {
             $dataDinas = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
@@ -1150,6 +1213,38 @@ class RekapitulasiController extends Controller
             }
             $data->map(function ($item) use ($pphTerutangData) {
                 $nip = $item->nip; // Asumsikan kolom NIP ada di `rekap_reguler`
+                $item->pph_terutang = $pphTerutangData[$nip]->pph_terutang ?? 0;
+                $item->bpjs1 = $pphTerutangData[$nip]->bpjs_satu_persen ?? 0;
+                $item->bpjs4 = $pphTerutangData[$nip]->bpjs_empat_persen ?? 0;
+                $item->save();
+            });
+
+            toastr()->success('berhasil di tarik');
+            return back();
+        }
+    }
+    public function tariktertu($bulan, $tahun)
+    {
+        $bulanTahunId = DB::connection('pajakasn')->table('bulan_tahun')->where('bulan', convertBulan($bulan))->where('tahun', $tahun)->first();
+        if ($bulanTahunId == null) {
+            toastr()->error('Gaji Belum Di Upload Oleh BPKPAD');
+            return back();
+        } else {
+            $pphTerutangData = DB::connection('pajakasn')
+                ->table('pajak')
+                ->select('nip', 'pph_terutang', 'bpjs_satu_persen', 'bpjs_empat_persen')
+                ->where('bulan_tahun_id', $bulanTahunId->id)
+                ->where('skpd_id', Auth::user()->skpd->id)
+                ->get()
+                ->mapWithKeys(function ($item) {
+                    return [(string) $item->nip => $item]; // Pastikan key adalah string
+                });
+
+            $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('sekolah_id', '!=', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+            //dd($data);
+            $data->map(function ($item) use ($pphTerutangData) {
+                $nip = $item->nip; // Asumsikan kolom NIP ada di `rekap_reguler`
+
                 $item->pph_terutang = $pphTerutangData[$nip]->pph_terutang ?? 0;
                 $item->bpjs1 = $pphTerutangData[$nip]->bpjs_satu_persen ?? 0;
                 $item->bpjs4 = $pphTerutangData[$nip]->bpjs_empat_persen ?? 0;

@@ -2401,9 +2401,8 @@ class RekapitulasiController extends Controller
                 $spreadsheet->getSheetByName('TU')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
                 $spreadsheet->getSheetByName('TU')->setCellValue('P' . $contentRow, $item->dp_ta);
                 $spreadsheet->getSheetByName('TU')->setCellValue('Q' . $contentRow, $item->dp_skp);
-                $spreadsheet->getSheetByName('TU')->setCellValue('R' . $contentRow, ($item->pph_terutang));
-                $spreadsheet->getSheetByName('TU')->setCellValue('AG' . $contentRow, $item->bpjs1);
-                $spreadsheet->getSheetByName('TU')->setCellValue('AH' . $contentRow, $item->bpjs4);
+                $spreadsheet->getSheetByName('TU')->setCellValue('AI' . $contentRow, ($item->pph_terutang));
+                $spreadsheet->getSheetByName('TU')->setCellValue('AJ' . $contentRow, $item->bpjs1);
                 $contentRow++;
             }
             //remove row

@@ -1123,17 +1123,11 @@ class RekapitulasiController extends Controller
         $param['bulan'] = $bulan;
         $param['tahun'] = $tahun;
         $param['skpd_id'] = Auth::user()->skpd->id;
-        $param['jenis'] = null;
+        $param['jenis'] = 'labkes';
+
         KunciTpp::create($param);
-        if (Auth::user()->skpd->id == 34) {
-            $dataDinas = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-            $dataIFK = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
 
-            $data = $dataDinas->merge($dataIFK);
-        } else {
-            $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-        }
-
+        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('puskesmas_id', '!=', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
 
         $data->map(function ($item) {
             //PBK
@@ -1151,7 +1145,7 @@ class RekapitulasiController extends Controller
                 $item->pbk_aktivitas = 0;
                 $item->pbk_skp = 0;
             }
-            $item->pbk_jumlah = round($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp);
+            $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * (87 / 100));
 
             //PPK
             $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
@@ -1168,23 +1162,23 @@ class RekapitulasiController extends Controller
                 $item->ppk_aktivitas = 0;
                 $item->ppk_skp = 0;
             }
-            $item->ppk_jumlah = round($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp);
+            $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (87 / 100));
 
             //PKK
-            $item->pkk = round($item->basic * ($item->p_kk / 100));
-            $item->pkk_jumlah = $item->pkk;
+            $item->pkk = $item->basic * ($item->p_kk / 100);
+            $item->pkk_jumlah = round($item->pkk * (87 / 100));
 
             //PKP
-            $item->pkp = round($item->basic * ($item->p_kp / 100));
-            $item->pkp_jumlah = $item->pkp;
+            $item->pkp = $item->basic * ($item->p_kp / 100);
+            $item->pkp_jumlah = round($item->pkp * (87 / 100));
             $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
-
             //simpan jumlah pembayaran
             $save = $item;
             $save->jumlah_pembayaran = $item->jumlah_pembayaran;
             $save->save();
             return $item;
         });
+
         toastr()->success('Telah Di Kunci');
         return back();
     }
@@ -1198,7 +1192,6 @@ class RekapitulasiController extends Controller
         KunciTpp::create($param);
 
         $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 8)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-
         $data->map(function ($item) {
             //PBK
             $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
@@ -1215,7 +1208,7 @@ class RekapitulasiController extends Controller
                 $item->pbk_aktivitas = 0;
                 $item->pbk_skp = 0;
             }
-            $item->pbk_jumlah = round($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp);
+            $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * 70 / 100);
 
             //PPK
             $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
@@ -1232,17 +1225,16 @@ class RekapitulasiController extends Controller
                 $item->ppk_aktivitas = 0;
                 $item->ppk_skp = 0;
             }
-            $item->ppk_jumlah = round($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp);
+            $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * 70 / 100);
 
             //PKK
-            $item->pkk = round($item->basic * ($item->p_kk / 100));
-            $item->pkk_jumlah = $item->pkk;
+            $item->pkk = $item->basic * ($item->p_kk / 100);
+            $item->pkk_jumlah = round($item->pkk * (70 / 100));
 
             //PKP
-            $item->pkp = round($item->basic * ($item->p_kp / 100));
-            $item->pkp_jumlah = $item->pkp;
-            $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
-
+            $item->pkp = $item->basic * ($item->p_kp / 100);
+            $item->pkp_jumlah = round($item->pkp * 70 / 100);
+            $item->jumlah_pembayaran = round($item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah);
             //simpan jumlah pembayaran
             $save = $item;
             $save->jumlah_pembayaran = $item->jumlah_pembayaran;

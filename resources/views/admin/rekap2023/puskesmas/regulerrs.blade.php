@@ -216,6 +216,7 @@ SUPERADMIN
                             <td class="text-right">{{number_format($item->pkk_jumlah)}}</td>
                             <td class="text-right">{{number_format($item->pkp)}}</td>
                             <td class="text-right">{{number_format($item->pkp_jumlah)}}</td>
+
                             <td class="text-right">{{number_format($item->jumlah_pembayaran)}}</td>
                             <td class="text-right">{{number_format($item->pph21)}}</td>
                             <td class="text-right">{{number_format($item->bpjs1)}}<br />

@@ -51,9 +51,9 @@ SUPERADMIN
                     kemungkinan besar, ASN tsb pensiun / tidak memiliki jabatan/persen jabatan 0, Solusinya klik tombol
                     hapus di paling kanan
                     jika pensiun, jika tidak pensiun hapus terlebih dahulu, kemudian masukkan/input kembali di kolom
-                    paling bawah.
+                    paling bawah..
                 </div>
-                @if (checkKunci($bulan, $tahun, Auth::user()->skpd->id) == true)
+                @if (checkKunciLabkes($bulan, $tahun, Auth::user()->skpd->id) == true)
 
                 <a href="#" class="btn btn-flat btn-xs btn-success"><i class="fa fa-lock"></i> Telah dikunci</a>
                 @else

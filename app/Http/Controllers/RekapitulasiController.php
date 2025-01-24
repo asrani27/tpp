@@ -3291,9 +3291,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('REGULER_RS')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('REGULER_RS')->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getSheetByName('REGULER_RS')->setCellValue('Q' . $contentRow, $item->dp_skp);
-            $spreadsheet->getSheetByName('REGULER_RS')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
-            $spreadsheet->getSheetByName('REGULER_RS')->setCellValue('AG' . $contentRow, $item->bpjs1);
-            $spreadsheet->getSheetByName('REGULER_RS')->setCellValue('AH' . $contentRow, $item->bpjs4);
+            $spreadsheet->getSheetByName('REGULER_RS')->setCellValue('AI' . $contentRow, ($item->pph_terutang));
+            $spreadsheet->getSheetByName('REGULER_RS')->setCellValue('AJ' . $contentRow, $item->bpjs1);
             $contentRow++;
         }
         //remove row
@@ -3361,9 +3360,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('O' . $contentRowPuskes, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('P' . $contentRowPuskes, $item->dp_ta);
             $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('Q' . $contentRowPuskes, $item->dp_skp);
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('R' . $contentRowPuskes, ($item->pph21 / 100));
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('AG' . $contentRowPuskes, $item->bpjs1);
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('AH' . $contentRowPuskes, $item->bpjs4);
+            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('AI' . $contentRow, ($item->pph_terutang));
+            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('AJ' . $contentRow, $item->bpjs1);
             $contentRowPuskes++;
         }
         //remove row

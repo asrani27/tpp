@@ -3360,8 +3360,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('O' . $contentRowPuskes, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('P' . $contentRowPuskes, $item->dp_ta);
             $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('Q' . $contentRowPuskes, $item->dp_skp);
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('AI' . $contentRow, ($item->pph_terutang));
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('AJ' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('AI' . $contentRowPuskes, ($item->pph_terutang));
+            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('AJ' . $contentRowPuskes, $item->bpjs1);
             $contentRowPuskes++;
         }
         //remove row

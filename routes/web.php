@@ -214,6 +214,8 @@ Route::group(['middleware' => ['XSS']], function () {
         //-------new route rekap tpp 2023--------//
 
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/tarikter', 'RekapitulasiController@tarikter');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/tarikterlabkes', 'RekapitulasiController@tarikterlabkes');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/tarikterregulerrs', 'RekapitulasiController@tarikterregulerrs');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/tu/tarikter', 'RekapitulasiController@tariktertu');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/kuncitpp', 'RekapitulasiController@kuncitpp');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/kuncitpptu', 'RekapitulasiController@kuncitpptu');

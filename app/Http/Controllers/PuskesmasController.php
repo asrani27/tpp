@@ -908,9 +908,8 @@ class PuskesmasController extends Controller
             $spreadsheet->getSheetByName('REGULER')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('REGULER')->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getSheetByName('REGULER')->setCellValue('Q' . $contentRow, $item->dp_skp);
-            $spreadsheet->getSheetByName('REGULER')->setCellValue('R' . $contentRow, ($item->pph21 / 100));
-            $spreadsheet->getSheetByName('REGULER')->setCellValue('AG' . $contentRow, $item->bpjs1);
-            $spreadsheet->getSheetByName('REGULER')->setCellValue('AH' . $contentRow, $item->bpjs4);
+            $spreadsheet->getSheetByName('REGULER')->setCellValue('AI' . $contentRow, ($item->pph_terutang));
+            $spreadsheet->getSheetByName('REGULER')->setCellValue('AJ' . $contentRow, $item->bpjs1);
             $contentRow++;
         }
         //remove row

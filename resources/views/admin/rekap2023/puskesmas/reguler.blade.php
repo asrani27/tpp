@@ -221,16 +221,16 @@ SUPERADMIN
                             <td class="text-right">{{number_format($item->pkp)}}</td>
                             <td class="text-right">{{number_format($item->pkp_jumlah)}}</td>
                             <td class="text-right">{{number_format($item->jumlah_pembayaran)}}</td>
-                            <td class="text-right">{{number_format($item->pph21)}}</td>
+                            <td class="text-right">{{number_format($item->pph_terutang)}}</td>
                             <td class="text-right">{{number_format($item->bpjs1)}}<br />
-                            </td>
                             <td class="text-right">{{number_format($item->bpjs1 * 4)}}</td>
                             <td class="text-right">{{number_format($item->tpp_diterima)}}</td>
 
+
                             <td>
-                                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/{{$item->id}}/delete"
+                                {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/{{$item->id}}/delete"
                                     onclick="return confirm('Yakin Ingin Dihapus?');"><span
-                                        class="badge badge-danger">Hapus</span></a>
+                                        class="badge badge-danger">Hapus</span></a> --}}
                             </td>
                         </tr>
                         @endforeach

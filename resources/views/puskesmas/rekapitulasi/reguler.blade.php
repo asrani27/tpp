@@ -114,7 +114,7 @@ ADMIN
                             <th style="background-color:#bbfac6; border:1px solid silver" colspan=13>Pembayaran</th>
                             <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>PPH 21 (TER)
                                 <br />
-                                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/tarikterregulerrs"
+                                <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/tarikter"
                                     class="btn btn-xs btn-danger">Tarik TER</a>
                             </th>
                             <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>BPJS 1%</th>

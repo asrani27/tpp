@@ -544,6 +544,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/excel', 'PuskesmasController@excel');
         Route::post('/puskesmas/rekapitulasi/tambahpegawai', 'PuskesmasController@tambahPegawai');
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/reguler/{id}/delete', 'PuskesmasController@delete');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/kuncitpp/reguler', 'PuskesmasController@kuncitpp');
 
         Route::post('/puskesmas/rekapitulasi/editjabatan/reguler', 'PuskesmasController@reguler_editjabatan');
         Route::post('/puskesmas/rekapitulasi/{bulan}/{tahun}/tambahpegawai/reguler', 'PuskesmasController@reguler_tambahpegawai');

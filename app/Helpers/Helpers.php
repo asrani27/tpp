@@ -36,6 +36,15 @@ function checkKunciLabkes($bulan, $tahun, $skpd_id)
         return true;
     }
 }
+function checkKunciPuskesmas($bulan, $tahun, $puskesmas_id)
+{
+    $check = KunciTpp::where('bulan', $bulan)->where('tahun', $tahun)->where('rs_puskesmas_id', $puskesmas_id)->where('jenis', 'puskesmas')->first();
+    if ($check == null) {
+        return false;
+    } else {
+        return true;
+    }
+}
 function checkKunciRegulerRs($bulan, $tahun, $skpd_id)
 {
     $check = KunciTpp::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', $skpd_id)->where('jenis', 'reguler_rs')->first();

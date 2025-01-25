@@ -64,6 +64,9 @@ ADMIN
                     jika pensiun, jika tidak pensiun hapus terlebih dahulu, kemudian masukkan/input kembali di kolom
                     paling bawah.
                 </div>
+                @if (checkKunciPuskesmas($bulan, $tahun, Auth::user()->puskesmas->id) == true)
+                <a href="#" class="btn btn-flat btn-xs btn-success"><i class="fa fa-lock"></i> Telah dikunci</a>
+                @else
 
                 <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/mp"
                     class="btn btn-flat btn-xs btn-primary"
@@ -78,6 +81,12 @@ ADMIN
 
                 <a href="#" class="btn btn-xs btn-flat btn-primary tambahpegawai"><i class="fas fa-user-plus"></i>Tambah
                     Pegawai</a>
+
+                <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/kuncitpp/reguler"
+                    class="btn btn-flat btn-xs btn-danger" onclick="return confirm('Yakin sudah selesai?');"><i
+                        class="fas fa-unlock"></i> Kunci TPP</a>
+
+                @endif
                 {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/excel"
                     class="btn btn-xs btn-flat btn-primary"><i class="fas fa-file-excel"></i> Export To Excel</a> --}}
                 <br /><br />
@@ -103,7 +112,11 @@ ADMIN
                             <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=4>Pagu<br /> TPP ASN
                             </th>
                             <th style="background-color:#bbfac6; border:1px solid silver" colspan=13>Pembayaran</th>
-                            <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>PPH 21</th>
+                            <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>PPH 21 (TER)
+                                <br />
+                                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/tarikterregulerrs"
+                                    class="btn btn-xs btn-danger">Tarik TER</a>
+                            </th>
                             <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>BPJS 1%</th>
                             <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>BPJS 4%</th>
                             <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>TPP Diterima</th>
@@ -131,16 +144,19 @@ ADMIN
                                 Kerja</th>
                             <th style="background-color:#bbfac6; border:1px solid silver" colspan=3>Prestasi Kerja</th>
                             <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah
-                                <br />Prestasi Kerja</th>
+                                <br />Prestasi Kerja
+                            </th>
                             <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Kondisi Kerja</th>
                             <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah <br />Kondisi
                                 Kerja</th>
                             <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Kelangkaan<br />
                                 Profesi</th>
                             <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah
-                                <br />Kelangkaan <br />Profesi</th>
+                                <br />Kelangkaan <br />Profesi
+                            </th>
                             <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah
-                                <br />Pembayaran</th>
+                                <br />Pembayaran
+                            </th>
                         </tr>
                         <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center">
                             <th style="background-color:#d6fdf9; border:1px solid silver">Aktivitas</th>
@@ -216,9 +232,7 @@ ADMIN
                             <td class="text-right">{{number_format($item->jumlah_pembayaran)}}</td>
                             <td class="text-right">{{number_format($item->pph21)}}</td>
                             <td class="text-right">{{number_format($item->bpjs1)}}<br />
-                                <button type="button" class=" btn btn-xs editbpjs" data-id="{{$item->id}}"
-                                    data-nama="{{$item->nama}}" data-1persen="{{$item->bpjs1}}"
-                                    data-4persen="{{$item->bpjs4}}"><i class="fas fa-edit"></i></button>
+
                             </td>
                             <td class="text-right">{{number_format($item->bpjs4)}}</td>
                             <td class="text-right">{{number_format($item->tpp_diterima)}}</td>

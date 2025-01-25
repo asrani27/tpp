@@ -7,6 +7,7 @@ use App\Kelas;
 use App\Jabatan;
 use App\Pangkat;
 use App\Pegawai;
+use App\KunciTpp;
 use App\RekapTpp;
 use App\Aktivitas;
 use App\RekapCpns;
@@ -39,7 +40,63 @@ class PuskesmasController extends Controller
         //$data = RekapTpp::where('skpd_id', 34)->where('puskesmas_id', Auth::user()->puskesmas->id)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         return view('puskesmas.rekapitulasi.bulantahun', compact('bulan', 'tahun'));
     }
+    public function kuncitpp($bulan, $tahun)
+    {
+        $param['bulan'] = $bulan;
+        $param['tahun'] = $tahun;
+        $param['rs_puskesmas_id'] = Auth::user()->puskesmas->id;
+        $param['jenis'] = 'puskesmas';
+        KunciTpp::create($param);
 
+        $data = RekapReguler::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $data->map(function ($item) {
+            //PBK
+            $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
+            if ($item->dp_ta >= 6750) {
+                $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
+                if ($item->dp_skp == 'kurang') {
+                    $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
+                } else {
+                    $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
+                }
+            } else {
+                $item->pbk_aktivitas = 0;
+                $item->pbk_skp = 0;
+            }
+            $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * (87 / 100));
+
+            //PPK
+            $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
+            if ($item->dp_ta >= 6750) {
+                $item->ppk_aktivitas = $item->basic * ($item->p_pk / 100) * (40 / 100);
+                if ($item->dp_skp == 'kurang') {
+                    $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (10 / 100);
+                } else {
+                    $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (20 / 100);
+                }
+            } else {
+                $item->ppk_aktivitas = 0;
+                $item->ppk_skp = 0;
+            }
+            $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (87 / 100));
+
+            //PKK
+            $item->pkk = $item->basic * ($item->p_kk / 100);
+            $item->pkk_jumlah = round($item->pkk * (87 / 100));
+
+            //PKP
+            $item->pkp = $item->basic * ($item->p_kp / 100);
+            $item->pkp_jumlah = round($item->pkp * (87 / 100));
+            $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
+            $save = $item;
+            $save->jumlah_pembayaran = $item->jumlah_pembayaran;
+            $save->save();
+            return $item;
+        });
+
+        toastr()->success('Telah Di Kunci');
+        return back();
+    }
     public function masukkanPegawai($bulan, $tahun)
     {
 

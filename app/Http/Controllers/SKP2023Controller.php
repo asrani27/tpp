@@ -259,9 +259,8 @@ class SKP2023Controller extends Controller
 
         $data = json_decode($response->getBody()->getContents())->data;
 
-
         foreach ($data as $i) {
-            $check = RencanaAksi::where('tahun', $tahun)->where('keterangan', $i->keterangan)->first();
+            $check = RencanaAksi::where('id_rencana_aksi', $i->id)->first();
             if ($check == null) {
                 $n = new RencanaAksi;
                 $n->nip = $pegawai->nip;

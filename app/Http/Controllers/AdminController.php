@@ -453,7 +453,7 @@ class AdminController extends Controller
     public function loginPuskesmas($id)
     {
         $user = Rspuskesmas::find($id)->user;
-
+        //dd($user);
         $uuid = Str::random(40);
         if (Auth::loginUsingId($user->id)) {
             Session::put('uuid', $uuid);

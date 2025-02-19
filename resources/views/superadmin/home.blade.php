@@ -62,6 +62,7 @@ SUPERADMIN
     </div>
 
     <a href="/home/superadmin/allpegawai" class='btn btn-primary'>Data Pegawai</a>
+    <a href="/home/superadmin/parametertpp" class='btn btn-primary'>Parameter TPP</a>
     <br /><br />
 
     <div class="row">

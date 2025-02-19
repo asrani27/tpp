@@ -11,6 +11,7 @@ use App\Skp2023;
 use App\Presensi;
 use App\RekapTpp;
 use App\Aktivitas;
+use App\Exports\ParameterTPP;
 use App\Exports\PegawaiAllExport;
 use App\Parameter;
 use Carbon\Carbon;
@@ -31,6 +32,10 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class HomeController extends Controller
 {
 
+    public function parametertpp()
+    {
+        return Excel::download(new ParameterTPP, 'parametertpp.xlsx');
+    }
     public function allpegawai()
     {
         //return Excel::download(new PegawaiAllExport, 'datapegawai.xlsx');

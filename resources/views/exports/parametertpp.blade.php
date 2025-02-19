@@ -25,7 +25,6 @@
                 <th>PARAMETER KELANGKAAN PROFESI</th>
                 <th>JABATAN ATASAN</th>
                 <th>SKPD</th>
-                <th>UNIT KERJA</th>
             </tr>
         </thead>
         <tbody>

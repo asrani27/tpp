@@ -1314,7 +1314,90 @@ class RekapitulasiController extends Controller
         toastr()->success('Telah Di Kunci');
         return back();
     }
+    public function kuncitpp_plt($bulan, $tahun)
+    {
+        $param['bulan'] = $bulan;
+        $param['tahun'] = $tahun;
+        $param['skpd_id'] = Auth::user()->skpd->id;
+        $param['jenis'] = 'plt';
+        KunciTpp::create($param);
+        if (Auth::user()->skpd->id == 34) {
+            $dataDinas = RekapPlt::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+            $dataIFK = RekapPlt::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
 
+            $data = $dataDinas->merge($dataIFK);
+        } else {
+            $data = RekapPlt::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        }
+
+
+        $data->map(function ($item) {
+            //PBK
+            $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
+            if ($item->dp_ta >= 6750) {
+                $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
+                if ($item->dp_skp == 'kurang') {
+                    $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
+                } else {
+                    $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
+                }
+            } else {
+                $item->pbk_aktivitas = 0;
+                $item->pbk_skp = 0;
+            }
+
+            if ($item->jenis_plt == '2') {
+                $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * 20 / 100);
+            } else {
+                $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp));
+            }
+
+            //PPK
+            $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
+            if ($item->dp_ta >= 6750) {
+                $item->ppk_aktivitas = $item->basic * ($item->p_pk / 100) * (40 / 100);
+                if ($item->dp_skp == 'kurang') {
+                    $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (10 / 100);
+                } else {
+                    $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (20 / 100);
+                }
+            } else {
+                $item->ppk_aktivitas = 0;
+                $item->ppk_skp = 0;
+            }
+
+            if ($item->jenis_plt == '2') {
+                $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * 20 / 100);
+            } else {
+
+                $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp));
+            }
+
+            //PKK
+            $item->pkk = round($item->basic * ($item->p_kk / 100));
+
+            if ($item->jenis_plt == '2') {
+
+                $item->pkk_jumlah = round($item->pkk * 20 / 100);
+            } else {
+
+                $item->pkk_jumlah = $item->pkk;
+            }
+            //PKP
+            $item->pkp = round($item->basic * ($item->p_kp / 100));
+            $item->pkp_jumlah = $item->pkp;
+            $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
+
+            //simpan jumlah pembayaran
+            $save = $item;
+            $save->jumlah_pembayaran = $item->jumlah_pembayaran;
+            $save->save();
+
+            return $item;
+        });
+        toastr()->success('Telah Di Kunci');
+        return back();
+    }
     public function tarikterlabkes($bulan, $tahun)
     {
         $bulanTahunId = DB::connection('pajakasn')->table('bulan_tahun')->where('bulan', convertBulan($bulan))->where('tahun', $tahun)->first();
@@ -4032,12 +4115,12 @@ class RekapitulasiController extends Controller
             $item->pkp = round($item->basic * ($item->p_kp / 100));
             $item->pkp_jumlah = $item->pkp;
             $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
-            //dd($item->jumlah_pembayaran, $item->pbk_jumlah, $item->ppk_jumlah);
-            //PPH 21
+
             $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
-            $item->tpp_diterima = $item->jumlah_pembayaran - $item->pph21 - $item->bpjs1;
+            $item->tpp_diterima = $item->jumlah_pembayaran - $item->bpjs1;
             return $item;
         });
+        //dd($data);
         return view('admin.rekap2023.plt', compact('data', 'bulan', 'tahun'));
     }
     public function plt_tambahpegawai(Request $req, $bulan, $tahun)
@@ -4122,9 +4205,10 @@ class RekapitulasiController extends Controller
     public function plt_perhitungan($bulan, $tahun)
     {
         $data = RekapPlt::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-
+        //dd($data);
         foreach ($data as $item) {
             $persen = Jabatan::find($item->jabatan_plt_id);
+
             if ($persen == null) {
                 $basic = 0;
                 $p_bk = 0;
@@ -4135,6 +4219,7 @@ class RekapitulasiController extends Controller
                 $pagu = 0;
             } else {
                 $basic     = Kelas::where('nama', $item->kelas)->first()->nilai;
+
                 $p_bk      = $persen->persen_beban_kerja;
                 $p_tbk     = $persen->persen_tambahan_beban_kerja;
                 $p_pk      = $persen->persen_prestasi_kerja;

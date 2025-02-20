@@ -17,7 +17,7 @@ class ParameterTPP implements FromView, WithEvents
     public function view(): View
     {
         return view('exports.parametertpp', [
-            'jabatan' => Jabatan::all()
+            'jabatan' => Jabatan::where('rs_puskesmas_id', null)->get()
         ]);
     }
     public function registerEvents(): array

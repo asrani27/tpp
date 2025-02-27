@@ -36,6 +36,11 @@ class HomeController extends Controller
     {
         return Excel::download(new ParameterTPP, 'parametertpp.xlsx');
     }
+
+    public function parametertpppuskesmas()
+    {
+        return Excel::download(new ParameterTPPpuskesmas, 'parametertpppuskesmas.xlsx');
+    }
     public function allpegawai()
     {
         //return Excel::download(new PegawaiAllExport, 'datapegawai.xlsx');

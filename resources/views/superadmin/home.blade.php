@@ -63,6 +63,7 @@ SUPERADMIN
 
     <a href="/home/superadmin/allpegawai" class='btn btn-primary'>Data Pegawai</a>
     <a href="/home/superadmin/parametertpp" class='btn btn-primary'>Parameter TPP</a>
+    <a href="/home/superadmin/parametertpppuskesmas" class='btn btn-primary'>Parameter TPP Puskesmas</a>
     <br /><br />
 
     <div class="row">

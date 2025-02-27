@@ -42,7 +42,7 @@
                 <td>{{ strtoupper($item->persen_kondisi_kerja) }}</td>
                 <td>{{ strtoupper($item->persen_kelangkaan_profesi) }}</td>
                 <td>{{ strtoupper($item->atasan == null ? null : $item->atasan->nama) }}</td>
-                <td>{{ strtoupper($item->skpd == null ? null : $item->skpd->nama) }}</td>
+                <td>{{ strtoupper($item->puskesmas == null ? null : $item->puskesmas->nama) }}</td>
             </tr>
             @endforeach
         </tbody>

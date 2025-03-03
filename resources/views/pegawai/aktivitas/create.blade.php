@@ -34,8 +34,7 @@ TAMBAH AKTIVITAS HARIAN
             <div class="col-sm-10">
 
               @if (Auth::user()->username == '197508312010011005'||Auth::user()->username ==
-              '198707242010011009'||Auth::user()->username == '197901192011012002'||Auth::user()->username ==
-              '198902192015021002'||Auth::user()->username == '198708132010011001'||Auth::user()->username ==
+              '198707242010011009'||Auth::user()->username == '196906081997032006'||Auth::user()->username ==
               '199612132019031004')
 
               <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"

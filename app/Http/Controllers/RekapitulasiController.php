@@ -4270,4 +4270,244 @@ class RekapitulasiController extends Controller
             return json_encode($data);
         }
     }
+
+    //IFK
+    public function ifk_reguler($bulan, $tahun)
+    {
+        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $data->map(function ($item) {
+            //PBK
+            $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
+            if ($item->dp_ta >= 6750) {
+                $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
+                if ($item->dp_skp == null) {
+                    $item->pbk_skp = 0;
+                } else if ($item->dp_skp == 'KURANG' || $item->dp_skp == "SANGAT KURANG") {
+                    $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
+                } else {
+                    $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
+                }
+            } else {
+                $item->pbk_aktivitas = 0;
+                $item->pbk_skp = 0;
+            }
+            $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * (85 / 100));
+
+            //PPK
+            $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
+            if ($item->dp_ta >= 6750) {
+                $item->ppk_aktivitas = $item->basic * ($item->p_pk / 100) * (40 / 100);
+                if ($item->dp_skp == null) {
+                    $item->pbk_skp = 0;
+                } else if ($item->dp_skp == 'KURANG' || $item->dp_skp == "SANGAT KURANG") {
+                    $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (10 / 100);
+                } else {
+                    $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (20 / 100);
+                }
+            } else {
+                $item->ppk_aktivitas = 0;
+                $item->ppk_skp = 0;
+            }
+            $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (85 / 100));
+
+            //PKK
+            $item->pkk = $item->basic * ($item->p_kk / 100);
+            $item->pkk_jumlah = round($item->pkk * (85 / 100));
+
+            //PKP
+            $item->pkp = $item->basic * ($item->p_kp / 100);
+            $item->pkp_jumlah = round($item->pkp * (85 / 100));
+            $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
+            //PPH 21
+            $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
+            $item->tpp_diterima = $item->jumlah_pembayaran - $item->bpjs1;
+            return $item;
+        });
+        return view('admin.rekap2023.ifk.reguler', compact('data', 'bulan', 'tahun'));
+    }
+    public function ifk_reguler_mp($bulan, $tahun)
+    {
+
+        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('status_pns', 'pns')->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
+            return $query->where('rs_puskesmas_id', 37)->where('sekolah_id', null);
+        })->get();
+
+        foreach ($pegawai as $item) {
+            $check = RekapReguler::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+            if ($check == null) {
+                $n = new RekapReguler;
+                $n->skpd_id          = Auth::user()->skpd->id;
+                $n->puskesmas_id     = $item->jabatan == null ? null : $item->jabatan->rs_puskesmas_id;
+                $n->sekolah_id       = $item->jabatan == null ? null : $item->jabatan->sekolah_id;
+                $n->nip              = $item->nip;
+                $n->nama             = $item->nama;
+                $n->pangkat          = $item->pangkat == null ? null : $item->pangkat->nama;
+                $n->golongan         = $item->pangkat == null ? null : $item->pangkat->golongan;
+                $n->jabatan          = $item->jabatan == null ? null : $item->jabatan->nama;
+                $n->jabatan_id       = $item->jabatan == null ? null : $item->jabatan->id;
+                $n->jenis_jabatan    = $item->jabatan == null ? null : $item->jabatan->jenis_jabatan;
+                $n->kelas            = $item->jabatan == null ? null : $item->jabatan->kelas->nama;
+                $n->bulan            = $bulan;
+                $n->tahun            = $tahun;
+                $n->pph21            = $item->pangkat == null ? null : $item->pangkat->pph;
+                $n->save();
+            } else {
+                if ($check->skpd_id == Auth::user()->skpd->id || $check->skpd_id == null) {
+                    $check->update([
+                        'skpd_id'       => Auth::user()->skpd->id,
+                        'puskesmas_id'  => $item->jabatan == null ? null : $item->jabatan->rs_puskesmas_id,
+                        'sekolah_id'    => $item->jabatan == null ? null : $item->jabatan->sekolah_id,
+                        'nip'           => $item->nip,
+                        'nama'          => $item->nama,
+                        'pangkat'       => $item->pangkat == null ? null : $item->pangkat->nama,
+                        'golongan'      => $item->pangkat == null ? null : $item->pangkat->golongan,
+                        'jabatan'       => $item->jabatan == null ? null : $item->jabatan->nama,
+                        'jabatan_id'    => $item->jabatan == null ? null : $item->jabatan->id,
+                        'jenis_jabatan' => $item->jabatan == null ? null : $item->jabatan->jenis_jabatan,
+                        'kelas'         => $item->jabatan == null ? null : $item->jabatan->kelas->nama,
+                        'bulan' => $bulan,
+                        'tahun' => $tahun,
+                        'pph21' => $item->pangkat == null ? null : $item->pangkat->pph,
+                    ]);
+                } else {
+                }
+            }
+        }
+
+        toastr()->success('Berhasil Memasukkan Pegawai');
+        return back();
+    }
+    public function ifk_reguler_psa($bulan, $tahun)
+    {
+        //cuti bersama
+        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count() * 420;
+        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        foreach ($data as $item) {
+            $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+            $dp_ct = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 7)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+            $dp_tl = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 5)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+            $dp_co = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 9)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 360;
+            $dp_di = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 4)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+            $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
+            $aktivitas = Aktivitas::where('pegawai_id', $pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('validasi', 1)->get();
+
+            $menit_aktivitas = $aktivitas->sum('menit') + $dp_ct + $dp_tl + $dp_co + $dp_di + $cuti_bersama;
+
+            if ($presensi == null) {
+                $absensi = 0;
+            } else {
+                $absensi = $presensi->persen_kehadiran;
+            }
+
+            $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
+
+            if ($bulan == '01' || $bulan == '02' || $bulan == '03') {
+                //ambil penilaian TW 4 tahun sebelumnya
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun - 1)->where('rhk_tw4', '!=', null)->orderBy('id', 'DESC')->first();
+
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
+            if ($bulan == '04' || $bulan == '05' || $bulan == '06') {
+                //ambil penilaian TW 1 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
+            if ($bulan == '07' || $bulan == '08' || $bulan == '09') {
+                //ambil penilaian TW 2 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
+            if ($bulan == '10' || $bulan == '11' || $bulan == '12') {
+                //ambil penilaian TW 3 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+            $item->update([
+                'dp_aktivitas' => $aktivitas->sum('menit'),
+                'dp_ct'        => $dp_ct,
+                'dp_tl'        => $dp_tl,
+                'dp_covid'     => $dp_co,
+                'dp_diklat'    => $dp_di,
+                'dp_cb'        => $cuti_bersama,
+                'dp_ta'        => $menit_aktivitas,
+                'dp_absensi'   => $absensi,
+                'dp_skp'       => $nilaiSKP,
+            ]);
+        }
+        toastr()->success('Berhasil di tarik');
+        return back();
+    }
+    public function ifk_reguler_perhitungan($bulan, $tahun)
+    {
+        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', '!=', 8)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 37)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+
+        foreach ($data as $item) {
+            //$jabatan_id = Pegawai::where('nip', $item->nip)->first()->jabatan_id;
+            $persen = Jabatan::find($item->jabatan_id);
+            if ($persen == null) {
+                $basic = 0;
+                $p_bk = 0;
+                $p_tbk = 0;
+                $p_pk = 0;
+                $p_kk = 0;
+                $p_kp = 0;
+                $pagu = 0;
+            } else {
+                $basic     = Kelas::where('nama', $item->kelas)->first()->nilai;
+                $p_bk      = $persen->persen_beban_kerja;
+                $p_tbk     = $persen->persen_tambahan_beban_kerja;
+                $p_pk      = $persen->persen_prestasi_kerja;
+                $p_kk      = $persen->persen_kondisi_kerja;
+                $p_kp      = $persen->persen_kelangkaan_profesi;
+                $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (85 / 100));
+            }
+
+            $item->update([
+                'basic' => $basic,
+                'p_bk'  => $p_bk,
+                'p_tbk' => $p_tbk,
+                'p_pk'  => $p_pk,
+                'p_kk'  => $p_kk,
+                'p_kp'  => $p_kp,
+                'pagu'  => $pagu,
+            ]);
+        }
+        toastr()->success('Berhasil di hitung');
+        return back();
+    }
 }

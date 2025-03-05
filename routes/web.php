@@ -268,6 +268,22 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/puskes/reguler/{id}/delete', 'RekapitulasiController@puskes_reguler_delete');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/puskes/reguler/excel', 'RekapitulasiController@puskes_reguler_excel');
 
+        //IFK
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/ifk/reguler', 'RekapitulasiController@ifk_reguler');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/ifk/reguler/mp', 'RekapitulasiController@ifk_reguler_mp');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/ifk/reguler/psa', 'RekapitulasiController@ifk_reguler_psa');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/ifk/reguler/perhitungan', 'RekapitulasiController@ifk_reguler_perhitungan');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/ifk/reguler/{id}/delete', 'RekapitulasiController@ifk_reguler_delete');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/ifk/reguler/excel', 'RekapitulasiController@ifk_reguler_excel');
+
+        //LABKES
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/labkes/reguler', 'RekapitulasiController@labkes_reguler');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/labkes/reguler/mp', 'RekapitulasiController@labkes_reguler_mp');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/labkes/reguler/psa', 'RekapitulasiController@labkes_reguler_psa');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/labkes/reguler/perhitungan', 'RekapitulasiController@labkes_reguler_perhitungan');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/labkes/reguler/{id}/delete', 'RekapitulasiController@labkes_reguler_delete');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/labkes/reguler/excel', 'RekapitulasiController@labkes_reguler_excel');
+
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/rs/reguler', 'RekapitulasiController@rs_reguler');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/rs/reguler/mp', 'RekapitulasiController@rs_reguler_mp');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/rs/reguler/psa', 'RekapitulasiController@rs_reguler_psa');

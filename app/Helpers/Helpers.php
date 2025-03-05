@@ -26,7 +26,15 @@ function checkKunci($bulan, $tahun, $skpd_id)
         return true;
     }
 }
-
+function checkKunciPLT($bulan, $tahun, $skpd_id)
+{
+    $check = KunciTpp::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', $skpd_id)->where('jenis', 'plt')->first();
+    if ($check == null) {
+        return false;
+    } else {
+        return true;
+    }
+}
 function checkKunciIFK($bulan, $tahun, $skpd_id)
 {
     $check = KunciTpp::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', $skpd_id)->where('jenis', 'ifk')->first();

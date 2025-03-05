@@ -28,6 +28,10 @@ SUPERADMIN
                     {{convertBulan($bulan)}} {{$tahun}}</h3>
             </div>
             <div class="card-body p-2">
+                @if (checkKunciPLT($bulan, $tahun, Auth::user()->skpd->id) == true)
+
+                <a href="#" class="btn btn-flat btn-xs btn-success"><i class="fa fa-lock"></i> Telah dikunci</a>
+                @else
                 <a href="#" class="btn btn-xs btn-primary tambahpegawai">
                     Tambah Pegawai PLT</a>
 
@@ -37,7 +41,7 @@ SUPERADMIN
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/plt/kuncitpp" class="btn btn-flat btn-xs btn-danger"
                     onclick="return confirm('Yakin sudah selesai?');"><i class="fas fa-unlock"></i> Kunci TPP</a>
-
+                @endif
                 <br /><br />
 
                 <table class="table table-hover text-nowrap table-sm table-responsive ">

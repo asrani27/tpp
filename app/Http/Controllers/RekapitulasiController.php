@@ -1622,6 +1622,47 @@ class RekapitulasiController extends Controller
             return back();
         }
     }
+    public function tarikter_plt($bulan, $tahun)
+    {
+
+        $bulanTahunId = DB::connection('pajakasn')->table('bulan_tahun')->where('bulan', convertBulan($bulan))->where('tahun', $tahun)->first();
+        //dd($bulanTahunId);
+        if ($bulanTahunId == null) {
+            toastr()->error('Gaji Belum Di Upload Oleh BPKPAD');
+            return back();
+        } else {
+            $pphTerutangData = DB::connection('pajakasn')
+                ->table('pajak')
+                ->select('nip', 'pph_terutang', 'bpjs_satu_persen', 'bpjs_empat_persen')
+                ->where('bulan_tahun_id', $bulanTahunId->id)
+                ->where('skpd_id', Auth::user()->skpd->id)
+                ->get()
+                ->mapWithKeys(function ($item) {
+                    return [(string) $item->nip => $item]; // Pastikan key adalah string
+                });
+
+            if (Auth::user()->skpd->id == 34) {
+                $dataDinas = RekapPlt::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->where('jenis_plt', 1)->orderBy('kelas', 'DESC')->get();
+                $dataIFK = RekapPlt::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->where('jenis_plt', 1)->orderBy('kelas', 'DESC')->get();
+
+                $data = $dataDinas->merge($dataIFK);
+            } else {
+                $data = RekapPlt::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->where('jenis_plt', 1)->orderBy('kelas', 'DESC')->get();
+            }
+
+            $data->map(function ($item) use ($pphTerutangData) {
+                $nip = $item->nip; // Asumsikan kolom NIP ada di `rekap_reguler`
+                $item->pph_terutang = $pphTerutangData[$nip]->pph_terutang ?? 0;
+                $item->bpjs1 = $pphTerutangData[$nip]->bpjs_satu_persen ?? 0;
+                $item->bpjs4 = $pphTerutangData[$nip]->bpjs_empat_persen ?? 0;
+                $item->save();
+            });
+
+            toastr()->success('berhasil di tarik');
+            return back();
+        }
+    }
+
     public function tariktertu($bulan, $tahun)
     {
         $bulanTahunId = DB::connection('pajakasn')->table('bulan_tahun')->where('bulan', convertBulan($bulan))->where('tahun', $tahun)->first();
@@ -2925,9 +2966,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('PLT')->setCellValue('O' . $contentRowPlt, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('PLT')->setCellValue('P' . $contentRowPlt, $item->dp_ta);
             $spreadsheet->getSheetByName('PLT')->setCellValue('Q' . $contentRowPlt, $item->dp_skp);
-            $spreadsheet->getSheetByName('PLT')->setCellValue('AF' . $contentRow, $item->pph_terutang);
-            $spreadsheet->getSheetByName('PLT')->setCellValue('AG' . $contentRowPlt, $item->bpjs1);
-            $spreadsheet->getSheetByName('PLT')->setCellValue('AH' . $contentRowPlt, $item->bpjs4);
+            $spreadsheet->getSheetByName('PLT')->setCellValue('AI' . $contentRowPlt, $item->pph_terutang);
+            $spreadsheet->getSheetByName('PLT')->setCellValue('AJ' . $contentRowPlt, $item->bpjs1);
             $contentRowPlt++;
         }
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');

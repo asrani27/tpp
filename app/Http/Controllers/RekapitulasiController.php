@@ -1591,7 +1591,7 @@ class RekapitulasiController extends Controller
     }
     public function puskes_reguler($bulan, $tahun)
     {
-        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('puskesmas_id', '!=', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('puskesmas_id', '!=', 36)->where('puskesmas_id', '!=', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         $data->map(function ($item) {
             //PBK
             $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
@@ -1608,7 +1608,7 @@ class RekapitulasiController extends Controller
                 $item->pbk_aktivitas = 0;
                 $item->pbk_skp = 0;
             }
-            $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * (87 / 100));
+            $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * (85 / 100));
 
             //PPK
             $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
@@ -1625,15 +1625,15 @@ class RekapitulasiController extends Controller
                 $item->ppk_aktivitas = 0;
                 $item->ppk_skp = 0;
             }
-            $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (87 / 100));
+            $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (85 / 100));
 
             //PKK
             $item->pkk = $item->basic * ($item->p_kk / 100);
-            $item->pkk_jumlah = round($item->pkk * (87 / 100));
+            $item->pkk_jumlah = round($item->pkk * (85 / 100));
 
             //PKP
             $item->pkp = $item->basic * ($item->p_kp / 100);
-            $item->pkp_jumlah = round($item->pkp * (87 / 100));
+            $item->pkp_jumlah = round($item->pkp * (85 / 100));
             $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
             //PPH 21
             $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
@@ -1701,6 +1701,7 @@ class RekapitulasiController extends Controller
     public function rs_reguler($bulan, $tahun)
     {
         $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 8)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+
         $data->map(function ($item) {
             //PBK
             $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
@@ -1717,7 +1718,7 @@ class RekapitulasiController extends Controller
                 $item->pbk_aktivitas = 0;
                 $item->pbk_skp = 0;
             }
-            $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * 70 / 100);
+            $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * 68 / 100);
 
             //PPK
             $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
@@ -1734,15 +1735,15 @@ class RekapitulasiController extends Controller
                 $item->ppk_aktivitas = 0;
                 $item->ppk_skp = 0;
             }
-            $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * 70 / 100);
+            $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * 68 / 100);
 
             //PKK
             $item->pkk = $item->basic * ($item->p_kk / 100);
-            $item->pkk_jumlah = round($item->pkk * (70 / 100));
+            $item->pkk_jumlah = round($item->pkk * (68 / 100));
 
             //PKP
             $item->pkp = $item->basic * ($item->p_kp / 100);
-            $item->pkp_jumlah = round($item->pkp * 70 / 100);
+            $item->pkp_jumlah = round($item->pkp * 68 / 100);
             $item->jumlah_pembayaran = round($item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah);
             //PPH 21
             $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
@@ -1871,7 +1872,7 @@ class RekapitulasiController extends Controller
     {
 
         $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('status_pns', 'pns')->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
-            return $query->where('rs_puskesmas_id', '!=', null)->where('rs_puskesmas_id', '!=', 8)->where('rs_puskesmas_id', '!=', 37)->where('sekolah_id', null);
+            return $query->where('rs_puskesmas_id', '!=', null)->where('rs_puskesmas_id', '!=', 8)->where('rs_puskesmas_id', '!=', 36)->where('rs_puskesmas_id', '!=', 37)->where('sekolah_id', null);
         })->get();
 
         foreach ($pegawai as $item) {
@@ -2470,7 +2471,7 @@ class RekapitulasiController extends Controller
                 $p_pk      = $persen->persen_prestasi_kerja;
                 $p_kk      = $persen->persen_kondisi_kerja;
                 $p_kp      = $persen->persen_kelangkaan_profesi;
-                $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (87 / 100));
+                $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (85 / 100));
             }
 
             $item->update([
@@ -2509,7 +2510,7 @@ class RekapitulasiController extends Controller
                 $p_pk      = $persen->persen_prestasi_kerja;
                 $p_kk      = $persen->persen_kondisi_kerja;
                 $p_kp      = $persen->persen_kelangkaan_profesi;
-                $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * 70 / 100);
+                $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * 68 / 100);
             }
 
             $item->update([
@@ -3423,28 +3424,28 @@ class RekapitulasiController extends Controller
         }
 
         // //sheet REGULER PUSKES
-        $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
-        $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
         $contentRowPuskes = 8;
 
         foreach ($reguler_puskes as $key => $item) {
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('B' . $contentRowPuskes, $item->nama);
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('C' . $contentRowPuskes, '\'' . $item->nip);
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('D' . $contentRowPuskes, $item->pangkat . '/' . $item->golongan);
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('E' . $contentRowPuskes, $item->jabatan);
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('F' . $contentRowPuskes, $item->jenis_jabatan);
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('G' . $contentRowPuskes, $item->kelas);
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('I' . $contentRowPuskes, $item->basic);
+            $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('B' . $contentRowPuskes, $item->nama);
+            $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('C' . $contentRowPuskes, '\'' . $item->nip);
+            $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('D' . $contentRowPuskes, $item->pangkat . '/' . $item->golongan);
+            $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('E' . $contentRowPuskes, $item->jabatan);
+            $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('F' . $contentRowPuskes, $item->jenis_jabatan);
+            $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('G' . $contentRowPuskes, $item->kelas);
+            $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('I' . $contentRowPuskes, $item->basic);
 
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('J' . $contentRowPuskes, (($item->p_bk + $item->p_tbk) / 100));
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('K' . $contentRowPuskes, ($item->p_pk / 100));
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('L' . $contentRowPuskes, ($item->p_kk / 100));
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('M' . $contentRowPuskes, ($item->p_kp / 100));
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('O' . $contentRowPuskes, ($item->dp_absensi / 100));
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('P' . $contentRowPuskes, $item->dp_ta);
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('Q' . $contentRowPuskes, $item->dp_skp);
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('AI' . $contentRowPuskes, ($item->pph_terutang));
-            $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('AJ' . $contentRowPuskes, $item->bpjs1);
+            $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('J' . $contentRowPuskes, (($item->p_bk + $item->p_tbk) / 100));
+            $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('K' . $contentRowPuskes, ($item->p_pk / 100));
+            $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('L' . $contentRowPuskes, ($item->p_kk / 100));
+            $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('M' . $contentRowPuskes, ($item->p_kp / 100));
+            $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('O' . $contentRowPuskes, ($item->dp_absensi / 100));
+            $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('P' . $contentRowPuskes, $item->dp_ta);
+            $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('Q' . $contentRowPuskes, $item->dp_skp);
+            $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('AI' . $contentRowPuskes, ($item->pph_terutang));
+            $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('AJ' . $contentRowPuskes, $item->bpjs1);
             $contentRowPuskes++;
         }
         //remove row
@@ -3457,13 +3458,13 @@ class RekapitulasiController extends Controller
         $sumAE = '=SUM(AE8:AE' . ($contentRowPuskes - 1) . ')';
         $sumAF = '=SUM(AF8:AF' . ($contentRowPuskes - 1) . ')';
         $sumAI = '=SUM(AI8:AI' . ($contentRowPuskes - 1) . ')';
-        $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->removeRow($rowMulaiHapusPuskes, $jumlahDihapusPuskes);
-        $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('V' . $contentRowPuskes, $sumV);
-        $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('Z' . $contentRowPuskes, $sumZ);
-        $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('AB' . $contentRowPuskes, $sumAB);
-        $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('AE' . $contentRowPuskes, $sumAE);
-        $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('AF' . $contentRowPuskes, $sumAF);
-        $spreadsheet->getSheetByName('REGULER_PUSKES_LAB')->setCellValue('AI' . $contentRowPuskes, $sumAI);
+        $spreadsheet->getSheetByName('REGULER_PUSKES')->removeRow($rowMulaiHapusPuskes, $jumlahDihapusPuskes);
+        $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('V' . $contentRowPuskes, $sumV);
+        $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('Z' . $contentRowPuskes, $sumZ);
+        $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('AB' . $contentRowPuskes, $sumAB);
+        $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('AE' . $contentRowPuskes, $sumAE);
+        $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('AF' . $contentRowPuskes, $sumAF);
+        $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('AI' . $contentRowPuskes, $sumAI);
 
         //sheet CPNS Puskes
         $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));

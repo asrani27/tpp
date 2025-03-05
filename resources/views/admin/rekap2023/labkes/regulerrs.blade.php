@@ -25,7 +25,7 @@ SUPERADMIN
         </div>
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Daftar TPP REGULER IFK Bulan
+                <h3 class="card-title">Daftar TPP REGULER RS Bulan
                     {{convertBulan($bulan)}} {{$tahun}}</h3>
             </div>
             <div class="card-body p-2">
@@ -51,33 +51,33 @@ SUPERADMIN
                     kemungkinan besar, ASN tsb pensiun / tidak memiliki jabatan/persen jabatan 0, Solusinya klik tombol
                     hapus di paling kanan
                     jika pensiun, jika tidak pensiun hapus terlebih dahulu, kemudian masukkan/input kembali di kolom
-                    paling bawah..
+                    paling bawah.
                 </div>
-                @if (checkKunciLabkes($bulan, $tahun, Auth::user()->skpd->id) == true)
-
+                @if (checkKunciRegulerRs($bulan, $tahun, Auth::user()->skpd->id) == true)
                 <a href="#" class="btn btn-flat btn-xs btn-success"><i class="fa fa-lock"></i> Telah dikunci</a>
                 @else
 
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/ifk/reguler/mp"
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/rs/reguler/mp"
                     class="btn btn-flat btn-xs btn-primary"
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
                     Semua Pegawai</a>
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/ifk/reguler/psa"
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/rs/reguler/psa"
                     class="btn btn-flat btn-xs btn-secondary"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Tarik PSA</a>
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/ifk/reguler/perhitungan"
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/rs/reguler/perhitungan"
                     class="btn btn-flat btn-xs btn-warning"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
 
-                {{-- <a href="#" class="btn btn-xs btn-flat btn-primary tambahpegawai"><i
-                        class="fas fa-user-plus"></i>Tambah
-                    Pegawai</a> --}}
+                <a href="#" class="btn btn-xs btn-flat btn-primary tambahpegawai"><i class="fas fa-user-plus"></i>Tambah
+                    Pegawai</a>
 
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/kuncitpp/ifk" class="btn btn-flat btn-xs btn-danger"
-                    onclick="return confirm('Yakin sudah selesai?');"><i class="fas fa-unlock"></i> Kunci TPP</a>
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/kuncitpp/regulerrs"
+                    class="btn btn-flat btn-xs btn-danger" onclick="return confirm('Yakin sudah selesai?');"><i
+                        class="fas fa-unlock"></i> Kunci TPP</a>
 
                 @endif
-
+                {{-- <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/excel"
+                    class="btn btn-xs btn-flat btn-primary"><i class="fas fa-file-excel"></i> Export To Excel</a> --}}
                 <br /><br />
 
                 <table class="table table-hover text-nowrap table-sm table-responsive ">
@@ -103,7 +103,7 @@ SUPERADMIN
                             <th style="background-color:#bbfac6; border:1px solid silver" colspan=13>Pembayaran</th>
                             <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>PPH 21 (TER)
                                 <br />
-                                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/tarikterifk"
+                                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/tarikterregulerrs"
                                     class="btn btn-xs btn-danger">Tarik TER</a>
                             </th>
                             <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>BPJS 1%</th>
@@ -173,7 +173,9 @@ SUPERADMIN
                             background-color:#f2dede
                             @endif
                             
-                           
+                            @if($item->puskesmas_id == 37)
+                            background-color:#bbebfb
+                            @endif
                             ">
                             <td>{{$no++}}</td>
                             <td>
@@ -218,8 +220,9 @@ SUPERADMIN
                             <td class="text-right">{{number_format($item->pkk_jumlah)}}</td>
                             <td class="text-right">{{number_format($item->pkp)}}</td>
                             <td class="text-right">{{number_format($item->pkp_jumlah)}}</td>
+
                             <td class="text-right">{{number_format($item->jumlah_pembayaran)}}</td>
-                            <td class="text-right">{{number_format($item->pph_terutang)}}</td>
+                            <td class="text-right">{{number_format($item->pph21)}}</td>
                             <td class="text-right">{{number_format($item->bpjs1)}}<br />
                             </td>
                             <td class="text-right">{{number_format($item->bpjs1 * 4)}}</td>
@@ -350,7 +353,7 @@ SUPERADMIN
 <div class="modal fade" id="modal-tambahpegawai" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/tambahpegawai/puskes/reguler"
+            <form method="post" action="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/tambahpegawai/reguler"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header bg-gradient-success" style="padding:10px">

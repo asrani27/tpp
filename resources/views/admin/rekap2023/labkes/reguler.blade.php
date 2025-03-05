@@ -25,7 +25,7 @@ SUPERADMIN
         </div>
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Daftar TPP REGULER IFK Bulan
+                <h3 class="card-title">Daftar TPP REGULER LABKES Bulan
                     {{convertBulan($bulan)}} {{$tahun}}</h3>
             </div>
             <div class="card-body p-2">
@@ -58,14 +58,14 @@ SUPERADMIN
                 <a href="#" class="btn btn-flat btn-xs btn-success"><i class="fa fa-lock"></i> Telah dikunci</a>
                 @else
 
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/ifk/reguler/mp"
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/labkes/reguler/mp"
                     class="btn btn-flat btn-xs btn-primary"
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
                     Semua Pegawai</a>
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/ifk/reguler/psa"
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/labkes/reguler/psa"
                     class="btn btn-flat btn-xs btn-secondary"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Tarik PSA</a>
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/ifk/reguler/perhitungan"
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/labkes/reguler/perhitungan"
                     class="btn btn-flat btn-xs btn-warning"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
 
@@ -73,8 +73,9 @@ SUPERADMIN
                         class="fas fa-user-plus"></i>Tambah
                     Pegawai</a> --}}
 
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/kuncitpp/ifk" class="btn btn-flat btn-xs btn-danger"
-                    onclick="return confirm('Yakin sudah selesai?');"><i class="fas fa-unlock"></i> Kunci TPP</a>
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/kuncitpp/labkes"
+                    class="btn btn-flat btn-xs btn-danger" onclick="return confirm('Yakin sudah selesai?');"><i
+                        class="fas fa-unlock"></i> Kunci TPP</a>
 
                 @endif
 

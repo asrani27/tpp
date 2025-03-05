@@ -3338,9 +3338,12 @@ class RekapitulasiController extends Controller
     {
 
         $reguler_rs = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 8)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-        $cpns_rs = RekapCpns::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 8)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        //$cpns_rs = RekapCpns::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 8)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         $reguler_puskes = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('puskesmas_id', '!=', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-        $cpns_puskes = RekapCpns::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('puskesmas_id', '!=', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        //$cpns_puskes = RekapCpns::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 8)->where('puskesmas_id', '!=', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+
+        $IFK = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $LABKES = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 36)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         //dd($reguler_puskes)
         $dataBulan = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun);
         $kinerjaBulan = $dataBulan->translatedFormat('F Y');
@@ -3351,7 +3354,7 @@ class RekapitulasiController extends Controller
         header("Content-Disposition: attachment;filename=$filename");
         header('Cache-Control: max-age=0');
 
-        $path = public_path('/excel/puskesmas.xlsx');
+        $path = public_path('/excel/rspuskes.xlsx');
         $reader = IOFactory::createReader('Xlsx');
         $spreadsheet = $reader->load($path);
 
@@ -3398,30 +3401,30 @@ class RekapitulasiController extends Controller
         $spreadsheet->getSheetByName('REGULER_RS')->setCellValue('AI' . $contentRow, $sumAI);
 
         //sheet CPNS
-        $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
-        $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
-        $contentRowCpns = 8;
-        foreach ($cpns_rs as $key => $item) {
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('B' . $contentRowCpns, $item->nama);
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('C' . $contentRowCpns, '\'' . $item->nip);
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('D' . $contentRowCpns, $item->pangkat . '/' . $item->golongan);
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('E' . $contentRowCpns, $item->jabatan);
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('F' . $contentRowCpns, $item->jenis_jabatan);
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('G' . $contentRowCpns, $item->kelas);
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('I' . $contentRowCpns, $item->basic);
+        // $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        // $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        // $contentRowCpns = 8;
+        // foreach ($cpns_rs as $key => $item) {
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('B' . $contentRowCpns, $item->nama);
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('C' . $contentRowCpns, '\'' . $item->nip);
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('D' . $contentRowCpns, $item->pangkat . '/' . $item->golongan);
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('E' . $contentRowCpns, $item->jabatan);
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('F' . $contentRowCpns, $item->jenis_jabatan);
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('G' . $contentRowCpns, $item->kelas);
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('I' . $contentRowCpns, $item->basic);
 
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('J' . $contentRowCpns, (($item->p_bk + $item->p_tbk) / 100));
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('K' . $contentRowCpns, ($item->p_pk / 100));
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('L' . $contentRowCpns, ($item->p_kk / 100));
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('M' . $contentRowCpns, ($item->p_kp / 100));
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('O' . $contentRowCpns, ($item->dp_absensi / 100));
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('P' . $contentRowCpns, $item->dp_ta);
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('Q' . $contentRowCpns, $item->dp_skp);
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('R' . $contentRowCpns, ($item->pph21 / 100));
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('AG' . $contentRowCpns, $item->bpjs1);
-            $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('AH' . $contentRowCpns, $item->bpjs4);
-            $contentRowCpns++;
-        }
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('J' . $contentRowCpns, (($item->p_bk + $item->p_tbk) / 100));
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('K' . $contentRowCpns, ($item->p_pk / 100));
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('L' . $contentRowCpns, ($item->p_kk / 100));
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('M' . $contentRowCpns, ($item->p_kp / 100));
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('O' . $contentRowCpns, ($item->dp_absensi / 100));
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('P' . $contentRowCpns, $item->dp_ta);
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('Q' . $contentRowCpns, $item->dp_skp);
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('R' . $contentRowCpns, ($item->pph21 / 100));
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('AG' . $contentRowCpns, $item->bpjs1);
+        //     $spreadsheet->getSheetByName('CPNS_RS')->setCellValue('AH' . $contentRowCpns, $item->bpjs4);
+        //     $contentRowCpns++;
+        // }
 
         // //sheet REGULER PUSKES
         $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
@@ -3467,31 +3470,113 @@ class RekapitulasiController extends Controller
         $spreadsheet->getSheetByName('REGULER_PUSKES')->setCellValue('AI' . $contentRowPuskes, $sumAI);
 
         //sheet CPNS Puskes
-        $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
-        $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
-        $contentRowCpnsPuskes = 8;
-        foreach ($cpns_puskes as $key => $item) {
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('B' . $contentRowCpnsPuskes, $item->nama);
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('C' . $contentRowCpnsPuskes, '\'' . $item->nip);
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('D' . $contentRowCpnsPuskes, $item->pangkat . '/' . $item->golongan);
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('E' . $contentRowCpnsPuskes, $item->jabatan);
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('F' . $contentRowCpnsPuskes, $item->jenis_jabatan);
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('G' . $contentRowCpnsPuskes, $item->kelas);
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('I' . $contentRowCpnsPuskes, $item->basic);
+        // $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        // $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        // $contentRowCpnsPuskes = 8;
+        // foreach ($cpns_puskes as $key => $item) {
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('B' . $contentRowCpnsPuskes, $item->nama);
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('C' . $contentRowCpnsPuskes, '\'' . $item->nip);
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('D' . $contentRowCpnsPuskes, $item->pangkat . '/' . $item->golongan);
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('E' . $contentRowCpnsPuskes, $item->jabatan);
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('F' . $contentRowCpnsPuskes, $item->jenis_jabatan);
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('G' . $contentRowCpnsPuskes, $item->kelas);
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('I' . $contentRowCpnsPuskes, $item->basic);
 
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('J' . $contentRowCpnsPuskes, (($item->p_bk + $item->p_tbk) / 100));
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('K' . $contentRowCpnsPuskes, ($item->p_pk / 100));
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('L' . $contentRowCpnsPuskes, ($item->p_kk / 100));
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('M' . $contentRowCpnsPuskes, ($item->p_kp / 100));
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('O' . $contentRowCpnsPuskes, ($item->dp_absensi / 100));
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('P' . $contentRowCpnsPuskes, $item->dp_ta);
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('Q' . $contentRowCpnsPuskes, $item->dp_skp);
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('R' . $contentRowCpnsPuskes, ($item->pph21 / 100));
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('AG' . $contentRowCpnsPuskes, $item->bpjs1);
-            $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('AH' . $contentRowCpnsPuskes, $item->bpjs4);
-            $contentRowCpnsPuskes++;
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('J' . $contentRowCpnsPuskes, (($item->p_bk + $item->p_tbk) / 100));
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('K' . $contentRowCpnsPuskes, ($item->p_pk / 100));
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('L' . $contentRowCpnsPuskes, ($item->p_kk / 100));
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('M' . $contentRowCpnsPuskes, ($item->p_kp / 100));
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('O' . $contentRowCpnsPuskes, ($item->dp_absensi / 100));
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('P' . $contentRowCpnsPuskes, $item->dp_ta);
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('Q' . $contentRowCpnsPuskes, $item->dp_skp);
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('R' . $contentRowCpnsPuskes, ($item->pph21 / 100));
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('AG' . $contentRowCpnsPuskes, $item->bpjs1);
+        //     $spreadsheet->getSheetByName('CPNS_PUSKES_LAB')->setCellValue('AH' . $contentRowCpnsPuskes, $item->bpjs4);
+        //     $contentRowCpnsPuskes++;
+        // }
+        //sheet IFK
+        $spreadsheet->getSheetByName('IFK')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        $spreadsheet->getSheetByName('IFK')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        $contentRow = 8;
+        foreach ($IFK as $key => $item) {
+            $spreadsheet->getSheetByName('IFK')->setCellValue('B' . $contentRow, $item->nama);
+            $spreadsheet->getSheetByName('IFK')->setCellValue('C' . $contentRow, '\'' . $item->nip);
+            $spreadsheet->getSheetByName('IFK')->setCellValue('D' . $contentRow, $item->pangkat . '/' . $item->golongan);
+            $spreadsheet->getSheetByName('IFK')->setCellValue('E' . $contentRow, $item->jabatan);
+            $spreadsheet->getSheetByName('IFK')->setCellValue('F' . $contentRow, $item->jenis_jabatan);
+            $spreadsheet->getSheetByName('IFK')->setCellValue('G' . $contentRow, $item->kelas);
+            $spreadsheet->getSheetByName('IFK')->setCellValue('I' . $contentRow, $item->basic);
+
+            $spreadsheet->getSheetByName('IFK')->setCellValue('J' . $contentRow, (($item->p_bk + $item->p_tbk) / 100));
+            $spreadsheet->getSheetByName('IFK')->setCellValue('K' . $contentRow, ($item->p_pk / 100));
+            $spreadsheet->getSheetByName('IFK')->setCellValue('L' . $contentRow, ($item->p_kk / 100));
+            $spreadsheet->getSheetByName('IFK')->setCellValue('M' . $contentRow, ($item->p_kp / 100));
+            $spreadsheet->getSheetByName('IFK')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
+            $spreadsheet->getSheetByName('IFK')->setCellValue('P' . $contentRow, $item->dp_ta);
+            $spreadsheet->getSheetByName('IFK')->setCellValue('Q' . $contentRow, $item->dp_skp);
+            $spreadsheet->getSheetByName('IFK')->setCellValue('AI' . $contentRow, ($item->pph_terutang));
+            $spreadsheet->getSheetByName('IFK')->setCellValue('AJ' . $contentRow, $item->bpjs1);
+            $contentRow++;
         }
+        //remove row
+        $rowMulaiHapus = $contentRow;
+        $jumlahDihapus = 18 - $rowMulaiHapus;
+        //dd($rowMulaiHapus, $jumlahDihapus, $contentRow);
+        $sumV = '=SUM(V8:V' . ($contentRow - 1) . ')';
+        $sumZ = '=SUM(Z8:Z' . ($contentRow - 1) . ')';
+        $sumAB = '=SUM(AB8:AB' . ($contentRow - 1) . ')';
+        $sumAE = '=SUM(AE8:AE' . ($contentRow - 1) . ')';
+        $sumAF = '=SUM(AF8:AF' . ($contentRow - 1) . ')';
+        $sumAI = '=SUM(AI8:AI' . ($contentRow - 1) . ')';
+        $spreadsheet->getSheetByName('IFK')->removeRow($rowMulaiHapus, $jumlahDihapus);
+        $spreadsheet->getSheetByName('IFK')->setCellValue('V' . $contentRow, $sumV);
+        $spreadsheet->getSheetByName('IFK')->setCellValue('Z' . $contentRow, $sumZ);
+        $spreadsheet->getSheetByName('IFK')->setCellValue('AB' . $contentRow, $sumAB);
+        $spreadsheet->getSheetByName('IFK')->setCellValue('AE' . $contentRow, $sumAE);
+        $spreadsheet->getSheetByName('IFK')->setCellValue('AF' . $contentRow, $sumAF);
+        $spreadsheet->getSheetByName('IFK')->setCellValue('AI' . $contentRow, $sumAI);
 
+        //sheet LABKES
+        $spreadsheet->getSheetByName('LABKES')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+        $spreadsheet->getSheetByName('LABKES')->setCellValue('A3', strtoupper(Auth::user()->skpd->nama));
+        $contentRow = 8;
+        foreach ($LABKES as $key => $item) {
+            $spreadsheet->getSheetByName('LABKES')->setCellValue('B' . $contentRow, $item->nama);
+            $spreadsheet->getSheetByName('LABKES')->setCellValue('C' . $contentRow, '\'' . $item->nip);
+            $spreadsheet->getSheetByName('LABKES')->setCellValue('D' . $contentRow, $item->pangkat . '/' . $item->golongan);
+            $spreadsheet->getSheetByName('LABKES')->setCellValue('E' . $contentRow, $item->jabatan);
+            $spreadsheet->getSheetByName('LABKES')->setCellValue('F' . $contentRow, $item->jenis_jabatan);
+            $spreadsheet->getSheetByName('LABKES')->setCellValue('G' . $contentRow, $item->kelas);
+            $spreadsheet->getSheetByName('LABKES')->setCellValue('I' . $contentRow, $item->basic);
+
+            $spreadsheet->getSheetByName('LABKES')->setCellValue('J' . $contentRow, (($item->p_bk + $item->p_tbk) / 100));
+            $spreadsheet->getSheetByName('LABKES')->setCellValue('K' . $contentRow, ($item->p_pk / 100));
+            $spreadsheet->getSheetByName('LABKES')->setCellValue('L' . $contentRow, ($item->p_kk / 100));
+            $spreadsheet->getSheetByName('LABKES')->setCellValue('M' . $contentRow, ($item->p_kp / 100));
+            $spreadsheet->getSheetByName('LABKES')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
+            $spreadsheet->getSheetByName('LABKES')->setCellValue('P' . $contentRow, $item->dp_ta);
+            $spreadsheet->getSheetByName('LABKES')->setCellValue('Q' . $contentRow, $item->dp_skp);
+            $spreadsheet->getSheetByName('LABKES')->setCellValue('AI' . $contentRow, ($item->pph_terutang));
+            $spreadsheet->getSheetByName('LABKES')->setCellValue('AJ' . $contentRow, $item->bpjs1);
+            $contentRow++;
+        }
+        //remove row
+        $rowMulaiHapus = $contentRow;
+        $jumlahDihapus = 18 - $rowMulaiHapus;
+        //dd($rowMulaiHapus, $jumlahDihapus, $contentRow);
+        $sumV = '=SUM(V8:V' . ($contentRow - 1) . ')';
+        $sumZ = '=SUM(Z8:Z' . ($contentRow - 1) . ')';
+        $sumAB = '=SUM(AB8:AB' . ($contentRow - 1) . ')';
+        $sumAE = '=SUM(AE8:AE' . ($contentRow - 1) . ')';
+        $sumAF = '=SUM(AF8:AF' . ($contentRow - 1) . ')';
+        $sumAI = '=SUM(AI8:AI' . ($contentRow - 1) . ')';
+        $spreadsheet->getSheetByName('LABKES')->removeRow($rowMulaiHapus, $jumlahDihapus);
+        $spreadsheet->getSheetByName('LABKES')->setCellValue('V' . $contentRow, $sumV);
+        $spreadsheet->getSheetByName('LABKES')->setCellValue('Z' . $contentRow, $sumZ);
+        $spreadsheet->getSheetByName('LABKES')->setCellValue('AB' . $contentRow, $sumAB);
+        $spreadsheet->getSheetByName('LABKES')->setCellValue('AE' . $contentRow, $sumAE);
+        $spreadsheet->getSheetByName('LABKES')->setCellValue('AF' . $contentRow, $sumAF);
+        $spreadsheet->getSheetByName('LABKES')->setCellValue('AI' . $contentRow, $sumAI);
 
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('php://output');
@@ -4291,7 +4376,7 @@ class RekapitulasiController extends Controller
                 $item->pbk_aktivitas = 0;
                 $item->pbk_skp = 0;
             }
-            $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * (85 / 100));
+            $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp));
 
             //PPK
             $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
@@ -4308,15 +4393,15 @@ class RekapitulasiController extends Controller
                 $item->ppk_aktivitas = 0;
                 $item->ppk_skp = 0;
             }
-            $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (85 / 100));
+            $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp));
 
             //PKK
             $item->pkk = $item->basic * ($item->p_kk / 100);
-            $item->pkk_jumlah = round($item->pkk * (85 / 100));
+            $item->pkk_jumlah = round($item->pkk);
 
             //PKP
             $item->pkp = $item->basic * ($item->p_kp / 100);
-            $item->pkp_jumlah = round($item->pkp * (85 / 100));
+            $item->pkp_jumlah = round($item->pkp);
             $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
             //PPH 21
             $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
@@ -4474,7 +4559,7 @@ class RekapitulasiController extends Controller
     }
     public function ifk_reguler_perhitungan($bulan, $tahun)
     {
-        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', '!=', 8)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 37)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
 
         foreach ($data as $item) {
             //$jabatan_id = Pegawai::where('nip', $item->nip)->first()->jabatan_id;
@@ -4494,7 +4579,247 @@ class RekapitulasiController extends Controller
                 $p_pk      = $persen->persen_prestasi_kerja;
                 $p_kk      = $persen->persen_kondisi_kerja;
                 $p_kp      = $persen->persen_kelangkaan_profesi;
-                $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (85 / 100));
+                $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100));
+            }
+
+            $item->update([
+                'basic' => $basic,
+                'p_bk'  => $p_bk,
+                'p_tbk' => $p_tbk,
+                'p_pk'  => $p_pk,
+                'p_kk'  => $p_kk,
+                'p_kp'  => $p_kp,
+                'pagu'  => $pagu,
+            ]);
+        }
+        toastr()->success('Berhasil di hitung');
+        return back();
+    }
+
+    //LABKES
+    public function labkes_reguler($bulan, $tahun)
+    {
+        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 36)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $data->map(function ($item) {
+            //PBK
+            $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
+            if ($item->dp_ta >= 6750) {
+                $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
+                if ($item->dp_skp == null) {
+                    $item->pbk_skp = 0;
+                } else if ($item->dp_skp == 'KURANG' || $item->dp_skp == "SANGAT KURANG") {
+                    $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
+                } else {
+                    $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
+                }
+            } else {
+                $item->pbk_aktivitas = 0;
+                $item->pbk_skp = 0;
+            }
+            $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp));
+
+            //PPK
+            $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
+            if ($item->dp_ta >= 6750) {
+                $item->ppk_aktivitas = $item->basic * ($item->p_pk / 100) * (40 / 100);
+                if ($item->dp_skp == null) {
+                    $item->pbk_skp = 0;
+                } else if ($item->dp_skp == 'KURANG' || $item->dp_skp == "SANGAT KURANG") {
+                    $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (10 / 100);
+                } else {
+                    $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (20 / 100);
+                }
+            } else {
+                $item->ppk_aktivitas = 0;
+                $item->ppk_skp = 0;
+            }
+            $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp));
+
+            //PKK
+            $item->pkk = $item->basic * ($item->p_kk / 100);
+            $item->pkk_jumlah = round($item->pkk);
+
+            //PKP
+            $item->pkp = $item->basic * ($item->p_kp / 100);
+            $item->pkp_jumlah = round($item->pkp);
+            $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
+            //PPH 21
+            $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
+            $item->tpp_diterima = $item->jumlah_pembayaran - $item->bpjs1;
+            return $item;
+        });
+        return view('admin.rekap2023.labkes.reguler', compact('data', 'bulan', 'tahun'));
+    }
+    public function labkes_reguler_mp($bulan, $tahun)
+    {
+
+        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('status_pns', 'pns')->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
+            return $query->where('rs_puskesmas_id', 36);
+        })->get();
+
+        foreach ($pegawai as $item) {
+            $check = RekapReguler::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+            if ($check == null) {
+                $n = new RekapReguler;
+                $n->skpd_id          = Auth::user()->skpd->id;
+                $n->puskesmas_id     = $item->jabatan == null ? null : $item->jabatan->rs_puskesmas_id;
+                $n->sekolah_id       = $item->jabatan == null ? null : $item->jabatan->sekolah_id;
+                $n->nip              = $item->nip;
+                $n->nama             = $item->nama;
+                $n->pangkat          = $item->pangkat == null ? null : $item->pangkat->nama;
+                $n->golongan         = $item->pangkat == null ? null : $item->pangkat->golongan;
+                $n->jabatan          = $item->jabatan == null ? null : $item->jabatan->nama;
+                $n->jabatan_id       = $item->jabatan == null ? null : $item->jabatan->id;
+                $n->jenis_jabatan    = $item->jabatan == null ? null : $item->jabatan->jenis_jabatan;
+                $n->kelas            = $item->jabatan == null ? null : $item->jabatan->kelas->nama;
+                $n->bulan            = $bulan;
+                $n->tahun            = $tahun;
+                $n->pph21            = $item->pangkat == null ? null : $item->pangkat->pph;
+                $n->save();
+            } else {
+                if ($check->skpd_id == Auth::user()->skpd->id || $check->skpd_id == null) {
+                    $check->update([
+                        'skpd_id'       => Auth::user()->skpd->id,
+                        'puskesmas_id'  => $item->jabatan == null ? null : $item->jabatan->rs_puskesmas_id,
+                        'sekolah_id'    => $item->jabatan == null ? null : $item->jabatan->sekolah_id,
+                        'nip'           => $item->nip,
+                        'nama'          => $item->nama,
+                        'pangkat'       => $item->pangkat == null ? null : $item->pangkat->nama,
+                        'golongan'      => $item->pangkat == null ? null : $item->pangkat->golongan,
+                        'jabatan'       => $item->jabatan == null ? null : $item->jabatan->nama,
+                        'jabatan_id'    => $item->jabatan == null ? null : $item->jabatan->id,
+                        'jenis_jabatan' => $item->jabatan == null ? null : $item->jabatan->jenis_jabatan,
+                        'kelas'         => $item->jabatan == null ? null : $item->jabatan->kelas->nama,
+                        'bulan' => $bulan,
+                        'tahun' => $tahun,
+                        'pph21' => $item->pangkat == null ? null : $item->pangkat->pph,
+                    ]);
+                } else {
+                }
+            }
+        }
+
+        toastr()->success('Berhasil Memasukkan Pegawai');
+        return back();
+    }
+    public function labkes_reguler_psa($bulan, $tahun)
+    {
+        //cuti bersama
+        $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count() * 420;
+        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 36)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        foreach ($data as $item) {
+            $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+            $dp_ct = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 7)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+            $dp_tl = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 5)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+            $dp_co = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 9)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 360;
+            $dp_di = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 4)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
+            $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
+            $aktivitas = Aktivitas::where('pegawai_id', $pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('validasi', 1)->get();
+
+            $menit_aktivitas = $aktivitas->sum('menit') + $dp_ct + $dp_tl + $dp_co + $dp_di + $cuti_bersama;
+
+            if ($presensi == null) {
+                $absensi = 0;
+            } else {
+                $absensi = $presensi->persen_kehadiran;
+            }
+
+            $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
+
+            if ($bulan == '01' || $bulan == '02' || $bulan == '03') {
+                //ambil penilaian TW 4 tahun sebelumnya
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun - 1)->where('rhk_tw4', '!=', null)->orderBy('id', 'DESC')->first();
+
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
+            if ($bulan == '04' || $bulan == '05' || $bulan == '06') {
+                //ambil penilaian TW 1 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
+            if ($bulan == '07' || $bulan == '08' || $bulan == '09') {
+                //ambil penilaian TW 2 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+
+            if ($bulan == '10' || $bulan == '11' || $bulan == '12') {
+                //ambil penilaian TW 3 tahun berjalan
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                if ($skp == null) {
+                    $nilaiSKP = null;
+                } else {
+                    $rhk = 'rhk_' . nilaiTW($bulan);
+                    $rpk = 'rpk_' . nilaiTW($bulan);
+                    $nilai_rhk = $skp[$rhk];
+                    $nilai_rpk = $skp[$rpk];
+                    $nilaiSKP = nilaiSkp($nilai_rhk, $nilai_rpk);
+                }
+            }
+            $item->update([
+                'dp_aktivitas' => $aktivitas->sum('menit'),
+                'dp_ct'        => $dp_ct,
+                'dp_tl'        => $dp_tl,
+                'dp_covid'     => $dp_co,
+                'dp_diklat'    => $dp_di,
+                'dp_cb'        => $cuti_bersama,
+                'dp_ta'        => $menit_aktivitas,
+                'dp_absensi'   => $absensi,
+                'dp_skp'       => $nilaiSKP,
+            ]);
+        }
+        toastr()->success('Berhasil di tarik');
+        return back();
+    }
+    public function labkes_reguler_perhitungan($bulan, $tahun)
+    {
+        $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 36)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+
+        foreach ($data as $item) {
+            //$jabatan_id = Pegawai::where('nip', $item->nip)->first()->jabatan_id;
+            $persen = Jabatan::find($item->jabatan_id);
+            if ($persen == null) {
+                $basic = 0;
+                $p_bk = 0;
+                $p_tbk = 0;
+                $p_pk = 0;
+                $p_kk = 0;
+                $p_kp = 0;
+                $pagu = 0;
+            } else {
+                $basic     = Kelas::where('nama', $item->kelas)->first()->nilai;
+                $p_bk      = $persen->persen_beban_kerja;
+                $p_tbk     = $persen->persen_tambahan_beban_kerja;
+                $p_pk      = $persen->persen_prestasi_kerja;
+                $p_kk      = $persen->persen_kondisi_kerja;
+                $p_kp      = $persen->persen_kelangkaan_profesi;
+                $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100));
             }
 
             $item->update([

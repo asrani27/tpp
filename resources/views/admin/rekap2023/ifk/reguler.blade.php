@@ -53,7 +53,7 @@ SUPERADMIN
                     jika pensiun, jika tidak pensiun hapus terlebih dahulu, kemudian masukkan/input kembali di kolom
                     paling bawah..
                 </div>
-                @if (checkKunciLabkes($bulan, $tahun, Auth::user()->skpd->id) == true)
+                @if (checkKunciIFK($bulan, $tahun, Auth::user()->skpd->id) == true)
 
                 <a href="#" class="btn btn-flat btn-xs btn-success"><i class="fa fa-lock"></i> Telah dikunci</a>
                 @else

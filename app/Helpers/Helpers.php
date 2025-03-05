@@ -27,9 +27,28 @@ function checkKunci($bulan, $tahun, $skpd_id)
     }
 }
 
+function checkKunciIFK($bulan, $tahun, $skpd_id)
+{
+    $check = KunciTpp::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', $skpd_id)->where('jenis', 'ifk')->first();
+    if ($check == null) {
+        return false;
+    } else {
+        return true;
+    }
+}
 function checkKunciLabkes($bulan, $tahun, $skpd_id)
 {
     $check = KunciTpp::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', $skpd_id)->where('jenis', 'labkes')->first();
+    if ($check == null) {
+        return false;
+    } else {
+        return true;
+    }
+}
+function checkKunciPuskes($bulan, $tahun, $skpd_id)
+{
+    $check = KunciTpp::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', $skpd_id)->where('jenis', 'puskesdinkes')->first();
+    //dd($check);
     if ($check == null) {
         return false;
     } else {

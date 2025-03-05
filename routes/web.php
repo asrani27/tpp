@@ -222,7 +222,9 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/kuncitpp', 'RekapitulasiController@kuncitpp');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/kuncitpptu', 'RekapitulasiController@kuncitpptu');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/kuncitpp/regulerrs', 'RekapitulasiController@kuncitppregulerrs');
-        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/kuncitpp/puskeslabkes', 'RekapitulasiController@kuncitpppuskeslabkes');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/kuncitpp/puskes', 'RekapitulasiController@kuncitpppuskes');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/kuncitpp/ifk', 'RekapitulasiController@kuncitppifk');
+        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/kuncitpp/labkes', 'RekapitulasiController@kuncitpplabkes');
 
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/reguler', 'RekapitulasiController@reguler');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/reguler/mp', 'RekapitulasiController@reguler_mp');

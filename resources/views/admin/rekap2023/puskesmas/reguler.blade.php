@@ -53,7 +53,7 @@ SUPERADMIN
                     jika pensiun, jika tidak pensiun hapus terlebih dahulu, kemudian masukkan/input kembali di kolom
                     paling bawah..
                 </div>
-                @if (checkKunciLabkes($bulan, $tahun, Auth::user()->skpd->id) == true)
+                @if (checkKunciPuskes($bulan, $tahun, Auth::user()->skpd->id) == true)
 
                 <a href="#" class="btn btn-flat btn-xs btn-success"><i class="fa fa-lock"></i> Telah dikunci</a>
                 @else
@@ -72,7 +72,7 @@ SUPERADMIN
                 <a href="#" class="btn btn-xs btn-flat btn-primary tambahpegawai"><i class="fas fa-user-plus"></i>Tambah
                     Pegawai</a>
 
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/kuncitpp/puskeslabkes"
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/kuncitpp/puskes"
                     class="btn btn-flat btn-xs btn-danger" onclick="return confirm('Yakin sudah selesai?');"><i
                         class="fas fa-unlock"></i> Kunci TPP</a>
 

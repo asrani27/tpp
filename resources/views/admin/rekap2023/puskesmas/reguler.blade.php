@@ -25,7 +25,7 @@ SUPERADMIN
         </div>
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Daftar TPP REGULER PUSKES, LABKES Bulan
+                <h3 class="card-title">Daftar TPP REGULER PUSKES Bulan
                     {{convertBulan($bulan)}} {{$tahun}}</h3>
             </div>
             <div class="card-body p-2">

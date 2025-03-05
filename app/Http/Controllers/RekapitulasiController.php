@@ -1991,7 +1991,7 @@ class RekapitulasiController extends Controller
 
             if ($bulan == '01' || $bulan == '02' || $bulan == '03') {
                 //ambil penilaian TW 4 tahun sebelumnya
-                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun - 1)->orderBy('id', 'DESC')->first();
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun - 1)->where('rhk_tw4', '!=', null)->first();
 
                 if ($skp == null) {
                     $nilaiSKP = null;

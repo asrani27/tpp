@@ -4,7 +4,8 @@
 
 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/puskes/reguler" class="btn btn-sm btn-flat btn-primary">REGULER
     PUSKES</a>
-<a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/labkes/reguler" class="btn btn-sm btn-flat btn-primary">IFK &
+<a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/ifk/reguler" class="btn btn-sm btn-flat btn-primary">IFK</a>
+<a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/labkes/reguler" class="btn btn-sm btn-flat btn-primary">
     LABKES</a>
 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/puskes/cpns" class="btn btn-sm btn-flat btn-primary">CPNS PUSKES &
     LABKES</a>

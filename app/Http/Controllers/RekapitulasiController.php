@@ -4381,10 +4381,8 @@ class RekapitulasiController extends Controller
     {
         $pegawai = Pegawai::find($req->pegawai);
         $jabatan_definitif = Jabatan::find($req->jabatan_definitif);
+        $jabatan_asli = Jabatan::find($pegawai->pegawai_id);
         $jabatan_plt = Jabatan::find($req->jabatan_plt);
-
-
-        //dd($req->all(), $pegawai, $jabatan_definitif, $jabatan_plt);
 
         $check = RekapPlt::where('nip', $pegawai->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
         if ($check == null) {

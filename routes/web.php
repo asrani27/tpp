@@ -13,6 +13,10 @@ Route::group(['middleware' => ['XSS']], function () {
 
     Route::get('/logout', 'LoginController@logout');
 
+    Route::group(['middleware' => ['auth', 'role:bpkpad']], function () {
+        Route::get('/bpkpad', 'BPKPADController@index');
+        Route::post('/bpkpad', 'BPKPADController@konsolidasitpp');
+    });
     Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::get('/home/superadmin', 'HomeController@superadmin');
         Route::get('/home/superadmin/parametertpp', 'HomeController@parametertpp');

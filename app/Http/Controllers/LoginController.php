@@ -24,6 +24,8 @@ class LoginController extends Controller
                 return redirect('/home/puskesmas');
             } elseif (Auth::user()->hasRole('walikota')) {
                 return redirect('/home/walikota');
+            } elseif (Auth::user()->hasRole('bpkpad')) {
+                return redirect('/bpkpad');
             }
         }
 
@@ -60,6 +62,8 @@ class LoginController extends Controller
                 return redirect('/home/puskesmas');
             } elseif (Auth::user()->hasRole('walikota')) {
                 return redirect('/home/walikota');
+            } elseif (Auth::user()->hasRole('bpkpad')) {
+                return redirect('/bpkpad');
             }
         } else {
             toastr()->error('Username / Password Tidak Ditemukan');

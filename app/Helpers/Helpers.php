@@ -8,15 +8,39 @@ use App\Eselon;
 use App\Jabatan;
 use App\Pangkat;
 use App\Pegawai;
+use App\KunciTpp;
 use App\RekapTpp;
 use App\Aktivitas;
 use App\Parameter;
+use Carbon\Carbon;
 use App\BulanTahun;
-use App\KunciTpp;
 use App\Rspuskesmas;
+use App\WhitelistNip;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+function checkDateInRange($dateToCheck)
+{
+    $today = Carbon::today();          // Hari ini
+    $yesterday = Carbon::yesterday();  // Hari sebelumnya
+
+    // Ubah input menjadi objek Carbon
+    $date = Carbon::parse($dateToCheck);
+
+    // Periksa apakah tanggal cocok dengan hari ini atau kemarin
+    return $date->equalTo($today) || $date->equalTo($yesterday);
+}
+
+function whitelist($nip)
+{
+    $data = WhitelistNip::where('nip', $nip)->first();
+    if ($data == null) {
+        $result = false;
+    } else {
+        $result = true;
+    }
+    return $result;
+}
 function checkKunci($bulan, $tahun, $skpd_id)
 {
     $check = KunciTpp::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', $skpd_id)->first();

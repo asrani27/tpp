@@ -11,6 +11,7 @@ use App\Skp2023Jf;
 use Carbon\Carbon;
 use App\Skp2023Jpt;
 use App\Skp_periode;
+use App\WhitelistNip;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -196,7 +197,74 @@ class AktivitasController extends Controller
             toastr()->error('Aktivitas Pada Bulan ' . convertBulan($bulan) . ' telah Di Kunci');
             return back();
         }
+        if (whitelist(Auth::user()->username) != true) {
+            $today = Carbon::today(); // Hari ini
+            $yesterday = Carbon::yesterday(); // Hari sebelumnya
+            if (checkDateInRange($req->tanggal) == true) {
+                $data = Aktivitas::where('tanggal', $req->tanggal)->where('pegawai_id', $this->user()->pegawai->id)->get()
+                    ->map(function ($item) use ($req) {
+                        if ($req->jam_mulai . ':00' >= $item->jam_mulai && $req->jam_mulai . ':00' <= $item->jam_selesai) {
+                            $item->status_jam_mulai = true;
+                        } else {
+                            $item->status_jam_mulai = false;
+                        }
 
+                        if ($req->jam_selesai . ':00' >= $item->jam_mulai && $req->jam_selesai . ':00' <= $item->jam_selesai) {
+                            $item->status_jam_selesai = true;
+                        } else {
+                            $item->status_jam_selesai = false;
+                        }
+
+                        if ($req->jam_mulai . ':00' <= $item->jam_mulai && $req->jam_selesai . ':00' >= $item->jam_selesai) {
+                            $item->status_jam_antara = true;
+                        } else {
+                            $item->status_jam_antara = false;
+                        }
+                        return $item;
+                    });
+
+                $status_jam_mulai = $data->where('status_jam_mulai', true)->first();
+                $status_jam_selesai = $data->where('status_jam_selesai', true)->first();
+                $status_jam_antara = $data->where('status_jam_antara', true)->first();
+
+                if ($status_jam_mulai != null || $status_jam_selesai != null || $status_jam_antara != null) {
+                    toastr()->error('Jam ini telah di gunakan');
+                    $req->flash();
+                    return back();
+                } else {
+                    $skp = Skp2023::where('pegawai_id', $this->user()->pegawai->id)->where('is_aktif', 1)->first();
+                    $skpMulai = $skp->mulai;
+                    $skpSampai = $skp->sampai;
+                    $tgl = $req->tanggal;
+                    if (Carbon::parse($tgl) >= Carbon::parse($skpMulai) && Carbon::parse($tgl) <= Carbon::parse($skpSampai)) {
+
+                        $attr = $req->all();
+                        $attr['pegawai_id'] = $this->user()->pegawai->id;
+                        if (strtotime($req->jam_selesai) > strtotime($req->jam_mulai)) {
+                            $menit = (strtotime($req->jam_selesai) - strtotime($req->jam_mulai)) / 60;
+                            $attr['menit'] = $menit;
+                            $attr['jenis'] = $skp->jenis;
+                            $attr['rencana_aksi'] = $req->rencana_aksi;
+
+                            Aktivitas::create($attr);
+                            toastr()->success('Aktivitas berhasil Di Simpan');
+                            return redirect('pegawai/aktivitas/harian');
+                        } else {
+                            toastr()->error('Jam Selesai Tidak Bisa Kurang Dari Jam Mulai');
+                            $req->flash();
+                            return back();
+                        }
+                    } else {
+                        toastr()->error('Tanggal Berada di luar Periode SKP yang di aktifkan');
+                        $req->flash();
+                        return back();
+                    }
+                }
+            } else {
+                toastr()->error('Input Aktivitas hanya bisa pada tanggal ' . $today->format('d-m-Y') . ' & ' . $yesterday->format('d-m-Y'));
+                return back();
+            }
+        }
         $data = Aktivitas::where('tanggal', $req->tanggal)->where('pegawai_id', $this->user()->pegawai->id)->get()
             ->map(function ($item) use ($req) {
                 if ($req->jam_mulai . ':00' >= $item->jam_mulai && $req->jam_mulai . ':00' <= $item->jam_selesai) {

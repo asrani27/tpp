@@ -34,7 +34,7 @@ TAMBAH AKTIVITAS HARIAN
             <div class="col-sm-10">
 
               @if (Auth::user()->username == '197508312010011005'||Auth::user()->username ==
-              '197909042009012002'||Auth::user()->username == '198012032011012001')
+              '197909042009012002'||Auth::user()->username == '196906081997032006')
 
               <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"
                 max="{{\Carbon\Carbon::today()->format('Y-m-d')}}">

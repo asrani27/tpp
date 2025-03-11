@@ -1060,7 +1060,6 @@ class RekapitulasiController extends Controller
         $param['tahun'] = $tahun;
         $param['skpd_id'] = Auth::user()->skpd->id;
         $param['jenis'] = 'tu';
-        KunciTpp::create($param);
 
         $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('sekolah_id', '!=', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
 
@@ -1114,6 +1113,8 @@ class RekapitulasiController extends Controller
             $save->save();
             return $item;
         });
+
+        KunciTpp::create($param);
         toastr()->success('Telah Di Kunci');
         return back();
     }
@@ -1125,7 +1126,6 @@ class RekapitulasiController extends Controller
         $param['skpd_id'] = Auth::user()->skpd->id;
         $param['jenis'] = 'puskesdinkes';
 
-        KunciTpp::create($param);
         $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', '!=', 8)->where('puskesmas_id', '!=', null)->where('puskesmas_id', '!=', 37)->where('puskesmas_id', '!=', 36)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
 
         $data->map(function ($item) {
@@ -1178,6 +1178,7 @@ class RekapitulasiController extends Controller
             return $item;
         });
 
+        KunciTpp::create($param);
         toastr()->success('Telah Di Kunci');
         return back();
     }
@@ -1251,7 +1252,6 @@ class RekapitulasiController extends Controller
         $param['skpd_id'] = Auth::user()->skpd->id;
         $param['jenis'] = 'labkes';
 
-        KunciTpp::create($param);
         $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 36)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         $data->map(function ($item) {
             //PBK
@@ -1304,6 +1304,7 @@ class RekapitulasiController extends Controller
             return $item;
         });
 
+        KunciTpp::create($param);
         toastr()->success('Telah Di Kunci');
         return back();
     }
@@ -1313,7 +1314,6 @@ class RekapitulasiController extends Controller
         $param['tahun'] = $tahun;
         $param['skpd_id'] = Auth::user()->skpd->id;
         $param['jenis'] = 'reguler_rs';
-        KunciTpp::create($param);
 
         $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 8)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         $data->map(function ($item) {
@@ -1365,6 +1365,8 @@ class RekapitulasiController extends Controller
             $save->save();
             return $item;
         });
+
+        KunciTpp::create($param);
         toastr()->success('Telah Di Kunci');
         return back();
     }
@@ -1374,7 +1376,6 @@ class RekapitulasiController extends Controller
         $param['tahun'] = $tahun;
         $param['skpd_id'] = Auth::user()->skpd->id;
         $param['jenis'] = null;
-        KunciTpp::create($param);
         if (Auth::user()->skpd->id == 34) {
             $dataDinas = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
             $dataIFK = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
@@ -1435,6 +1436,8 @@ class RekapitulasiController extends Controller
             $save->save();
             return $item;
         });
+
+        KunciTpp::create($param);
         toastr()->success('Telah Di Kunci');
         return back();
     }
@@ -1444,7 +1447,6 @@ class RekapitulasiController extends Controller
         $param['tahun'] = $tahun;
         $param['skpd_id'] = Auth::user()->skpd->id;
         $param['jenis'] = 'plt';
-        KunciTpp::create($param);
         if (Auth::user()->skpd->id == 34) {
             $dataDinas = RekapPlt::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
             $dataIFK = RekapPlt::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
@@ -1519,6 +1521,8 @@ class RekapitulasiController extends Controller
 
             return $item;
         });
+
+        KunciTpp::create($param);
         toastr()->success('Telah Di Kunci');
         return back();
     }
@@ -1554,6 +1558,7 @@ class RekapitulasiController extends Controller
     }
     public function tarikterifk($bulan, $tahun)
     {
+
         $bulanTahunId = DB::connection('pajakasn')->table('bulan_tahun')->where('bulan', convertBulan($bulan))->where('tahun', $tahun)->first();
         if ($bulanTahunId == null) {
             toastr()->error('Gaji Belum Di Upload Oleh BPKPAD');
@@ -1568,7 +1573,7 @@ class RekapitulasiController extends Controller
                 ->mapWithKeys(function ($item) {
                     return [(string) $item->nip => $item]; // Pastikan key adalah string
                 });
-            $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+            $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
 
             $data->map(function ($item) use ($pphTerutangData) {
                 $nip = $item->nip; // Asumsikan kolom NIP ada di `rekap_reguler`

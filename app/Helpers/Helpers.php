@@ -43,7 +43,7 @@ function whitelist($nip)
 }
 function checkKunci($bulan, $tahun, $skpd_id)
 {
-    $check = KunciTpp::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', $skpd_id)->first();
+    $check = KunciTpp::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', $skpd_id)->where('jenis', null)->first();
     if ($check == null) {
         return false;
     } else {

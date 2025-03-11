@@ -1177,6 +1177,30 @@ class RekapitulasiController extends Controller
             $save->save();
             return $item;
         });
+        $bulanTahunId = DB::connection('pajakasn')->table('bulan_tahun')->where('bulan', convertBulan($bulan))->where('tahun', $tahun)->first();
+        $pphTerutangData = DB::connection('pajakasn')
+            ->table('pajak')
+            ->select('*')
+            ->where('bulan_tahun_id', $bulanTahunId->id)
+            ->where('skpd_id', Auth::user()->skpd->id)
+            ->whereIn('nip', $data->pluck('nip'))
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [(string) $item->nip => $item]; // Pastikan key adalah string
+            });
+        $pphTerutangData->map(function ($item) use ($data, $bulanTahunId) {
+            $matchedItem = $data->firstWhere('nip', $item->nip);
+
+            $tpp = $matchedItem ? $matchedItem->jumlah_pembayaran : 0;
+
+            DB::connection('pajakasn')
+                ->table('pajak')
+                ->where('nip', $item->nip)
+                ->where('bulan_tahun_id', $bulanTahunId->id)
+                ->update(['tpp' => $tpp]);
+
+            return $item;
+        });
 
         KunciTpp::create($param);
         toastr()->success('Telah Di Kunci');
@@ -1237,6 +1261,31 @@ class RekapitulasiController extends Controller
             $save = $item;
             $save->jumlah_pembayaran = $item->jumlah_pembayaran;
             $save->save();
+
+            return $item;
+        });
+
+        $bulanTahunId = DB::connection('pajakasn')->table('bulan_tahun')->where('bulan', convertBulan($bulan))->where('tahun', $tahun)->first();
+        $pphTerutangData = DB::connection('pajakasn')
+            ->table('pajak')
+            ->select('*')
+            ->where('bulan_tahun_id', $bulanTahunId->id)
+            ->where('skpd_id', Auth::user()->skpd->id)
+            ->whereIn('nip', $data->pluck('nip'))
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [(string) $item->nip => $item]; // Pastikan key adalah string
+            });
+        $pphTerutangData->map(function ($item) use ($data, $bulanTahunId) {
+            $matchedItem = $data->firstWhere('nip', $item->nip);
+
+            $tpp = $matchedItem ? $matchedItem->jumlah_pembayaran : 0;
+
+            DB::connection('pajakasn')
+                ->table('pajak')
+                ->where('nip', $item->nip)
+                ->where('bulan_tahun_id', $bulanTahunId->id)
+                ->update(['tpp' => $tpp]);
 
             return $item;
         });
@@ -1304,6 +1353,31 @@ class RekapitulasiController extends Controller
             return $item;
         });
 
+        $bulanTahunId = DB::connection('pajakasn')->table('bulan_tahun')->where('bulan', convertBulan($bulan))->where('tahun', $tahun)->first();
+        $pphTerutangData = DB::connection('pajakasn')
+            ->table('pajak')
+            ->select('*')
+            ->where('bulan_tahun_id', $bulanTahunId->id)
+            ->where('skpd_id', Auth::user()->skpd->id)
+            ->whereIn('nip', $data->pluck('nip'))
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [(string) $item->nip => $item]; // Pastikan key adalah string
+            });
+        $pphTerutangData->map(function ($item) use ($data, $bulanTahunId) {
+            $matchedItem = $data->firstWhere('nip', $item->nip);
+
+            $tpp = $matchedItem ? $matchedItem->jumlah_pembayaran : 0;
+
+            DB::connection('pajakasn')
+                ->table('pajak')
+                ->where('nip', $item->nip)
+                ->where('bulan_tahun_id', $bulanTahunId->id)
+                ->update(['tpp' => $tpp]);
+
+            return $item;
+        });
+
         KunciTpp::create($param);
         toastr()->success('Telah Di Kunci');
         return back();
@@ -1363,6 +1437,30 @@ class RekapitulasiController extends Controller
             $save = $item;
             $save->jumlah_pembayaran = $item->jumlah_pembayaran;
             $save->save();
+            return $item;
+        });
+        $bulanTahunId = DB::connection('pajakasn')->table('bulan_tahun')->where('bulan', convertBulan($bulan))->where('tahun', $tahun)->first();
+        $pphTerutangData = DB::connection('pajakasn')
+            ->table('pajak')
+            ->select('*')
+            ->where('bulan_tahun_id', $bulanTahunId->id)
+            ->where('skpd_id', Auth::user()->skpd->id)
+            ->whereIn('nip', $data->pluck('nip'))
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [(string) $item->nip => $item]; // Pastikan key adalah string
+            });
+        $pphTerutangData->map(function ($item) use ($data, $bulanTahunId) {
+            $matchedItem = $data->firstWhere('nip', $item->nip);
+
+            $tpp = $matchedItem ? $matchedItem->jumlah_pembayaran : 0;
+
+            DB::connection('pajakasn')
+                ->table('pajak')
+                ->where('nip', $item->nip)
+                ->where('bulan_tahun_id', $bulanTahunId->id)
+                ->update(['tpp' => $tpp]);
+
             return $item;
         });
 

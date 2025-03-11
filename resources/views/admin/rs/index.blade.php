@@ -83,12 +83,12 @@ SUPERADMIN
                     <a href="/admin/rspuskesmas/{{$item->id}}/delete" class="btn btn-sm btn-danger"
                       data-toggle="tooltip" title='Hapus data' onclick="return confirm('Yakin ingin di hapus?');"><i
                         class="fas fa-trash"></i></a>
-                      @if ($item->id == 8 || $item->id == 37)
-                          
-                      @else
+                    @if ($item->id == 8 || $item->id == 37|| $item->id == 36)
+
+                    @else
                     <a href="/admin/rspuskesmas/{{$item->id}}/login" class="btn btn-sm btn-danger" data-toggle="tooltip"
                       title='Login Ke Puskesmas'>Login <i class="fas fa-arrow-right"></i></a>
-                      @endif
+                    @endif
                   </td>
                 </tr>
                 @endforeach

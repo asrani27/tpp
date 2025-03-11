@@ -135,20 +135,20 @@
                 </p>
             </a>
         </li>
-        
+
         @if (Auth::user()->skpd->id == 34)
         <li class="nav-item">
             <a href="/admin/rekapitulasi-puskesmas-gabungan"
                 class="nav-link {{Request::is('admin/rekapitulasi-puskesmas-gabungan') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
-                    Rekap TPP Puskes & RSSS
+                    Rekap TPP RS, PUSKES, IFK, LABKES
                 </p>
             </a>
         </li>
-        
+
         @else
-        
+
         @endif
 
         @if (session()->get('uuid') != null)

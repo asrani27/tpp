@@ -1533,16 +1533,31 @@ class RekapitulasiController extends Controller
             toastr()->error('Gaji Belum Di Upload Oleh BPKPAD');
             return back();
         } else {
+
+            $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 36)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
             $pphTerutangData = DB::connection('pajakasn')
                 ->table('pajak')
-                ->select('nip', 'pph_terutang', 'bpjs_satu_persen', 'bpjs_empat_persen')
+                ->select('*')
                 ->where('bulan_tahun_id', $bulanTahunId->id)
                 ->where('skpd_id', Auth::user()->skpd->id)
+                ->whereIn('nip', $data->pluck('nip'))
                 ->get()
                 ->mapWithKeys(function ($item) {
                     return [(string) $item->nip => $item]; // Pastikan key adalah string
                 });
-            $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 36)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+            $pphTerutangData->map(function ($item) use ($data, $bulanTahunId) {
+                $matchedItem = $data->firstWhere('nip', $item->nip);
+
+                $tpp = $matchedItem ? $matchedItem->jumlah_pembayaran : 0;
+
+                DB::connection('pajakasn')
+                    ->table('pajak')
+                    ->where('nip', $item->nip)
+                    ->where('bulan_tahun_id', $bulanTahunId->id)
+                    ->update(['tpp' => $tpp]);
+
+                return $item;
+            });
 
             $data->map(function ($item) use ($pphTerutangData) {
                 $nip = $item->nip; // Asumsikan kolom NIP ada di `rekap_reguler`

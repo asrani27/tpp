@@ -438,7 +438,7 @@ class PuskesmasController extends Controller
             $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
             //PPH 21
             $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
-            $item->tpp_diterima = $item->jumlah_pembayaran - $item->pph21 - $item->bpjs1;
+            $item->tpp_diterima = $item->jumlah_pembayaran - $item->bpjs1;
             return $item;
         });
         return view('puskesmas.rekapitulasi.reguler', compact('data', 'bulan', 'tahun'));

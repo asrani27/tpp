@@ -69,9 +69,8 @@ SUPERADMIN
                     class="btn btn-flat btn-xs btn-warning"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
 
-                {{-- <a href="#" class="btn btn-xs btn-flat btn-primary tambahpegawai"><i
-                        class="fas fa-user-plus"></i>Tambah
-                    Pegawai</a> --}}
+                <a href="#" class="btn btn-xs btn-flat btn-primary tambahpegawai"><i class="fas fa-user-plus"></i>Tambah
+                    Pegawai</a>
 
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/kuncitpp/labkes"
                     class="btn btn-flat btn-xs btn-danger" onclick="return confirm('Yakin sudah selesai?');"><i
@@ -351,7 +350,7 @@ SUPERADMIN
 <div class="modal fade" id="modal-tambahpegawai" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/tambahpegawai/puskes/reguler"
+            <form method="post" action="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/tambahpegawai/reguler"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header bg-gradient-success" style="padding:10px">

@@ -1188,7 +1188,6 @@ class RekapitulasiController extends Controller
         $param['skpd_id'] = Auth::user()->skpd->id;
         $param['jenis'] = 'ifk';
 
-        KunciTpp::create($param);
         $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         $data->map(function ($item) {
             //PBK
@@ -1241,6 +1240,7 @@ class RekapitulasiController extends Controller
             return $item;
         });
 
+        KunciTpp::create($param);
         toastr()->success('Telah Di Kunci');
         return back();
     }

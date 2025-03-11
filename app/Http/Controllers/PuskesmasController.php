@@ -47,78 +47,90 @@ class PuskesmasController extends Controller
         $param['rs_puskesmas_id'] = Auth::user()->puskesmas->id;
         $param['jenis'] = 'puskesmas';
 
-        $data = RekapReguler::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-        $data->map(function ($item) {
-            //PBK
-            $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
-            if ($item->dp_ta >= 6750) {
-                $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
-                if ($item->dp_skp == 'kurang') {
-                    $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
+        DB::beginTransaction();
+
+        try {
+            $data = RekapReguler::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+            $data->map(function ($item) {
+                //PBK
+                $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
+                if ($item->dp_ta >= 6750) {
+                    $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
+                    if ($item->dp_skp == 'kurang') {
+                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
+                    } else {
+                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
+                    }
                 } else {
-                    $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
+                    $item->pbk_aktivitas = 0;
+                    $item->pbk_skp = 0;
                 }
-            } else {
-                $item->pbk_aktivitas = 0;
-                $item->pbk_skp = 0;
-            }
-            $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * (87 / 100));
+                $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * (87 / 100));
 
-            //PPK
-            $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
-            if ($item->dp_ta >= 6750) {
-                $item->ppk_aktivitas = $item->basic * ($item->p_pk / 100) * (40 / 100);
-                if ($item->dp_skp == 'kurang') {
-                    $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (10 / 100);
+                //PPK
+                $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
+                if ($item->dp_ta >= 6750) {
+                    $item->ppk_aktivitas = $item->basic * ($item->p_pk / 100) * (40 / 100);
+                    if ($item->dp_skp == 'kurang') {
+                        $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (10 / 100);
+                    } else {
+                        $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (20 / 100);
+                    }
                 } else {
-                    $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (20 / 100);
+                    $item->ppk_aktivitas = 0;
+                    $item->ppk_skp = 0;
                 }
-            } else {
-                $item->ppk_aktivitas = 0;
-                $item->ppk_skp = 0;
-            }
-            $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (87 / 100));
+                $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (87 / 100));
 
-            //PKK
-            $item->pkk = $item->basic * ($item->p_kk / 100);
-            $item->pkk_jumlah = round($item->pkk * (87 / 100));
+                //PKK
+                $item->pkk = $item->basic * ($item->p_kk / 100);
+                $item->pkk_jumlah = round($item->pkk * (87 / 100));
 
-            //PKP
-            $item->pkp = $item->basic * ($item->p_kp / 100);
-            $item->pkp_jumlah = round($item->pkp * (87 / 100));
-            $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
-            $save = $item;
-            $save->jumlah_pembayaran = $item->jumlah_pembayaran;
-            $save->save();
-            return $item;
-        });
-        $bulanTahunId = DB::connection('pajakasn')->table('bulan_tahun')->where('bulan', convertBulan($bulan))->where('tahun', $tahun)->first();
-        $pphTerutangData = DB::connection('pajakasn')
-            ->table('pajak')
-            ->select('*')
-            ->where('bulan_tahun_id', $bulanTahunId->id)
-            ->where('skpd_id', Auth::user()->skpd->id)
-            ->whereIn('nip', $data->pluck('nip'))
-            ->get()
-            ->mapWithKeys(function ($item) {
-                return [(string) $item->nip => $item]; // Pastikan key adalah string
+                //PKP
+                $item->pkp = $item->basic * ($item->p_kp / 100);
+                $item->pkp_jumlah = round($item->pkp * (87 / 100));
+                $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
+                $save = $item;
+                $save->jumlah_pembayaran = $item->jumlah_pembayaran;
+                $save->save();
+                return $item;
             });
-        $pphTerutangData->map(function ($item) use ($data, $bulanTahunId) {
-            $matchedItem = $data->firstWhere('nip', $item->nip);
-
-            $tpp = $matchedItem ? $matchedItem->jumlah_pembayaran : 0;
-
-            DB::connection('pajakasn')
+            $bulanTahunId = DB::connection('pajakasn')->table('bulan_tahun')->where('bulan', convertBulan($bulan))->where('tahun', $tahun)->first();
+            $pphTerutangData = DB::connection('pajakasn')
                 ->table('pajak')
-                ->where('nip', $item->nip)
+                ->select('*')
                 ->where('bulan_tahun_id', $bulanTahunId->id)
-                ->update(['tpp' => $tpp]);
+                ->where('skpd_id', Auth::user()->skpd->id)
+                ->whereIn('nip', $data->pluck('nip'))
+                ->get()
+                ->mapWithKeys(function ($item) {
+                    return [(string) $item->nip => $item]; // Pastikan key adalah string
+                });
+            $pphTerutangData->map(function ($item) use ($data, $bulanTahunId) {
+                $matchedItem = $data->firstWhere('nip', $item->nip);
 
-            return $item;
-        });
-        KunciTpp::create($param);
-        toastr()->success('Telah Di Kunci');
-        return back();
+                $tpp = $matchedItem ? $matchedItem->jumlah_pembayaran : 0;
+
+                DB::connection('pajakasn')
+                    ->table('pajak')
+                    ->where('nip', $item->nip)
+                    ->where('bulan_tahun_id', $bulanTahunId->id)
+                    ->update(['tpp' => $tpp]);
+
+                return $item;
+            });
+            KunciTpp::create($param);
+
+            DB::commit();
+            toastr()->success('Telah Di Kunci');
+            return back();
+            // all good
+        } catch (\Exception $e) {
+            DB::rollback();
+            toastr()->success($e);
+            return back();
+            // something went wrong
+        }
     }
     public function masukkanPegawai($bulan, $tahun)
     {

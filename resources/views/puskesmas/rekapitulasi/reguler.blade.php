@@ -76,7 +76,7 @@ ADMIN
                     class="btn btn-flat btn-xs btn-secondary"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Tarik PSA</a>
                 @if (Auth::user()->puskesmas->id == 8)
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/puskes/reguler/perhitunganrs"
+                <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/puskes/reguler/perhitunganrs"
                     class="btn btn-flat btn-xs btn-warning"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
                 @else

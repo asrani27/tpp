@@ -100,7 +100,6 @@ class PuskesmasController extends Controller
                 ->table('pajak')
                 ->select('*')
                 ->where('bulan_tahun_id', $bulanTahunId->id)
-                ->where('skpd_id', Auth::user()->skpd->id)
                 ->whereIn('nip', $data->pluck('nip'))
                 ->get()
                 ->mapWithKeys(function ($item) {

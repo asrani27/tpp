@@ -478,7 +478,6 @@ class PuskesmasController extends Controller
                 $item->pkk_jumlah = round($item->pkk * (85 / 100));
             }
 
-
             //PKP
             $item->pkp = $item->basic * ($item->p_kp / 100);
             if (Auth::user()->puskesmas->id == 8) {

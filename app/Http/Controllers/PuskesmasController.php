@@ -973,31 +973,33 @@ class PuskesmasController extends Controller
         $spreadsheet->getSheetByName('REGULER')->setCellValue('AI' . $contentRow, $sumAI);
 
         //sheet CPNS
-        $spreadsheet->getSheetByName('CPNS')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
-        $spreadsheet->getSheetByName('CPNS')->setCellValue('A3', strtoupper(Auth::user()->puskesmas->nama));
-        $contentRowCpns = 8;
-        foreach ($cpns as $key => $item) {
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('B' . $contentRowCpns, $item->nama);
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('C' . $contentRowCpns, '\'' . $item->nip);
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('D' . $contentRowCpns, $item->pangkat . '/' . $item->golongan);
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('E' . $contentRowCpns, $item->jabatan);
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('F' . $contentRowCpns, $item->jenis_jabatan);
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('G' . $contentRowCpns, $item->kelas);
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('I' . $contentRowCpns, $item->basic);
+        if (Auth::user()->puskesmas->id == 8) {
+        } else {
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('A3', strtoupper(Auth::user()->puskesmas->nama));
+            $contentRowCpns = 8;
+            foreach ($cpns as $key => $item) {
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('B' . $contentRowCpns, $item->nama);
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('C' . $contentRowCpns, '\'' . $item->nip);
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('D' . $contentRowCpns, $item->pangkat . '/' . $item->golongan);
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('E' . $contentRowCpns, $item->jabatan);
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('F' . $contentRowCpns, $item->jenis_jabatan);
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('G' . $contentRowCpns, $item->kelas);
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('I' . $contentRowCpns, $item->basic);
 
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('J' . $contentRowCpns, (($item->p_bk + $item->p_tbk) / 100));
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('K' . $contentRowCpns, ($item->p_pk / 100));
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('L' . $contentRowCpns, ($item->p_kk / 100));
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('M' . $contentRowCpns, ($item->p_kp / 100));
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('O' . $contentRowCpns, ($item->dp_absensi / 100));
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('P' . $contentRowCpns, $item->dp_ta);
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('Q' . $contentRowCpns, $item->dp_skp);
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('R' . $contentRowCpns, ($item->pph21 / 100));
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('AG' . $contentRowCpns, $item->bpjs1);
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('AH' . $contentRowCpns, $item->bpjs4);
-            $contentRowCpns++;
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('J' . $contentRowCpns, (($item->p_bk + $item->p_tbk) / 100));
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('K' . $contentRowCpns, ($item->p_pk / 100));
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('L' . $contentRowCpns, ($item->p_kk / 100));
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('M' . $contentRowCpns, ($item->p_kp / 100));
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('O' . $contentRowCpns, ($item->dp_absensi / 100));
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('P' . $contentRowCpns, $item->dp_ta);
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('Q' . $contentRowCpns, $item->dp_skp);
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('R' . $contentRowCpns, ($item->pph21 / 100));
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('AG' . $contentRowCpns, $item->bpjs1);
+                $spreadsheet->getSheetByName('CPNS')->setCellValue('AH' . $contentRowCpns, $item->bpjs4);
+                $contentRowCpns++;
+            }
         }
-
 
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('php://output');

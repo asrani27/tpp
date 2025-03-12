@@ -676,11 +676,45 @@ class PuskesmasController extends Controller
                 $p_kk      = $persen->persen_kondisi_kerja;
                 $p_kp      = $persen->persen_kelangkaan_profesi;
 
-                if (Auth::user()->puskesmas->id == 8) {
-                    $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (68 / 100));
-                } else {
-                    $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (85 / 100));
-                }
+                $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (85 / 100));
+            }
+
+            $item->update([
+                'basic' => $basic,
+                'p_bk'  => $p_bk,
+                'p_tbk' => $p_tbk,
+                'p_pk'  => $p_pk,
+                'p_kk'  => $p_kk,
+                'p_kp'  => $p_kp,
+                'pagu'  => $pagu,
+            ]);
+        }
+        toastr()->success('Berhasil di hitung');
+        return back();
+    }
+    public function rs_reguler_perhitungan($bulan, $tahun)
+    {
+        $data = RekapReguler::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+
+        foreach ($data as $item) {
+            $persen = Jabatan::find($item->jabatan_id);
+            if ($persen == null) {
+                $basic = 0;
+                $p_bk = 0;
+                $p_tbk = 0;
+                $p_pk = 0;
+                $p_kk = 0;
+                $p_kp = 0;
+                $pagu = 0;
+            } else {
+                $basic     = Kelas::where('nama', $item->kelas)->first()->nilai;
+                $p_bk      = $persen->persen_beban_kerja;
+                $p_tbk     = $persen->persen_tambahan_beban_kerja;
+                $p_pk      = $persen->persen_prestasi_kerja;
+                $p_kk      = $persen->persen_kondisi_kerja;
+                $p_kp      = $persen->persen_kelangkaan_profesi;
+
+                $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (68 / 100));
             }
 
             $item->update([

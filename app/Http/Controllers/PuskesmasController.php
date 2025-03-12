@@ -659,7 +659,7 @@ class PuskesmasController extends Controller
                 $p_pk      = $persen->persen_prestasi_kerja;
                 $p_kk      = $persen->persen_kondisi_kerja;
                 $p_kp      = $persen->persen_kelangkaan_profesi;
-                $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (87 / 100));
+                $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (85 / 100));
             }
 
             $item->update([

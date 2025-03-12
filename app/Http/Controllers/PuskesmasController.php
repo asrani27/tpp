@@ -1007,7 +1007,7 @@ class PuskesmasController extends Controller
         header('Cache-Control: max-age=0');
         if (Auth::user()->puskesmas->id == 8) {
             $path = public_path('/excel/rumahsakit.xlsx');
-        } elseif (Auth::user()->puskesmas->id == 36 || Auth::user()->puskesmas->id == 36) {
+        } elseif (Auth::user()->puskesmas->id == 36 || Auth::user()->puskesmas->id == 37) {
             $path = public_path('/excel/ifk.xlsx');
         } else {
             $path = public_path('/excel/perpuskes2.xlsx');

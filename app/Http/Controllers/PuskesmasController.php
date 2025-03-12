@@ -917,8 +917,11 @@ class PuskesmasController extends Controller
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header("Content-Disposition: attachment;filename=$filename");
         header('Cache-Control: max-age=0');
-
-        $path = public_path('/excel/perpuskes2.xlsx');
+        if (Auth::user()->puskesmas->id == 8) {
+            $path = public_path('/excel/rumahsakit.xlsx');
+        } else {
+            $path = public_path('/excel/perpuskes2.xlsx');
+        }
         $reader = IOFactory::createReader('Xlsx');
         $spreadsheet = $reader->load($path);
 

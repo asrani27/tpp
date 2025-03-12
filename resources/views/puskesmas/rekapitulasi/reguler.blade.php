@@ -75,10 +75,15 @@ ADMIN
                 <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/psa"
                     class="btn btn-flat btn-xs btn-secondary"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Tarik PSA</a>
+                @if (Auth::user()->puskesmas->id == 8)
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/puskes/reguler/perhitunganrs"
+                    class="btn btn-flat btn-xs btn-warning"
+                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
+                @else
                 <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/perhitungan"
                     class="btn btn-flat btn-xs btn-warning"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
-
+                @endif
                 <a href="#" class="btn btn-xs btn-flat btn-primary tambahpegawai"><i class="fas fa-user-plus"></i>Tambah
                     Pegawai</a>
 

@@ -1025,7 +1025,7 @@ class PuskesmasController extends Controller
         $spreadsheet->getSheetByName('REGULER')->setCellValue('AI' . $contentRow, $sumAI);
 
         //sheet CPNS
-        if (Auth::user()->puskesmas->id == 8) {
+        if (Auth::user()->puskesmas->id == 8 || Auth::user()->puskesmas->id == 36 || Auth::user()->puskesmas->id == 37) {
         } else {
             $spreadsheet->getSheetByName('CPNS')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
             $spreadsheet->getSheetByName('CPNS')->setCellValue('A3', strtoupper(Auth::user()->puskesmas->nama));

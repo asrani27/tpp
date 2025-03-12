@@ -677,7 +677,7 @@ class PuskesmasController extends Controller
                 $p_kp      = $persen->persen_kelangkaan_profesi;
 
                 if (Auth::user()->puskesmas->id == 8) {
-                    $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (85 / 100));
+                    $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (68 / 100));
                 } else {
                     $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (85 / 100));
                 }

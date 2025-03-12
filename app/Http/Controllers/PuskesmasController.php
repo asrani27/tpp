@@ -447,6 +447,8 @@ class PuskesmasController extends Controller
             }
             if (Auth::user()->puskesmas->id == 8) {
                 $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * (68 / 100));
+            } elseif (Auth::user()->puskesmas->id == 36 || Auth::user()->puskesmas->id == 37) {
+                $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp));
             } else {
                 $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * (85 / 100));
             }
@@ -466,6 +468,8 @@ class PuskesmasController extends Controller
             }
             if (Auth::user()->puskesmas->id == 8) {
                 $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (68 / 100));
+            } elseif (Auth::user()->puskesmas->id == 36 || Auth::user()->puskesmas->id == 37) {
+                $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp));
             } else {
                 $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (85 / 100));
             }
@@ -474,6 +478,8 @@ class PuskesmasController extends Controller
             $item->pkk = $item->basic * ($item->p_kk / 100);
             if (Auth::user()->puskesmas->id == 8) {
                 $item->pkk_jumlah = round($item->pkk * (68 / 100));
+            } elseif (Auth::user()->puskesmas->id == 36 || Auth::user()->puskesmas->id == 37) {
+                $item->pkk_jumlah = round($item->pkk);
             } else {
                 $item->pkk_jumlah = round($item->pkk * (85 / 100));
             }
@@ -482,6 +488,8 @@ class PuskesmasController extends Controller
             $item->pkp = $item->basic * ($item->p_kp / 100);
             if (Auth::user()->puskesmas->id == 8) {
                 $item->pkp_jumlah = round($item->pkp * (68 / 100));
+            } elseif (Auth::user()->puskesmas->id == 36 || Auth::user()->puskesmas->id == 37) {
+                $item->pkp_jumlah = round($item->pkp);
             } else {
                 $item->pkp_jumlah = round($item->pkp * (85 / 100));
             }

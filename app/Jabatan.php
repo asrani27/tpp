@@ -68,4 +68,8 @@ class Jabatan extends Model
     {
         return $this->belongsTo(Sekolah::class, 'sekolah_id');
     }
+    public function kadis()
+    {
+        return $this->hasMany(Jabatan::class, 'skpd_id');
+    }
 }

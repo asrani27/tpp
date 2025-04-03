@@ -59,7 +59,18 @@ SUPERADMIN
                     @endif
                   </td>
                   <td>
-                    <strong>{{$item->nama}}</strong><br />
+                    <strong>{{$item->nama}}</strong>
+                    @if ($item->kadis->where('jabatan_id',null)->first() == null)
+                    -
+                    @else
+                    {{$item->kadis->where('jabatan_id',null)->first()->nama}}
+                    @if ($item->kadis->where('jabatan_id',null)->first()->pegawai == null)
+                    -
+                    @else
+                    {{$item->kadis->where('jabatan_id',null)->first()->pegawai->nama}}
+                    @endif
+                    @endif
+                    <br />
                     <a href="/superadmin/skpd/pegawai/{{$item->id}}" class="btn btn-sm btn-info"><i
                         class="fas fa-users"></i> ASN : {{$item->pegawai->count()}}</a>
                     <a href="/superadmin/skpd/tpp" class="btn btn-sm btn-success"><i class="fas fa-money-bill"></i> TPP

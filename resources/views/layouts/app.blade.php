@@ -15,12 +15,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </head>
 
 <body class="hold-transition sidebar-mini">
-  <div class="bg-warning text-center">
-    Assalammualaikum... Mohon perhatian bapak/ibu pegawai. Sehubungan dengan akan berakhirnya Triwulan III, mohon kepada
-    seluruh bapak/ibu pegawai untuk mengisi realisasi capaian Triwulan III di aplikasi TPP di menu SKP Baru, dan khusus
-    untuk Pejabat Penilai mohon mengisi umpan balik di menu Penilaian SKP
+  <div class="bg-warning text-center">Assalammualaikum... Mohon perhatian bapak/ibu pegawai. Sehubungan dengan akan
+    berakhirnya Triwulan I, mohon kepada seluruh bapak/ibu pegawai untuk mengisi realisasi capaian Triwulan I di
+    aplikasi TPP di menu SKP Baru, dan khusus untuk Pejabat Penilai mohon mengisi umpan balik di menu Penilaian SKP
 
-    Pengisian Realisasi dan penilaian SKP ditutup di aplikasi TPP pada tanggal 31 Oktober 2024
+    Pengisian Realisasi dan penilaian SKP ditutup di aplikasi TPP pada tanggal 13 Mei 2025
   </div>
   <div class="wrapper">
     <!-- Navbar -->

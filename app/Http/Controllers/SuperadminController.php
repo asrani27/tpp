@@ -440,6 +440,7 @@ class SuperadminController extends Controller
         $urutan          = Skpd::find($req->skpd_id)->pegawai->sortBy('urutan')->last() == null ? 1 : Skpd::find($req->skpd_id)->pegawai->sortBy('urutan')->last()->urutan + 1;
 
         $attr = $req->all();
+        $attr['jabatan_id']  = $req->jabatan_id ?: null;
         $attr['verified'] = 1;
         $attr['urutan'] = $urutan;
 

@@ -100,11 +100,15 @@ class AdminController extends Controller
             $urutan      = Skpd::find($this->skpd_id())->pegawai->sortBy('urutan')->last()->urutan + 1;
         }
 
+
         $attr            = $req->all();
         $attr['eselon_id'] = $req->eselon_id == null ? null : $req->eselon_id;
+        $attr['jabatan_id']  = $req->jabatan_id ?: null;
+
         $attr['urutan']  = $urutan;
         $attr['skpd_id'] = $this->skpd_id();
         $attr['verified'] = 1;
+
 
         Pegawai::create($attr);
 

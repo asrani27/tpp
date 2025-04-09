@@ -18,7 +18,7 @@
       <span class="info-box-icon bg-primary"><i class="far fa-user"></i></span>
 
       <div class="info-box-content">
-        <span class="info-box-text">WALIKOTA BANJARMASIN</span>
+        <span class="info-box-text">Wali Kota Banjarmasin</span>
         <span class="info-box-number">H. Muhammad Yamin HR</span>
       </div>
       <!-- /.info-box-content -->

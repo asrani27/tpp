@@ -58,7 +58,8 @@ SUPERADMIN
                 </div>
                 @if (checkKunci($bulan, $tahun, Auth::user()->skpd->id) == true)
 
-                <a href="#" class="btn btn-flat btn-xs btn-success"><i class="fa fa-lock"></i> Telah dikunci</a>
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/kuncitpp" class="btn btn-flat btn-xs btn-success"><i
+                        class="fa fa-lock"></i> Telah dikunci</a>
                 @else
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/reguler/mp" class="btn btn-flat btn-xs btn-primary"
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan

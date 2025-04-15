@@ -4601,7 +4601,6 @@ class RekapitulasiController extends Controller
         toastr()->success('Berhasil di tarik');
         return back();
     }
-
     public function plt_perhitungan($bulan, $tahun)
     {
         $data = RekapPlt::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
@@ -4646,6 +4645,7 @@ class RekapitulasiController extends Controller
         toastr()->success('Berhasil di hitung');
         return back();
     }
+
     public function getJabatan(Request $req)
     {
         if ($req->searchTerm == null) {

@@ -583,6 +583,14 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/reguler/perhitungan', 'PuskesmasController@puskes_reguler_perhitungan');
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/reguler/perhitunganrs', 'PuskesmasController@rs_reguler_perhitungan');
 
+
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/plt', 'PuskesmasController@plt');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/plt/psa', 'PuskesmasController@plt_psa');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/plt/kuncitpp', 'PuskesmasController@kuncitpp_plt');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/plt/perhitungan', 'PuskesmasController@plt_perhitungan');
+        Route::post('/puskesmas/rekapitulasi/{bulan}/{tahun}/tambahpegawai/plt', 'PuskesmasController@plt_tambahpegawai');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/plt/{id}/delete', 'PuskesmasController@plt_delete');
+
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/cpns', 'PuskesmasController@cpns');
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/cpns/mp', 'PuskesmasController@cpns_mp');
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/cpns/psa', 'PuskesmasController@cpns_psa');

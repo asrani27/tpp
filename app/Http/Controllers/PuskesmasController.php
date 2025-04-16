@@ -1218,6 +1218,7 @@ class PuskesmasController extends Controller
         $check = RekapPlt::where('nip', $pegawai->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
         if ($check == null) {
             $n = new RekapPlt;
+            $n->skpd_id          = 34;
             $n->puskesmas_id          = Auth::user()->puskesmas->id;
             // $n->puskesmas_id     = $jabatan_definitif == null ? null : $jabatan_definitif->rs_puskesmas_id;
             $n->sekolah_id       = $jabatan_definitif == null ? null : $jabatan_definitif->sekolah_id;

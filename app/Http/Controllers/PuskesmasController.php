@@ -1328,4 +1328,83 @@ class PuskesmasController extends Controller
         toastr()->success('Berhasil di hitung');
         return back();
     }
+
+    public function kuncitpp_plt($bulan, $tahun)
+    {
+        $param['bulan'] = $bulan;
+        $param['tahun'] = $tahun;
+        $param['rs_puskesmas_id'] = Auth::user()->puskesmas->id;
+        $param['jenis'] = 'plt';
+        $data = RekapPlt::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+
+
+        $data->map(function ($item) {
+            //PBK
+            $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
+            if ($item->dp_ta >= 6750) {
+                $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
+                if ($item->dp_skp == 'kurang') {
+                    $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
+                } else {
+                    $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
+                }
+            } else {
+                $item->pbk_aktivitas = 0;
+                $item->pbk_skp = 0;
+            }
+
+            if ($item->jenis_plt == '2') {
+                $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * 20 / 100);
+            } else {
+                $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp));
+            }
+
+            //PPK
+            $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
+            if ($item->dp_ta >= 6750) {
+                $item->ppk_aktivitas = $item->basic * ($item->p_pk / 100) * (40 / 100);
+                if ($item->dp_skp == 'kurang') {
+                    $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (10 / 100);
+                } else {
+                    $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (20 / 100);
+                }
+            } else {
+                $item->ppk_aktivitas = 0;
+                $item->ppk_skp = 0;
+            }
+
+            if ($item->jenis_plt == '2') {
+                $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * 20 / 100);
+            } else {
+
+                $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp));
+            }
+
+            //PKK
+            $item->pkk = round($item->basic * ($item->p_kk / 100));
+
+            if ($item->jenis_plt == '2') {
+
+                $item->pkk_jumlah = round($item->pkk * 20 / 100);
+            } else {
+
+                $item->pkk_jumlah = $item->pkk;
+            }
+            //PKP
+            $item->pkp = round($item->basic * ($item->p_kp / 100));
+            $item->pkp_jumlah = $item->pkp;
+            $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
+
+            //simpan jumlah pembayaran
+            $save = $item;
+            $save->jumlah_pembayaran = $item->jumlah_pembayaran;
+            $save->save();
+
+            return $item;
+        });
+
+        KunciTpp::create($param);
+        toastr()->success('Telah Di Kunci');
+        return back();
+    }
 }

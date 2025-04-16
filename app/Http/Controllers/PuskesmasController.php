@@ -1087,7 +1087,48 @@ class PuskesmasController extends Controller
                 $contentRowCpns++;
             }
         }
+        if (Auth::user()->puskesmas->id == 8) {
+            //sheet PLT
+            $dataPlt = RekapPlt::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+            $spreadsheet->getSheetByName('PLT')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
+            $spreadsheet->getSheetByName('PLT')->setCellValue('A3', strtoupper(Auth::user()->puskesmas->nama));
+            $contentRowPlt = 8;
 
+            //dd($dataPlt);
+            foreach ($dataPlt as $key => $item) {
+                $spreadsheet->getSheetByName('PLT')->setCellValue('B' . $contentRowPlt, $item->nama);
+                $spreadsheet->getSheetByName('PLT')->setCellValue('C' . $contentRowPlt, '\'' . $item->nip);
+                $spreadsheet->getSheetByName('PLT')->setCellValue('D' . $contentRowPlt, $item->pangkat . '/' . $item->golongan);
+                $spreadsheet->getSheetByName('PLT')->setCellValue('E' . $contentRowPlt, $item->jabatan . '/ Plt. ' . $item->jabatan_plt);
+                $spreadsheet->getSheetByName('PLT')->setCellValue('F' . $contentRowPlt, $item->jenis_jabatan);
+                $spreadsheet->getSheetByName('PLT')->setCellValue('G' . $contentRowPlt, $item->kelas);
+                $spreadsheet->getSheetByName('PLT')->setCellValue('I' . $contentRowPlt, $item->basic);
+
+                $spreadsheet->getSheetByName('PLT')->setCellValue('J' . $contentRowPlt, (($item->p_bk + $item->p_tbk) / 100));
+                $spreadsheet->getSheetByName('PLT')->setCellValue('K' . $contentRowPlt, ($item->p_pk / 100));
+                $spreadsheet->getSheetByName('PLT')->setCellValue('L' . $contentRowPlt, ($item->p_kk / 100));
+                $spreadsheet->getSheetByName('PLT')->setCellValue('M' . $contentRowPlt, ($item->p_kp / 100));
+                if ($item->jenis_plt == '2') {
+                    //=ROUND(SUM(S9:U9);0)
+                    $formulaPagu = '=ROUND(I' . $contentRowPlt . '*(SUM(J' . $contentRowPlt . ':M' . $contentRowPlt . '))*20%,0)';
+                    //$formulaBK = '=ROUND(SUM(S9:U9)*20%,0)';
+                    $formulaBK = '=ROUND(SUM(S' . $contentRowPlt . ':U' . $contentRowPlt . ')*20%,0)';
+
+                    $formulaPK = '=ROUND(SUM(W' . $contentRowPlt . ':Y' . $contentRowPlt . ')*20%,0)';
+                    $formulaKK = '=ROUND(AA' . $contentRowPlt . '*20%,0)';
+                    $spreadsheet->getSheetByName('PLT')->setCellValue('N' . $contentRowPlt, $formulaPagu);
+                    $spreadsheet->getSheetByName('PLT')->setCellValue('V' . $contentRowPlt, $formulaBK);
+                    $spreadsheet->getSheetByName('PLT')->setCellValue('Z' . $contentRowPlt, $formulaPK);
+                    $spreadsheet->getSheetByName('PLT')->setCellValue('AB' . $contentRowPlt, $formulaKK);
+                }
+                $spreadsheet->getSheetByName('PLT')->setCellValue('O' . $contentRowPlt, ($item->dp_absensi / 100));
+                $spreadsheet->getSheetByName('PLT')->setCellValue('P' . $contentRowPlt, $item->dp_ta);
+                $spreadsheet->getSheetByName('PLT')->setCellValue('Q' . $contentRowPlt, $item->dp_skp);
+                $spreadsheet->getSheetByName('PLT')->setCellValue('AI' . $contentRowPlt, $item->pph_terutang);
+                $spreadsheet->getSheetByName('PLT')->setCellValue('AJ' . $contentRowPlt, $item->bpjs1);
+                $contentRowPlt++;
+            }
+        }
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('php://output');
         exit;
@@ -1210,7 +1251,7 @@ class PuskesmasController extends Controller
     {
         //cuti bersama
         $cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count() * 420;
-        $data = RekapPlt::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $data = RekapPlt::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         foreach ($data as $item) {
             $presensi = DB::connection('presensi')->table('ringkasan')->where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
             $dp_ct = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 7)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
@@ -1245,7 +1286,7 @@ class PuskesmasController extends Controller
     }
     public function plt_perhitungan($bulan, $tahun)
     {
-        $data = RekapPlt::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+        $data = RekapPlt::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         //dd($data);
         foreach ($data as $item) {
             $persen = Jabatan::find($item->jabatan_plt_id);

@@ -17,7 +17,7 @@ SUPERADMIN
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body p-2">
-                        @include('puskesmas.rekap2023.menu')
+                        @include('puskesmas.rekapitulasi.menu')
                     </div>
                 </div>
             </div>
@@ -30,18 +30,20 @@ SUPERADMIN
             <div class="card-body p-2">
                 @if (checkKunciPLT($bulan, $tahun, Auth::user()->puskesmas->id) == true)
 
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/plt/kuncitpp"
+                <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/plt/kuncitpp"
                     class="btn btn-flat btn-xs btn-success"><i class="fa fa-lock"></i> Telah dikunci</a>
                 @else
                 <a href="#" class="btn btn-xs btn-primary tambahpegawai">
                     Tambah Pegawai PLT</a>
 
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/plt/psa" class="btn btn-flat btn-xs btn-secondary"
+                <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/plt/psa"
+                    class="btn btn-flat btn-xs btn-secondary"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Tarik PSA</a>
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/plt/perhitungan" class="btn btn-xs btn-warning"
+                <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/plt/perhitungan" class="btn btn-xs btn-warning"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/plt/kuncitpp" class="btn btn-flat btn-xs btn-danger"
-                    onclick="return confirm('Yakin sudah selesai?');"><i class="fas fa-unlock"></i> Kunci TPP</a>
+                <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/plt/kuncitpp"
+                    class="btn btn-flat btn-xs btn-danger" onclick="return confirm('Yakin sudah selesai?');"><i
+                        class="fas fa-unlock"></i> Kunci TPP</a>
                 @endif
                 <br /><br />
 
@@ -186,7 +188,7 @@ SUPERADMIN
                             <td class="text-right">{{number_format($item->tpp_diterima)}}</td>
 
                             <td>
-                                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/plt/{{$item->id}}/delete"
+                                <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/plt/{{$item->id}}/delete"
                                     onclick="return confirm('Yakin Ingin Dihapus?');"><span
                                         class="badge badge-danger">Hapus</span></a>
                             </td>
@@ -244,7 +246,7 @@ SUPERADMIN
 <div class="modal fade" id="modal-bpjs" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="/admin/rekapitulasi/bpjs/plt" enctype="multipart/form-data">
+            <form method="post" action="/puskesmas/rekapitulasi/bpjs/plt" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header bg-gradient-success" style="padding:10px">
                     <h4 class="modal-title text-sm">BPJS</h4>
@@ -273,7 +275,7 @@ SUPERADMIN
 <div class="modal fade" id="modal-tambahpegawai" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/tambahpegawai/plt"
+            <form method="post" action="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/tambahpegawai/plt"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header bg-gradient-success" style="padding:10px">
@@ -356,7 +358,7 @@ SUPERADMIN
          $("#selectPegawai").select2({
             placeholder: '-Cari NIP/Nama-',
             ajax: { 
-            url: '/admin/rekapitulasi/getPegawai',
+            url: '/puskesmas/rekapitulasi/getPegawai',
             type: "post",
             dataType: 'json',
             delay: 250,
@@ -386,7 +388,7 @@ SUPERADMIN
          $("#selectJabatanDefinitif").select2({
             placeholder: '-Pilih-',
             ajax: { 
-            url: '/admin/rekapitulasi/getJabatan',
+            url: '/puskesmas/rekapitulasi/getJabatan',
             type: "post",
             dataType: 'json',
             delay: 250,
@@ -416,7 +418,7 @@ SUPERADMIN
          $("#selectJabatanPLT").select2({
             placeholder: '-Pilih-',
             ajax: { 
-            url: '/admin/rekapitulasi/getJabatan',
+            url: '/puskesmas/rekapitulasi/getJabatan',
             type: "post",
             dataType: 'json',
             delay: 250,

@@ -28,11 +28,11 @@ SUPERADMIN
                     {{convertBulan($bulan)}} {{$tahun}}</h3>
             </div>
             <div class="card-body p-2">
-                @if (checkKunciPLTrs($bulan, $tahun, Auth::user()->puskesmas->id) == true)
+                {{-- @if (checkKunciPLTrs($bulan, $tahun, Auth::user()->puskesmas->id) == true)
 
                 <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/plt/kuncitpp"
                     class="btn btn-flat btn-xs btn-success"><i class="fa fa-lock"></i> Telah dikunci</a>
-                @else
+                @else --}}
                 <a href="#" class="btn btn-xs btn-primary tambahpegawai">
                     Tambah Pegawai PLT</a>
 
@@ -44,7 +44,7 @@ SUPERADMIN
                 <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/plt/kuncitpp"
                     class="btn btn-flat btn-xs btn-danger" onclick="return confirm('Yakin sudah selesai?');"><i
                         class="fas fa-unlock"></i> Kunci TPP</a>
-                @endif
+                {{-- @endif --}}
                 <br /><br />
 
                 <table class="table table-hover text-nowrap table-sm table-responsive ">
@@ -70,7 +70,7 @@ SUPERADMIN
                             <th style="background-color:#bbfac6; border:1px solid silver" colspan=13>Pembayaran</th>
                             <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>PPH 21
                                 <br />
-                                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/plt/tarikter"
+                                <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/plt/tarikter"
                                     class="btn btn-xs btn-danger">Tarik TER</a>
                             </th>
                             <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>BPJS 1%</th>

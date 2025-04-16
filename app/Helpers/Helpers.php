@@ -90,7 +90,7 @@ function checkKunciPuskes($bulan, $tahun, $skpd_id)
 
 function checkKunciPLTrs($bulan, $tahun, $puskesmas_id)
 {
-    $check = KunciTpp::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', $puskesmas_id)->where('jenis', 'plt')->first();
+    $check = KunciTpp::where('bulan', $bulan)->where('tahun', $tahun)->where('rs_puskesmas_id', $puskesmas_id)->where('jenis', 'puskesmas')->first();
     if ($check == null) {
         return false;
     } else {

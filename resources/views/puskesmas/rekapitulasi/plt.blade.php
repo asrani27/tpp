@@ -28,7 +28,7 @@ SUPERADMIN
                     {{convertBulan($bulan)}} {{$tahun}}</h3>
             </div>
             <div class="card-body p-2">
-                @if (checkKunciPLT($bulan, $tahun, Auth::user()->puskesmas->id) == true)
+                @if (checkKunciPLTrs($bulan, $tahun, Auth::user()->puskesmas->id) == true)
 
                 <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/plt/kuncitpp"
                     class="btn btn-flat btn-xs btn-success"><i class="fa fa-lock"></i> Telah dikunci</a>

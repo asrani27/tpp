@@ -26,6 +26,7 @@ class NilaiSKPController extends Controller
             $item->nilai_tw4 = nilaiSkp($item->rhk_tw4, $item->rpk_tw4);
             return $item;
         });
+
         return view('pegawai.skp2023.nilai.index', compact('data'));
     }
 

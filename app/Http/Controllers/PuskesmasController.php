@@ -1059,9 +1059,7 @@ class PuskesmasController extends Controller
         $spreadsheet->getSheetByName('REGULER')->setCellValue('AF' . $contentRow, $sumAF);
         $spreadsheet->getSheetByName('REGULER')->setCellValue('AI' . $contentRow, $sumAI);
 
-        //sheet CPNS
-        if (Auth::user()->puskesmas->id == 8 || Auth::user()->puskesmas->id == 36 || Auth::user()->puskesmas->id == 37) {
-        } else {
+        if (Auth::user()->puskesmas->id == 8) {
             $spreadsheet->getSheetByName('CPNS')->setCellValue('A2', 'BULAN ' . strtoupper($pembayaranBulan) . ' UNTUK KINERJA ' . strtoupper($kinerjaBulan));
             $spreadsheet->getSheetByName('CPNS')->setCellValue('A3', strtoupper(Auth::user()->puskesmas->nama));
             $contentRowCpns = 8;
@@ -1087,6 +1085,12 @@ class PuskesmasController extends Controller
                 $contentRowCpns++;
             }
         }
+        // else {
+        // }
+        //sheet CPNS
+        // if (Auth::user()->puskesmas->id == 8 || Auth::user()->puskesmas->id == 36 || Auth::user()->puskesmas->id == 37) {
+        // } else {
+        // }
         if (Auth::user()->puskesmas->id == 8) {
             //sheet PLT
             $dataPlt = RekapPlt::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();

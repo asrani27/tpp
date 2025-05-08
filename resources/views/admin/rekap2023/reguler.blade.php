@@ -278,7 +278,7 @@ SUPERADMIN
                             <td></td>
                             <td></td>
                             <td>{{currency($data->sum('jumlah_pembayaran'))}}</td>
-                            <td>{{currency($data->sum('pph21'))}}</td>
+                            <td>{{currency($data->sum('pph_terutang'))}}</td>
                             <td></td>
                             <td></td>
                             <td>{{currency($data->sum('tpp_diterima'))}}</td>

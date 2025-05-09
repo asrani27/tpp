@@ -998,7 +998,7 @@ class PuskesmasController extends Controller
     {
         $reguler = RekapReguler::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         $cpns = RekapCpns::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-        dd($cpns);
+        //dd($cpns);
         $dataBulan = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun);
         $kinerjaBulan = $dataBulan->translatedFormat('F Y');
         $pembayaranBulan = $dataBulan->addMonth(1)->translatedFormat('F Y');

@@ -1561,9 +1561,7 @@ class RekapitulasiController extends Controller
             $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
             if ($item->dp_ta >= 6750) {
                 $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
-                if ($item->dp_skp == null) {
-                    $item->pbk_skp = 0;
-                } else if ($item->dp_skp == 'KURANG' || $item->dp_skp == "SANGAT KURANG") {
+                if ($item->dp_skp == 'kurang') {
                     $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
                 } else {
                     $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
@@ -1572,15 +1570,13 @@ class RekapitulasiController extends Controller
                 $item->pbk_aktivitas = 0;
                 $item->pbk_skp = 0;
             }
-            $item->pbk_jumlah = round($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp);
+            $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * (80 / 100));
 
             //PPK
             $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
             if ($item->dp_ta >= 6750) {
                 $item->ppk_aktivitas = $item->basic * ($item->p_pk / 100) * (40 / 100);
-                if ($item->dp_skp == null) {
-                    $item->pbk_skp = 0;
-                } else if ($item->dp_skp == 'KURANG' || $item->dp_skp == "SANGAT KURANG") {
+                if ($item->dp_skp == 'kurang') {
                     $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (10 / 100);
                 } else {
                     $item->ppk_skp = $item->basic * ($item->p_pk / 100) * (20 / 100);
@@ -1589,7 +1585,7 @@ class RekapitulasiController extends Controller
                 $item->ppk_aktivitas = 0;
                 $item->ppk_skp = 0;
             }
-            $item->ppk_jumlah = round($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp);
+            $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (80 / 100));
 
             //PKK
             $item->pkk = round($item->basic * ($item->p_kk / 100));
@@ -1599,11 +1595,10 @@ class RekapitulasiController extends Controller
             $item->pkp = round($item->basic * ($item->p_kp / 100));
             $item->pkp_jumlah = $item->pkp;
             $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
-
-            //simpan jumlah pembayaran
-            $save = $item;
-            $save->jumlah_pembayaran = $item->jumlah_pembayaran;
-            $save->save();
+            //dd($item->jumlah_pembayaran, $item->pbk_jumlah, $item->ppk_jumlah);
+            //PPH 21
+            $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
+            $item->tpp_diterima = $item->jumlah_pembayaran - $item->pph21 - $item->bpjs1;
             return $item;
         });
 

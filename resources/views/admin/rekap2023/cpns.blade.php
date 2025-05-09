@@ -27,7 +27,7 @@ SUPERADMIN
                     {{convertBulan($bulan)}} {{$tahun}}</h3>
             </div>
             <div class="card-body p-2">
-                @if (checkKunci($bulan, $tahun, Auth::user()->skpd->id) == true)
+                @if (checkKunciCpns($bulan, $tahun, Auth::user()->skpd->id) == true)
 
                 <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/cpns/kuncitpp"
                     class="btn btn-flat btn-xs btn-success"><i class="fa fa-lock"></i> Telah dikunci</a>

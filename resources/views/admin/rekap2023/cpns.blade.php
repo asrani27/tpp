@@ -177,7 +177,7 @@ SUPERADMIN
                             <td class="text-right">{{number_format($item->pkp)}}</td>
                             <td class="text-right">{{number_format($item->pkp_jumlah)}}</td>
                             <td class="text-right">{{number_format($item->jumlah_pembayaran)}}</td>
-                            <td class="text-right">{{number_format($item->pph21)}}</td>
+                            <td class="text-right">{{number_format($item->pph_terutang)}}</td>
                             <td class="text-right">{{number_format($item->bpjs1)}}<br />
                                 <button type="button" class=" btn btn-xs editbpjs" data-id="{{$item->id}}"
                                     data-nama="{{$item->nama}}" data-1persen="{{$item->bpjs1}}"
@@ -229,7 +229,7 @@ SUPERADMIN
                             <td></td>
                             <td></td>
                             <td>{{currency($data->sum('jumlah_pembayaran'))}}</td>
-                            <td>{{currency($data->sum('pph21'))}}</td>
+                            <td>{{currency($data->sum('pph_terutang'))}}</td>
                             <td></td>
                             <td></td>
                             <td>{{currency($data->sum('tpp_diterima'))}}</td>

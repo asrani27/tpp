@@ -8,14 +8,14 @@
                 </p>
             </a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a href="/superadmin/profil" class="nav-link {{ Request::is('superadmin/profil*') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-user"></i>
                 <p>
                     Profil
                 </p>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a href="/superadmin/skpd" class="nav-link {{ Request::is('superadmin/skpd*') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-university"></i>
@@ -25,6 +25,14 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="/superadmin/kuncitpp" class="nav-link {{ Request::is('superadmin/kuncitpp*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-key"></i>
+                <p>
+                    Bukan Kunci TPP
+                </p>
+            </a>
+        </li>
         <li class="nav-item">
             <a href="/superadmin/persentase"
                 class="nav-link {{ Request::is('superadmin/persentase*') ? 'active' : '' }}">

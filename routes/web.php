@@ -26,6 +26,7 @@ Route::group(['middleware' => ['XSS']], function () {
 
         Route::get('/superadmin/tpp/{bulan}/{tahun}', 'TppController@tppBulanTahun');
         Route::get('/superadmin/tpp/{bulan}/{tahun}/laporan/{id}', 'TppController@tppSkpd');
+        Route::get('/superadmin/kuncitpp', 'HomeController@kuncitpp');
         Route::post('/superadmin/profil', 'ProfilController@changeSuperadmin');
         Route::get('/superadmin/skpd', 'SuperadminController@skpd');
         Route::get('/superadmin/skpd/login/{id}', 'SuperadminController@loginSkpd');

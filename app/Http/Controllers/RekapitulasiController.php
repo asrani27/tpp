@@ -1597,8 +1597,10 @@ class RekapitulasiController extends Controller
             $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
             //dd($item->jumlah_pembayaran, $item->pbk_jumlah, $item->ppk_jumlah);
             //PPH 21
-            $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
-            $item->tpp_diterima = $item->jumlah_pembayaran - $item->pph21 - $item->bpjs1;
+            //simpan jumlah pembayaran
+            $save = $item;
+            $save->jumlah_pembayaran = $item->jumlah_pembayaran;
+            $save->save();
             return $item;
         });
 

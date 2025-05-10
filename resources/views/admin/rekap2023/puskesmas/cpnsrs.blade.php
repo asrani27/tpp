@@ -28,18 +28,32 @@ SUPERADMIN
                 </h3>
             </div>
             <div class="card-body p-2">
+                @if (checkKunciCpnsRs($bulan, $tahun, Auth::user()->skpd->id) == true)
 
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/rs/cpns/mp" class="btn btn-xs btn-primary" onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/rs/cpns/kuncitpp"
+                    class="btn btn-flat btn-xs btn-success"><i class="fa fa-lock"></i> Telah dikunci</a>
+                @else
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/rs/cpns/mp" class="btn btn-xs btn-primary"
+                    onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
                     Pegawai CPNS</a>
 
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/rs/cpns/psa" class="btn btn-flat btn-xs btn-secondary" onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Tarik PSA</a>
-                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/rs/cpns/perhitungan" class="btn btn-xs btn-warning" onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/rs/cpns/psa"
+                    class="btn btn-flat btn-xs btn-secondary"
+                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Tarik PSA</a>
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/rs/cpns/perhitungan" class="btn btn-xs btn-warning"
+                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
+
+                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/rs/cpns/kuncitpp"
+                    class="btn btn-flat btn-xs btn-danger" onclick="return confirm('Yakin sudah selesai?');"><i
+                        class="fas fa-unlock"></i> Kunci TPP</a>
+                @endif
                 <br /><br />
 
                 <table class="table table-hover text-nowrap table-sm table-responsive ">
                     <thead>
                         <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center">
-                            <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4 style="width: 10px">#</th>
+                            <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4
+                                style="width: 10px">#</th>
                             <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Nama
                                 <br />NIP<br />Pangkat<br />Golongan
                             </th>
@@ -49,10 +63,12 @@ SUPERADMIN
                             </th>
                             <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Kelas</th>
 
-                            <th style="background-color:#d6fdf9; border:1px solid silver" colspan=9>Disiplin Dan Produktivitas</th>
+                            <th style="background-color:#d6fdf9; border:1px solid silver" colspan=9>Disiplin Dan
+                                Produktivitas</th>
                             <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=4>Basic<br /> TPP</th>
                             <th style="background-color:#f9cb9c; border:1px solid silver" colspan=4>Persentase</th>
-                            <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=4>Pagu<br /> TPP ASN</th>
+                            <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=4>Pagu<br /> TPP ASN
+                            </th>
                             <th style="background-color:#bbfac6; border:1px solid silver" colspan=13>Pembayaran</th>
                             <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>PPH 21</th>
                             <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>BPJS 1%</th>
@@ -62,23 +78,39 @@ SUPERADMIN
                             <th rowspan=4 style="border:1px solid silver">Aksi</th>
                         </tr>
                         <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center">
-                            <th colspan=6 style="background-color:#d6fdf9; border:1px solid silver">Aktivitas (menit)</th>
-                            <th style="background-color:#d6fdf9; border:1px solid silver" rowspan=2>Total<br /> Aktivitas</th>
+                            <th colspan=6 style="background-color:#d6fdf9; border:1px solid silver">Aktivitas (menit)
+                            </th>
+                            <th style="background-color:#d6fdf9; border:1px solid silver" rowspan=2>Total<br />
+                                Aktivitas</th>
                             <th style="background-color:#d6fdf9; border:1px solid silver" rowspan=2>Absensi</th>
-                            <th style="background-color:#d6fdf9; border:1px solid silver" rowspan=2>Penilaian<br /> Kinerja</th>
-                            <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Beban<br /> Kerja</th>
-                            <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Prestasi<br /> Kerja</th>
-                            <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Kondisi<br /> Kerja</th>
-                            <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Kelangkaan<br /> Profesi</th>
+                            <th style="background-color:#d6fdf9; border:1px solid silver" rowspan=2>Penilaian<br />
+                                Kinerja</th>
+                            <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Beban<br /> Kerja
+                            </th>
+                            <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Prestasi<br /> Kerja
+                            </th>
+                            <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Kondisi<br /> Kerja
+                            </th>
+                            <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Kelangkaan<br />
+                                Profesi</th>
                             <th style="background-color:#bbfac6; border:1px solid silver" colspan=3>Beban Kerja</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah<br /> Beban Kerja</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah<br /> Beban
+                                Kerja</th>
                             <th style="background-color:#bbfac6; border:1px solid silver" colspan=3>Prestasi Kerja</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah <br />Prestasi Kerja</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah
+                                <br />Prestasi Kerja
+                            </th>
                             <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Kondisi Kerja</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah <br />Kondisi Kerja</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Kelangkaan<br /> Profesi</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah <br />Kelangkaan <br />Profesi</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah <br />Pembayaran</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah <br />Kondisi
+                                Kerja</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Kelangkaan<br />
+                                Profesi</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah
+                                <br />Kelangkaan <br />Profesi
+                            </th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah
+                                <br />Pembayaran
+                            </th>
                         </tr>
                         <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center">
                             <th style="background-color:#d6fdf9; border:1px solid silver">Aktivitas</th>
@@ -114,7 +146,9 @@ SUPERADMIN
                             <td>
                                 {!!wordwrap($item->jabatan,40,"<br>")!!}
 
-                                <a href="#" class="btn btn-xs editjabatan" data-id="{{$item->id}}" data-nama="{{$item->nama}}" data-jabatan="{{$item->jabatan}}"><i class="fas fa-edit"></i></a>
+                                <a href="#" class="btn btn-xs editjabatan" data-id="{{$item->id}}"
+                                    data-nama="{{$item->nama}}" data-jabatan="{{$item->jabatan}}"><i
+                                        class="fas fa-edit"></i></a>
 
                             </td>
                             <td>{{$item->jenis_jabatan}}</td>
@@ -149,18 +183,23 @@ SUPERADMIN
                             <td class="text-right">{{number_format($item->jumlah_pembayaran)}}</td>
                             <td class="text-right">{{number_format($item->pph21)}}</td>
                             <td class="text-right">{{number_format($item->bpjs1)}}<br />
-                                <button type="button" class=" btn btn-xs editbpjs" data-id="{{$item->id}}" data-nama="{{$item->nama}}" data-1persen="{{$item->bpjs1}}" data-4persen="{{$item->bpjs4}}"><i class="fas fa-edit"></i></button>
+                                <button type="button" class=" btn btn-xs editbpjs" data-id="{{$item->id}}"
+                                    data-nama="{{$item->nama}}" data-1persen="{{$item->bpjs1}}"
+                                    data-4persen="{{$item->bpjs4}}"><i class="fas fa-edit"></i></button>
                             </td>
                             <td class="text-right">{{number_format($item->bpjs4)}}</td>
                             <td class="text-right">{{number_format($item->tpp_diterima)}}</td>
 
                             <td>
-                                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/cpns/{{$item->id}}/delete" onclick="return confirm('Yakin Ingin Dihapus?');"><span class="badge badge-danger">Hapus</span></a>
+                                <a href="/admin/rekapitulasi/{{$bulan}}/{{$tahun}}/cpns/{{$item->id}}/delete"
+                                    onclick="return confirm('Yakin Ingin Dihapus?');"><span
+                                        class="badge badge-danger">Hapus</span></a>
                             </td>
                         </tr>
                         @endforeach
 
-                        <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif; font-weight:bold; background-color:#bbfac6">
+                        <tr
+                            style="font-size:11px; font-family:Arial, Helvetica, sans-serif; font-weight:bold; background-color:#bbfac6">
                             <td></td>
                             <td></td>
                             <td></td>
@@ -222,8 +261,10 @@ SUPERADMIN
 
                 <div class="modal-body">
                     Nama<input type="text" id="id_nama" class="form-control" readonly><br />
-                    BPJS 1% <input type="text" id="id_1persen" class="form-control" name="satu_persen" onkeypress="return hanyaAngka(event)" required><br />
-                    BPJS 4% <input type="text" id="id_4persen" class="form-control" name="empat_persen" onkeypress="return hanyaAngka(event)" required>
+                    BPJS 1% <input type="text" id="id_1persen" class="form-control" name="satu_persen"
+                        onkeypress="return hanyaAngka(event)" required><br />
+                    BPJS 4% <input type="text" id="id_4persen" class="form-control" name="empat_persen"
+                        onkeypress="return hanyaAngka(event)" required>
                     <input type="hidden" id="id_rekap" name="id_rekap">
                 </div>
 

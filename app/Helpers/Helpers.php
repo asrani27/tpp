@@ -41,6 +41,15 @@ function whitelist($nip)
     }
     return $result;
 }
+function checkKunciCpnsRS($bulan, $tahun, $skpd_id)
+{
+    $check = KunciTpp::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', $skpd_id)->where('jenis', 'cpnsrs')->first();
+    if ($check == null) {
+        return false;
+    } else {
+        return true;
+    }
+}
 function checkKunciCpns($bulan, $tahun, $skpd_id)
 {
     $check = KunciTpp::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', $skpd_id)->where('jenis', 'cpns')->first();

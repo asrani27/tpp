@@ -1879,7 +1879,46 @@ class RekapitulasiController extends Controller
             return back();
         }
     }
+    public function tarikter_cpns($bulan, $tahun)
+    {
 
+        $bulanTahunId = DB::connection('pajakasn')->table('bulan_tahun')->where('bulan', convertBulan($bulan))->where('tahun', $tahun)->first();
+        //dd($bulanTahunId);
+        if ($bulanTahunId == null) {
+            toastr()->error('Gaji Belum Di Upload Oleh BPKPAD');
+            return back();
+        } else {
+            $pphTerutangData = DB::connection('pajakasn')
+                ->table('pajak')
+                ->select('nip', 'pph_terutang', 'bpjs_satu_persen', 'bpjs_empat_persen')
+                ->where('bulan_tahun_id', $bulanTahunId->id)
+                ->where('skpd_id', Auth::user()->skpd->id)
+                ->get()
+                ->mapWithKeys(function ($item) {
+                    return [(string) $item->nip => $item]; // Pastikan key adalah string
+                });
+
+            if (Auth::user()->skpd->id == 34) {
+                $dataDinas = RekapCpns::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+                $dataIFK = RekapCpns::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 37)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+
+                $data = $dataDinas->merge($dataIFK);
+            } else {
+                $data = RekapCpns::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+            }
+
+            $data->map(function ($item) use ($pphTerutangData) {
+                $nip = $item->nip; // Asumsikan kolom NIP ada di `rekap_reguler`
+                $item->pph_terutang = $pphTerutangData[$nip]->pph_terutang ?? 0;
+                $item->bpjs1 = $pphTerutangData[$nip]->bpjs_satu_persen ?? 0;
+                $item->bpjs4 = $pphTerutangData[$nip]->bpjs_empat_persen ?? 0;
+                $item->save();
+            });
+
+            toastr()->success('berhasil di tarik');
+            return back();
+        }
+    }
     public function tariktertu($bulan, $tahun)
     {
         $bulanTahunId = DB::connection('pajakasn')->table('bulan_tahun')->where('bulan', convertBulan($bulan))->where('tahun', $tahun)->first();

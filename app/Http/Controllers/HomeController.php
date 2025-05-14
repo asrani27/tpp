@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ParameterTPPpuskesmas;
+use App\KunciTpp;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -98,6 +99,22 @@ class HomeController extends Controller
     public function upload()
     {
         return view('upload');
+    }
+    public function bukakuncidinas(Request $req)
+    {
+        KunciTpp::where('bulan', $req->bulan)->where('tahun', $req->tahun)->where('skpd_id', $req->skpd_id)->delete();
+        toastr()->success('Sudah Di Bukan');
+        return back();
+    }
+    public function bukakuncipuskesmas(Request $req)
+    {
+        KunciTpp::where('bulan', $req->bulan)->where('tahun', $req->tahun)->where('rs_puskesmas_id', $req->puskesmas_id)->delete();
+        toastr()->success('Sudah Di Bukan');
+        return back();
+    }
+    public function kuncitpp()
+    {
+        return view('superadmin.kuncitpp.index');
     }
 
     public function storeUpload(Request $req)

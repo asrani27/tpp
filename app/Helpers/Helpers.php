@@ -253,6 +253,10 @@ function detailSkpd($id)
     return Skpd::find($id);
 }
 
+function puskesmas()
+{
+    return Rspuskesmas::get();
+}
 function detailPuskesmas($id)
 {
     return Rspuskesmas::find($id);

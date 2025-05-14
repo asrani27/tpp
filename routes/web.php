@@ -27,6 +27,8 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/superadmin/tpp/{bulan}/{tahun}', 'TppController@tppBulanTahun');
         Route::get('/superadmin/tpp/{bulan}/{tahun}/laporan/{id}', 'TppController@tppSkpd');
         Route::get('/superadmin/kuncitpp', 'HomeController@kuncitpp');
+        Route::post('/superadmin/kuncitpp/dinas', 'HomeController@bukakuncidinas');
+        Route::post('/superadmin/kuncitpp/puskesmas', 'HomeController@bukakuncipuskesmas');
         Route::post('/superadmin/profil', 'ProfilController@changeSuperadmin');
         Route::get('/superadmin/skpd', 'SuperadminController@skpd');
         Route::get('/superadmin/skpd/login/{id}', 'SuperadminController@loginSkpd');
@@ -306,7 +308,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/puskes/cpns/perhitungan', 'RekapitulasiController@puskes_cpns_perhitungan');
 
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/rs/cpns', 'RekapitulasiController@rs_cpns');
-        Route::get('/admin/rekapitulasi/{bulan}/{tahun}/rs/cpns/kuncitpp', 'RekapitulasiController@rs_cpns_kuncitpp');
+        // Route::get('/admin/rekapitulasi/{bulan}/{tahun}/rs/cpns/kuncitpp', 'RekapitulasiController@rs_cpns_kuncitpp');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/rs/cpns/mp', 'RekapitulasiController@rs_cpns_mp');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/rs/cpns/psa', 'RekapitulasiController@rs_cpns_psa');
         Route::get('/admin/rekapitulasi/{bulan}/{tahun}/rs/cpns/perhitungan', 'RekapitulasiController@rs_cpns_perhitungan');

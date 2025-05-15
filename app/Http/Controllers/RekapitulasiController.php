@@ -3183,9 +3183,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('CPNS')->setCellValue('O' . $contentRowCpns, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('CPNS')->setCellValue('P' . $contentRowCpns, $item->dp_ta);
             $spreadsheet->getSheetByName('CPNS')->setCellValue('Q' . $contentRowCpns, $item->dp_skp);
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('AF' . $contentRowCpns, $item->pph_terutang);
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('AG' . $contentRowCpns, $item->bpjs1);
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('AH' . $contentRowCpns, $item->bpjs4);
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('AI' . $contentRowCpns, $item->pph_terutang);
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('AJ' . $contentRowCpns, $item->bpjs1);
             $contentRowCpns++;
         }
 

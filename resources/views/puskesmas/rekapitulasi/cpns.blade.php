@@ -30,90 +30,112 @@ SUPERADMIN
             </div>
         </div>
         @include('puskesmas.rekapitulasi.menu')
-        <br/><br/>
+        <br /><br />
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Daftar TPP CPNS Bulan
                     {{convertBulan($bulan)}} {{$tahun}}</h3>
             </div>
             <div class="card-body p-2">
-                
+
                 <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/cpns/mp" class="btn btn-xs btn-primary"
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
                     Pegawai CPNS</a>
 
-                <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/cpns/psa" class="btn btn-flat btn-xs btn-secondary"
+                <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/cpns/psa"
+                    class="btn btn-flat btn-xs btn-secondary"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Tarik PSA</a>
                 <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/cpns/perhitungan" class="btn btn-xs btn-warning"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Perhitungan</a>
-            <br /><br />
+                <a href="/puskesmas/rekapitulasi/{{$bulan}}/{{$tahun}}/cpns/kuncitpp"
+                    class="btn btn-flat btn-xs btn-danger" onclick="return confirm('Yakin sudah selesai?');"><i
+                        class="fas fa-unlock"></i> Kunci TPP</a>
+                <br /><br />
 
-            <table class="table table-hover text-nowrap table-sm table-responsive ">
-                <thead>
-                    <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center">
-                        <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4
-                            style="width: 10px">#</th>
-                        <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Nama
-                            <br />NIP<br />Pangkat<br />Golongan
-                        </th>
-                        <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Jabatan</th>
-                        <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Jenis
-                            <br />Jabatan
-                        </th>
-                        <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Kelas</th>
-                        
-                        <th style="background-color:#d6fdf9; border:1px solid silver" colspan=9>Disiplin Dan Produktivitas</th>
-                        <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=4>Basic<br/> TPP</th>
-                        <th style="background-color:#f9cb9c; border:1px solid silver" colspan=4>Persentase</th>
-                        <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=4>Pagu<br/> TPP ASN</th>
-                        <th style="background-color:#bbfac6; border:1px solid silver" colspan=13>Pembayaran</th>
-                        <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>PPH 21</th>
-                        <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>BPJS 1%</th>
-                        <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>BPJS 4%</th>
-                        <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>TPP Diterima</th>
-                        
-                        <th rowspan=4 style="border:1px solid silver">Aksi</th>
-                    </tr>
-                    <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center">
-                        <th colspan=6 style="background-color:#d6fdf9; border:1px solid silver">Aktivitas (menit)</th>
-                        <th style="background-color:#d6fdf9; border:1px solid silver" rowspan=2>Total<br/> Aktivitas</th>
-                        <th style="background-color:#d6fdf9; border:1px solid silver" rowspan=2>Absensi</th>
-                        <th style="background-color:#d6fdf9; border:1px solid silver" rowspan=2>Penilaian<br/> Kinerja</th>
-                        <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Beban<br/> Kerja</th>
-                        <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Prestasi<br/> Kerja</th>
-                        <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Kondisi<br/> Kerja</th>
-                        <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Kelangkaan<br/> Profesi</th>
-                        <th style="background-color:#bbfac6; border:1px solid silver" colspan=3>Beban Kerja</th>
-                        <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah<br/> Beban Kerja</th>
-                        <th style="background-color:#bbfac6; border:1px solid silver" colspan=3>Prestasi Kerja</th>
-                        <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah <br/>Prestasi Kerja</th>
-                        <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Kondisi Kerja</th>
-                        <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah <br/>Kondisi Kerja</th>
-                        <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Kelangkaan<br/> Profesi</th>
-                        <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah <br/>Kelangkaan <br/>Profesi</th>
-                        <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah <br/>Pembayaran</th>
-                    </tr>
-                    <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center">
-                        <th style="background-color:#d6fdf9; border:1px solid silver">Aktivitas</th>
-                        <th style="background-color:#d6fdf9; border:1px solid silver">CT</th>
-                        <th style="background-color:#d6fdf9; border:1px solid silver">TL</th>
-                        <th style="background-color:#d6fdf9; border:1px solid silver">Covid</th>
-                        <th style="background-color:#d6fdf9; border:1px solid silver">Diklat</th>
-                        <th style="background-color:#d6fdf9; border:1px solid silver">CB</th>
-                        <th style="background-color:#bbfac6; border:1px solid silver">Absensi</th>
-                        <th style="background-color:#bbfac6; border:1px solid silver">Aktivitas</th>
-                        <th style="background-color:#bbfac6; border:1px solid silver">Kinerja</th>
-                        <th style="background-color:#bbfac6; border:1px solid silver">Absensi</th>
-                        <th style="background-color:#bbfac6; border:1px solid silver">Aktivitas</th>
-                        <th style="background-color:#bbfac6; border:1px solid silver">Kinerja</th>
-                    </tr>
-                    
-                </thead>
-                @php
-                $no =1;
-                @endphp
-                <tbody>
-                    @foreach ($data as $item)
+                <table class="table table-hover text-nowrap table-sm table-responsive ">
+                    <thead>
+                        <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center">
+                            <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4
+                                style="width: 10px">#</th>
+                            <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Nama
+                                <br />NIP<br />Pangkat<br />Golongan
+                            </th>
+                            <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Jabatan</th>
+                            <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Jenis
+                                <br />Jabatan
+                            </th>
+                            <th style="background-color:antiquewhite; border:1px solid silver" rowspan=4>Kelas</th>
+
+                            <th style="background-color:#d6fdf9; border:1px solid silver" colspan=9>Disiplin Dan
+                                Produktivitas</th>
+                            <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=4>Basic<br /> TPP</th>
+                            <th style="background-color:#f9cb9c; border:1px solid silver" colspan=4>Persentase</th>
+                            <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=4>Pagu<br /> TPP ASN
+                            </th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" colspan=13>Pembayaran</th>
+                            <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>PPH 21</th>
+                            <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>BPJS 1%</th>
+                            <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>BPJS 4%</th>
+                            <th style="background-color:#7ef8f8; border:1px solid silver" rowspan=4>TPP Diterima</th>
+
+                            <th rowspan=4 style="border:1px solid silver">Aksi</th>
+                        </tr>
+                        <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center">
+                            <th colspan=6 style="background-color:#d6fdf9; border:1px solid silver">Aktivitas (menit)
+                            </th>
+                            <th style="background-color:#d6fdf9; border:1px solid silver" rowspan=2>Total<br />
+                                Aktivitas</th>
+                            <th style="background-color:#d6fdf9; border:1px solid silver" rowspan=2>Absensi</th>
+                            <th style="background-color:#d6fdf9; border:1px solid silver" rowspan=2>Penilaian<br />
+                                Kinerja</th>
+                            <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Beban<br /> Kerja
+                            </th>
+                            <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Prestasi<br /> Kerja
+                            </th>
+                            <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Kondisi<br /> Kerja
+                            </th>
+                            <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Kelangkaan<br />
+                                Profesi</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" colspan=3>Beban Kerja</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah<br /> Beban
+                                Kerja</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" colspan=3>Prestasi Kerja</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah
+                                <br />Prestasi Kerja
+                            </th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Kondisi Kerja</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah <br />Kondisi
+                                Kerja</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Kelangkaan<br />
+                                Profesi</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah
+                                <br />Kelangkaan <br />Profesi
+                            </th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah
+                                <br />Pembayaran
+                            </th>
+                        </tr>
+                        <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif" class="text-center">
+                            <th style="background-color:#d6fdf9; border:1px solid silver">Aktivitas</th>
+                            <th style="background-color:#d6fdf9; border:1px solid silver">CT</th>
+                            <th style="background-color:#d6fdf9; border:1px solid silver">TL</th>
+                            <th style="background-color:#d6fdf9; border:1px solid silver">Covid</th>
+                            <th style="background-color:#d6fdf9; border:1px solid silver">Diklat</th>
+                            <th style="background-color:#d6fdf9; border:1px solid silver">CB</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver">Absensi</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver">Aktivitas</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver">Kinerja</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver">Absensi</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver">Aktivitas</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver">Kinerja</th>
+                        </tr>
+
+                    </thead>
+                    @php
+                    $no =1;
+                    @endphp
+                    <tbody>
+                        @foreach ($data as $item)
                         <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif;
                         @if($item->dp_ta < 6750)
                         background-color:#f2dede
@@ -126,7 +148,7 @@ SUPERADMIN
                             </td>
                             <td>
                                 {!!wordwrap($item->jabatan,40,"<br>")!!}
-                                
+
 
                             </td>
                             <td>{{$item->jenis_jabatan}}</td>
@@ -160,8 +182,8 @@ SUPERADMIN
                             <td class="text-right">{{number_format($item->pkp_jumlah)}}</td>
                             <td class="text-right">{{number_format($item->jumlah_pembayaran)}}</td>
                             <td class="text-right">{{number_format($item->pph21)}}</td>
-                            <td class="text-right">{{number_format($item->bpjs1)}}<br/>
-                            <button type="button" class=" btn btn-xs editbpjs" data-id="{{$item->id}}"
+                            <td class="text-right">{{number_format($item->bpjs1)}}<br />
+                                <button type="button" class=" btn btn-xs editbpjs" data-id="{{$item->id}}"
                                     data-nama="{{$item->nama}}" data-1persen="{{$item->bpjs1}}"
                                     data-4persen="{{$item->bpjs4}}"><i class="fas fa-edit"></i></button>
                             </td>
@@ -174,52 +196,53 @@ SUPERADMIN
                                         class="badge badge-danger">Hapus</span></a>
                             </td>
                         </tr>
-                    @endforeach
-                    
-                    <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif; font-weight:bold; background-color:#bbfac6">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>{{currency($data->sum('jumlah_pembayaran'))}}</td>
-                        <td>{{currency($data->sum('pph21'))}}</td>
-                        <td></td>
-                        <td></td>
-                        <td>{{currency($data->sum('tpp_diterima'))}}</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <br />
+                        @endforeach
+
+                        <tr
+                            style="font-size:11px; font-family:Arial, Helvetica, sans-serif; font-weight:bold; background-color:#bbfac6">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{currency($data->sum('jumlah_pembayaran'))}}</td>
+                            <td>{{currency($data->sum('pph21'))}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{currency($data->sum('tpp_diterima'))}}</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br />
             </div>
         </div>
     </div>

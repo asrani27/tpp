@@ -600,6 +600,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/plt/tarikter', 'PuskesmasController@tarikter_plt');
 
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/cpns', 'PuskesmasController@cpns');
+        Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/cpns/kuncitpp', 'PuskesmasController@kuncitpp_cpns');
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/cpns/mp', 'PuskesmasController@cpns_mp');
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/cpns/psa', 'PuskesmasController@cpns_psa');
         Route::get('/puskesmas/rekapitulasi/{bulan}/{tahun}/cpns/perhitungan', 'PuskesmasController@cpns_perhitungan');

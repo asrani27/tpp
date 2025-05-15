@@ -46,7 +46,7 @@ class PuskesmasController extends Controller
         $param['bulan'] = $bulan;
         $param['tahun'] = $tahun;
         $param['rs_puskesmas_id'] = Auth::user()->puskesmas->id;
-        $param['jenis'] = 'puskesmas';
+        $param['jenis'] = 'cpns';
 
         DB::beginTransaction();
 

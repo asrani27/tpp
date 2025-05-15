@@ -51,7 +51,7 @@ class PuskesmasController extends Controller
         DB::beginTransaction();
 
         try {
-            $data = RekapReguler::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+            $data = RekapCpns::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
             $data->map(function ($item) {
 
                 //PBK

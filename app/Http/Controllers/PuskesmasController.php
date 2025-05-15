@@ -751,6 +751,38 @@ class PuskesmasController extends Controller
         toastr()->success('Berhasil di tarik');
         return back();
     }
+
+    public function tarikter_cpns($bulan, $tahun)
+    {
+        $bulanTahunId = DB::connection('pajakasn')->table('bulan_tahun')->where('bulan', convertBulan($bulan))->where('tahun', $tahun)->first();
+        if ($bulanTahunId == null) {
+            toastr()->error('Gaji Belum Di Upload Oleh BPKPAD');
+            return back();
+        } else {
+            $data = RekapCpns::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
+            $pphTerutangData = DB::connection('pajakasn')
+                ->table('pajak')
+                ->select('nip', 'pph_terutang', 'bpjs_satu_persen', 'bpjs_empat_persen')
+                ->where('bulan_tahun_id', $bulanTahunId->id)
+                ->where('skpd_id', 34)
+                ->whereIn('nip', $data->pluck('nip'))
+                ->get()
+                ->mapWithKeys(function ($item) {
+                    return [(string) $item->nip => $item]; // Pastikan key adalah string
+                });
+            //dd($data, $pphTerutangData['198307112009032009']);
+            $data->map(function ($item) use ($pphTerutangData) {
+                $nip = $item->nip; // Asumsikan kolom NIP ada di `rekap_reguler`
+                $item->pph_terutang = $pphTerutangData[$nip]->pph_terutang ?? 0;
+                $item->bpjs1 = $pphTerutangData[$nip]->bpjs_satu_persen ?? 0;
+                $item->bpjs4 = $pphTerutangData[$nip]->bpjs_empat_persen ?? 0;
+                $item->save();
+            });
+
+            toastr()->success('berhasil di tarik');
+            return back();
+        }
+    }
     public function tarikter($bulan, $tahun)
     {
         $bulanTahunId = DB::connection('pajakasn')->table('bulan_tahun')->where('bulan', convertBulan($bulan))->where('tahun', $tahun)->first();

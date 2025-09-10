@@ -1546,7 +1546,7 @@ class PuskesmasController extends Controller
             toastr()->error('Gaji Belum Di Upload Oleh BPKPAD');
             return back();
         } else {
-            $data = RekapPlt::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->where('jenis_plt', 1)->orderBy('kelas', 'DESC')->get();
+            $data = RekapPlt::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
 
             $pphTerutangData = DB::connection('pajakasn')
                 ->table('pajak')
@@ -1558,7 +1558,6 @@ class PuskesmasController extends Controller
                     return [(string) $item->nip => $item]; // Pastikan key adalah string
                 });
 
-            dd($data);
 
             $data->map(function ($item) use ($pphTerutangData) {
                 $nip = $item->nip; // Asumsikan kolom NIP ada di `rekap_reguler`

@@ -53,13 +53,11 @@ SUPERADMIN
               <td>{{convertBulan($item->bulan)}}</td>
               <td>{{$item->tahun}}</td>
               <td>
-                @if ($item->tahun == 2025)
+
                 <a href="/admin/rekapitulasi/{{$item->bulan}}/{{$item->tahun}}" class="btn btn-xs btn-primary"><i
                     class="fas fa-eye"></i> Detail</a>
               </td>
-              @else
-              Proses Backup 2024
-              @endif
+
 
             </tr>
             @endforeach

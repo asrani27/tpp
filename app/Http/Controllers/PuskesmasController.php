@@ -935,6 +935,7 @@ class PuskesmasController extends Controller
 
     public function cpns($bulan, $tahun)
     {
+        dd(Auth::user()->puskesmas->id);
         $data = RekapCpns::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         $data->map(function ($item) {
             //PBK
@@ -1093,7 +1094,7 @@ class PuskesmasController extends Controller
                 $p_pk      = $persen->persen_prestasi_kerja;
                 $p_kk      = $persen->persen_kondisi_kerja;
                 $p_kp      = $persen->persen_kelangkaan_profesi;
-                $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (80 / 100) * (87 / 100));
+                $pagu      = round($basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (80 / 100) * (68 / 100));
             }
 
             $item->update([

@@ -935,9 +935,17 @@ class PuskesmasController extends Controller
 
     public function cpns($bulan, $tahun)
     {
-        dd(Auth::user()->puskesmas->id);
+        if (Auth::user()->puskesmas->id == 8) {
+            //untuk RS Susus
+            $pengali_pertama = 0.68;
+            $pengali_kedua = 0.80;
+        } else {
+            //Untuk puskesmas Lain
+            $pengali_pertama = 0.85;
+            $pengali_kedua = 0.80;
+        }
         $data = RekapCpns::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
-        $data->map(function ($item) {
+        $data->map(function ($item) use ($pengali_kedua, $pengali_pertama) {
             //PBK
             $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
             if ($item->dp_ta >= 6750) {
@@ -951,7 +959,7 @@ class PuskesmasController extends Controller
                 $item->pbk_aktivitas = 0;
                 $item->pbk_skp = 0;
             }
-            $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * (80 / 100) * (87 / 100));
+            $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * $pengali_pertama * $pengali_kedua);
 
             //PPK
             $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
@@ -966,15 +974,15 @@ class PuskesmasController extends Controller
                 $item->ppk_aktivitas = 0;
                 $item->ppk_skp = 0;
             }
-            $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (80 / 100) * (87 / 100));
+            $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * $pengali_pertama * $pengali_kedua);
 
             //PKK
             $item->pkk = $item->basic * ($item->p_kk / 100);
-            $item->pkk_jumlah = round($item->pkk * (80 / 100) * (87 / 100));
+            $item->pkk_jumlah = round($item->pkk * $pengali_pertama * $pengali_kedua);
 
             //PKP
             $item->pkp = $item->basic * ($item->p_kp / 100);
-            $item->pkp_jumlah = round($item->pkp * (80 / 100) * (87 / 100));
+            $item->pkp_jumlah = round($item->pkp * $pengali_pertama * $pengali_kedua);
             $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
             //dd($item->jumlah_pembayaran, $item->pbk_jumlah, $item->ppk_jumlah);
             //PPH 21

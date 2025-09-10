@@ -186,10 +186,7 @@ SUPERADMIN
                             <td class="text-right">{{number_format($item->pkp_jumlah)}}</td>
                             <td class="text-right">{{number_format($item->jumlah_pembayaran)}}</td>
                             <td class="text-right">{{number_format($item->pph_terutang)}}</td>
-                            <td class="text-right">{{number_format($item->bpjs1)}}<br />
-                                <button type="button" class=" btn btn-xs editbpjs" data-id="{{$item->id}}"
-                                    data-nama="{{$item->nama}}" data-1persen="{{$item->bpjs1}}"
-                                    data-4persen="{{$item->bpjs4}}"><i class="fas fa-edit"></i></button>
+                            <td class="text-right">{{number_format($item->bpjs1)}}
                             </td>
                             <td class="text-right">{{number_format($item->bpjs4)}}</td>
                             <td class="text-right">{{number_format($item->tpp_diterima)}}</td>

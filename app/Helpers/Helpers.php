@@ -33,13 +33,7 @@ function checkDateInRange($dateToCheck)
 
 function whitelist($nip)
 {
-    $data = WhitelistNip::where('nip', $nip)->first();
-    if ($data == null) {
-        $result = false;
-    } else {
-        $result = true;
-    }
-    return $result;
+    return (bool) WhitelistNip::where('nip', $nip)->first();
 }
 function checkKunciCpnsRS($bulan, $tahun, $skpd_id)
 {

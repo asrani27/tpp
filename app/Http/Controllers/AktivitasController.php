@@ -188,210 +188,229 @@ class AktivitasController extends Controller
         }
     }
 
+    /**
+     * Checks for time conflicts with existing activities for the same user and date.
+     *
+     * @param string $tanggal
+     * @param string $jam_mulai
+     * @param string $jam_selesai
+     * @param int $pegawai_id
+     * @return bool True if there is a conflict, false otherwise.
+     */
+    private function hasTimeConflict(string $tanggal, string $jam_mulai, string $jam_selesai, int $pegawai_id): bool
+    {
+        $newStart = Carbon::parse($jam_mulai . ':00');
+        $newEnd = Carbon::parse($jam_selesai . ':00');
+
+        $existingActivities = Aktivitas::where('tanggal', $tanggal)
+            ->where('pegawai_id', $pegawai_id)
+            ->get();
+
+        foreach ($existingActivities as $activity) {
+            $existingStart = Carbon::parse($activity->jam_mulai);
+            $existingEnd = Carbon::parse($activity->jam_selesai);
+
+            // Check for overlap:
+            // New activity starts before or at the same time as an existing one ends AND
+            // New activity ends after or at the same time as an existing one starts.
+            if ($newStart->lt($existingEnd) && $newEnd->gt($existingStart)) {
+                return true; // Conflict found
+            }
+        }
+
+        return false; // No conflict
+    }
+
+    /**
+     * Checks for time conflicts with existing activities for the same user and date,
+     * excluding a specific activity by its ID.
+     *
+     * @param string $tanggal
+     * @param string $jam_mulai
+     * @param string $jam_selesai
+     * @param int $pegawai_id
+     * @param int $excludeId
+     * @return bool True if there is a conflict, false otherwise.
+     */
+    private function hasTimeConflictForUpdate(string $tanggal, string $jam_mulai, string $jam_selesai, int $pegawai_id, int $excludeId): bool
+    {
+        $newStart = Carbon::parse($jam_mulai . ':00');
+        $newEnd = Carbon::parse($jam_selesai . ':00');
+
+        $existingActivities = Aktivitas::where('tanggal', $tanggal)
+            ->where('pegawai_id', $pegawai_id)
+            ->where('id', '!=', $excludeId) // Exclude the current activity being updated
+            ->get();
+
+        foreach ($existingActivities as $activity) {
+            $existingStart = Carbon::parse($activity->jam_mulai);
+            $existingEnd = Carbon::parse($activity->jam_selesai);
+
+            if ($newStart->lt($existingEnd) && $newEnd->gt($existingStart)) {
+                return true; // Conflict found
+            }
+        }
+
+        return false; // No conflict
+    }
+
+    /**
+     * Validates if the given date is within the active SKP period for the user.
+     * Returns the active SKP if valid, null otherwise.
+     *
+     * @param string $tanggal
+     * @param int $pegawai_id
+     * @return Skp2023|null
+     */
+    private function validateSkpPeriod(string $tanggal, int $pegawai_id): ?Skp2023
+    {
+        $skp = Skp2023::where('pegawai_id', $pegawai_id)->where('is_aktif', 1)->first();
+        if (!$skp) {
+            return null; // No active SKP
+        }
+
+        $tgl = Carbon::parse($tanggal);
+        $skpMulai = Carbon::parse($skp->mulai);
+        $skpSampai = Carbon::parse($skp->sampai);
+
+        if ($tgl->gte($skpMulai) && $tgl->lte($skpSampai)) {
+            return $skp; // Date is within SKP period
+        }
+
+        return null; // Date is outside SKP period
+    }
+
+    /**
+     * Handles the creation of the Aktivitas record.
+     *
+     * @param Request $req
+     * @param Skp2023 $skp
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    private function createAktivitas(Request $req, Skp2023 $skp)
+    {
+        if (strtotime($req->jam_selesai) > strtotime($req->jam_mulai)) {
+            $attr = $req->all();
+            $attr['pegawai_id'] = $this->user()->pegawai->id;
+            $attr['menit'] = (strtotime($req->jam_selesai) - strtotime($req->jam_mulai)) / 60;
+            $attr['jenis'] = $skp->jenis;
+            $attr['rencana_aksi'] = $req->rencana_aksi;
+
+            Aktivitas::create($attr);
+            toastr()->success('Aktivitas berhasil Di Simpan');
+            return redirect('pegawai/aktivitas/harian');
+        } else {
+            toastr()->error('Jam Selesai Tidak Bisa Kurang Dari Jam Mulai');
+            $req->flash();
+            return back();
+        }
+    }
+
+    /**
+     * Handles the update of the Aktivitas record.
+     *
+     * @param Request $req
+     * @param int $id
+     * @param Skp2023 $skp
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    private function updateAktivitasRecord(Request $req, int $id, Skp2023 $skp)
+    {
+        if (strtotime($req->jam_selesai) > strtotime($req->jam_mulai)) {
+            $attr = $req->all();
+            // $attr['pegawai_id'] is already set and should not change on update.
+            $attr['menit'] = (strtotime($req->jam_selesai) - strtotime($req->jam_mulai)) / 60;
+            $attr['jenis'] = $skp->jenis;
+            $attr['rencana_aksi'] = $req->rencana_aksi;
+
+            Aktivitas::find($id)->update($attr);
+            toastr()->success('Aktivitas berhasil Di Simpan');
+            return redirect('pegawai/aktivitas/harian');
+        } else {
+            toastr()->error('Jam Selesai Tidak Bisa Kurang Dari Jam Mulai');
+            $req->flash();
+            return back();
+        }
+    }
+
     public function store(Request $req)
     {
         $bulan = Carbon::parse($req->tanggal)->format('m');
         $tahun = Carbon::parse($req->tanggal)->format('Y');
+        $pegawai_id = $this->user()->pegawai->id;
+        $tanggal = $req->tanggal;
+        $jam_mulai = $req->jam_mulai;
+        $jam_selesai = $req->jam_selesai;
 
+        // 1. Check if SKPD is locked for the month
         if (lockSkpd(Auth::user()->pegawai->skpd_id, $bulan, $tahun) == 1) {
             toastr()->error('Aktivitas Pada Bulan ' . convertBulan($bulan) . ' telah Di Kunci');
             return back();
         }
+
+        // 2. Date range validation (only if not whitelisted)
         if (whitelist(Auth::user()->username) != true) {
-            $today = Carbon::today(); // Hari ini
-            $yesterday = Carbon::yesterday(); // Hari sebelumnya
-            if (checkDateInRange($req->tanggal) == true) {
-                $data = Aktivitas::where('tanggal', $req->tanggal)->where('pegawai_id', $this->user()->pegawai->id)->get()
-                    ->map(function ($item) use ($req) {
-                        if ($req->jam_mulai . ':00' >= $item->jam_mulai && $req->jam_mulai . ':00' <= $item->jam_selesai) {
-                            $item->status_jam_mulai = true;
-                        } else {
-                            $item->status_jam_mulai = false;
-                        }
-
-                        if ($req->jam_selesai . ':00' >= $item->jam_mulai && $req->jam_selesai . ':00' <= $item->jam_selesai) {
-                            $item->status_jam_selesai = true;
-                        } else {
-                            $item->status_jam_selesai = false;
-                        }
-
-                        if ($req->jam_mulai . ':00' <= $item->jam_mulai && $req->jam_selesai . ':00' >= $item->jam_selesai) {
-                            $item->status_jam_antara = true;
-                        } else {
-                            $item->status_jam_antara = false;
-                        }
-                        return $item;
-                    });
-
-                $status_jam_mulai = $data->where('status_jam_mulai', true)->first();
-                $status_jam_selesai = $data->where('status_jam_selesai', true)->first();
-                $status_jam_antara = $data->where('status_jam_antara', true)->first();
-
-                if ($status_jam_mulai != null || $status_jam_selesai != null || $status_jam_antara != null) {
-                    toastr()->error('Jam ini telah di gunakan');
-                    $req->flash();
-                    return back();
-                } else {
-                    $skp = Skp2023::where('pegawai_id', $this->user()->pegawai->id)->where('is_aktif', 1)->first();
-                    $skpMulai = $skp->mulai;
-                    $skpSampai = $skp->sampai;
-                    $tgl = $req->tanggal;
-                    if (Carbon::parse($tgl) >= Carbon::parse($skpMulai) && Carbon::parse($tgl) <= Carbon::parse($skpSampai)) {
-
-                        $attr = $req->all();
-                        $attr['pegawai_id'] = $this->user()->pegawai->id;
-                        if (strtotime($req->jam_selesai) > strtotime($req->jam_mulai)) {
-                            $menit = (strtotime($req->jam_selesai) - strtotime($req->jam_mulai)) / 60;
-                            $attr['menit'] = $menit;
-                            $attr['jenis'] = $skp->jenis;
-                            $attr['rencana_aksi'] = $req->rencana_aksi;
-
-                            Aktivitas::create($attr);
-                            toastr()->success('Aktivitas berhasil Di Simpan');
-                            return redirect('pegawai/aktivitas/harian');
-                        } else {
-                            toastr()->error('Jam Selesai Tidak Bisa Kurang Dari Jam Mulai');
-                            $req->flash();
-                            return back();
-                        }
-                    } else {
-                        toastr()->error('Tanggal Berada di luar Periode SKP yang di aktifkan');
-                        $req->flash();
-                        return back();
-                    }
-                }
-            } else {
-                toastr()->error('Input Aktivitas hanya bisa pada tanggal ' . $today->format('d-m-Y') . ' & ' . $yesterday->format('d-m-Y'));
+            if (!checkDateInRange($tanggal)) { // Assuming checkDateInRange is a global helper
+                $today = Carbon::today()->format('d-m-Y');
+                $yesterday = Carbon::yesterday()->format('d-m-Y');
+                toastr()->error('Input Aktivitas hanya bisa pada tanggal ' . $today . ' & ' . $yesterday);
                 return back();
             }
         }
-        $data = Aktivitas::where('tanggal', $req->tanggal)->where('pegawai_id', $this->user()->pegawai->id)->get()
-            ->map(function ($item) use ($req) {
-                if ($req->jam_mulai . ':00' >= $item->jam_mulai && $req->jam_mulai . ':00' <= $item->jam_selesai) {
-                    $item->status_jam_mulai = true;
-                } else {
-                    $item->status_jam_mulai = false;
-                }
 
-                if ($req->jam_selesai . ':00' >= $item->jam_mulai && $req->jam_selesai . ':00' <= $item->jam_selesai) {
-                    $item->status_jam_selesai = true;
-                } else {
-                    $item->status_jam_selesai = false;
-                }
-
-                if ($req->jam_mulai . ':00' <= $item->jam_mulai && $req->jam_selesai . ':00' >= $item->jam_selesai) {
-                    $item->status_jam_antara = true;
-                } else {
-                    $item->status_jam_antara = false;
-                }
-                return $item;
-            });
-
-        $status_jam_mulai = $data->where('status_jam_mulai', true)->first();
-        $status_jam_selesai = $data->where('status_jam_selesai', true)->first();
-        $status_jam_antara = $data->where('status_jam_antara', true)->first();
-
-        if ($status_jam_mulai != null || $status_jam_selesai != null || $status_jam_antara != null) {
+        // 3. Time conflict validation
+        if ($this->hasTimeConflict($tanggal, $jam_mulai, $jam_selesai, $pegawai_id)) {
             toastr()->error('Jam ini telah di gunakan');
             $req->flash();
             return back();
-        } else {
-            $skp = Skp2023::where('pegawai_id', $this->user()->pegawai->id)->where('is_aktif', 1)->first();
-            $skpMulai = $skp->mulai;
-            $skpSampai = $skp->sampai;
-            $tgl = $req->tanggal;
-            if (Carbon::parse($tgl) >= Carbon::parse($skpMulai) && Carbon::parse($tgl) <= Carbon::parse($skpSampai)) {
-
-                $attr = $req->all();
-                $attr['pegawai_id'] = $this->user()->pegawai->id;
-                if (strtotime($req->jam_selesai) > strtotime($req->jam_mulai)) {
-                    $menit = (strtotime($req->jam_selesai) - strtotime($req->jam_mulai)) / 60;
-                    $attr['menit'] = $menit;
-                    $attr['jenis'] = $skp->jenis;
-                    $attr['rencana_aksi'] = $req->rencana_aksi;
-
-                    Aktivitas::create($attr);
-                    toastr()->success('Aktivitas berhasil Di Simpan');
-                    return redirect('pegawai/aktivitas/harian');
-                } else {
-                    toastr()->error('Jam Selesai Tidak Bisa Kurang Dari Jam Mulai');
-                    $req->flash();
-                    return back();
-                }
-            } else {
-                toastr()->error('Tanggal Berada di luar Periode SKP yang di aktifkan');
-                $req->flash();
-                return back();
-            }
         }
+
+        // 4. SKP period validation
+        $skp = $this->validateSkpPeriod($tanggal, $pegawai_id);
+        if (!$skp) {
+            toastr()->error('Tanggal Berada di luar Periode SKP yang di aktifkan atau SKP tidak ditemukan');
+            $req->flash();
+            return back();
+        }
+
+        // 5. Create Aktivitas
+        return $this->createAktivitas($req, $skp);
     }
 
     public function update(Request $req, $id)
     {
-        $attr = $req->all();
-        //$attr['pegawai_id'] = Auth::user()->pegawai->id;
+        $pegawai_id = $this->user()->pegawai->id;
+        $tanggal = $req->tanggal;
+        $jam_mulai = $req->jam_mulai;
+        $jam_selesai = $req->jam_selesai;
 
-        $data = Aktivitas::where('tanggal', $req->tanggal)->where('pegawai_id', $this->user()->pegawai->id)->get()
-            ->map(function ($item) use ($req) {
-                if ($req->jam_mulai . ':00' >= $item->jam_mulai && $req->jam_mulai . ':00' <= $item->jam_selesai) {
-                    $item->status_jam_mulai = true;
-                } else {
-                    $item->status_jam_mulai = false;
-                }
-
-                if ($req->jam_selesai . ':00' >= $item->jam_mulai && $req->jam_selesai . ':00' <= $item->jam_selesai) {
-                    $item->status_jam_selesai = true;
-                } else {
-                    $item->status_jam_selesai = false;
-                }
-
-                if ($req->jam_mulai . ':00' <= $item->jam_mulai && $req->jam_selesai . ':00' >= $item->jam_selesai) {
-                    $item->status_jam_antara = true;
-                } else {
-                    $item->status_jam_antara = false;
-                }
-                return $item;
-            })->where('id', '!=', $id);
-
-        $status_jam_mulai = $data->where('status_jam_mulai', true)->first();
-        $status_jam_selesai = $data->where('status_jam_selesai', true)->first();
-        $status_jam_antara = $data->where('status_jam_antara', true)->first();
-
-
-        if ($status_jam_mulai != null || $status_jam_selesai != null || $status_jam_antara != null) {
-            toastr()->error('Jam ini telah di gunakan');
-            $req->flash();
-            return back();
-        } else {
-            $skp = Skp2023::where('pegawai_id', $this->user()->pegawai->id)->where('is_aktif', 1)->first();
-            $skpMulai = $skp->mulai;
-            $skpSampai = $skp->sampai;
-
-            $tgl = $req->tanggal;
-            if (Carbon::parse($tgl) >= Carbon::parse($skpMulai) && Carbon::parse($tgl) <= Carbon::parse($skpSampai)) {
-
-                $attr = $req->all();
-                $attr['pegawai_id'] = $this->user()->pegawai->id;
-                if (strtotime($req->jam_selesai) > strtotime($req->jam_mulai)) {
-                    $menit = (strtotime($req->jam_selesai) - strtotime($req->jam_mulai)) / 60;
-                    $attr['menit'] = $menit;
-                    $attr['jenis'] = $skp->jenis;
-                    $attr['rencana_aksi'] = $req->rencana_aksi;
-
-                    Aktivitas::find($id)->update($attr);
-                    toastr()->success('Aktivitas berhasil Di Simpan');
-                    return redirect('pegawai/aktivitas/harian');
-                } else {
-                    toastr()->error('Jam Selesai Tidak Bisa Kurang Dari Jam Mulai');
-                    $req->flash();
-                    return back();
-                }
-            } else {
-                toastr()->error('Tanggal Berada di luar Periode SKP yang di aktifkan');
-                $req->flash();
+        // 1. Date range validation (only if not whitelisted)
+        if (whitelist(Auth::user()->username) != true) {
+            if (!checkDateInRange($tanggal)) { // Assuming checkDateInRange is a global helper
+                $today = Carbon::today()->format('d-m-Y');
+                $yesterday = Carbon::yesterday()->format('d-m-Y');
+                toastr()->error('Input Aktivitas hanya bisa pada tanggal ' . $today . ' & ' . $yesterday);
                 return back();
             }
         }
+
+        // 2. Time conflict validation (excluding current activity)
+        if ($this->hasTimeConflictForUpdate($tanggal, $jam_mulai, $jam_selesai, $pegawai_id, $id)) {
+            toastr()->error('Jam ini telah di gunakan');
+            $req->flash();
+            return back();
+        }
+
+        // 2. SKP period validation
+        $skp = $this->validateSkpPeriod($tanggal, $pegawai_id);
+        if (!$skp) {
+            toastr()->error('Tanggal Berada di luar Periode SKP yang di aktifkan atau SKP tidak ditemukan');
+            $req->flash();
+            return back();
+        }
+
+        // 3. Update Aktivitas
+        return $this->updateAktivitasRecord($req, $id, $skp);
     }
 
     public function keberatan()

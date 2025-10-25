@@ -30,10 +30,16 @@ use App\KunciTpp;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Exports\JabatanExport;
 
 class HomeController extends Controller
 {
 
+    public function exportskp() {
+        return Excel::download(new JabatanExport, 'data_jabatan_skpd_28.xlsx');
+    }
+
+    
     public function parametertpp()
     {
         return Excel::download(new ParameterTPP, 'parametertpp.xlsx');

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['XSS']], function () {
     Route::get('/', 'LoginController@index');
+    Route::get('/exportskp', 'HomeController@exportskp');
     Route::get('/export', 'HomeController@export');
     Route::post('/login', 'LoginController@login');
     Route::get('/login', 'LoginController@redirectLogin')->name('login');

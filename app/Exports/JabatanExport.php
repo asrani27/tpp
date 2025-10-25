@@ -21,7 +21,7 @@ class JabatanExport implements FromCollection, WithHeadings, WithEvents
             ->leftJoin('skp2023', function ($join) {
                 $join->on('pegawai.id', '=', 'skp2023.pegawai_id')
                     ->whereRaw('skp2023.id = (SELECT MAX(s2.id) FROM skp2023 s2 WHERE s2.pegawai_id = pegawai.id AND YEAR(s2.sampai) = 2025)')
-                    ->whereYear('skp2023.sampai', 2025);
+                    ->whereYear('skp2023.sampai', 2024);
             })
             ->select('jabatan.nama as nama_jabatan', 'pegawai.nip', 'pegawai.nama', 'skp2023.jenis', 'skp2023.id as skp_id', 'pegawai.id as pegawai_id')
             ->get();
@@ -34,7 +34,7 @@ class JabatanExport implements FromCollection, WithHeadings, WithEvents
         foreach ($jabatanData as $item) {
             // Get all RHK based on jenis
             $rhkList = $this->getAllRHK($item->jenis, $item->skp_id);
-            
+
             if (empty($rhkList)) {
                 // If no RHK found, still add the row with empty RHK
                 $result->push([
@@ -50,7 +50,7 @@ class JabatanExport implements FromCollection, WithHeadings, WithEvents
             } else {
                 $startRow = $currentRow;
                 $rhkCount = count($rhkList);
-                
+
                 // Add multiple rows for each RHK
                 foreach ($rhkList as $index => $rhk) {
                     $result->push([
@@ -63,7 +63,7 @@ class JabatanExport implements FromCollection, WithHeadings, WithEvents
                     ]);
                     $currentRow++;
                 }
-                
+
                 // Store merge range if multiple RHK
                 if ($rhkCount > 1) {
                     $endRow = $startRow + $rhkCount - 1;
@@ -72,7 +72,7 @@ class JabatanExport implements FromCollection, WithHeadings, WithEvents
                         'end' => $endRow
                     ];
                 }
-                
+
                 $pegawaiCounter++; // Increment pegawai counter by 1, not by RHK count
             }
         }

@@ -27,40 +27,43 @@ class JabatanExport implements FromCollection, WithHeadings, WithEvents
             ->get();
 
         $result = collect();
-        $nomor = 1;
+        $pegawaiCounter = 1; // Counter for pegawai numbering
+        $currentRow = 1; // Counter for actual row positioning
         $this->mergeRanges = []; // Store merge ranges for later processing
 
         foreach ($jabatanData as $item) {
             // Get all RHK based on jenis
             $rhkList = $this->getAllRHK($item->jenis, $item->skp_id);
-
+            
             if (empty($rhkList)) {
                 // If no RHK found, still add the row with empty RHK
                 $result->push([
-                    'nomor' => $nomor,
+                    'nomor' => $pegawaiCounter,
                     'nip' => $item->nip ? '`' . $item->nip : '',
                     'nama' => $item->nama ?? '',
                     'nama_jabatan' => $item->nama_jabatan ?? '',
                     'jenis' => $item->jenis ?? '',
                     'rhk' => ''
                 ]);
-                $nomor++;
+                $pegawaiCounter++;
+                $currentRow++;
             } else {
-                $startRow = $nomor;
+                $startRow = $currentRow;
                 $rhkCount = count($rhkList);
-
+                
                 // Add multiple rows for each RHK
                 foreach ($rhkList as $index => $rhk) {
                     $result->push([
-                        'nomor' => $index === 0 ? $nomor : '', // Only show number on first row
-                        'nip' => $index === 0 ? ($item->nip ? '`' . $item->nip : '') : '', // Only show NIP on first row
-                        'nama' => $index === 0 ? ($item->nama ?? '') : '', // Only show name on first row
-                        'nama_jabatan' => $index === 0 ? ($item->nama_jabatan ?? '') : '', // Only show jabatan on first row
-                        'jenis' => $index === 0 ? ($item->jenis ?? '') : '', // Only show jenis on first row
+                        'nomor' => $pegawaiCounter, // Always show the same pegawai number
+                        'nip' => $item->nip ? '`' . $item->nip : '',
+                        'nama' => $item->nama ?? '',
+                        'nama_jabatan' => $item->nama_jabatan ?? '',
+                        'jenis' => $item->jenis ?? '',
                         'rhk' => $rhk
                     ]);
+                    $currentRow++;
                 }
-
+                
                 // Store merge range if multiple RHK
                 if ($rhkCount > 1) {
                     $endRow = $startRow + $rhkCount - 1;
@@ -69,8 +72,8 @@ class JabatanExport implements FromCollection, WithHeadings, WithEvents
                         'end' => $endRow
                     ];
                 }
-
-                $nomor += $rhkCount; // Increment by RHK count, not by 1
+                
+                $pegawaiCounter++; // Increment pegawai counter by 1, not by RHK count
             }
         }
 

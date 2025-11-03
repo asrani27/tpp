@@ -152,8 +152,8 @@ class SkpPegawai implements FromCollection, WithHeadings, WithEvents
         $pegawaiData = Pegawai::whereIn('nip', $nip)
             ->leftJoin('skp2023', function ($join) {
                 $join->on('pegawai.id', '=', 'skp2023.pegawai_id')
-                    ->whereRaw('skp2023.id = (SELECT MAX(s2.id) FROM skp2023 s2 WHERE s2.pegawai_id = pegawai.id AND YEAR(s2.sampai) = 2024)')
-                    ->whereYear('skp2023.sampai', 2024);
+                    ->whereRaw('skp2023.id = (SELECT MAX(s2.id) FROM skp2023 s2 WHERE s2.pegawai_id = pegawai.id AND YEAR(s2.sampai) = 2023)')
+                    ->whereYear('skp2023.sampai', 2023);
             })
             ->select('pegawai.nip', 'pegawai.nama', 'skp2023.jenis', 'skp2023.id as skp_id')
             ->orderBy('pegawai.nama')

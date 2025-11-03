@@ -104,7 +104,7 @@ class PegawaiController extends Controller
         $pegawai = Pegawai::with('jabatan', 'pangkat')->where('nip', $nip)->first();
         if ($pegawai == null) {
             $data['message_code'] = 101;
-            $data['message']       = 'username atau password kosong';
+            $data['message']       = 'data tidak ditemukan';
             $data['data']          = null;
             return response()->json($data);
         } else {

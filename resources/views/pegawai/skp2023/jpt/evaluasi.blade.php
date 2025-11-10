@@ -158,7 +158,7 @@ PEGAWAI
                                 @endforeach
                                 <tr
                                     style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
-                                    <th colspan="8">RENCANA AKSI TRIWULAN {{$triwulan}} .</th>
+                                    <th colspan="8">RENCANA AKSI TRIWULAN {{$triwulan}}</th>
                                 </tr>
                                 <tr>
                                     <td colspan="8">
@@ -195,8 +195,7 @@ PEGAWAI
                                                             <td></td>
                                                         </tr>
 
-                                                        @foreach
-                                                        ($u->rencana_aksi->where('rhk_id',$item->id)->where('triwulan',
+                                                        @foreach($u->rencana_aksi->where('rhk_id',$item->id)->where('triwulan',
                                                         $triwulan) as $rencana)
                                                         <tr>
                                                             <td>{!!wordwrap($rencana->keterangan, 100, '<br />')!!}</td>
@@ -461,7 +460,46 @@ PEGAWAI
     </div>
 </div>
 
-{{-- SKP TAMBAHAN --}}
+{{-- RENCANA AKSI --}}
+<div class="modal fade" id="modal-ra" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form method="post" action="/pegawai/rencana-aksi" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header bg-gradient-primary" style="padding:10px">
+                    <h4 class="modal-title text-sm">Rencana Aksi</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Realisasi</label>
+                        <input type="text" class="form-control" id="realisasi_rencana_aksi" name="realisasi"
+                            placeholder="realisasi" required>
+                        <input type="hidden" class="form-control" id="ra_id" name="ra_id">
+                    </div>
+                    <div class="form-group">
+                        <label>Bukti Dukung (link google drive)</label>
+                        <input type="text" class="form-control" id="link" name="bukti_dukung"
+                            placeholder="Link google drive" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Permasalahan / Faktor Keberhasilan</label>
+                        <input type="text" class="form-control" id="masalah" name="masalah"
+                            placeholder="tidak ada masalah" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="submit" class="btn btn-block btn-primary"><i class="fas fa-save"></i>
+                        Simpan Rencana Aksi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @endsection
 
@@ -473,5 +511,16 @@ PEGAWAI
     $('#realisasi_id').val($(this).data('id'));
     $("#modal-edit").modal();
 });
+</script>
+
+<script>
+    $(document).on('click', '.rencana-aksi', function() {
+        console.log('asdasdas');
+        $('#ra_id').val($(this).data('id'));
+        $('#realisasi_rencana_aksi').val($(this).data('realisasi'));
+        $('#link').val($(this).data('link'));
+        $('#masalah').val($(this).data('masalah'));
+        $("#modal-ra").modal();
+    });
 </script>
 @endpush

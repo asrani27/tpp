@@ -480,8 +480,6 @@ class SKP2023Controller extends Controller
         $eselon_id = [5, 6, 7, 8, 9, 10, 11];
         $eselon = Auth::user()->pegawai->eselon_id;
         $checkEselon = array_search($eselon, $eselon_id);
-
-
         if ($checkEselon == false) {
 
             $pegawai_id = Auth::user()->pegawai->id;
@@ -651,7 +649,7 @@ class SKP2023Controller extends Controller
 
                 $skp_utama = Skp2023Jpt::where('skp2023_id', $u->id)->where('jenis', 'utama')->get();
                 $skp_tambahan = Skp2023Jpt::where('skp2023_id', $u->id)->where('jenis', 'tambahan')->get();
-
+                //dd($ra, $triwulan, $pn, $pp, $u, $skp_utama, $skp_tambahan);
                 return view('pegawai.skp2023.jpt.evaluasi', compact('pn', 'pp', 'u', 'skp_utama', 'skp_tambahan', 'triwulan', 'ra'));
             }
 

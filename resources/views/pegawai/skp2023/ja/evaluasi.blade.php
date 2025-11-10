@@ -166,7 +166,7 @@ PEGAWAI
                                 @endforeach
                                 <tr
                                     style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;background-color:rgb(218, 236, 249);">
-                                    <th colspan="8">RENCANA AKSI TRIWULAN {{$triwulan}} </th>
+                                    <th colspan="8">RENCANA AKSI TRIWULAN {{$triwulan}} .</th>
                                 </tr>
                                 <tr>
                                     <td colspan="8">
@@ -182,7 +182,7 @@ PEGAWAI
                                         <table width="100%">
                                             <tr>
                                                 <th>No</th>
-                                                <th>Rencana Hasil Kerja (RHK)</th>
+                                                <th>Rencana Hasil Kerja (RHK).</th>
                                                 <th>Rencana Aksi</th>
                                             </tr>
                                             @foreach ($skp_utama as $key => $item)
@@ -228,6 +228,11 @@ PEGAWAI
                                                                     data-link="{{$rencana->bukti_dukung}}"
                                                                     data-masalah="{{$rencana->masalah}}"><i
                                                                         class="fas fa-edit"></i></a>
+
+                                                                <a href="/pegawai/new-skp/periode/evaluasi/{{$rencana->skp2023_id}}/triwulan/{{$triwulan}}/delete/{{$rencana->id}}"
+                                                                    class="btn btn-xs btn-danger"
+                                                                    onclick="return confirm('Yakin ingin di hapus?');">
+                                                                    <i class="fas fa-trash"></i></a>
                                                             </td>
 
                                                         </tr>

@@ -418,6 +418,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/pegawai/new-skp/periode/view/{id}', 'SKP2023Controller@viewPeriode');
         Route::get('/pegawai/new-skp/periode/view/{id}/tarik-rencana-aksi', 'SKP2023Controller@tarikRencanaAksi');
         Route::get('/pegawai/new-skp/periode/evaluasi/{id}/triwulan/{triwulan}', 'SKP2023Controller@viewEvaluasi');
+        Route::get('/pegawai/new-skp/periode/evaluasi/{id}/triwulan/{triwulan}/delete/{rencana_id}', 'SKP2023Controller@deleteRencanaAksi');
         Route::post('/pegawai/new-skp/periode/evaluasi/{id}/triwulan/{triwulan}/realisasijpt', 'SKP2023Controller@realJPT');
         Route::post('/pegawai/new-skp/periode/evaluasi/{id}/triwulan/{triwulan}/realisasijf', 'SKP2023Controller@realJF');
         Route::post('/pegawai/new-skp/periode/evaluasi/{id}/triwulan/{triwulan}/realisasija', 'SKP2023Controller@realJA');

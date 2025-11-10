@@ -17,6 +17,12 @@ use Illuminate\Support\Facades\Http;
 
 class SKP2023Controller extends Controller
 {
+    public function deleteRencanaAksi($id, $triwulan, $rencana_id)
+    {
+        RencanaAksi::find($rencana_id)->delete();
+        toastr()->success('Berhasil Di hapus');
+        return back();
+    }
     public function index()
     {
         $data = Skp2023::where('pegawai_id', Auth::user()->pegawai->id)->paginate(25);

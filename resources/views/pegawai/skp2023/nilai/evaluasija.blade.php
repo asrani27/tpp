@@ -194,8 +194,7 @@ PEGAWAI
                                                             <td></td>
                                                         </tr>
 
-                                                        @foreach
-                                                        ($u->rencana_aksi->where('rhk_id',$item->id)->where('triwulan',
+                                                        @foreach($u->rencana_aksi->where('rhk_id',$item->id)->where('triwulan',
                                                         $triwulan) as $rencana)
                                                         <tr>
                                                             <td>{!!wordwrap($rencana->keterangan, 100, '<br />')!!}</td>

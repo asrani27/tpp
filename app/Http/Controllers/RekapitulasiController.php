@@ -2477,8 +2477,18 @@ class RekapitulasiController extends Controller
             $dp_co = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 9)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 360;
             $dp_di = DB::connection('presensi')->table('detail_cuti')->where('nip', $item->nip)->where('jenis_keterangan_id', 4)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->count() * 420;
             $pegawai_id = Pegawai::where('nip', $item->nip)->first()->id;
-            $aktivitas = Aktivitas::where('pegawai_id', $pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('validasi', 1)->get();
 
+            if ($bulan == '12') {
+                $aktivitas = Aktivitas::where('pegawai_id', $pegawai_id)
+                    ->whereYear('tanggal', $tahun)
+                    ->whereMonth('tanggal', $bulan)
+                    ->whereDay('tanggal', '>=', 1)
+                    ->whereDay('tanggal', '<=', 15)
+                    ->where('validasi', 1)
+                    ->get();
+            } else {
+                $aktivitas = Aktivitas::where('pegawai_id', $pegawai_id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('validasi', 1)->get();
+            }
             $menit_aktivitas = $aktivitas->sum('menit') + $dp_ct + $dp_tl + $dp_co + $dp_di + $cuti_bersama;
 
             if ($presensi == null) {
@@ -3067,9 +3077,17 @@ class RekapitulasiController extends Controller
         header('Cache-Control: max-age=0');
 
         if (Auth::user()->skpd->id == 1) {
-            $path = public_path('/excel/disdik.xlsx');
+            if ($bulan == '12') {
+                $path = public_path('/excel/disdik_50.xlsx');
+            } else {
+                $path = public_path('/excel/disdik.xlsx');
+            }
         } else {
-            $path = public_path('/excel/testing.xlsx');
+            if ($bulan == '12') {
+                $path = public_path('/excel/testing_50.xlsx');
+            } else {
+                $path = public_path('/excel/testing.xlsx');
+            }
         }
         $reader = IOFactory::createReader('Xlsx');
         $spreadsheet = $reader->load($path);

@@ -2225,21 +2225,38 @@ class RekapitulasiController extends Controller
     {
         $data = RekapReguler::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', 8)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
 
-        $data->map(function ($item) {
+        $data->map(function ($item) use ($bulan) {
             //PBK
             $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
-            if ($item->dp_ta >= 6750) {
-                $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
-                if ($item->dp_skp == null) {
-                    $item->pbk_skp = 0;
-                } else if ($item->dp_skp == 'KURANG' || $item->dp_skp == "SANGAT KURANG") {
-                    $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
+            if ($bulan == '12') {
+                if ($item->dp_ta >= 3375) {
+                    $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
+                    if ($item->dp_skp == null) {
+                        $item->pbk_skp = 0;
+                    } else if ($item->dp_skp == 'KURANG' || $item->dp_skp == "SANGAT KURANG") {
+                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
+                    } else {
+                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
+                    }
                 } else {
-                    $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
+                    $item->pbk_aktivitas = 0;
+                    $item->pbk_skp = 0;
                 }
             } else {
-                $item->pbk_aktivitas = 0;
-                $item->pbk_skp = 0;
+
+                if ($item->dp_ta >= 6750) {
+                    $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
+                    if ($item->dp_skp == null) {
+                        $item->pbk_skp = 0;
+                    } else if ($item->dp_skp == 'KURANG' || $item->dp_skp == "SANGAT KURANG") {
+                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
+                    } else {
+                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
+                    }
+                } else {
+                    $item->pbk_aktivitas = 0;
+                    $item->pbk_skp = 0;
+                }
             }
             $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * 68 / 100);
 

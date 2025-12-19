@@ -185,12 +185,22 @@ ADMIN
                     <tbody>
                         @foreach ($data as $item)
                         <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif;
+                            @if($bulan == '12')
+                             @if($item->dp_ta < 3375)
+                            background-color:#f2dede
+                            @endif
+                            @if($item->puskesmas_id == 37)
+                            background-color:#b0fffe
+                            @endif
+                            @else
                             @if($item->dp_ta < 6750)
                             background-color:#f2dede
                             @endif
                             @if($item->puskesmas_id == 37)
                             background-color:#b0fffe
-                            @endif">
+                            @endif
+                            @endif
+                            ">
                             <td>{{$no++}}</td>
                             <td>
                                 {{$item->nama}} <br />

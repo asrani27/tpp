@@ -1230,13 +1230,24 @@ class PuskesmasController extends Controller
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header("Content-Disposition: attachment;filename=$filename");
         header('Cache-Control: max-age=0');
-        if (Auth::user()->puskesmas->id == 8) {
-            $path = public_path('/excel/rumahsakit.xlsx');
-        } elseif (Auth::user()->puskesmas->id == 36 || Auth::user()->puskesmas->id == 37) {
-            $path = public_path('/excel/ifk.xlsx');
+        if ($bulan == '12') {
+            if (Auth::user()->puskesmas->id == 8) {
+                $path = public_path('/excel/rumahsakit_50.xlsx');
+            } elseif (Auth::user()->puskesmas->id == 36 || Auth::user()->puskesmas->id == 37) {
+                $path = public_path('/excel/ifk_50.xlsx');
+            } else {
+                $path = public_path('/excel/perpuskes2_50.xlsx');
+            }
         } else {
-            $path = public_path('/excel/perpuskes2.xlsx');
+            if (Auth::user()->puskesmas->id == 8) {
+                $path = public_path('/excel/rumahsakit.xlsx');
+            } elseif (Auth::user()->puskesmas->id == 36 || Auth::user()->puskesmas->id == 37) {
+                $path = public_path('/excel/ifk.xlsx');
+            } else {
+                $path = public_path('/excel/perpuskes2.xlsx');
+            }
         }
+
         $reader = IOFactory::createReader('Xlsx');
         $spreadsheet = $reader->load($path);
 

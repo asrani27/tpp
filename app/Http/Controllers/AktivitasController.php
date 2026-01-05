@@ -349,14 +349,14 @@ class AktivitasController extends Controller
         }
 
         // 2. Date range validation (only if not whitelisted)
-        if (whitelist(Auth::user()->username) != true) {
-            if (!checkDateInRange($tanggal)) { // Assuming checkDateInRange is a global helper
-                $today = Carbon::today()->format('d-m-Y');
-                $yesterday = Carbon::yesterday()->format('d-m-Y');
-                toastr()->error('Input Aktivitas hanya bisa pada tanggal ' . $today . ' & ' . $yesterday);
-                return back();
-            }
-        }
+        // if (whitelist(Auth::user()->username) != true) {
+        //     if (!checkDateInRange($tanggal)) { // Assuming checkDateInRange is a global helper
+        //         $today = Carbon::today()->format('d-m-Y');
+        //         $yesterday = Carbon::yesterday()->format('d-m-Y');
+        //         toastr()->error('Input Aktivitas hanya bisa pada tanggal ' . $today . ' & ' . $yesterday);
+        //         return back();
+        //     }
+        // }
 
         // 3. Time conflict validation
         if ($this->hasTimeConflict($tanggal, $jam_mulai, $jam_selesai, $pegawai_id)) {

@@ -347,7 +347,6 @@ class AktivitasController extends Controller
             toastr()->error('Aktivitas Pada Bulan ' . convertBulan($bulan) . ' telah Di Kunci');
             return back();
         }
-
         // 2. Date range validation (only if not whitelisted)
         // if (whitelist(Auth::user()->username) != true) {
         //     if (!checkDateInRange($tanggal)) { // Assuming checkDateInRange is a global helper
@@ -372,6 +371,7 @@ class AktivitasController extends Controller
             $req->flash();
             return back();
         }
+
 
         // 5. Create Aktivitas
         return $this->createAktivitas($req, $skp);

@@ -33,20 +33,20 @@ TAMBAH AKTIVITAS HARIAN
             <label class="col-sm-2 col-form-label">Tanggal</label>
             <div class="col-sm-10">
 
-              <input type="date" class="form-control" name="tanggal" value="{{ $tanggal }}" min="2026-01-01"
-                max="2026-01-31">
-              {{-- @if (whitelist(Auth::user()->username) == true) --}}
+              {{-- <input type="date" class="form-control" name="tanggal" value="{{ $tanggal }}" min="2026-01-01"
+                max="2026-01-31"> --}}
+              @if (whitelist(Auth::user()->username) == true)
 
-              {{-- <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"
-                max="{{\Carbon\Carbon::today()->format('Y-m-d')}}"> --}}
-              {{-- @else --}}
+              <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"
+                max="{{\Carbon\Carbon::today()->format('Y-m-d')}}">
+              @else
               {{-- <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"
                 min="2025-01-01" max="{{\Carbon\Carbon::today()->format('Y-m-d')}}"> --}}
 
-              {{-- <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"
+              <input type="date" class="form-control" name="tanggal" placeholder="" value="{{$tanggal}}"
                 min="{{\Carbon\Carbon::today()->subdays(1)->format('Y-m-d')}}"
                 max="{{\Carbon\Carbon::today()->format('Y-m-d')}}">
-              @endif --}}
+              @endif
             </div>
           </div>
           <div class="form-group row">

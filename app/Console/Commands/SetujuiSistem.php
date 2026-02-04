@@ -42,14 +42,14 @@ class SetujuiSistem extends Command
      */
     public function handle()
     {
-        // $tanggal   = Carbon::today()->subDays(6)->format('Y-m-d');
-        // $aktivitas = Aktivitas::where('validasi', 0)->where('tanggal', '<=', $tanggal)->get();
-        $startDate = Carbon::create(2025, 12, 1)->startOfDay();
-        $endDate   = Carbon::create(2025, 12, 15)->endOfDay();
+        $tanggal   = Carbon::today()->subDays(5)->format('Y-m-d');
+        $aktivitas = Aktivitas::where('validasi', 0)->where('tanggal', '<=', $tanggal)->get();
+        // $startDate = Carbon::create(2025, 12, 1)->startOfDay();
+        // $endDate   = Carbon::create(2025, 12, 15)->endOfDay();
 
-        $aktivitas = Aktivitas::where('validasi', 0)
-            ->whereBetween('tanggal', [$startDate, $endDate])
-            ->get();
+        // $aktivitas = Aktivitas::where('validasi', 0)
+        //     ->whereBetween('tanggal', [$startDate, $endDate])
+        //     ->get();
         $aktivitas->map(function ($item) {
             if ($item->pegawai->jabatan == null) {
             } else {

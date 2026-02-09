@@ -101,8 +101,7 @@ class RekapitulasiController extends Controller
 
     public function index()
     {
-        $tampil = false;
-        return view('admin.rekapitulasi.index', compact('tampil'));
+        return view('admin.rekapitulasi.under-development');
     }
 
     public function skpd_id()

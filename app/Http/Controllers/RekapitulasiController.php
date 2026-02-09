@@ -902,7 +902,7 @@ class RekapitulasiController extends Controller
 
     public function puskesmasGabungan()
     {
-        return view('admin.rekapitulasi.puskesmasgabungan');
+        return view('admin.rekapitulasi.under-development-puskesmas-gabungan');
     }
 
     public function PGbulanTahun($bulan, $tahun)

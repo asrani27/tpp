@@ -24,6 +24,19 @@ Rekap TPP - Sedang Dalam Pengembangan
                     <p class="text-muted mb-4">
                         Fitur ini akan segera tersedia. Silakan cembali lagi nanti atau hubungi administrator untuk informasi lebih lanjut.
                     </p>
+                    
+                    <div class="alert alert-info">
+                        <h5 class="alert-heading">
+                            <i class="fas fa-clock mr-2"></i>
+                            Perkiraan Waktu Selesai
+                        </h5>
+                        <hr>
+                        <div class="countdown-container">
+                            <h2 class="countdown-timer mb-2" id="countdown">--:--:--</h2>
+                            <p class="text-muted mb-0">Fitur akan tersedia pada pukul 15:00 (10 Februari 2026)</p>
+                        </div>
+                    </div>
+                    
                     <a href="/home/admin" class="btn btn-warning">
                         <i class="fas fa-home mr-2"></i>Kembali ke Beranda
                     </a>
@@ -39,3 +52,35 @@ Rekap TPP - Sedang Dalam Pengembangan
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    // Set target date and time: 10 Februari 2026 pukul 15:00
+    const targetDate = new Date('2026-02-10T15:00:00').getTime();
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+            document.getElementById('countdown').innerHTML = 'FITUR TELAH TERSEDIA!';
+            return;
+        }
+
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        const formattedHours = hours.toString().padStart(2, '0');
+        const formattedMinutes = minutes.toString().padStart(2, '0');
+        const formattedSeconds = seconds.toString().padStart(2, '0');
+
+        document.getElementById('countdown').innerHTML = 
+            formattedHours + ':' + formattedMinutes + ':' + formattedSeconds;
+    }
+
+    // Update countdown every second
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+</script>
+@endpush

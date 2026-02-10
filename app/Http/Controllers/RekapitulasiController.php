@@ -101,7 +101,8 @@ class RekapitulasiController extends Controller
 
     public function index()
     {
-        return view('admin.rekapitulasi.under-development');
+        $tampil = false;
+        return view('admin.rekapitulasi.index', compact('tampil'));
     }
 
     public function skpd_id()
@@ -902,7 +903,7 @@ class RekapitulasiController extends Controller
 
     public function puskesmasGabungan()
     {
-        return view('admin.rekapitulasi.under-development-puskesmas-gabungan');
+        return view('admin.rekapitulasi.puskesmasgabungan');
     }
 
     public function PGbulanTahun($bulan, $tahun)

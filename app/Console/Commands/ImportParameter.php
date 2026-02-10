@@ -40,9 +40,9 @@ class ImportParameter extends Command
      */
     public function handle()
     {
-        $filepuskes = public_path('persentpp/parametertpppuskesmas.xlsx');
+        $filepuskes = public_path('parameter/tpp2026_puskes_rs_uptdinkes.xlsx');
         Excel::import(new ParameterTppPuskesmasImport, $filepuskes);
-        $file = public_path('persentpp/parametertpp.xlsx');
+        $file = public_path('parameter/tpp2026_badan_dinas.xlsx');
         Excel::import(new ParameterTPPimport, $file);
         $this->info('Import selesai!');
     }

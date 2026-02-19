@@ -29,11 +29,11 @@ class LaporanController extends Controller
             }
             $item->presensi = $absensi;
             $item->menit = totalMenit($item->bulan, $item->tahun);
-            $item->cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $item->bulan)->whereYear('tanggal', $item->tahun)->where('deskripsi', 'cuti bersama')->get()->count() * 420;
-            $item->cuti_tahunan = DB::connection('presensi')->table('detail_cuti')->where('nip', $nip)->where('jenis_keterangan_id', 7)->whereMonth('tanggal', $item->bulan)->whereYear('tanggal', $item->tahun)->get()->count() * 420;
-            $item->tugas_luar = DB::connection('presensi')->table('detail_cuti')->where('nip', $nip)->where('jenis_keterangan_id', 5)->whereMonth('tanggal', $item->bulan)->whereYear('tanggal', $item->tahun)->get()->count() * 420;
+            $item->cuti_bersama = DB::connection('presensi')->table('libur_nasional')->whereMonth('tanggal', $item->bulan)->whereYear('tanggal', $item->tahun)->where('deskripsi', 'cuti bersama')->get()->count() * 360;
+            $item->cuti_tahunan = DB::connection('presensi')->table('detail_cuti')->where('nip', $nip)->where('jenis_keterangan_id', 7)->whereMonth('tanggal', $item->bulan)->whereYear('tanggal', $item->tahun)->get()->count() * 360;
+            $item->tugas_luar = DB::connection('presensi')->table('detail_cuti')->where('nip', $nip)->where('jenis_keterangan_id', 5)->whereMonth('tanggal', $item->bulan)->whereYear('tanggal', $item->tahun)->get()->count() * 360;
             $item->covid = DB::connection('presensi')->table('detail_cuti')->where('nip', $nip)->where('jenis_keterangan_id', 9)->whereMonth('tanggal', $item->bulan)->whereYear('tanggal', $item->tahun)->get()->count() * 360;
-            $item->diklat = DB::connection('presensi')->table('detail_cuti')->where('nip', $nip)->where('jenis_keterangan_id', 4)->whereMonth('tanggal', $item->bulan)->whereYear('tanggal', $item->tahun)->get()->count() * 420;
+            $item->diklat = DB::connection('presensi')->table('detail_cuti')->where('nip', $nip)->where('jenis_keterangan_id', 4)->whereMonth('tanggal', $item->bulan)->whereYear('tanggal', $item->tahun)->get()->count() * 360;
             return $item;
         });
         //dd($data);

@@ -1577,7 +1577,7 @@ class PuskesmasController extends Controller
                 $p_kk      = $persen->persen_kondisi_kerja;
                 $p_kp      = $persen->persen_kelangkaan_profesi;
                 if ($item->jenis_plt == '1') {
-                    $pagu      = $basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100);
+                    $pagu      = $basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (20 / 100);
                 }
                 if ($item->jenis_plt == '2') {
                     $pagu      = $basic * (($p_bk + $p_tbk + $p_pk + $p_kk + $p_kp) / 100) * (20 / 100);

@@ -93,7 +93,8 @@ SUPERADMIN
                             </th>
                             <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Kelangkaan<br />
                                 Profesi</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver" colspan=3>Beban Kerja</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" colspan=3 rowspan="2">Beban
+                                Kerja</th>
                             <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah<br /> Beban
                                 Kerja</th>
                             <th style="background-color:#bbfac6; border:1px solid silver" colspan=3>Prestasi Kerja</th>
@@ -119,9 +120,7 @@ SUPERADMIN
                             <th style="background-color:#d6fdf9; border:1px solid silver">Covid</th>
                             <th style="background-color:#d6fdf9; border:1px solid silver">Diklat</th>
                             <th style="background-color:#d6fdf9; border:1px solid silver">CB</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver">Absensi</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver">Aktivitas</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver">Kinerja</th>
+
                             <th style="background-color:#bbfac6; border:1px solid silver">Absensi</th>
                             <th style="background-color:#bbfac6; border:1px solid silver">Aktivitas</th>
                             <th style="background-color:#bbfac6; border:1px solid silver">Kinerja</th>
@@ -182,9 +181,7 @@ SUPERADMIN
                             <td class="text-right">{{$item->p_kk}}</td>
                             <td class="text-right">{{$item->p_kp}}</td>
                             <td class="text-right">{{number_format($item->pagu)}}</td>
-                            <td class="text-right">{{number_format($item->pbk_absensi)}}</td>
-                            <td class="text-right">{{number_format($item->pbk_aktivitas)}}</td>
-                            <td class="text-right">{{number_format($item->pbk_skp)}}</td>
+                            <td class="text-right" colspan="3">{{number_format($item->pbk_jumlah)}}</td>
                             <td class="text-right">{{number_format($item->pbk_jumlah)}}</td>
                             <td class="text-right">{{number_format($item->ppk_absensi)}}</td>
                             <td class="text-right">{{number_format($item->ppk_aktivitas)}}</td>

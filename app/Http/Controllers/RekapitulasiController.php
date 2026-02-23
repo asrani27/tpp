@@ -1976,7 +1976,7 @@ class RekapitulasiController extends Controller
 
         $data->map(function ($item) use ($bulan) {
             //PBK (beban kerja)
-            $item->pbk = $item->basic * ($item->p_bk / 100);
+            $item->pbk = $item->basic * (($item->p_bk + $item->p_tbk) / 100);
 
             $item->pbk_jumlah = $item->pbk;
 
@@ -4093,7 +4093,7 @@ class RekapitulasiController extends Controller
         $data = RekapCpns::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         $data->map(function ($item) use ($bulan) {
             //PBK
-            $item->pbk = $item->basic * ($item->p_bk / 100);
+            $item->pbk = $item->basic * (($item->p_bk + $item->p_tbk) / 100);
 
             $item->pbk_jumlah = $item->pbk;
 
@@ -4739,39 +4739,11 @@ class RekapitulasiController extends Controller
         $data = RekapPlt::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         $data->map(function ($item) use ($bulan) {
             //PBK
-            $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
+            $item->pbk = $item->basic * (($item->p_bk + $item->p_tbk) / 100);
 
-            if ($bulan == '12') {
-                if ($item->dp_ta >= 3375) {
-                    $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
-                    if ($item->dp_skp == 'kurang') {
-                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
-                    } else {
-                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
-                    }
-                } else {
-                    $item->pbk_aktivitas = 0;
-                    $item->pbk_skp = 0;
-                }
-            } else {
-                if ($item->dp_ta >= 6750) {
-                    $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
-                    if ($item->dp_skp == 'kurang') {
-                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
-                    } else {
-                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
-                    }
-                } else {
-                    $item->pbk_aktivitas = 0;
-                    $item->pbk_skp = 0;
-                }
-            }
+            $item->pbk_jumlah = $item->pbk  * 20 / 100;
 
-            if ($item->jenis_plt == '2') {
-                $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * 20 / 100);
-            } else {
-                $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp));
-            }
+
 
             //PPK
             $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);

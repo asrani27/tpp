@@ -1675,7 +1675,7 @@ class RekapitulasiController extends Controller
                 $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * 20 / 100);
             } else {
 
-                $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp));
+                $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * 20 / 100);
             }
 
             //PKK
@@ -1686,7 +1686,7 @@ class RekapitulasiController extends Controller
                 $item->pkk_jumlah = round($item->pkk * 20 / 100);
             } else {
 
-                $item->pkk_jumlah = $item->pkk;
+                $item->pkk_jumlah = round($item->pkk * 20 / 100);
             }
             //PKP
             $item->pkp = round($item->basic * ($item->p_kp / 100));

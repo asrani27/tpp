@@ -3225,8 +3225,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('REGULER')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('REGULER')->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getSheetByName('REGULER')->setCellValue('Q' . $contentRow, $item->dp_skp);
-            $spreadsheet->getSheetByName('REGULER')->setCellValue('AI' . $contentRow, $item->pph_terutang);
-            $spreadsheet->getSheetByName('REGULER')->setCellValue('AJ' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('REGULER')->setCellValue('AG' . $contentRow, $item->pph_terutang);
+            $spreadsheet->getSheetByName('REGULER')->setCellValue('AH' . $contentRow, $item->bpjs1);
             $contentRow++;
         }
         //remove row
@@ -3267,8 +3267,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('CPNS')->setCellValue('O' . $contentRowCpns, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('CPNS')->setCellValue('P' . $contentRowCpns, $item->dp_ta);
             $spreadsheet->getSheetByName('CPNS')->setCellValue('Q' . $contentRowCpns, $item->dp_skp);
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('AI' . $contentRowCpns, $item->pph_terutang);
-            $spreadsheet->getSheetByName('CPNS')->setCellValue('AJ' . $contentRowCpns, $item->bpjs1);
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('AG' . $contentRowCpns, $item->pph_terutang);
+            $spreadsheet->getSheetByName('CPNS')->setCellValue('AH' . $contentRowCpns, $item->bpjs1);
             $contentRowCpns++;
         }
 
@@ -3305,8 +3305,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('PLT')->setCellValue('O' . $contentRowPlt, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('PLT')->setCellValue('P' . $contentRowPlt, $item->dp_ta);
             $spreadsheet->getSheetByName('PLT')->setCellValue('Q' . $contentRowPlt, $item->dp_skp);
-            $spreadsheet->getSheetByName('PLT')->setCellValue('AI' . $contentRowPlt, $item->pph_terutang);
-            $spreadsheet->getSheetByName('PLT')->setCellValue('AJ' . $contentRowPlt, $item->bpjs1);
+            $spreadsheet->getSheetByName('PLT')->setCellValue('AG' . $contentRowPlt, $item->pph_terutang);
+            $spreadsheet->getSheetByName('PLT')->setCellValue('AH' . $contentRowPlt, $item->bpjs1);
             $contentRowPlt++;
         }
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');

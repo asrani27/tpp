@@ -4095,7 +4095,7 @@ class RekapitulasiController extends Controller
             //PBK
             $item->pbk = $item->basic * (($item->p_bk + $item->p_tbk) / 100);
 
-            $item->pbk_jumlah = $item->pbk;
+            $item->pbk_jumlah = $item->pbk * (80 / 100);
 
             //PPK
             $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);

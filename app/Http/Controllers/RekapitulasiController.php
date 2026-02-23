@@ -3289,19 +3289,19 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('PLT')->setCellValue('K' . $contentRowPlt, ($item->p_pk / 100));
             $spreadsheet->getSheetByName('PLT')->setCellValue('L' . $contentRowPlt, ($item->p_kk / 100));
             $spreadsheet->getSheetByName('PLT')->setCellValue('M' . $contentRowPlt, ($item->p_kp / 100));
-            if ($item->jenis_plt == '2' || $item->jenis_plt == '1') {
-                //=ROUND(SUM(S9:U9);0)
-                $formulaPagu = '=ROUND(I' . $contentRowPlt . '*(SUM(J' . $contentRowPlt . ':M' . $contentRowPlt . '))*20%,0)';
-                //$formulaBK = '=ROUND(SUM(S9:U9)*20%,0)';
-                $formulaBK = '=ROUND(SUM(S' . $contentRowPlt . ':U' . $contentRowPlt . ')*20%,0)';
+            // if ($item->jenis_plt == '2' || $item->jenis_plt == '1') {
+            //     //=ROUND(SUM(S9:U9);0)
+            //     $formulaPagu = '=ROUND(I' . $contentRowPlt . '*(SUM(J' . $contentRowPlt . ':M' . $contentRowPlt . '))*20%,0)';
+            //     //$formulaBK = '=ROUND(SUM(S9:U9)*20%,0)';
+            //     $formulaBK = '=ROUND(SUM(S' . $contentRowPlt . ':U' . $contentRowPlt . ')*20%,0)';
 
-                $formulaPK = '=ROUND(SUM(W' . $contentRowPlt . ':Y' . $contentRowPlt . ')*20%,0)';
-                $formulaKK = '=ROUND(AA' . $contentRowPlt . '*20%,0)';
-                $spreadsheet->getSheetByName('PLT')->setCellValue('N' . $contentRowPlt, $formulaPagu);
-                $spreadsheet->getSheetByName('PLT')->setCellValue('V' . $contentRowPlt, $formulaBK);
-                $spreadsheet->getSheetByName('PLT')->setCellValue('Z' . $contentRowPlt, $formulaPK);
-                $spreadsheet->getSheetByName('PLT')->setCellValue('AB' . $contentRowPlt, $formulaKK);
-            }
+            //     $formulaPK = '=ROUND(SUM(W' . $contentRowPlt . ':Y' . $contentRowPlt . ')*20%,0)';
+            //     $formulaKK = '=ROUND(AA' . $contentRowPlt . '*20%,0)';
+            //     $spreadsheet->getSheetByName('PLT')->setCellValue('N' . $contentRowPlt, $formulaPagu);
+            //     $spreadsheet->getSheetByName('PLT')->setCellValue('V' . $contentRowPlt, $formulaBK);
+            //     $spreadsheet->getSheetByName('PLT')->setCellValue('Z' . $contentRowPlt, $formulaPK);
+            //     $spreadsheet->getSheetByName('PLT')->setCellValue('AB' . $contentRowPlt, $formulaKK);
+            // }
             $spreadsheet->getSheetByName('PLT')->setCellValue('O' . $contentRowPlt, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('PLT')->setCellValue('P' . $contentRowPlt, $item->dp_ta);
             $spreadsheet->getSheetByName('PLT')->setCellValue('Q' . $contentRowPlt, $item->dp_skp);

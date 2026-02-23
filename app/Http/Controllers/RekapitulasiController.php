@@ -1487,9 +1487,9 @@ class RekapitulasiController extends Controller
         $data->map(function ($item) use ($bulan) {
 
             //PBK (beban kerja)
-            $item->pbk = $item->basic * ($item->p_bk / 100);
+            $pbk = $item->basic * ($item->p_bk / 100);
 
-            $item->pbk_jumlah = $item->pbk;
+            $item->pbk_jumlah = $pbk;
 
             //PPK
             $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);

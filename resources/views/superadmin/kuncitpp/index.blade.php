@@ -39,7 +39,7 @@
                         <option value="12">Desember</option>
                     </select>
                     <select class="form-control" name="tahun">
-                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
                     </select>
                     <button type="submit" class="btn btn-md btn-block btn-primary">Buka</button>
                 </form>
@@ -84,7 +84,7 @@
                         <option value="12">Desember</option>
                     </select>
                     <select class="form-control" name="tahun">
-                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
                     </select>
                     <button type="submit" class="btn btn-md btn-block btn-primary">Buka</button>
                 </form>

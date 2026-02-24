@@ -123,7 +123,8 @@ SUPERADMIN
                             </th>
                             <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Kelangkaan<br />
                                 Profesi</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver" colspan=3>Beban Kerja</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" colspan=3 rowspan="2">Beban
+                                Kerja</th>
                             <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah<br /> Beban
                                 Kerja</th>
                             <th style="background-color:#bbfac6; border:1px solid silver" colspan=3>Prestasi Kerja</th>

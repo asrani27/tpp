@@ -2454,7 +2454,7 @@ class RekapitulasiController extends Controller
 
             if ($bulan == '01' || $bulan == '02' || $bulan == '03') {
                 //ambil penilaian TW 4 tahun sebelumnya
-                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun - 1)->where('rhk_tw4', '!=', null)->first();
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun - 1)->where('rhk_tw4', '!=', null)->latest('id')->first();
 
                 if ($skp == null) {
                     $nilaiSKP = null;
@@ -2469,7 +2469,7 @@ class RekapitulasiController extends Controller
 
             if ($bulan == '04' || $bulan == '05' || $bulan == '06') {
                 //ambil penilaian TW 1 tahun berjalan
-                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->latest('id')->first();
                 if ($skp == null) {
                     $nilaiSKP = null;
                 } else {
@@ -2483,7 +2483,7 @@ class RekapitulasiController extends Controller
 
             if ($bulan == '07' || $bulan == '08' || $bulan == '09') {
                 //ambil penilaian TW 2 tahun berjalan
-                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->latest('id')->first();
                 if ($skp == null) {
                     $nilaiSKP = null;
                 } else {
@@ -2497,7 +2497,7 @@ class RekapitulasiController extends Controller
 
             if ($bulan == '10' || $bulan == '11' || $bulan == '12') {
                 //ambil penilaian TW 3 tahun berjalan
-                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->first();
+                $skp = Skp2023::where('pegawai_id', $pegawai_id)->whereYear('sampai', $tahun)->where('is_aktif', 1)->latest('id')->first();
                 if ($skp == null) {
                     $nilaiSKP = null;
                 } else {

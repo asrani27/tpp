@@ -212,9 +212,7 @@ SUPERADMIN
                             <td class="text-right">{{$item->p_kk}}</td>
                             <td class="text-right">{{$item->p_kp}}</td>
                             <td class="text-right">{{number_format($item->pagu)}}</td>
-                            <td class="text-right">{{number_format($item->pbk_absensi)}}</td>
-                            <td class="text-right">{{number_format($item->pbk_aktivitas)}}</td>
-                            <td class="text-right">{{number_format($item->pbk_skp)}}</td>
+                            <td class="text-right" colspan="3">{{number_format($item->pbk_jumlah)}}</td>
                             <td class="text-right">{{number_format($item->pbk_jumlah)}}</td>
                             <td class="text-right">{{number_format($item->ppk_absensi)}}</td>
                             <td class="text-right">{{number_format($item->ppk_aktivitas)}}</td>

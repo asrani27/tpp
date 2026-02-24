@@ -2089,38 +2089,10 @@ class RekapitulasiController extends Controller
 
         $data->map(function ($item) use ($bulan) {
             //PBK
-            $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
-            if ($bulan == '12') {
-                if ($item->dp_ta >= 3375) {
-                    $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
-                    if ($item->dp_skp == null) {
-                        $item->pbk_skp = 0;
-                    } else if ($item->dp_skp == 'KURANG' || $item->dp_skp == "SANGAT KURANG") {
-                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
-                    } else {
-                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
-                    }
-                } else {
-                    $item->pbk_aktivitas = 0;
-                    $item->pbk_skp = 0;
-                }
-            } else {
+            //PBK (beban kerja)
+            $item->pbk = $item->basic * (($item->p_bk + $item->p_tbk) / 100);
 
-                if ($item->dp_ta >= 6750) {
-                    $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
-                    if ($item->dp_skp == null) {
-                        $item->pbk_skp = 0;
-                    } else if ($item->dp_skp == 'KURANG' || $item->dp_skp == "SANGAT KURANG") {
-                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
-                    } else {
-                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
-                    }
-                } else {
-                    $item->pbk_aktivitas = 0;
-                    $item->pbk_skp = 0;
-                }
-            }
-            $item->pbk_jumlah = round($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp);
+            $item->pbk_jumlah = $item->pbk;
 
             //PPK
             $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);

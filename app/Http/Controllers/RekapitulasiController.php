@@ -2012,16 +2012,16 @@ class RekapitulasiController extends Controller
                     $item->ppk_skp = 0;
                 }
             }
-            $item->ppk_jumlah = round($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp);
+            $item->ppk_jumlah = $item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp;
 
             //PKK
-            $item->pkk = round($item->basic * ($item->p_kk / 100));
+            $item->pkk = $item->basic * ($item->p_kk / 100);
             $item->pkk_jumlah = $item->pkk;
 
             //PKP
-            $item->pkp = round($item->basic * ($item->p_kp / 100));
+            $item->pkp = $item->basic * ($item->p_kp / 100);
             $item->pkp_jumlah = $item->pkp;
-            $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
+            $item->jumlah_pembayaran = round($item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah);
             //PPH 21
             $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
             $item->tpp_diterima = $item->jumlah_pembayaran - $item->bpjs1;

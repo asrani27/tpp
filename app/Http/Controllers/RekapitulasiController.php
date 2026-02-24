@@ -4743,27 +4743,27 @@ class RekapitulasiController extends Controller
             }
 
             if ($item->jenis_plt == '2') {
-                $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * 20 / 100);
+                $item->ppk_jumlah = ($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * 20 / 100;
             } else {
 
-                $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * 20 / 100);
+                $item->ppk_jumlah = ($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * 20 / 100;
             }
 
             //PKK
-            $item->pkk = round($item->basic * ($item->p_kk / 100));
+            $item->pkk = $item->basic * ($item->p_kk / 100);
 
             if ($item->jenis_plt == '2') {
 
-                $item->pkk_jumlah = round($item->pkk * 20 / 100);
+                $item->pkk_jumlah = $item->pkk * 20 / 100;
             } else {
 
-                $item->pkk_jumlah = round($item->pkk * 20 / 100);
+                $item->pkk_jumlah = $item->pkk * 20 / 100;
             }
 
             //PKP
-            $item->pkp = round($item->basic * ($item->p_kp / 100));
+            $item->pkp = $item->basic * ($item->p_kp / 100);
             $item->pkp_jumlah = $item->pkp;
-            $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
+            $item->jumlah_pembayaran = round($item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah);
 
             $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
             $item->tpp_diterima = $item->jumlah_pembayaran - $item->bpjs1;

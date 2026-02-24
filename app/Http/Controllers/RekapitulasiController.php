@@ -3277,8 +3277,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('PLT')->setCellValue('O' . $contentRowPlt, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('PLT')->setCellValue('P' . $contentRowPlt, $item->dp_ta);
             $spreadsheet->getSheetByName('PLT')->setCellValue('Q' . $contentRowPlt, $item->dp_skp);
-            $spreadsheet->getSheetByName('PLT')->setCellValue('AG' . $contentRowPlt, $item->pph_terutang);
-            $spreadsheet->getSheetByName('PLT')->setCellValue('AH' . $contentRowPlt, $item->bpjs1);
+            $spreadsheet->getSheetByName('PLT')->setCellValue('AG' . $contentRowPlt, 0);
+            $spreadsheet->getSheetByName('PLT')->setCellValue('AH' . $contentRowPlt, 0);
             $contentRowPlt++;
         }
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');

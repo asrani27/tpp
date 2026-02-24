@@ -3342,8 +3342,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('Pejabat')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('Pejabat')->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getSheetByName('Pejabat')->setCellValue('Q' . $contentRow, $item->dp_skp);
-            $spreadsheet->getSheetByName('Pejabat')->setCellValue('AI' . $contentRow, $item->pph_terutang);
-            $spreadsheet->getSheetByName('Pejabat')->setCellValue('AJ' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('AG' . $contentRow, $item->pph_terutang);
+            $spreadsheet->getSheetByName('Pejabat')->setCellValue('AH' . $contentRow, $item->bpjs1);
             $contentRow++;
         }
         //remove row
@@ -3385,8 +3385,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('Umum')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('Umum')->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getSheetByName('Umum')->setCellValue('Q' . $contentRow, $item->dp_skp);
-            $spreadsheet->getSheetByName('Umum')->setCellValue('AI' . $contentRow, $item->pph_terutang);
-            $spreadsheet->getSheetByName('Umum')->setCellValue('AJ' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Umum')->setCellValue('AG' . $contentRow, $item->pph_terutang);
+            $spreadsheet->getSheetByName('Umum')->setCellValue('AH' . $contentRow, $item->bpjs1);
             $contentRow++;
         }
         //remove row
@@ -3428,8 +3428,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('Kesra')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('Kesra')->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getSheetByName('Kesra')->setCellValue('Q' . $contentRow, $item->dp_skp);
-            $spreadsheet->getSheetByName('Kesra')->setCellValue('AI' . $contentRow, $item->pph_terutang);
-            $spreadsheet->getSheetByName('Kesra')->setCellValue('AJ' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('AG' . $contentRow, $item->pph_terutang);
+            $spreadsheet->getSheetByName('Kesra')->setCellValue('AH' . $contentRow, $item->bpjs1);
             $contentRow++;
         }
         //remove row
@@ -3471,8 +3471,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('Organisasi')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('Organisasi')->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getSheetByName('Organisasi')->setCellValue('Q' . $contentRow, $item->dp_skp);
-            $spreadsheet->getSheetByName('Organisasi')->setCellValue('AI' . $contentRow, $item->pph_terutang);
-            $spreadsheet->getSheetByName('Organisasi')->setCellValue('AJ' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('AG' . $contentRow, $item->pph_terutang);
+            $spreadsheet->getSheetByName('Organisasi')->setCellValue('AH' . $contentRow, $item->bpjs1);
             $contentRow++;
         }
         //remove row
@@ -3513,8 +3513,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('Perekonomian')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('Perekonomian')->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getSheetByName('Perekonomian')->setCellValue('Q' . $contentRow, $item->dp_skp);
-            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('AI' . $contentRow, $item->pph_terutang);
-            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('AJ' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('AG' . $contentRow, $item->pph_terutang);
+            $spreadsheet->getSheetByName('Perekonomian')->setCellValue('AH' . $contentRow, $item->bpjs1);
             $contentRow++;
         }
         //remove row
@@ -3555,8 +3555,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('Prokom')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('Prokom')->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getSheetByName('Prokom')->setCellValue('Q' . $contentRow, $item->dp_skp);
-            $spreadsheet->getSheetByName('Prokom')->setCellValue('AI' . $contentRow, $item->pph_terutang);
-            $spreadsheet->getSheetByName('Prokom')->setCellValue('AJ' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('AG' . $contentRow, $item->pph_terutang);
+            $spreadsheet->getSheetByName('Prokom')->setCellValue('AH' . $contentRow, $item->bpjs1);
             $contentRow++;
         }
         //remove row
@@ -3597,8 +3597,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('PBJ')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('PBJ')->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getSheetByName('PBJ')->setCellValue('Q' . $contentRow, $item->dp_skp);
-            $spreadsheet->getSheetByName('PBJ')->setCellValue('AI' . $contentRow, $item->pph_terutang);
-            $spreadsheet->getSheetByName('PBJ')->setCellValue('AJ' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('AG' . $contentRow, $item->pph_terutang);
+            $spreadsheet->getSheetByName('PBJ')->setCellValue('AH' . $contentRow, $item->bpjs1);
             $contentRow++;
         }
         //remove row
@@ -3639,8 +3639,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('Adpem')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('Adpem')->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getSheetByName('Adpem')->setCellValue('Q' . $contentRow, $item->dp_skp);
-            $spreadsheet->getSheetByName('Adpem')->setCellValue('AI' . $contentRow, $item->pph_terutang);
-            $spreadsheet->getSheetByName('Adpem')->setCellValue('AJ' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('AG' . $contentRow, $item->pph_terutang);
+            $spreadsheet->getSheetByName('Adpem')->setCellValue('AH' . $contentRow, $item->bpjs1);
             $contentRow++;
         }
         //remove row
@@ -3681,8 +3681,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('Hukum')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('Hukum')->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getSheetByName('Hukum')->setCellValue('Q' . $contentRow, $item->dp_skp);
-            $spreadsheet->getSheetByName('Hukum')->setCellValue('AI' . $contentRow, $item->pph_terutang);
-            $spreadsheet->getSheetByName('Hukum')->setCellValue('AJ' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('AG' . $contentRow, $item->pph_terutang);
+            $spreadsheet->getSheetByName('Hukum')->setCellValue('AH' . $contentRow, $item->bpjs1);
             $contentRow++;
         }
         //remove row
@@ -3723,8 +3723,8 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('O' . $contentRow, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('P' . $contentRow, $item->dp_ta);
             $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('Q' . $contentRow, $item->dp_skp);
-            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('AI' . $contentRow, $item->pph_terutang);
-            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('AJ' . $contentRow, $item->bpjs1);
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('AG' . $contentRow, $item->pph_terutang);
+            $spreadsheet->getSheetByName('Pemerintahan')->setCellValue('AH' . $contentRow, $item->bpjs1);
             $contentRow++;
         }
         //remove row
@@ -3788,19 +3788,19 @@ class RekapitulasiController extends Controller
             $spreadsheet->getSheetByName('PLT')->setCellValue('K' . $contentRowPlt, ($item->p_pk / 100));
             $spreadsheet->getSheetByName('PLT')->setCellValue('L' . $contentRowPlt, ($item->p_kk / 100));
             $spreadsheet->getSheetByName('PLT')->setCellValue('M' . $contentRowPlt, ($item->p_kp / 100));
-            if ($item->jenis_plt == '2') {
-                //=ROUND(SUM(S9:U9);0)
-                $formulaPagu = '=ROUND(I' . $contentRowPlt . '*(SUM(J' . $contentRowPlt . ':M' . $contentRowPlt . '))*20%,0)';
-                //$formulaBK = '=ROUND(SUM(S9:U9)*20%,0)';
-                $formulaBK = '=ROUND(SUM(S' . $contentRowPlt . ':U' . $contentRowPlt . ')*20%,0)';
+            // if ($item->jenis_plt == '2') {
+            //     //=ROUND(SUM(S9:U9);0)
+            //     $formulaPagu = '=ROUND(I' . $contentRowPlt . '*(SUM(J' . $contentRowPlt . ':M' . $contentRowPlt . '))*20%,0)';
+            //     //$formulaBK = '=ROUND(SUM(S9:U9)*20%,0)';
+            //     $formulaBK = '=ROUND(SUM(S' . $contentRowPlt . ':U' . $contentRowPlt . ')*20%,0)';
 
-                $formulaPK = '=ROUND(SUM(W' . $contentRowPlt . ':Y' . $contentRowPlt . ')*20%,0)';
-                $formulaKK = '=ROUND(AA' . $contentRowPlt . '*20%,0)';
-                $spreadsheet->getSheetByName('PLT')->setCellValue('N' . $contentRowPlt, $formulaPagu);
-                $spreadsheet->getSheetByName('PLT')->setCellValue('V' . $contentRowPlt, $formulaBK);
-                $spreadsheet->getSheetByName('PLT')->setCellValue('Z' . $contentRowPlt, $formulaPK);
-                $spreadsheet->getSheetByName('PLT')->setCellValue('AB' . $contentRowPlt, $formulaKK);
-            }
+            //     $formulaPK = '=ROUND(SUM(W' . $contentRowPlt . ':Y' . $contentRowPlt . ')*20%,0)';
+            //     $formulaKK = '=ROUND(AA' . $contentRowPlt . '*20%,0)';
+            //     $spreadsheet->getSheetByName('PLT')->setCellValue('N' . $contentRowPlt, $formulaPagu);
+            //     $spreadsheet->getSheetByName('PLT')->setCellValue('V' . $contentRowPlt, $formulaBK);
+            //     $spreadsheet->getSheetByName('PLT')->setCellValue('Z' . $contentRowPlt, $formulaPK);
+            //     $spreadsheet->getSheetByName('PLT')->setCellValue('AB' . $contentRowPlt, $formulaKK);
+            // }
             $spreadsheet->getSheetByName('PLT')->setCellValue('O' . $contentRowPlt, ($item->dp_absensi / 100));
             $spreadsheet->getSheetByName('PLT')->setCellValue('P' . $contentRowPlt, $item->dp_ta);
             $spreadsheet->getSheetByName('PLT')->setCellValue('Q' . $contentRowPlt, $item->dp_skp);

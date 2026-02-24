@@ -2219,16 +2219,16 @@ class RekapitulasiController extends Controller
     public function reguler_mp($bulan, $tahun)
     {
         if (Auth::user()->skpd->id == 34) {
-            $pegawaiDinas = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('status_pns', 'pns')->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
+            $pegawaiDinas = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('status_pns', 'pns')->whereHas('jabatan', function ($query) {
                 return $query->where('rs_puskesmas_id', null)->where('sekolah_id', null);
             })->get();
-            $pegawaiIFK = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('status_pns', 'pns')->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
+            $pegawaiIFK = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('status_pns', 'pns')->whereHas('jabatan', function ($query) {
                 return $query->where('rs_puskesmas_id', 37)->where('sekolah_id', null);
             })->get();
 
             $pegawai = $pegawaiDinas->merge($pegawaiIFK);
         } else {
-            $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('status_pns', 'pns')->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
+            $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('is_aktif', 1)->where('status_pns', 'pns')->whereHas('jabatan', function ($query) {
                 return $query->where('rs_puskesmas_id', null)->where('sekolah_id', null);
             })->get();
         }

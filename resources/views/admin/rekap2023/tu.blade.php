@@ -149,9 +149,7 @@ SUPERADMIN
                             <th style="background-color:#d6fdf9; border:1px solid silver">Covid</th>
                             <th style="background-color:#d6fdf9; border:1px solid silver">Diklat</th>
                             <th style="background-color:#d6fdf9; border:1px solid silver">CB</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver">Absensi</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver">Aktivitas</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver">Kinerja</th>
+
                             <th style="background-color:#bbfac6; border:1px solid silver">Absensi</th>
                             <th style="background-color:#bbfac6; border:1px solid silver">Aktivitas</th>
                             <th style="background-color:#bbfac6; border:1px solid silver">Kinerja</th>

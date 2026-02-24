@@ -2137,7 +2137,7 @@ class RekapitulasiController extends Controller
             $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
             //PPH 21
             $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
-            $item->tpp_diterima = $item->jumlah_pembayaran - $item->pph21 - $item->bpjs1;
+            $item->tpp_diterima = $item->jumlah_pembayaran - $item->bpjs1;
             return $item;
         });
         //dd($data->take(2));
@@ -2210,7 +2210,7 @@ class RekapitulasiController extends Controller
             $item->jumlah_pembayaran = round($item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah);
             //PPH 21
             $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
-            $item->tpp_diterima = $item->jumlah_pembayaran - $item->pph21 - $item->bpjs1;
+            $item->tpp_diterima = $item->jumlah_pembayaran - $item->bpjs1;
             return $item;
         });
         return view('admin.rekap2023.puskesmas.regulerrs', compact('data', 'bulan', 'tahun'));
@@ -4106,7 +4106,7 @@ class RekapitulasiController extends Controller
             //dd($item->jumlah_pembayaran, $item->pbk_jumlah, $item->ppk_jumlah);
             //PPH 21
             $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
-            $item->tpp_diterima = $item->jumlah_pembayaran - $item->pph21 - $item->bpjs1;
+            $item->tpp_diterima = $item->jumlah_pembayaran - $item->bpjs1;
             return $item;
         });
         return view('admin.rekap2023.cpns', compact('data', 'bulan', 'tahun'));
@@ -4156,7 +4156,7 @@ class RekapitulasiController extends Controller
             //dd($item->jumlah_pembayaran, $item->pbk_jumlah, $item->ppk_jumlah);
             //PPH 21
             $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
-            $item->tpp_diterima = $item->jumlah_pembayaran - $item->pph21 - $item->bpjs1;
+            $item->tpp_diterima = $item->jumlah_pembayaran - $item->bpjs1;
             return $item;
         });
         return view('admin.rekap2023.puskesmas.cpns', compact('data', 'bulan', 'tahun'));

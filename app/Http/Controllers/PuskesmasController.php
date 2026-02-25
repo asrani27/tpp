@@ -1080,7 +1080,7 @@ class PuskesmasController extends Controller
     public function cpns_mp($bulan, $tahun)
     {
         $pegawai = Pegawai::where('skpd_id', 34)->where('is_aktif', 1)->where('status_pns', 'cpns')->where('jabatan_id', '!=', null)->whereHas('jabatan', function ($query) {
-            return $query->where('rs_puskesmas_id', Auth::user()->puskesmas->id)->where('rs_puskesmas_id', '!=', 8)->where('rs_puskesmas_id', '!=', 37)->where('sekolah_id', null);
+            return $query->where('rs_puskesmas_id', Auth::user()->puskesmas->id)->where('rs_puskesmas_id', '!=', 37)->where('sekolah_id', null);
         })->get();
 
         foreach ($pegawai as $item) {

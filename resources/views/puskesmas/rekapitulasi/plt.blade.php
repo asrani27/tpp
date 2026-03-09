@@ -13,15 +13,27 @@ SUPERADMIN
 @section('content')
 <div class="row">
     <div class="col-md-12">
+
         <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body p-2">
-                        @include('puskesmas.rekapitulasi.menu')
+            <div class="col-lg-12 col-12">
+                <div class="card card-widget widget-user-2">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header bg-info">
+                        <div class="widget-user-image">
+                            <img class="img-circle elevation-2" src="/login_tpp/images/icons/logo.png"
+                                alt="User Avatar">
+                        </div>
+                        <!-- /.widget-user-image -->
+                        <h3 class="widget-user-username">Laporan TPP {{Auth::user()->name}}</h3>
+                        <h5 class="widget-user-desc">Menampilkan data Laporan TPP</h5>
                     </div>
+
                 </div>
             </div>
         </div>
+
+        @include('puskesmas.rekapitulasi.menu')
+        <br /><br />
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Daftar TPP PLT Bulan
@@ -95,7 +107,8 @@ SUPERADMIN
                             </th>
                             <th style="background-color:#f9cb9c; border:1px solid silver" rowspan=3>Kelangkaan<br />
                                 Profesi</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver" colspan=3>Beban Kerja</th>
+                            <th style="background-color:#bbfac6; border:1px solid silver" colspan=3 rowspan="2">Beban
+                                Kerja</th>
                             <th style="background-color:#bbfac6; border:1px solid silver" rowspan=3>Jumlah<br /> Beban
                                 Kerja</th>
                             <th style="background-color:#bbfac6; border:1px solid silver" colspan=3>Prestasi Kerja</th>
@@ -121,9 +134,7 @@ SUPERADMIN
                             <th style="background-color:#d6fdf9; border:1px solid silver">Covid</th>
                             <th style="background-color:#d6fdf9; border:1px solid silver">Diklat</th>
                             <th style="background-color:#d6fdf9; border:1px solid silver">CB</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver">Absensi</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver">Aktivitas</th>
-                            <th style="background-color:#bbfac6; border:1px solid silver">Kinerja</th>
+
                             <th style="background-color:#bbfac6; border:1px solid silver">Absensi</th>
                             <th style="background-color:#bbfac6; border:1px solid silver">Aktivitas</th>
                             <th style="background-color:#bbfac6; border:1px solid silver">Kinerja</th>
@@ -167,9 +178,7 @@ SUPERADMIN
                             <td class="text-right">{{$item->p_kk}}</td>
                             <td class="text-right">{{$item->p_kp}}</td>
                             <td class="text-right">{{number_format($item->pagu)}}</td>
-                            <td class="text-right">{{number_format($item->pbk_absensi)}}</td>
-                            <td class="text-right">{{number_format($item->pbk_aktivitas)}}</td>
-                            <td class="text-right">{{number_format($item->pbk_skp)}}</td>
+                            <td class="text-right" colspan="3">{{number_format($item->pbk_jumlah)}}</td>
                             <td class="text-right">{{number_format($item->pbk_jumlah)}}</td>
                             <td class="text-right">{{number_format($item->ppk_absensi)}}</td>
                             <td class="text-right">{{number_format($item->ppk_aktivitas)}}</td>

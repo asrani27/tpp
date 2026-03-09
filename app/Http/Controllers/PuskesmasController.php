@@ -1352,40 +1352,12 @@ class PuskesmasController extends Controller
     {
         $data = RekapPlt::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->orderBy('kelas', 'DESC')->get();
         $data->map(function ($item) use ($bulan) {
-            //PBK
-            $item->pbk_absensi = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100) * ($item->dp_absensi / 100);
-            if ($bulan == '12') {
-                if ($item->dp_ta >= 3375) {
-                    $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
-                    if ($item->dp_skp == 'kurang') {
-                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
-                    } else {
-                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
-                    }
-                } else {
-                    $item->pbk_aktivitas = 0;
-                    $item->pbk_skp = 0;
-                }
-            } else {
 
-                if ($item->dp_ta >= 6750) {
-                    $item->pbk_aktivitas = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (40 / 100);
-                    if ($item->dp_skp == 'kurang') {
-                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (10 / 100);
-                    } else {
-                        $item->pbk_skp = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (20 / 100);
-                    }
-                } else {
-                    $item->pbk_aktivitas = 0;
-                    $item->pbk_skp = 0;
-                }
-            }
 
-            if ($item->jenis_plt == '2') {
-                $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp) * 20 / 100);
-            } else {
-                $item->pbk_jumlah = round(($item->pbk_absensi + $item->pbk_aktivitas + $item->pbk_skp));
-            }
+            //PBK (beban kerja)
+            $item->pbk = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (85 / 100);
+
+            $item->pbk_jumlah = $item->pbk * 20 / 100;
 
             //PPK
             $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
@@ -1416,27 +1388,27 @@ class PuskesmasController extends Controller
                 }
             }
             if ($item->jenis_plt == '2') {
-                $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * 20 / 100);
+                $item->ppk_jumlah = ($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * 20 / 100;
             } else {
 
-                $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp));
+                $item->ppk_jumlah = ($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp);
             }
 
             //PKK
-            $item->pkk = round($item->basic * ($item->p_kk / 100));
+            $item->pkk = $item->basic * ($item->p_kk / 100);
 
             if ($item->jenis_plt == '2') {
 
-                $item->pkk_jumlah = round($item->pkk * 20 / 100);
+                $item->pkk_jumlah = $item->pkk * 20 / 100;
             } else {
 
                 $item->pkk_jumlah = $item->pkk;
             }
 
             //PKP
-            $item->pkp = round($item->basic * ($item->p_kp / 100));
+            $item->pkp = $item->basic * ($item->p_kp / 100);
             $item->pkp_jumlah = $item->pkp;
-            $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
+            $item->jumlah_pembayaran = round($item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah);
 
             $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
             $item->tpp_diterima = $item->jumlah_pembayaran - $item->bpjs1;

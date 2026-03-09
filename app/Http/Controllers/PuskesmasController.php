@@ -610,33 +610,33 @@ class PuskesmasController extends Controller
                 }
             }
             if (Auth::user()->puskesmas->id == 8) {
-                $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (68 / 100));
+                $item->ppk_jumlah = ($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (68 / 100);
             } elseif (Auth::user()->puskesmas->id == 36 || Auth::user()->puskesmas->id == 37) {
-                $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp));
+                $item->ppk_jumlah = ($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp);
             } else {
-                $item->ppk_jumlah = round(($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (85 / 100));
+                $item->ppk_jumlah = ($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (85 / 100);
             }
 
             //PKK
             $item->pkk = $item->basic * ($item->p_kk / 100);
             if (Auth::user()->puskesmas->id == 8) {
-                $item->pkk_jumlah = round($item->pkk * (68 / 100));
+                $item->pkk_jumlah = $item->pkk * (68 / 100);
             } elseif (Auth::user()->puskesmas->id == 36 || Auth::user()->puskesmas->id == 37) {
-                $item->pkk_jumlah = round($item->pkk);
+                $item->pkk_jumlah = $item->pkk;
             } else {
-                $item->pkk_jumlah = round($item->pkk * (85 / 100));
+                $item->pkk_jumlah = $item->pkk * (85 / 100);
             }
 
             //PKP
             $item->pkp = $item->basic * ($item->p_kp / 100);
             if (Auth::user()->puskesmas->id == 8) {
-                $item->pkp_jumlah = round($item->pkp * (68 / 100));
+                $item->pkp_jumlah = $item->pkp * (68 / 100);
             } elseif (Auth::user()->puskesmas->id == 36 || Auth::user()->puskesmas->id == 37) {
-                $item->pkp_jumlah = round($item->pkp);
+                $item->pkp_jumlah = $item->pkp;
             } else {
-                $item->pkp_jumlah = round($item->pkp * (85 / 100));
+                $item->pkp_jumlah = $item->pkp * (85 / 100);
             }
-            $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
+            $item->jumlah_pembayaran = round($item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah);
             //PPH 21
             $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));
             $item->tpp_diterima = $item->jumlah_pembayaran - $item->bpjs1;

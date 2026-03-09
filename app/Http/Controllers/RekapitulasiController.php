@@ -4712,8 +4712,6 @@ class RekapitulasiController extends Controller
 
             $item->pbk_jumlah = $item->pbk  * 20 / 100;
 
-
-
             //PPK
             $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);
             if ($bulan == '12') {

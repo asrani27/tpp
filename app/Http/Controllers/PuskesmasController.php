@@ -1388,10 +1388,10 @@ class PuskesmasController extends Controller
                 }
             }
             if ($item->jenis_plt == '2') {
-                $item->ppk_jumlah = ($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * 20 / 100;
+                $item->ppk_jumlah = ($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (85 / 100) * 20 / 100;
             } else {
 
-                $item->ppk_jumlah = ($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * 20 / 100;
+                $item->ppk_jumlah = ($item->ppk_absensi + $item->ppk_aktivitas + $item->ppk_skp) * (85 / 100) * 20 / 100;
             }
 
             //PKK
@@ -1399,15 +1399,15 @@ class PuskesmasController extends Controller
 
             if ($item->jenis_plt == '2') {
 
-                $item->pkk_jumlah = $item->pkk * 20 / 100;
+                $item->pkk_jumlah = $item->pkk * (85 / 100) * 20 / 100;
             } else {
 
-                $item->pkk_jumlah = $item->pkk * 20 / 100;
+                $item->pkk_jumlah = $item->pkk * (85 / 100) * 20 / 100;
             }
 
             //PKP
             $item->pkp = $item->basic * ($item->p_kp / 100);
-            $item->pkp_jumlah = $item->pkp * 20 / 100;
+            $item->pkp_jumlah = $item->pkp * (85 / 100) * 20 / 100;
             $item->jumlah_pembayaran = round($item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah);
 
             $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));

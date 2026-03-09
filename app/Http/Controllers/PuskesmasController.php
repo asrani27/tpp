@@ -1551,9 +1551,9 @@ class PuskesmasController extends Controller
 
 
             //PBK (beban kerja)
-            $item->pbk = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (85 / 100);
+            $pbk = $item->basic * (($item->p_bk + $item->p_tbk) / 100) * (85 / 100);
 
-            $item->pbk_jumlah = $item->pbk * 20 / 100;
+            $item->pbk_jumlah = $pbk * 20 / 100;
 
             //PPK
             $item->ppk_absensi = $item->basic * ($item->p_pk / 100) * (40 / 100) * ($item->dp_absensi / 100);

@@ -1295,7 +1295,7 @@ class PuskesmasController extends Controller
         // }
         //sheet CPNS
 
-        if Auth::user()->puskesmas->id == 37) {
+        if (Auth::user()->puskesmas->id == 37) {
         } else {
 
             //sheet PLT

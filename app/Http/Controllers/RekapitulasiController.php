@@ -4102,7 +4102,7 @@ class RekapitulasiController extends Controller
             //PKP
             $item->pkp = $item->basic * ($item->p_kp / 100);
             $item->pkp_jumlah = $item->pkp;
-            $item->jumlah_pembayaran = round($item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah);
+            $item->jumlah_pembayaran = $item->pbk_jumlah + $item->ppk_jumlah + $item->pkk_jumlah + $item->pkp_jumlah;
             //dd($item->jumlah_pembayaran, $item->pbk_jumlah, $item->ppk_jumlah);
             //PPH 21
             $item->pph21 = round($item->jumlah_pembayaran * ($item->pph21 / 100));

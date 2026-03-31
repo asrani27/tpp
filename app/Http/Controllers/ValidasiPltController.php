@@ -13,80 +13,62 @@ class ValidasiPltController extends Controller
     {
         return Auth::user();
     }
-    
     public function index()
     {
-        try {
-            if ($this->user()->pegawai->jabatan == null) {
-                toastr()->info('Tidak bisa melakukan validasi karena anda tidak memiliki jabatan, hub admin SKPD');
-                return back();
-            }
-
-            // Load with eager loading to prevent N+1 queries
-            $data1 = $this->user()->pegawai->jabatanPlt->bawahan
-                ->load(['pegawai.aktivitas', 'pegawaiplt.aktivitas'])
-                ->map(function ($item) {
-                    if ($item->pegawai == null) {
-                        if ($item->pegawaiplt == null) {
-                            $item->pegawai_id     = null;
-                            $item->nama_pegawai = null;
-                            $item->aktivitas_baru = 0;
-                        } else {
-                            $item->pegawai_id     = $item->pegawaiplt->id;
-                            $item->nama_pegawai   = $item->pegawaiplt->nama;
-                            $item->aktivitas_baru = $item->pegawaiplt->aktivitas->where('validasi', 0)->count();
-                        }
-                    } else {
-                        $item->pegawai_id     = $item->pegawai->id;
-                        $item->nama_pegawai   = $item->pegawai->nama;
-                        $item->aktivitas_baru = $item->pegawai->aktivitas->where('validasi', 0)->count();
-                    }
-                    return $item;
-                });
-
-            if ($this->user()->pegawai->jabatanPlt->sekda == 1) {
-                // Optimize query with eager loading and limit to prevent memory issues
-                $data2 = Jabatan::with(['pegawai.aktivitas', 'pegawaiplt.aktivitas', 'skpd'])
-                    ->where('jabatan_id', null)
-                    ->where('sekda', null)
-                    ->limit(500) // Add limit to prevent memory overload
-                    ->get()
-                    ->map(function ($item) {
-                        // Null safety for skpd relationship
-                        $skpdNama = $item->skpd ? $item->skpd->nama : 'N/A';
-                        
-                        if ($item->pegawai == null) {
-                            if ($item->pegawaiplt == null) {
-                                $item->nama = $item->nama . ', SKPD : ' . $skpdNama;
-                                $item->pegawai_id     = '-';
-                                $item->nama_pegawai   = '-';
-                                $item->aktivitas_baru = 0;
-                            } else {
-                                $item->nama = 'Plt. ' . $item->nama . ', SKPD : ' . $skpdNama;
-                                $item->pegawai_id     = $item->pegawaiplt->id;
-                                $item->nama_pegawai   = $item->pegawaiplt->nama;
-                                $item->aktivitas_baru = $item->pegawaiplt->aktivitas->where('validasi', 0)->count();
-                            }
-                        } else {
-                            $item->nama = $item->nama . ', SKPD : ' . $skpdNama;
-                            $item->pegawai_id     = $item->pegawai->id;
-                            $item->nama_pegawai   = $item->pegawai->nama;
-                            $item->aktivitas_baru = $item->pegawai->aktivitas->where('validasi', 0)->count();
-                        }
-                        return $item;
-                    });
-            } else {
-                $data2 = collect([]);
-            }
-
-            $currentPegawaiId = $this->user()->pegawai->id ?? 0;
-            $data = $data1->merge($data2)->whereNotIn('pegawai_id', [$currentPegawaiId]);
-
-            return view('pegawai.validasiplt.index', compact('data'));
-        } catch (\Exception $e) {
-            toastr()->error('Terjadi kesalahan: ' . $e->getMessage());
+        if ($this->user()->pegawai->jabatan == null) {
+            toastr()->info('Tidak bisa melakukan validasi karena anda tidak memiliki jabatan, hub admin SKPD');
             return back();
         }
+
+        $data1 = $this->user()->pegawai->jabatanPlt->bawahan->load('pegawai')->map(function ($item) {
+            if ($item->pegawai == null) {
+                if ($item->pegawaiplt == null) {
+                    $item->pegawai_id     = null;
+                    $item->nama_pegawai = null;
+                    $item->aktivitas_baru = 0;
+                } else {
+                    $item->pegawai_id     = $item->pegawaiplt->id;
+                    $item->nama_pegawai   = $item->pegawaiplt->nama;
+                    $item->aktivitas_baru = $item->pegawaiplt->aktivitas->where('validasi', 0)->count();
+                }
+            } else {
+                $item->pegawai_id     = $item->pegawai->id;
+                $item->nama_pegawai   = $item->pegawai->nama;
+                $item->aktivitas_baru = $item->pegawai->aktivitas->where('validasi', 0)->count();
+            }
+            return $item;
+        });
+        if ($this->user()->pegawai->jabatanPlt->sekda == 1) {
+
+            $data2 = Jabatan::where('jabatan_id', null)->where('sekda', null)->get()->map(function ($item) {
+                if ($item->pegawai == null) {
+                    if ($item->pegawaiplt == null) {
+                        $item->nama = $item->nama . ', SKPD : ' . $item->skpd->nama;
+                        $item->pegawai_id     = '-';
+                        $item->nama_pegawai   = '-';
+                        $item->aktivitas_baru = 0;
+                    } else {
+                        $item->nama = 'Plt. ' . $item->nama . ', SKPD : ' . $item->skpd->nama;
+                        $item->pegawai_id     = $item->pegawaiplt->id;
+                        $item->nama_pegawai   = $item->pegawaiplt->nama;
+                        $item->aktivitas_baru = $item->pegawaiplt->aktivitas->where('validasi', 0)->count();
+                    }
+                } else {
+                    $item->nama = $item->nama . ', SKPD : ' . $item->skpd->nama;
+                    $item->pegawai_id     = $item->pegawai->id;
+                    $item->nama_pegawai   = $item->pegawai->nama;
+                    $item->aktivitas_baru = $item->pegawai->aktivitas->where('validasi', 0)->count();
+                }
+                return $item;
+            });
+        } else {
+            $data2 = collect([]);
+        }
+
+        dd($data1, $data2);
+        $data = $data1->merge($data2)->whereNotIn('pegawai_id', $this->user()->pegawai->id);
+
+        return view('pegawai.validasiplt.index', compact('data'));
     }
 
     public function view($id)

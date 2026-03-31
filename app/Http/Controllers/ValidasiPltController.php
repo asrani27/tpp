@@ -25,20 +25,20 @@ class ValidasiPltController extends Controller
                 if ($item->pegawaiplt == null) {
                     $item->pegawai_id     = null;
                     $item->nama_pegawai = null;
-                    $item->aktivitas_baru = 0;
+                    // $item->aktivitas_baru = 0;
                 } else {
                     $item->pegawai_id     = $item->pegawaiplt->id;
                     $item->nama_pegawai   = $item->pegawaiplt->nama;
-                    $item->aktivitas_baru = $item->pegawaiplt->aktivitas->where('validasi', 0)->count();
+                    // $item->aktivitas_baru = $item->pegawaiplt->aktivitas->where('validasi', 0)->count();
                 }
             } else {
                 $item->pegawai_id     = $item->pegawai->id;
                 $item->nama_pegawai   = $item->pegawai->nama;
-                $item->aktivitas_baru = $item->pegawai->aktivitas->where('validasi', 0)->count();
+                // $item->aktivitas_baru = $item->pegawai->aktivitas->where('validasi', 0)->count();
             }
             return $item;
         });
-        dd($data1);
+
         if ($this->user()->pegawai->jabatanPlt->sekda == 1) {
 
             $data2 = Jabatan::where('jabatan_id', null)->where('sekda', null)->get()->map(function ($item) {
@@ -47,18 +47,18 @@ class ValidasiPltController extends Controller
                         $item->nama = $item->nama . ', SKPD : ' . $item->skpd->nama;
                         $item->pegawai_id     = '-';
                         $item->nama_pegawai   = '-';
-                        $item->aktivitas_baru = 0;
+                        // $item->aktivitas_baru = 0;
                     } else {
                         $item->nama = 'Plt. ' . $item->nama . ', SKPD : ' . $item->skpd->nama;
                         $item->pegawai_id     = $item->pegawaiplt->id;
                         $item->nama_pegawai   = $item->pegawaiplt->nama;
-                        $item->aktivitas_baru = $item->pegawaiplt->aktivitas->where('validasi', 0)->count();
+                        // $item->aktivitas_baru = $item->pegawaiplt->aktivitas->where('validasi', 0)->count();
                     }
                 } else {
                     $item->nama = $item->nama . ', SKPD : ' . $item->skpd->nama;
                     $item->pegawai_id     = $item->pegawai->id;
                     $item->nama_pegawai   = $item->pegawai->nama;
-                    $item->aktivitas_baru = $item->pegawai->aktivitas->where('validasi', 0)->count();
+                    // $item->aktivitas_baru = $item->pegawai->aktivitas->where('validasi', 0)->count();
                 }
                 return $item;
             });
@@ -66,7 +66,6 @@ class ValidasiPltController extends Controller
             $data2 = collect([]);
         }
 
-        dd($data1, $data2);
         $data = $data1->merge($data2)->whereNotIn('pegawai_id', $this->user()->pegawai->id);
 
         return view('pegawai.validasiplt.index', compact('data'));

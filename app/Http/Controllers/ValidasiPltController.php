@@ -38,6 +38,7 @@ class ValidasiPltController extends Controller
             }
             return $item;
         });
+        dd($data1);
         if ($this->user()->pegawai->jabatanPlt->sekda == 1) {
 
             $data2 = Jabatan::where('jabatan_id', null)->where('sekda', null)->get()->map(function ($item) {

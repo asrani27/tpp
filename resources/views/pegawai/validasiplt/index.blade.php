@@ -43,7 +43,7 @@ VALIDASI AKTIVITAS
 
                     @else
                     <button href="#" class="btn btn-sm bg-purple">
-                      <i class="fas fa-user-edit"></i> <strong>Aktivitas </strong>
+                      <i class="fas fa-user-edit"></i> <strong>{{$item->aktivitas_baru}} Aktivitas </strong>
                     </button>
                     @endif
                   </td>

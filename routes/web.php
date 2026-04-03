@@ -19,6 +19,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('/bpkpad', 'BPKPADController@konsolidasitpp');
     });
     Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
+        Route::get('/superadmin/export', 'ExportController@index');
         Route::get('/home/superadmin', 'HomeController@superadmin');
         Route::get('/home/superadmin/parametertpp', 'HomeController@parametertpp');
         Route::get('/home/superadmin/parametertpppuskesmas', 'HomeController@parametertpppuskesmas');

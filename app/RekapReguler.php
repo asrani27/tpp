@@ -13,4 +13,9 @@ class RekapReguler extends Model
     {
         return $this->belongsTo(Sekolah::class, 'sekolah_id');
     }
+
+    public function skpd()
+    {
+        return $this->belongsTo(Skpd::class, 'skpd_id');
+    }
 }

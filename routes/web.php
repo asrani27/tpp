@@ -20,6 +20,7 @@ Route::group(['middleware' => ['XSS']], function () {
     });
     Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::get('/superadmin/export', 'ExportController@index');
+        Route::post('/superadmin/export/pagu', 'ExportController@exportPagu');
         Route::get('/home/superadmin', 'HomeController@superadmin');
         Route::get('/home/superadmin/parametertpp', 'HomeController@parametertpp');
         Route::get('/home/superadmin/parametertpppuskesmas', 'HomeController@parametertpppuskesmas');

@@ -70,7 +70,7 @@ class PaguExport implements FromCollection, WithHeadings, WithColumnFormatting, 
     public function columnWidths(): array
     {
         return [
-            'D' => 200, // Jabatan column width
+            'D' => 30, // Jabatan column width
         ];
     }
 }

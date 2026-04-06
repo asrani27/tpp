@@ -110,8 +110,13 @@ class ValidasiPltController extends Controller
         $jabatan_saya = $this->user()->pegawai->jabatanPlt;
 
         $jabatan = Jabatan::with('pegawai.aktivitas')->findOrFail($id);
+        if ($jabatan->atasan == null) {
+            $jabatan_id = Jabatan::where('sekda', 1)->first()->id;
+        } else {
+            $jabatan_id = $jabatan->atasan->id;
+        }
 
-        if ($jabatan_saya->id != $jabatan->atasan->id) {
+        if ($jabatan_saya->id != $jabatan_id) {
             toastr()->error('Tidak Bisa Validasi , bukan bawahan anda', 'Authorize');
             return back();
         } else {

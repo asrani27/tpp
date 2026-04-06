@@ -120,7 +120,11 @@ class ValidasiPltController extends Controller
             toastr()->error('Tidak Bisa Validasi , bukan bawahan anda', 'Authorize');
             return back();
         } else {
-            $data = $jabatan->pegawai->aktivitas->where('validasi', 0);
+            if ($jabatan->pegawai == null) {
+                $data = $jabatan->pegawaiplt->aktivitas->where('validasi', 0);
+            } else {
+                $data = $jabatan->pegawai->aktivitas->where('validasi', 0);
+            }
 
             $data->map(function ($item) {
                 $item->update([

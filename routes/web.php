@@ -499,6 +499,14 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/pegawai/aktivitas/keberatan', 'AktivitasController@keberatan');
         Route::get('/pegawai/aktivitas/keberatan/{id}/{penilai_id}', 'AktivitasController@ajukanKeberatan');
 
+        // Lampiran WFH Routes
+        Route::get('/pegawai/lampiran/wfh', 'LampiranController@index');
+        Route::get('/pegawai/lampiran/wfh/create', 'LampiranController@create');
+        Route::post('/pegawai/lampiran/wfh', 'LampiranController@store');
+        Route::get('/pegawai/lampiran/wfh/edit/{id}', 'LampiranController@edit');
+        Route::put('/pegawai/lampiran/wfh/edit/{id}', 'LampiranController@update');
+        Route::get('/pegawai/lampiran/wfh/delete/{id}', 'LampiranController@delete');
+
         Route::get('/pegawai/validasi/harian', 'ValidasiController@index');
         Route::get('/pegawai/validasi/riwayat', 'ValidasiController@riwayat');
         Route::get('/pegawai/validasi/harian/acc/{id}', 'ValidasiController@accSemua');

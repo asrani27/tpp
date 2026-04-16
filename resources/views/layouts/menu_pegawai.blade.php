@@ -26,7 +26,8 @@
             </a>
         </li>
         <li class="nav-item">
-        {{-- <li class="nav-item has-treeview menu-open">
+            {{--
+        <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link {{Request::is('pegawai/skp*') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-address-book"></i>
                 <p>
@@ -89,6 +90,13 @@
                         class="nav-link {{ Request::is('pegawai/aktivitas/keberatan') ? 'active' : '' }}">
                         <i class="nav-icon far fa-circle nav-icon"></i>
                         <p>Pengajuan Keberatan</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/pegawai/lampiran/wfh"
+                        class="nav-link {{ Request::is('pegawai/lampiran/wfh') ? 'active' : '' }}">
+                        <i class="nav-icon far fa-circle nav-icon"></i>
+                        <p>Lampiran WFH</p>
                     </a>
                 </li>
             </ul>

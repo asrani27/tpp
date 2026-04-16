@@ -1102,7 +1102,7 @@ class SuperadminController extends Controller
         } catch (\Exception $e) {
 
             DB::rollback();
-            dd($e);
+            
             toastr()->error(' Gagal Diproses');
             return back();
         }

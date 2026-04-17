@@ -282,6 +282,7 @@ class SKP2023Controller extends Controller
                 $n->save();
             } else {
                 $check->update([
+                    'skp2023_id' =>  $u->id,
                     'triwulan' => $i->triwulan,
                     'rhk_id' => $i->id_rhk,
                     'id_rencana_aksi' => $i->id,

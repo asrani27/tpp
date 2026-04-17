@@ -168,6 +168,7 @@ PEGAWAI
                                     </td>
                                 </tr>
 
+
                                 <tr
                                     style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                                     <td colspan="8">
@@ -177,11 +178,13 @@ PEGAWAI
                                                 <th>Rencana Hasil Kerja (RHK)</th>
                                                 <th>Rencana Aksi</th>
                                             </tr>
+
                                             @foreach ($skp_utama as $key => $item)
                                             <tr
                                                 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:10px;">
                                                 <td>{{$key + 1}}</td>
                                                 <td>{{$item->rhk}}</td>
+                                                {{-- {{dd($item, $triwulan,$u)}} --}}
                                                 <td>
                                                     <table>
                                                         <tr
